@@ -899,6 +899,9 @@ oc.curves <- function(object, ...)
         if (object$type=="xbar")
            beta <- oc.curves.xbar(object, ...)
      else
+        if (object$type=="R")
+           beta <- oc.curves.R(object, ...)
+     else
            stop("Operating characteristic curves not available for this type of chart.")
 
   invisible(beta)
@@ -1065,6 +1068,86 @@ oc.curves.c <- function(object, nsigmas = object$nsigmas, identify=FALSE, restor
                        ", ARL=", formatC(1/(1-beta), 2, flag="-"), sep="")
        i <- identify(lambda, beta, labels, pos=4, offset=0.2)
        apply(as.matrix(labels[i$ind]), 1, cat, "\n")
+     }
+  invisible(beta)
+}
+
+oc.curves.R <-
+function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identify=FALSE, restore.par=TRUE)
+{
+# Draw the operating-characteristic curves for the R-chart with nsigmas
+# limits. The values on the vertical axis give the probability of not detecting
+# a change from sigma to c*sigma on the first sample following the change.
+
+  type <- object$type
+  if (!(object$type=="R"))
+     stop("not a `qcc' object of type \"R\".")
+
+  size <- unique(object$sizes)
+  if (length(size) > 1)
+     stop("Operating characteristic curves available only for equal sample sizes!")
+  if (missing(n))
+     n <- unique(c(size, c(2,5,10,15,20)))
+  if (is.null(nsigmas))
+    { tail.prob <- (1 - object$confidence.level) / 2
+      beta.fun <- function(c, n, p)
+      {
+        lcl <- qtukey(p, n, Inf)
+        ucl <- qtukey(p, n, Inf, lower.tail = FALSE)
+        ptukey(ucl / c, n, Inf) - ptukey(lcl / c, n, Inf)
+      }
+      beta <- outer(c, n, beta.fun, tail.prob)
+    }
+  else
+    { exp.R.unscaled <- qcc.options("exp.R.unscaled")
+      se.R.unscaled <- qcc.options("se.R.unscaled")
+      Rtab <- min(length(exp.R.unscaled), length(se.R.unscaled))
+      if (any(n > Rtab))
+          stop(paste("group size must be less than",
+                      Rtab + 1, "when giving nsigmas"))
+      beta.fun <- function(c, n, conf)
+      {
+        d2 <- exp.R.unscaled[n]
+        d3 <- se.R.unscaled[n]
+        lcl <- pmax(0, d2 - conf * d3)
+        ucl <- d2 + conf * d3
+        ptukey(ucl / c, n, Inf) - ptukey(lcl / c, n, Inf)
+      }
+      beta <- outer(c, n, beta.fun, nsigmas)
+    }
+
+  colnames(beta) <- paste("n=",n,sep="")
+  rownames(beta) <- c
+
+  oldpar <- par(bg  = qcc.options("bg.margin"),
+                cex = qcc.options("cex"),
+                no.readonly = TRUE)
+  if (restore.par) on.exit(par(oldpar))
+
+  plot(c, beta[,1], type="n",
+       ylim = c(0,1), xlim = c(1,max(c)),
+       xlab = "Process scale multiplier",
+       ylab = "Prob. type II error ",
+       main = paste("OC curves for", object$type, "chart"))
+  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4],
+       col = qcc.options("bg.figure"))
+  matlines(c, beta, lty = 1:length(n), col = 1)
+
+  names(dimnames(beta)) <- c("scale multiplier", "sample size")
+
+  if (identify)
+     { cs <- rep(c,length(n))
+       betas <- as.vector(beta)
+       labels <- paste("c=", formatC(cs, 2, flag="-"),
+                       ": beta=", formatC(betas, 4, flag="-"),
+                       ", ARL=", formatC(1/(1-betas), 2, flag="-"), sep="")
+       i <- identify(cs, betas, labels, pos=4, offset=0.2)
+       apply(as.matrix(labels[i$ind]), 1, cat, "\n")
+     }
+  else
+     { legend(max(c), 1, legend = paste("n =", n),
+              bg = qcc.options("bg.figure"),
+              lty = 1:length(n), xjust = 1, yjust = 1)
      }
   invisible(beta)
 }
