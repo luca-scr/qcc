@@ -1,0 +1,28 @@
+importFrom("MASS", "mvrnorm")
+
+export(qcc, print.qcc, summary.qcc, plot.qcc)
+S3method("print", "qcc")
+S3method("summary", "qcc")
+S3method("plot", "qcc")
+
+export(cusum, print.cusum.qcc, summary.cusum.qcc, plot.cusum.qcc)
+S3method("print", "cusum.qcc")
+S3method("summary", "cusum.qcc")
+S3method("plot", "cusum.qcc")
+
+export(ewma, print.ewma.qcc, summary.ewma.qcc, plot.ewma.qcc)
+S3method("print", "ewma.qcc")
+S3method("summary", "ewma.qcc")
+S3method("plot", "ewma.qcc")
+
+export(mqcc, print.mqcc, summary.mqcc, plot.mqcc)
+S3method("print", "mqcc")
+S3method("summary", "mqcc")
+S3method("plot", "mqcc")
+
+export(pareto.chart, print.pareto.chart, plot.pareto.chart)
+S3method("print", "pareto.chart")
+S3method("plot", "pareto.chart")
+  
+exportPattern("^[^\\.]")
+
