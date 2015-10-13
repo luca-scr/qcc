@@ -1,4 +1,4 @@
-qcc - Quality Control Charts in R
+qcc: Quality Control Charts in R
 ---------------------------------
 
 GitHub repository for R package `qcc`.
