@@ -919,6 +919,8 @@ oc.curves.xbar <- function(object, n, c = seq(0, 5, length=101), nsigmas = objec
      stop("Operating characteristic curves available only for equal sample sizes!")
   if (missing(n))
      n <- unique(c(size, c(1,5,10,15,20)))
+  if (is.null(nsigmas))
+     nsigmas <- qnorm(1 - (1 - object$confidence.level) / 2)
 
   beta <- matrix(as.double(NA), length(n), length(c))
   for (i in 1:length(n))
