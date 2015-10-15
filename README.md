@@ -17,5 +17,6 @@ GitHub repository for R package `qcc`.
 ### Contributors
 
 * Greg Snow
+* Peter Bloomfield
 
  
