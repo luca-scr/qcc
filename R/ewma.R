@@ -192,7 +192,7 @@ summary.ewma.qcc <- function(object, digits =  getOption("digits"), ...)
                 newdata.name, ":\n", sep = ""))
       print(summary(newstats), digits = digits, ...)
       newsizes <- object$newsizes
-      if(!any(diff(newsizes)))
+      if (length(unique(newsizes)) == 1)
          newsizes <- newsizes[1]
       if(length(newsizes) == 1)
          cat("\nGroup sample size: ", format(newsizes))
