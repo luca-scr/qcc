@@ -793,11 +793,11 @@ stats.u <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
-sd.u <- function(data, sizes, ...)
+sd.u <- function (data, sizes, ...)
 {
   data <- as.vector(data)
   sizes <- as.vector(sizes)
-  std.dev <- sqrt(sum(sizes * data)/sum(sizes))
+  std.dev <- sqrt(sum(data)/sum(sizes))
   return(std.dev)
 }
 
