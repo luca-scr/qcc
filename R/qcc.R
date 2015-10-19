@@ -57,7 +57,8 @@ qcc <- function(data, type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u"
   sd <- paste("sd.", type, sep = "")
   if (!exists(sd, mode="function"))
      stop(paste("function", sd, "is not defined!"))
-  if (missing(std.dev)) 
+  missing.std.dev <- missing(std.dev)
+  if (missing.std.dev)
      { std.dev <- NULL
        std.dev <- switch(type, 
                          "xbar" = { if(any(sizes > 25)) "RMSDF"
@@ -134,7 +135,7 @@ qcc <- function(data, type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u"
                                       sizes = sizes, conf = conf)) 
      }
   else 
-     { if (!missing(std.dev))
+     { if (!missing.std.dev)
           warning("'std.dev' is not used when limits is given")
        if (!is.numeric(limits))
           stop("'limits' must be a vector of length 2 or a 2-columns matrix")
