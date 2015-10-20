@@ -891,19 +891,16 @@ oc.curves <- function(object, ...)
   if (length(size)>1)
      stop("Operating characteristic curves available only for equal sample sizes!")
 
-  if (object$type=="p" | object$type=="np")
-     beta <- oc.curves.p(object, ...)
-  else
-     if (object$type=="c" | object$type=="u")
-        beta <- oc.curves.c(object, ...)
-     else
-        if (object$type=="xbar")
-           beta <- oc.curves.xbar(object, ...)
-     else
-        if (object$type=="R")
-           beta <- oc.curves.R(object, ...)
-     else
-           stop("Operating characteristic curves not available for this type of chart.")
+  beta <- switch(object$type,
+                 xbar = oc.curves.xbar(object, ...),
+                 R    = oc.curves.R(object, ...),
+                 S    = oc.curves.S(object, ...),
+                 np   =,
+                 p    = oc.curves.p(object, ...),
+                 u    =,
+                 c    = oc.curves.c(object, ...))
+  if (is.null(beta))
+     stop("Operating characteristic curves not available for this type of chart.")
 
   invisible(beta)
 }
@@ -1115,6 +1112,81 @@ function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identif
         ptukey(ucl / c, n, Inf) - ptukey(lcl / c, n, Inf)
       }
       beta <- outer(c, n, beta.fun, nsigmas)
+    }
+
+  colnames(beta) <- paste("n=",n,sep="")
+  rownames(beta) <- c
+
+  oldpar <- par(bg  = qcc.options("bg.margin"),
+                cex = qcc.options("cex"),
+                no.readonly = TRUE)
+  if (restore.par) on.exit(par(oldpar))
+
+  plot(c, beta[,1], type="n",
+       ylim = c(0,1), xlim = c(1,max(c)),
+       xlab = "Process scale multiplier",
+       ylab = "Prob. type II error ",
+       main = paste("OC curves for", object$type, "chart"))
+  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4],
+       col = qcc.options("bg.figure"))
+  matlines(c, beta, lty = 1:length(n), col = 1)
+
+  names(dimnames(beta)) <- c("scale multiplier", "sample size")
+
+  if (identify)
+     { cs <- rep(c,length(n))
+       betas <- as.vector(beta)
+       labels <- paste("c=", formatC(cs, 2, flag="-"),
+                       ": beta=", formatC(betas, 4, flag="-"),
+                       ", ARL=", formatC(1/(1-betas), 2, flag="-"), sep="")
+       i <- identify(cs, betas, labels, pos=4, offset=0.2)
+       apply(as.matrix(labels[i$ind]), 1, cat, "\n")
+     }
+  else
+     { legend(max(c), 1, legend = paste("n =", n),
+              bg = qcc.options("bg.figure"),
+              lty = 1:length(n), xjust = 1, yjust = 1)
+     }
+  invisible(beta)
+}
+
+oc.curves.S <-
+function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identify=FALSE, restore.par=TRUE)
+{
+# Draw the operating-characteristic curves for the S-chart with nsigmas
+# limits. The values on the vertical axis give the probability of not detecting
+# a change from sigma to c*sigma on the first sample following the change.
+
+  type <- object$type
+  if (!(object$type=="S"))
+     stop("not a `qcc' object of type \"S\".")
+
+  size <- unique(object$sizes)
+  if (length(size) > 1)
+     stop("Operating characteristic curves available only for equal sample sizes!")
+  if (missing(n))
+     n <- unique(c(size, c(2,5,10,15,20)))
+  if (is.null(nsigmas))
+    { tail.prob <- (1 - object$confidence.level) / 2
+      beta.fun <- function(c, n, p)
+      {
+        ucl <- sqrt(qchisq(1 - p, n - 1) / (n - 1))
+        lcl <- sqrt(qchisq(p, n - 1) / (n - 1))
+        pchisq((n - 1) * (ucl / c)^2, n - 1) - pchisq((n - 1)* (lcl / c)^2, n - 1)
+      }
+      beta <- outer(c, n, beta.fun, tail.prob)
+    }
+  else
+    { c4 <- .qcc.c4
+      beta.fun <- function(c, n)
+      {
+        center <- c4(n)
+        tol <- sqrt(1 - c4(n)^2)
+        lcl <- pmax(0, center - nsigmas * tol)
+        ucl <- center + nsigmas * tol
+        pchisq((n - 1) * (ucl / c)^2, n - 1) - pchisq((n - 1) * (lcl / c)^2, n - 1)
+      }
+      beta <- outer(c, n, beta.fun)
     }
 
   colnames(beta) <- paste("n=",n,sep="")
