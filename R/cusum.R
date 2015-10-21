@@ -4,7 +4,8 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-cusum <- function(data, sizes, center, std.dev, decision.interval = 5, se.shift = 1, data.name, labels, newdata, newsizes, newlabels, plot = TRUE, ...)
+cusum <- function(data, sizes, center, std.dev, head.start = 0, decision.interval = 5,
+                  se.shift = 1, data.name, labels, newdata, newsizes, newlabels, plot = TRUE, ...)
 {
   call <- match.call()
   if (missing(data))
@@ -21,6 +22,12 @@ cusum <- function(data, sizes, center, std.dev, decision.interval = 5, se.shift 
          sizes <- rep(sizes, nrow(data))
       else if(length(sizes) != nrow(data))
               stop("sizes length doesn't match with data") }
+
+  if (decision.interval <= 0)
+      stop("decision.interval must be positive")
+
+  if (head.start < 0 || head.start >= decision.interval)
+      stop("head.start must be non-negative and less than decision.interval")
   
   # used for computing statistics and std.dev
   type <- if(any(sizes==1)) "xbar.one" else "xbar"
@@ -100,13 +107,13 @@ cusum <- function(data, sizes, center, std.dev, decision.interval = 5, se.shift 
   #
   z.f <- z - se.shift/2
   cusum.pos <- rep(NA, n)
-  cusum.pos[1] <- max(0, z.f[1])
+  cusum.pos[1] <- max(0, head.start + z.f[1])
   for (i in 2:n)
       cusum.pos[i] <- max(0, cusum.pos[i-1]+z.f[i])
   #
   z.f <- z + se.shift/2
   cusum.neg <- rep(NA, n)
-  cusum.neg[1] <- max(0, -z.f[1])
+  cusum.neg[1] <- max(0, head.start - z.f[1])
   for (i in 2:n)
       cusum.neg[i] <- max(0, cusum.neg[i-1]-z.f[i])
   cusum.neg <- -cusum.neg
@@ -116,6 +123,7 @@ cusum <- function(data, sizes, center, std.dev, decision.interval = 5, se.shift 
   object$type <- "cusum"
   object$pos <- cusum.pos 
   object$neg <- cusum.neg
+  object$head.start <- head.start
   object$decision.interval <- decision.interval
   object$se.shift <- se.shift
   object$violations <- violations
@@ -181,6 +189,9 @@ summary.cusum.qcc <- function(object, digits =  getOption("digits"), ...)
       cat("\nNumber of groups: ", length(newstats), "\n")
      }
 
+  if (object$head.start > 0)
+      cat("Head start (std.err.):",
+          signif(object$head.start, digits = digits), "\n")
   cat("\nDecision interval (std.err.):", 
       signif(object$decision.interval, digits = digits), "\n")
   cat("Shift detection  (std. err.):", 
@@ -262,9 +273,15 @@ plot.cusum.qcc <- function(x, add.stats = TRUE, chart.all = TRUE,
   lines(indices, cusum.neg[indices], type = "b", pch=20) 
 
   mtext(if(missing(ylab)) "Cumulative Sum" else ylab, line=3, side=2)
-  mtext("Above target", srt=90, line=2, side=2, at=0+par("usr")[4]/2, 
+  lab <- "Above target"
+  if (addstats && object$head.start > 0)
+      lab <- paste(lab, " (start = ", object$head.start, ")", sep = "")
+  mtext(lab, srt=90, line=2, side=2, at=0+par("usr")[4]/2,
         cex = par("cex")*0.8)
-  mtext("Below target", srt=90, line=2, side=2, at=0+par("usr")[3]/2, 
+  lab <- "Below target"
+  if (addstats && object$head.start > 0)
+      lab <- paste(lab, " (start = ", - object$head.start, ")", sep = "")
+  mtext(lab, srt=90, line=2, side=2, at=0+par("usr")[3]/2,
         cex = par("cex")*0.8)
   mtext(label.bounds, side = 4, at = c(ldb, udb), las = 1, line = 0.1, 
         col = gray(0.3), cex = par("cex"))

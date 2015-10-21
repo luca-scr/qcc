@@ -9,8 +9,9 @@
 \description{Create an object of class 'cusum.qcc' to compute a Cusum chart for statistical quality control.}
 
 \usage{
-cusum(data, sizes, center, std.dev, decision.interval = 5, se.shift = 1,
-      data.name, labels, newdata, newsizes, newlabels, plot = TRUE, \dots)
+cusum(data, sizes, center, std.dev, head.start = 0,
+      decision.interval = 5, se.shift = 1, data.name, labels,
+      newdata, newsizes, newlabels, plot = TRUE, \dots)
 
 \method{print}{cusum.qcc}(x, \dots)
 
@@ -31,6 +32,11 @@ cusum(data, sizes, center, std.dev, decision.interval = 5, se.shift = 1,
 \item{std.dev}{a value or an available method specifying the within-group standard deviation(s) of the process. \cr
 Several methods are available for estimating the standard deviation. See \code{\link{sd.xbar}} and \code{\link{sd.xbar.one}} for, respectively, the grouped data case and the individual observations case.
 }
+
+\item{head.start}{The initializing value for the above-target and
+below-target cumulative sums, measured in standard errors of the summary
+statistics. Use zero for the traditional Cusum chart, or a positive
+value less than the \code{decision.interval} for a Fast Initial Response.}
 
 \item{decision.interval}{A numeric value specifying the number of standard errors of the summary statistics at which the cumulative sum is out of control.}
 
