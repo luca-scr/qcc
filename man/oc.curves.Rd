@@ -2,6 +2,7 @@
 \alias{oc.curves}
 \alias{oc.curves.xbar}
 \alias{oc.curves.R}
+\alias{oc.curves.S}
 \alias{oc.curves.p}
 \alias{oc.curves.c}
 \title{Operating Characteristic Function}
@@ -13,6 +14,9 @@ oc.curves.xbar(object, n, c = seq(0, 5, length=101),
                nsigmas = object$nsigmas, identify=FALSE, restore.par=TRUE)
 
 oc.curves.R(object, n, c = seq(1, 6, length=101),
+            nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
+
+oc.curves.S(object, n, c = seq(1, 6, length=101),
             nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
 
 oc.curves.p(object, nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
@@ -35,11 +39,12 @@ is ignored for types "p" and "c".}
 \details{An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. \code{oc.curves} is a generic function which calls the proper function depending on the type of 'qcc' object. Further arguments provided through \dots are passed to the specific function depending on the type of chart.
 
 The probabilities are based on the conventional assumptions about
-process distributions: the normal distribution for "xbar" and
-"R", the binomial distribution for "p" and "np", and the Poisson distribution
+process distributions: the normal distribution for "xbar" , "R", and "S",
+the binomial distribution for "p" and "np", and the Poisson distribution
 for "c" and "u". They are all sensitive to departures from those assumptions,
-but to varying degrees. The performance of the "R" chart, in particular,
-is likely to be seriously affected by longer tails.}
+but to varying degrees. The performance of the "S" chart, and especially
+the "R" chart,
+are likely to be seriously affected by longer tails.}
 \value{The function invisibly returns a matrix or a vector of beta values, the probability of type II error.}
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM. \cr
