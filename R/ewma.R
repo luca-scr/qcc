@@ -28,15 +28,10 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
   y <- y[ord]
   n <- length(y)
   if (missing(start)) start <- y[1]
-  
-  S1 <- diag(rep(1,n))
-  for (i in 1:(n-1))
-      {for (j in i:n)
-           { S1[j,i] <- (1-lambda)^(j-i) }}
-            
-  S2 <- (1-lambda)^seq(1,n)
-  z <- lambda*(S1%*%y) + S2*start
-  list(x=x, y=z, lambda=lambda, start=start)
+  z <- c(start, y)
+  for (i in 2:(n + 1))
+    z[i] <- lambda * z[i] + (1 - lambda) * z[i - 1]
+  list(x=x, y=z[-1], lambda=lambda, start=start)
 }
 
 

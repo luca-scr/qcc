@@ -698,11 +698,7 @@ sd.p <- function(data, sizes, ...)
 
 limits.p <- function(center, std.dev, sizes, conf)
 { 
-  # use normal approximation for computing control limits
-  limits <- limits.xbar(center, std.dev, sizes, conf)
-  limits[limits < 0] <- 0
-  limits[limits > 1] <- 1
-  return(limits)
+  limits.np(center * sizes, std.dev, sizes, conf) / sizes
 }
 
 # np Chart
@@ -731,15 +727,25 @@ sd.np <- function(data, sizes, ...)
 
 limits.np <- function(center, std.dev, sizes, conf)
 { 
-  # use normal approximation for computing control limits
+  sizes <- as.vector(sizes)
   if (length(unique(sizes)) == 1)
      sizes <- sizes[1]
-  limits <- limits.xbar(center, std.dev*sqrt(sizes), sizes, conf)
-  limits[limits < 0] <- 0
-  if (length(sizes)==1)
-      limits[limits > sizes] <- sizes
+  pbar <- mean(center / sizes)
+  if (conf >= 1)
+     { tol <- conf * sqrt(pbar * (1 - pbar) * sizes)
+       lcl <- pmax(center - tol, 0)
+       ucl <- pmin(center + tol, sizes)
+     }
   else
-      limits[limits > sizes] <- sizes[limits > sizes]
+     { if (conf > 0 & conf < 1)
+          { lcl <- qbinom((1 - conf)/2, sizes, pbar)
+            ucl <- qbinom((1 - conf)/2, sizes, pbar, lower.tail = FALSE)
+          }
+       else stop("invalid conf argument. See help.")
+     }
+  limits <- matrix(c(lcl, ucl), ncol = 2)
+  rownames(limits) <- rep("", length = nrow(limits))
+  colnames(limits) <- c("LCL", "UCL")
   return(limits)
 }
 
@@ -807,15 +813,7 @@ limits.u <- function(center, std.dev, sizes, conf)
   sizes <- as.vector(sizes)
   if (length(unique(sizes))==1)
      sizes <- sizes[1]
-  if (conf > 0 & conf < 1)  
-     conf <- qnorm(1 - (1 - conf)/2)
-  lcl <- center - conf * sqrt(center/sizes)
-  lcl[lcl < 0] <- 0
-  ucl <- center + conf * sqrt(center/sizes)
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  limits.c(center * sizes, std.dev, sizes, conf) / sizes
 }
 
 #
