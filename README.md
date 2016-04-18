@@ -10,7 +10,7 @@ GitHub repository for R package `qcc`.
 * Pareto chart and cause-and-effect chart. 
 * Multivariate control charts.
 
-### Author
+### Author/Maintainer
 
 * Luca Scrucca
 

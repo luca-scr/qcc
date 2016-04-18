@@ -1,2 +1,0 @@
-process.variation			Shewhart charts for some process variation models
-p.std.chart           Example showing how to extend the package by defining a new control chart

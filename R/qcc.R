@@ -800,7 +800,7 @@ stats.u <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
-sd.u <- function (data, sizes, ...)
+sd.u <- function(data, sizes, ...)
 {
   data <- as.vector(data)
   sizes <- as.vector(sizes)
@@ -1086,13 +1086,13 @@ function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identif
      n <- unique(c(size, c(2,5,10,15,20)))
   if (is.null(nsigmas))
     { tail.prob <- (1 - object$confidence.level) / 2
-      beta.fun <- function(c, n, p)
+      beta.fun1 <- function(c, n, p)
       {
         lcl <- qtukey(p, n, Inf)
         ucl <- qtukey(p, n, Inf, lower.tail = FALSE)
         ptukey(ucl / c, n, Inf) - ptukey(lcl / c, n, Inf)
       }
-      beta <- outer(c, n, beta.fun, tail.prob)
+      beta <- outer(c, n, beta.fun1, tail.prob)
     }
   else
     { exp.R.unscaled <- qcc.options("exp.R.unscaled")
@@ -1101,7 +1101,7 @@ function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identif
       if (any(n > Rtab))
           stop(paste("group size must be less than",
                       Rtab + 1, "when giving nsigmas"))
-      beta.fun <- function(c, n, conf)
+      beta.fun2 <- function(c, n, conf)
       {
         d2 <- exp.R.unscaled[n]
         d3 <- se.R.unscaled[n]
@@ -1109,7 +1109,7 @@ function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identif
         ucl <- d2 + conf * d3
         ptukey(ucl / c, n, Inf) - ptukey(lcl / c, n, Inf)
       }
-      beta <- outer(c, n, beta.fun, nsigmas)
+      beta <- outer(c, n, beta.fun2, nsigmas)
     }
 
   colnames(beta) <- paste("n=",n,sep="")
@@ -1166,17 +1166,17 @@ function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identif
      n <- unique(c(size, c(2,5,10,15,20)))
   if (is.null(nsigmas))
     { tail.prob <- (1 - object$confidence.level) / 2
-      beta.fun <- function(c, n, p)
+      beta.fun1 <- function(c, n, p)
       {
         ucl <- sqrt(qchisq(1 - p, n - 1) / (n - 1))
         lcl <- sqrt(qchisq(p, n - 1) / (n - 1))
         pchisq((n - 1) * (ucl / c)^2, n - 1) - pchisq((n - 1)* (lcl / c)^2, n - 1)
       }
-      beta <- outer(c, n, beta.fun, tail.prob)
+      beta <- outer(c, n, beta.fun1, tail.prob)
     }
   else
     { c4 <- .qcc.c4
-      beta.fun <- function(c, n)
+      beta.fun2 <- function(c, n)
       {
         center <- c4(n)
         tol <- sqrt(1 - c4(n)^2)
@@ -1184,7 +1184,7 @@ function(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, identif
         ucl <- center + nsigmas * tol
         pchisq((n - 1) * (ucl / c)^2, n - 1) - pchisq((n - 1) * (lcl / c)^2, n - 1)
       }
-      beta <- outer(c, n, beta.fun)
+      beta <- outer(c, n, beta.fun2)
     }
 
   colnames(beta) <- paste("n=",n,sep="")

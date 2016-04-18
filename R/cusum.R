@@ -274,12 +274,12 @@ plot.cusum.qcc <- function(x, add.stats = TRUE, chart.all = TRUE,
 
   mtext(if(missing(ylab)) "Cumulative Sum" else ylab, line=3, side=2)
   lab <- "Above target"
-  if (addstats && object$head.start > 0)
+  if (add.stats && object$head.start > 0)
       lab <- paste(lab, " (start = ", object$head.start, ")", sep = "")
   mtext(lab, srt=90, line=2, side=2, at=0+par("usr")[4]/2,
         cex = par("cex")*0.8)
   lab <- "Below target"
-  if (addstats && object$head.start > 0)
+  if (add.stats && object$head.start > 0)
       lab <- paste(lab, " (start = ", - object$head.start, ")", sep = "")
   mtext(lab, srt=90, line=2, side=2, at=0+par("usr")[3]/2,
         cex = par("cex")*0.8)

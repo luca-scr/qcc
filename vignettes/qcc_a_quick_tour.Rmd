@@ -1,0 +1,463 @@
+---
+title: "A quick tour of **qcc**"
+author: "Luca Scrucca"
+date: "`r format(Sys.time(), '%d %b %Y')`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    css: "vignette.css"
+vignette: >
+  %\VignetteIndexEntry{A quick tour of qcc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align="center",
+               fig.width=5, fig.height=4.5,
+               dev.args=list(pointsize=8))
+
+knit_hooks$set(par = function(before, options, envir)
+  { if(before && options$fig.show != "none") 
+       par(mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
+})
+```
+       
+## Introduction
+
+`qcc` is a contributed R package for **statistical quality control charts** which provides:
+
+- Shewhart quality control charts for continuous, attribute and count data
+- Cusum and EWMA charts
+- Operating characteristic curves
+- Process capability analysis
+- Pareto chart and cause-and-effect chart
+- Multivariate control charts.
+
+This document gives a quick tour of `qcc` (version `r packageVersion("qcc")`) functionalities. It was written in R Markdown, using the [knitr](http://cran.r-project.org/package=knitr) package for production. 
+
+Further details are provided in the following paper:  
+
+> Scrucca, L. (2004) qcc: an R package for quality control charting and statistical process control. *R News* 4/1, 11-17.
+
+For a nice blog post discussing the `qcc` package, in particular how to implement the *Western Eletric Rules* (WER), see http://blog.yhathq.com/posts/quality-control-in-r.html.
+
+
+```{r, message=FALSE}
+library(qcc)
+```
+
+## Shewhart charts
+
+### x-bar chart
+
+```{r}
+data(pistonrings)
+diameter <- with(pistonrings, qcc.groups(diameter, sample))
+head(diameter)
+
+q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
+plot(q1, chart.all=FALSE)
+q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,],
+          confidence.level=0.99)
+```
+
+Add warning limits at 2 std. deviations:
+```{r}
+q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], plot=FALSE)
+(warn.limits <- limits.xbar(q1$center, q1$std.dev, q1$sizes, 2))
+plot(q1, restore.par = FALSE)
+abline(h = warn.limits, lty = 3, col = "chocolate")
+```
+
+### R chart
+```{r}
+q2 <- qcc(diameter[1:25,], type="R")
+summary(q2)
+q3 <- qcc(diameter[1:25,], type="R", newdata=diameter[26:40,])
+summary(q3)
+```
+
+### S chart
+```{r}
+q4 <- qcc(diameter[1:25,], type="S")
+summary(q4)
+q5 <- qcc(diameter[1:25,], type="S", newdata=diameter[26:40,])
+summary(q5)
+```
+
+### Variable control limits
+
+```{r}
+out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
+diameter2 <- with(pistonrings, qcc.groups(diameter[-out], sample[-out]))
+summary(qcc(diameter2[1:25,], type="xbar"))
+summary(qcc(diameter2[1:25,], type="R"))
+```
+
+### p and np charts
+
+```{r}
+data(orangejuice)
+attach(orangejuice)
+q1 <- qcc(D[trial], sizes=size[trial], type="p")
+summary(q1)
+
+summary(qcc(D[trial], sizes=size[trial], type="np"))
+```
+
+Remove out-of-control points (see `help(orangejuice)` for the reasons):
+```
+inc <- setdiff(which(trial), c(15,23))
+q2 <- qcc(D[inc], sizes=size[inc], type="p",
+          newdata=D[!trial], newsizes=size[!trial]) 
+detach(orangejuice)
+```
+
+```{r}
+data(orangejuice2)
+attach(orangejuice2)
+names(D) <- sample
+q1 <- qcc(D[trial], sizes=size[trial], type="p")
+summary(q1)
+q2 <- qcc(D[trial], sizes=size[trial], type="p", 
+          newdata=D[!trial], newsizes=size[!trial])
+summary(q2)
+detach(orangejuice2)
+```
+
+### c and u charts
+
+```{r}
+data(circuit)
+attach(circuit)
+q1 <- qcc(x[trial], sizes=size[trial], type="c")
+summary(q1)
+```
+
+Remove out-of-control points (see `help(circuit)` for the reasons)
+```{r}
+inc <- setdiff(which(trial), c(6,20))
+q2 <- qcc(x[inc], sizes=size[inc], type="c", labels=inc, 
+          newdata=x[!trial], newsizes=size[!trial], newlabels=which(!trial))
+summary(q2)
+
+q3 <- qcc(x[inc], sizes=size[inc], type="u", labels=inc, 
+          newdata=x[!trial], newsizes=size[!trial], newlabels=which(!trial))
+summary(q3)
+detach(circuit)
+```
+
+```{r}
+data(pcmanufact)
+attach(pcmanufact)
+q1 <- qcc(x, sizes=size, type="u")
+summary(q1)
+detach(pcmanufact)
+```
+
+###  Continuous one-at-time data 
+
+```{r}
+# viscosity data (Montgomery, pag. 242)
+x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 33.27, 33.49, 33.20,
+       33.62, 33.00, 33.54, 33.12, 33.84)
+q1 <- qcc(x, type="xbar.one")
+summary(q1)
+q2 <- qcc(x, type="xbar.one", std.dev = "SD")
+summary(q2)
+```
+
+### Standardized p chart
+
+In this example we show how to extend the package by defining a new control chart, i.e. a standardized p chart (`type = "p.std"`).
+
+Function to compute group statistics and center:
+```{r}
+stats.p.std <- function(data, sizes)
+{
+  data <- as.vector(data)
+  sizes <- as.vector(sizes)
+  pbar <- sum(data)/sum(sizes)
+  z <- (data/sizes - pbar)/sqrt(pbar*(1-pbar)/sizes)
+  list(statistics = z, center = 0)
+}
+```
+
+Function to compute within-group standard deviation:
+```{r}
+sd.p.std <- function(data, sizes, ...) { return(1) }
+```
+
+Function to compute control limits based on normal approximation:
+```{r}
+limits.p.std <- function(center, std.dev, sizes, conf)
+{
+  if(conf >= 1) 
+    { lcl <- -conf
+      ucl <- +conf 
+  }
+  else
+    { if(conf > 0 & conf < 1)
+        { nsigmas <- qnorm(1 - (1 - conf)/2)
+          lcl <- -nsigmas
+          ucl <- +nsigmas }
+      else stop("invalid 'conf' argument.") 
+  }
+  limits <- matrix(c(lcl, ucl), ncol = 2)
+  rownames(limits) <- rep("", length = nrow(limits))
+  colnames(limits) <- c("LCL", "UCL")
+  return(limits)
+}
+```
+
+Example with simulated data:
+```{r}
+# set unequal sample sizes
+n <- c(rep(50,5), rep(100,5), rep(25, 5))
+# generate randomly the number of successes
+x <- rbinom(length(n), n, 0.2)
+# plot the control chart with variable limits
+summary(qcc(x, type="p", size=n))
+# plot the standardized control chart
+summary(qcc(x, type="p.std", size=n))
+```
+
+
+## Cusum chart
+
+```{r}
+data(pistonrings)
+attach(pistonrings)
+diameter <- with(pistonrings, qcc.groups(diameter, sample))
+
+q1 <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+summary(q1)
+
+q2 <- cusum(diameter[1:25,], newdata=diameter[26:40,])
+summary(q2)
+plot(q2, chart.all=FALSE)
+```
+
+## EWMA
+
+
+```{r}
+data(pistonrings)
+attach(pistonrings)
+diameter <- with(pistonrings, qcc.groups(diameter, sample))
+
+q1 <- ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
+summary(q1)
+
+q2 <-  ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, 
+            newdata=diameter[26:40,]) 
+summary(q2)
+
+x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 33.27, 
+       33.49, 33.20, 33.62, 33.00, 33.54, 33.12, 33.84)
+q3 <-  ewma(x, lambda=0.2, nsigmas=2.7)
+summary(q3)
+```
+
+## Process capability analysis
+
+```{r}
+data(pistonrings)
+attach(pistonrings)
+diameter <- with(pistonrings, qcc.groups(diameter, sample))
+
+q1 <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
+process.capability(q1, spec.limits=c(73.95,74.05))
+process.capability(q1, spec.limits=c(73.95,74.05), target=74.02)
+process.capability(q1, spec.limits=c(73.99,74.01))
+process.capability(q1, spec.limits = c(73.99, 74.1))
+```
+
+## Multivariate Quality Control Charts
+
+Individual observations data:
+```{r}
+data(boiler)
+
+q1 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999)
+summary(q1)
+
+# generate new "in control" data
+boilerNew <- MASS::mvrnorm(10, mu = q1$center, Sigma = q1$cov)
+q2 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+           newdata = boilerNew, pred.limits = TRUE)
+summary(q2)
+
+# generate new "out of control" data
+boilerNew <- MASS::mvrnorm(10, mu = 1.01*q1$center, Sigma = q1$cov)
+q3 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+           newdata = boilerNew, pred.limits = TRUE)
+summary(q3)
+
+# provides "robust" estimates of means and covariance matrix
+rob <- MASS::cov.rob(boiler)
+q4 <- mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
+summary(q4)
+```
+
+## Pareto chart
+
+```{r}
+defect <- c(80, 27, 66, 94, 33)
+names(defect) <- c("price code", "schedule date", "supplier code", "contact num.", "part num.")
+pareto.chart(defect, ylab = "Error frequency")
+```
+
+
+## Cause and effect diagram
+
+```{r}
+cause.and.effect(cause=list(Measurements=c("Micrometers", "Microscopes", "Inspectors"),
+                            Materials=c("Alloys", "Lubricants", "Suppliers"),
+                            Personnel=c("Shifts", "Supervisors", "Training", "Operators"),
+                            Environment=c("Condensation", "Moisture"),
+                            Methods=c("Brake", "Engager", "Angle"),
+                            Machines=c("Speed", "Lathes", "Bits", "Sockets")),
+                 effect="Surface Flaws")
+```
+
+
+## Process variation
+
+In the following simulated data are used to describe some models for process variation. For further details see Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*, New York, Chapman and Hall, Chapter 3.
+
+```{r, echo = FALSE}
+set.seed(123) # set seed for reproducibility
+```
+
+
+### Simple random variation
+
+$x_{ij} = \mu + \sigma_W \epsilon_{ij}$
+
+```{r}
+mu <- 100
+sigma_W <- 10
+epsilon <- rnorm(500)
+x <- matrix(mu + sigma_W*epsilon, ncol=10, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+
+### Between and within sample extra variation
+
+$x_{ij} = \mu + \sigma_B u_i + \sigma_W \epsilon_{ij}$
+
+```{r}
+mu <- 100
+sigma_W <- 10
+sigma_B <- 5
+epsilon <- rnorm(500)
+u <- as.vector(sapply(rnorm(50), rep, 10))
+x <- mu + sigma_B*u + sigma_W*epsilon
+x <- matrix(x, ncol=10, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+
+### Autocorrelation
+
+$x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}$  
+where $W_i = \rho W_{i-1} + \sigma_B u_i = \sigma_B u_i + \rho \sigma_B u_{i-1} + \rho^2 \sigma_B u_{i-2} + \ldots$,   
+and $W_0 = 0$.
+
+```{r}
+mu <- 100
+rho <- 0.8
+sigma_W <- 10
+sigma_B <- 5
+epsilon <- rnorm(500)
+u <- rnorm(500)
+W <- rep(0,100)
+for(i in 2:length(W))
+    W[i] <- rho*W[i-1] + sigma_B*u[i]
+x <- mu + sigma_B*u + sigma_W*epsilon
+x <- matrix(x, ncol=10, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+
+### Recurring cycles
+
+Assume we have 3 working turns of 8 hours each for each working day, so $8 \times 3 = 24$ points in time, and at each point we sample 5 units.
+
+$x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}$  
+where $W_i$ ($i=1,\ldots,8$) is the cycle.
+
+```{r}
+mu <- 100
+sigma_W <- 10
+epsilon <- rnorm(120, sd=0.3)
+W <- c(-4, 0, 1, 2, 4, 2, 0, -2) # assumed workers cycle
+W <- rep(rep(W, rep(5,8)), 3)
+x <- mu + W + sigma_W*epsilon
+x <- matrix(x, ncol=5, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+
+### Trends
+
+$x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}$  
+where $W_i = 0.2 i$
+
+```{r}
+mu <- 100
+sigma_W <- 10
+epsilon <- rnorm(500)
+W <- rep(0.2*1:100, rep(5,100))
+x <- mu + W + sigma_W*epsilon
+x <- matrix(x, ncol=10, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+
+### Mixture
+
+$x_{ij} = \mu_1 p + \mu_2 (1-p) + \sigma_W \epsilon_{ij}$  
+where $p = \Pr(\text{Process #1})$.
+
+```{r}
+mu1 <- 90
+mu2 <- 110
+sigma_W <- 10
+epsilon <- rnorm(500)
+p <- rbinom(50, 1, 0.5)
+mu <- mu1*p + mu2*(1-p)
+x <- rep(mu, rep(10, length(mu))) + sigma_W*epsilon
+x <- matrix(x, ncol=10, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+
+
+### Sudden jumps
+
+$x_{ij} = \mu_i + \sigma_W \epsilon_{ij}$  
+where $\mu_i$ is the mean of the process for state $i$ ($i=1,\ldots,k)$.
+
+```{r}
+mu <- rep(c(95,110,100,90), c(20,35,25,20))
+sigma_W <- 10
+epsilon <- rnorm(500)
+x <- rep(mu, rep(5, length(mu))) + sigma_W*epsilon
+x <- matrix(x, ncol=10, byrow=TRUE)
+q <- qcc(x, type="xbar")
+q <- qcc(x, type="R")
+q <- qcc(x, type="S")
+```
+

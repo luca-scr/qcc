@@ -8,9 +8,9 @@
 Shewhart quality control charts for continuous, attribute and count data. Cusum and EWMA charts. Operating characteristic curves. Process capability analysis. Pareto chart and cause-and-effect chart. Multivariate control charts.
 }
 
-%\details{}
-
-\note{For a nice blog post discussing the \code{qcc} package, in particular how to implement the \emph{Western Eletric Rules (WER)}, see \url{http://blog.yhathq.com/posts/quality-control-in-r.html}.}
+\details{
+See \href{../doc/index.html}{vignette and documentation} accompanying the package.
+}
 
 \seealso{\code{\link{qcc}}, \code{\link{mqcc}}, \code{\link{cusum}}, \code{\link{ewma}}, \code{\link{oc.curves}}, \code{\link{process.capability}}, \code{\link{pareto.chart}}, \code{\link{cause.and.effect}}.}
 
