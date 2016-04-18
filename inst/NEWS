@@ -2,8 +2,6 @@ Version 2.8 (NOT ON CRAN)
    o Created an html vignette "A quick tour of qcc"
    o Moved R News paper to documentation.
    o Removed demos.
-   o TO BE FIXED a bug in cex labels (see "qcc/misc/bugs/bug_cex labels.R").
-   o Fix typos in the documentation.
    o Control limits for p and np charts computed based on binomial quantiles
      (and not on normal approximation).
    o Control limits for c chart computed based on Poisson quantiles
@@ -12,6 +10,8 @@ Version 2.8 (NOT ON CRAN)
    o Implemented OC curves for R and S charts.
    o Make xbar OC curves when confidence.level is used.
    o Fix a bug in sd.u
+   o Fix typos in the documentation.
+   o Fix a bug in cex labels.
    
 Version 2.7
    o Add a link in the qcc-package.Rd help page to yhat blog post describing
