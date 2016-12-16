@@ -116,7 +116,7 @@ process.capability <- function(object, spec.limits, target, std.dev, nsigmas, co
   usr <- par()$usr
   rect(usr[1], usr[3], usr[2], usr[4], col = qcc.options("bg.figure"))
   axis(1); box()
-  plot(h, add=TRUE, freq=FALSE) # draw histogram
+  plot(h, add=TRUE, freq=FALSE, col = "lightblue") # draw histogram
   # add graphical info
   abline(v=c(LSL,USL), col=2, lty=3, lwd=2)
   text(LSL, usr[4], "LSL", pos=1, col="darkgray", cex=0.8)

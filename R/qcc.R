@@ -940,7 +940,7 @@ oc.curves.xbar <- function(object, n, c = seq(0, 5, length=101), nsigmas = objec
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
   for (i in 1:length(n))
-      lines(c, beta[i,], type = "l", lty=i)
+      lines(c, beta[i,], type = "l", lty=i, col=i)
   beta <- t(beta)
   names(dimnames(beta)) <- c("shift (std.dev)", "sample size")
 
@@ -956,7 +956,8 @@ oc.curves.xbar <- function(object, n, c = seq(0, 5, length=101), nsigmas = objec
   else
      { legend(max(c), 1, legend = paste("n =", n), 
               bg = qcc.options("bg.figure"),
-              lty = 1:length(n), xjust = 1, yjust = 1)
+              lty = 1:length(n), xjust = 1, yjust = 1, col = 1:length(n),
+              bty = "n")
      }
   invisible(beta)
 }
