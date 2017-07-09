@@ -15,7 +15,7 @@
 #  Main function to create a 'qcc' object
 #
 
-qcc <- function(data, type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), sizes, center, std.dev, limits, data.name, labels, newdata, newsizes, newlabels, nsigmas = 3, confidence.level, rules = shewhart.rules, plot = TRUE, ...)
+qcc <- function(data, type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), sizes, center, std.dev, limits, data.name, labels, newdata, newsizes, newdata.name, newlabels, nsigmas = 3, confidence.level, rules = shewhart.rules, plot = TRUE, ...)
 {
   call <- match.call()
   
@@ -85,7 +85,8 @@ qcc <- function(data, type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u"
                  center = center, std.dev = std.dev)
   # check for new data provided and update object
   if (!missing(newdata))
-     { newdata.name <- deparse(substitute(newdata))
+     {   if (missing(newdata.name))
+			{newdata.name <- deparse(substitute(newdata))}
        newdata <- data.matrix(newdata)
        if (missing(newsizes))
           { if (any(type==c("p", "np", "u")))

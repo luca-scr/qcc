@@ -6,10 +6,10 @@
 \title{Quality Control Charts}
 \description{Create an object of class 'qcc' to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.}
 \usage{
-qcc(data, type, sizes, center, std.dev, limits, 
-    data.name, labels, newdata, newsizes, newlabels, 
-    nsigmas = 3, confidence.level, rules = shewhart.rules, 
-    plot = TRUE, \dots)
+qcc(data, type, sizes, center, std.dev, limits,
+    data.name, labels, newdata, newsizes, newdata.name,
+	newlabels, nsigmas = 3, confidence.level,
+	rules = shewhart.rules, plot = TRUE, \dots)
 
 \method{print}{qcc}(x, \dots)
 
@@ -59,6 +59,8 @@ Several methods are available for estimating the standard deviation in case of a
 \item{newdata}{a data frame, matrix or vector, as for the \code{data} argument, providing further data to plot but not included in the computations.}
 
 \item{newsizes}{a vector as for the \code{sizes} argument providing further data sizes to plot but not included in the computations.}
+
+\item{newdata.name}{a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as newdata.}
 
 \item{newlabels}{a character vector of labels for each new group defined in the argument \code{newdata}.}
 
