@@ -1,7 +1,8 @@
-Version 2.8 
-   o Created an html vignette "A quick tour of qcc"
+Version 2.7 
+   o Created an html vignette entitled "A quick tour of qcc".
    o Moved R News paper to documentation.
    o Removed demos.
+   o Improved appearance of graphs.
    o Control limits for p and np charts computed based on binomial quantiles
      (and not on normal approximation).
    o Control limits for c chart computed based on Poisson quantiles
@@ -12,13 +13,11 @@ Version 2.8
    o Fix a bug in sd.u
    o Fix typos in the documentation.
    o Fix a bug in cex labels.
-   
-Version 2.7 (NOT ON CRAN)
    o Add a link in the qcc-package.Rd help page to yhat blog post describing
      how to implement the Western Eletric Rules (WER).
    o pareto.chart() function now returns an object of class 'paretoChart' with
      associated print and plot method.
-   o Included a link in qcc-package.Rd to R News article.
+   o Included a link in the qcc-package.Rd to R News article.
 
 Version 2.6
    o allow one sided specification limit in process.capability. 
