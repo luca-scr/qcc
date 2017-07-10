@@ -49,7 +49,7 @@ If a value is associated with an option argument, such option is set and the lis
 In this case the list \code{.qcc.options} is modified and any modification will remain in effect for the rest of the session.
 }
 
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 \seealso{\code{\link{qcc}} }
 \examples{

@@ -14,7 +14,7 @@
 
 \details{These functions are not intended to be called by the user.}
 
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 
 \keyword{internal}
 

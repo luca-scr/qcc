@@ -19,7 +19,7 @@ cause.and.effect(cause, effect, title = "Cause-and-Effect diagram",
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 \examples{
 cause.and.effect(cause=list(Measurements=c("Micrometers", "Microscopes", "Inspectors"),
                             Materials=c("Alloys", "Lubricants", "Suppliers"),

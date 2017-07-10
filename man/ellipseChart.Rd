@@ -33,7 +33,7 @@ Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Contro
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
 Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
 }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 
 \seealso{\code{\link{mqcc}}, \code{\link{stats.T2}}, \code{\link{stats.T2.single}}}

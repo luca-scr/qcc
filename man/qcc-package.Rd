@@ -14,7 +14,7 @@ See \href{../doc/index.html}{vignette and documentation} accompanying the packag
 
 \seealso{\code{\link{qcc}}, \code{\link{mqcc}}, \code{\link{cusum}}, \code{\link{ewma}}, \code{\link{oc.curves}}, \code{\link{process.capability}}, \code{\link{pareto.chart}}, \code{\link{cause.and.effect}}.}
 
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 
 \references{
 Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17.

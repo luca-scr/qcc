@@ -25,7 +25,7 @@ The \code{shewhart.rules} function returns a list with components:
 \item{violating.runs}{the indices of points violating runs.}
 }
 %\references{ ~put references to the literature/web site here ~ }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{ ~~further notes~~ }
 %\examples{}
 \keyword{hplot}

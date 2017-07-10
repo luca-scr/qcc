@@ -1,4 +1,4 @@
-Version 2.8 (NOT ON CRAN)
+Version 2.8 
    o Created an html vignette "A quick tour of qcc"
    o Moved R News paper to documentation.
    o Removed demos.
@@ -13,7 +13,7 @@ Version 2.8 (NOT ON CRAN)
    o Fix typos in the documentation.
    o Fix a bug in cex labels.
    
-Version 2.7
+Version 2.7 (NOT ON CRAN)
    o Add a link in the qcc-package.Rd help page to yhat blog post describing
      how to implement the Western Eletric Rules (WER).
    o pareto.chart() function now returns an object of class 'paretoChart' with

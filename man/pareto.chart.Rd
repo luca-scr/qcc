@@ -2,6 +2,7 @@
 \alias{pareto.chart}
 \alias{print.pareto.chart}
 \alias{plot.pareto.chart}
+\alias{blues.colors}
 
 \title{Pareto chart}
 \description{Computes a table of statistics and plot a Pareto chart.}
@@ -13,7 +14,8 @@ pareto.chart(data, plot = TRUE, \dots)
      ylab2 = "Cumulative Percentage", 
      cumperc = seq(0, 100, by = 25), 
      ylim = NULL, main = NULL,
-     col = heat.colors(nlevels), \dots) 
+     col = blues.colors(nlevels), 
+     \dots) 
 }
 \arguments{
 \item{data}{a vector of values. \code{names(data)} are used for labelling the bars.}
@@ -40,7 +42,7 @@ Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. 
 Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17. \cr
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 \seealso{\code{\link{barplot}}}
 \examples{
 defect <- c(80, 27, 66, 94, 33)

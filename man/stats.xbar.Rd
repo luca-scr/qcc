@@ -51,7 +51,7 @@ Burr, I.W. (1969) Control charts for measurements with varying sample sizes. \em
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 \seealso{\code{\link{qcc}} }
 %\examples{}

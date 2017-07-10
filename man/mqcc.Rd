@@ -98,7 +98,7 @@ Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. 
 Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17. \cr
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 
 \seealso{\code{\link{stats.T2}}, \code{\link{stats.T2.single}}, \code{\link{limits.T2}}, \code{\link{limits.T2.single}}, \code{\link{ellipseChart}}, \code{\link{qcc}}

@@ -1,3 +1,5 @@
+# Import all packages listed as Imports or Depends
+import("stats", "utils", "graphics", "grDevices")
 importFrom("MASS", "mvrnorm")
 
 export(qcc, print.qcc, summary.qcc, plot.qcc)

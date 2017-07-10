@@ -40,7 +40,7 @@ Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th 
 Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
 }
 
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 
 \seealso{\code{\link{mqcc}}, \code{\link{stats.T2}}}

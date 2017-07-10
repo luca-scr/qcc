@@ -105,25 +105,30 @@ process.capability <- function(object, spec.limits, target, std.dev, nsigmas, co
 
   oldpar <- par(no.readonly = TRUE)
   if(restore.par) on.exit(par(oldpar))
+  mar <- c(4.1,2.1,3.6,2.1)
   par(bg  = qcc.options("bg.margin"), 
       cex = oldpar$cex * qcc.options("cex"),
-      mar = if(add.stats) 
-              c(9+is.null(center)*-1, 2, 4, 2) + 0.1
-            else  oldpar$mar)
-  
+      mar = if(add.stats) pmax(mar, c(8.6+is.null(center)*-1,0,0,0)) else mar)
+
   plot(0, 0, type="n", xlim = xlim, ylim = ylim,
-       axes = FALSE, ylab="", xlab = "", main = title)
+       axes = FALSE, ylab="", xlab = "")
   usr <- par()$usr
   rect(usr[1], usr[3], usr[2], usr[4], col = qcc.options("bg.figure"))
   axis(1); box()
-  plot(h, add=TRUE, freq=FALSE) # draw histogram
+  top.line <- par("mar")[3]-length(capture.output(cat(title))) - 0.5
+  mtext(title, side = 3, line = top.line,
+        font = par("font.main"), 
+        cex  = qcc.options("cex"), 
+        col  = par("col.main"))
+  # draw histogram
+  plot(h, add = TRUE, freq = FALSE) 
   # add graphical info
   abline(v=c(LSL,USL), col=2, lty=3, lwd=2)
-  text(LSL, usr[4], "LSL", pos=1, col="darkgray", cex=0.8)
-  text(USL, usr[4], "USL", pos=1, col="darkgray", cex=0.8)
+  text(LSL, usr[4], "LSL", pos=3, offset=0.2, cex=0.8, xpd = TRUE)
+  text(USL, usr[4], "USL", pos=3, offset=0.2, cex=0.8, xpd = TRUE)
   if(has.target)
     { abline(v=target, col=2, lty=2, lwd=2)
-      text(target, usr[4], "Target", pos=1, col="darkgray", cex=0.8) }
+      text(target, usr[4], "Target", pos=3, offset=0.2, cex=0.8, xpd = TRUE) }
   lines(xx, dx, lty=2)
 
   if(add.stats) 
@@ -132,70 +137,71 @@ process.capability <- function(object, spec.limits, target, std.dev, nsigmas, co
       px <- diff(usr[1:2])/diff(plt[1:2])
       xfig <- c(usr[1]-px*plt[1], usr[2]+px*(1-plt[2]))
       at.col <- xfig[1] + diff(xfig[1:2])*c(0.07, 0.35, 0.56, 0.75)
+      top.line <- 3
       # write info at bottom
       #--
       mtext(paste("Number of obs = ", n, sep = ""), 
-            side = 1, line = 3, adj = 0, at = at.col[1],
+            side = 1, line = top.line, adj = 0, at = at.col[1],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Center = ", signif(center, digits), sep = ""), 
-            side = 1, line = 4, adj = 0, at = at.col[1],
+            side = 1, line = top.line+1, adj = 0, at = at.col[1],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("StdDev = ", signif(std.dev, digits), sep = ""), 
-            side = 1, line = 5, adj = 0, at = at.col[1],
+            side = 1, line = top.line+2, adj = 0, at = at.col[1],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       #--
       mtext(ifelse(has.target, paste("Target = ", signif(target, digits), sep = ""),
                                paste("Target = ")),
-            side = 1, line = 3, adj = 0, at = at.col[2],
+            side = 1, line = top.line, adj = 0, at = at.col[2],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("LSL = ", ifelse(is.na(LSL), "", signif(LSL, digits)), sep = ""), 
-            side = 1, line = 4, adj = 0, at = at.col[2],
+            side = 1, line = top.line+1, adj = 0, at = at.col[2],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("USL = ", ifelse(is.na(USL), "", signif(USL, digits)), sep = ""), 
-            side = 1, line = 5, adj = 0, at = at.col[2],
+            side = 1, line = top.line+2, adj = 0, at = at.col[2],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       #--
       mtext(paste("Cp     = ", ifelse(is.na(Cp), "", signif(Cp, 3)), sep = ""), 
-            side = 1, line = 3, adj = 0, at = at.col[3],
+            side = 1, line = top.line, adj = 0, at = at.col[3],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Cp_l  = ", ifelse(is.na(Cp.l), "", signif(Cp.l, 3)), sep = ""), 
-            side = 1, line = 4, adj = 0, at = at.col[3],
+            side = 1, line = top.line+1, adj = 0, at = at.col[3],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Cp_u = ", ifelse(is.na(Cp.u), "", signif(Cp.u, 3)), sep = ""), 
-            side = 1, line = 5, adj = 0, at = at.col[3],
+            side = 1, line = top.line+2, adj = 0, at = at.col[3],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Cp_k = ", ifelse(is.na(Cp.k), "", signif(Cp.k, 3)), sep = ""), 
-            side = 1, line = 6, adj = 0, at = at.col[3],
+            side = 1, line = top.line+3, adj = 0, at = at.col[3],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Cpm  = ", ifelse(is.na(Cpm), "", signif(Cpm, 3)), sep = ""), 
-            side = 1, line = 7, adj = 0, at = at.col[3],
+            side = 1, line = top.line+4, adj = 0, at = at.col[3],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       #--
       mtext(paste("Exp<LSL ", ifelse(is.na(exp.LSL), "", paste(signif(exp.LSL, 2), "%", sep="")), sep = ""), 
-            side = 1, line = 3, adj = 0, at = at.col[4],
+            side = 1, line = top.line, adj = 0, at = at.col[4],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Exp>USL ", ifelse(is.na(exp.USL), "", paste(signif(exp.USL, 2), "%", sep="")), sep = ""),
-            side = 1, line = 4, adj = 0, at = at.col[4],
+            side = 1, line = top.line+1, adj = 0, at = at.col[4],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Obs<LSL ", ifelse(is.na(obs.LSL), "", paste(signif(obs.LSL, 2), "%", sep="")), sep = ""), 
-            side = 1, line = 5, adj = 0, at = at.col[4],
+            side = 1, line = top.line+2, adj = 0, at = at.col[4],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
       mtext(paste("Obs>USL ", ifelse(is.na(obs.USL), "", paste(signif(obs.USL, 2), "%", sep="")), sep = ""), 
-            side = 1, line = 6, adj = 0, at = at.col[4],
+            side = 1, line = top.line+3, adj = 0, at = at.col[4],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
     }

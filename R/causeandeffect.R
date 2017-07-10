@@ -22,11 +22,19 @@ cause.and.effect <- function(cause, effect, title = "Cause-and-Effect diagram", 
 
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
-  par(mar = c(1,1,3,1), cex = qcc.options("cex"))
-  cex <- par()$cex*cex
+  par(bg  = qcc.options("bg.margin"), 
+      cex = oldpar$cex * qcc.options("cex"),
+      mar = c(2,2,3,2))
+
+  plot(0:100, 0:100, type = "n", xlab = "", ylab = "", axes = FALSE)
+  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
+       col = qcc.options("bg.figure"))
+  # box()
+  mtext(title, side = 3, line = par("mar")[3]/3,
+        font = par("font.main"), 
+        cex  = qcc.options("cex"), 
+        col  = par("col.main"))
   
-  plot(0:100, 0:100, type = "n", xlab = "", ylab = "", 
-       axes = FALSE, main = title)
   usr <- par("usr")
   we <- strwidth(effect, units="user")*1.1
   wc <- max(unlist(sapply(cause, strwidth, units="user")))

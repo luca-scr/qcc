@@ -43,7 +43,7 @@ Chou, Y., Owen D.B. and Borrego S.A. (1990) \emph{Lower Confidence Limits on Pro
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)

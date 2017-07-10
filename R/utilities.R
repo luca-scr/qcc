@@ -1,23 +1,13 @@
-# old version
-.printShortMatrix <- function(x, head = 2, tail = 1, ...)
-{ 
-  x <- as.matrix(x)
-  nr <- nrow(x)
-  nc <- ncol(x)
-  if(nr > 4)
-    { rnames <- rownames(x)
-      if(is.null(rnames)) 
-        rnames <- paste("[", 1:nr, ",]", sep ="")
-      x <- rbind(x[1:head,], rep(NA, nc), x[(nr-tail+1):nr,])
-      rownames(x) <- c(rnames[1:head], "...", rnames[(nr-tail+1):nr])
-      print(x, na.print = "", ...)
-    }
-  else
-    { print(x, ...)}  
+
+blues.colors <- function (n) 
+{
+  palette <- grDevices::colorRampPalette(c("#03396c", "#005b96", "#6497b1", "#b3cde0"), 
+                                         space = "Lab")
+  palette(n)
 }
 
+
 #----------------------------------------------------------------------------#
-# new version (2014/07/01)
 # print a short version of a matrix by allowing to select the number of 
 # head/tail rows and columns to display
 
@@ -52,6 +42,24 @@
           
   print(x, na.print = "", ...)
 }
+
+# old version
+# .printShortMatrix <- function(x, head = 2, tail = 1, ...)
+# { 
+#   x <- as.matrix(x)
+#   nr <- nrow(x)
+#   nc <- ncol(x)
+#   if(nr > 4)
+#     { rnames <- rownames(x)
+#       if(is.null(rnames)) 
+#         rnames <- paste("[", 1:nr, ",]", sep ="")
+#       x <- rbind(x[1:head,], rep(NA, nc), x[(nr-tail+1):nr,])
+#       rownames(x) <- c(rnames[1:head], "...", rnames[(nr-tail+1):nr])
+#       print(x, na.print = "", ...)
+#     }
+#   else
+#     { print(x, ...)}  
+# }
 
 #-------------------------------------------------------------------#
 #                                                                   #
@@ -90,11 +98,11 @@ qcc.options <- function (...)
                       violating.runs = list(pch=19, col="orange"),
                       run.length = 7,
                       # bg.margin = "lightgrey",
-                      bg.margin = rgb(229,229,229,max=255),
+                      bg.margin = "#E5E5E5",
                       bg.figure = "white",
                       cex = 1,
                       font.stats = 1,
-                      cex.stats = 1)
+                      cex.stats = 0.9)
 
 .onAttach <- function(library, pkg)
 {

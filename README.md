@@ -1,5 +1,5 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qcc)](https://cran.r-project.org/package=qcc)
-[![](http://cranlogs.r-pkg.org/badges/qcc)](http://cran.rstudio.com/web/packages/qcc/index.html)
+[![](http://cranlogs.r-pkg.org/badges/qcc)](https://cran.rstudio.com/web/packages/qcc/index.html)
 
 # qcc: An R package for quality control charting and statistical process control
 

@@ -15,7 +15,7 @@ qcc.groups(data, sample)
 The function returns a matrix of suitable dimensions. If one or more group have few observations than others, \code{NA} values are appended.
 }
 %\references{}
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 \seealso{\code{\link{qcc}} }
 \examples{

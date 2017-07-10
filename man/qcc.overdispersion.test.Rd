@@ -19,7 +19,7 @@ and refer this to a Chi-square distribution with (no. observations - 1) degrees 
 \value{The function returns a matrix of results.}
 \references{Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process
 Control}, New York, Chapman and Hall, pp. 216--218}
-\author{Luca Scrucca \email{luca@stat.unipg.it}}
+\author{Luca Scrucca}
 %\note{}
 %\seealso{}
 \examples{

@@ -30,7 +30,14 @@ pareto.chart <- function(data, plot = TRUE, ...)
 
 print.pareto.chart <- function(x, ...) print.table(x, ...)
 
-plot.pareto.chart <- function(x, xlab = NULL, ylab = "Frequency", ylab2 = "Cumulative Percentage", cumperc = seq(0, 100, by = 25), ylim = NULL, main = NULL, col = heat.colors(nlevels), ...)
+plot.pareto.chart <- function(x, xlab = NULL, 
+                              ylab = "Frequency", 
+                              ylab2 = "Cumulative Percentage", 
+                              cumperc = seq(0, 100, by = 25), 
+                              ylim = NULL, 
+                              main = NULL, 
+                              col = blues.colors(nlevels), 
+                              ...)
 {
   call <- attr(x, "call")
   nlevels <- nrow(x)
@@ -49,15 +56,25 @@ plot.pareto.chart <- function(x, xlab = NULL, ylab = "Frequency", ylab2 = "Cumul
     { if (las==1) mar <- c(1,1,0,2)  
       else        mar <- c(log(max(w),2),0,0,2) }
   else mar <- call$mar
+  
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
-  par(mar = pmax(par("mar")+mar,c(4.1,4.1,3.1,4.1)), 
+  par(bg  = qcc.options("bg.margin"),
+      mar = pmax(par("mar")+mar,c(4.1,4.1,3.1,4.1)), 
       las = las, 
       cex = oldpar$cex*qcc.options("cex"))
   #
-  pc <- barplot(x[,1], width = 1, space = 0.2, main = main, 
-                ylim = ylim, ylab = ylab, xlab = xlab, yaxt = "n", col = col, 
+  pc <- barplot(x[,1], width = 1, space = 0.2, col = col,
+                ylim = ylim, ylab = ylab, xlab = xlab, yaxt = "n",  
                 ...)
+  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
+       col = qcc.options("bg.figure"))
+  box()
+  top.line <- par("mar")[3]/3
+  mtext(main, side = 3, line = top.line, las = 1,
+        font = par("font.main"), 
+        cex  = qcc.options("cex"), 
+        col  = par("col.main"))
   # adding line for percentage level overwrite bars...
   abline(h = q, col = "lightgrey", lty = 3)
   # ... so we redraw bars (not nice but works!)
