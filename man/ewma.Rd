@@ -13,11 +13,9 @@ ewma(data, sizes, center, std.dev, lambda = 0.2, nsigmas = 3,
      data.name, labels, newdata, newsizes, newlabels, 
      plot = TRUE, \dots)
 
-\method{print}{ewma.qcc}(x, \dots)
+\method{print}{ewma.qcc}(x, digits = getOption("digits"), \dots)
 
-\method{summary}{ewma.qcc}(object, digits = getOption("digits"), \dots)
-
-\method{plot}{ewma.qcc}(x, add.stats = TRUE, chart.all = TRUE, 
+\method{plot}{ewma.qcc}(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
      label.limits = c("LCL", "UCL"), title, xlab, ylab, ylim, 
      axes.las = 0, digits = getOption("digits"),
      restore.par = TRUE, \dots)
@@ -53,6 +51,9 @@ Several methods are available for estimating the standard deviation. See \code{\
 \item{add.stats}{a logical value indicating whether statistics and other information should be printed at the bottom of the chart.}
 
 \item{chart.all}{a logical value indicating whether both statistics for \code{data} and for \code{newdata} (if given) should be plotted.}
+
+\item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
+\code{qcc.options("zones")$fill}.}
 
 \item{label.limits}{a character vector specifying the labels for control limits.}
 

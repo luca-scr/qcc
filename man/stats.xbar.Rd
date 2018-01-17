@@ -20,11 +20,11 @@ limits.xbar(center, std.dev, sizes, conf)
 \details{
 The following methods are available for estimating the process standard deviation:
 \describe{
-\item{\code{"UWAVE-R"}}{UnWeighted AVErage of subgroup estimates based on subgroup Ranges}
-\item{\code{"UWAVE-SD"}}{UnWeighted AVErage of subgroup estimates based on subgroup Standard Deviations}
-\item{\code{"MVLUE-R"}}{Minimum Variance Linear Unbiased Estimator computed as a weighted average of subgroups estimates based on subgroup Ranges}
-\item{\code{"MVLUE-SD"}}{Minimum Variance Linear Unbiased Estimator computed as a weighted average of subgroup estimates based on subgroup Standard Deviations}
-\item{\code{"RMSDF"}}{Root-Mean-Square estimator computed as a weighted average of subgroup estimates based on subgroup Standard Deviations}
+\item{\code{"UWAVE-R"}}{UnWeighted AVErage of within-group estimates based on within-group Ranges}
+\item{\code{"UWAVE-SD"}}{UnWeighted AVErage of within-group estimates based on within-group Standard Deviations}
+\item{\code{"MVLUE-R"}}{Minimum Variance Linear Unbiased Estimator computed as a weighted average of within-group estimates based on within-group Ranges}
+\item{\code{"MVLUE-SD"}}{Minimum Variance Linear Unbiased Estimator computed as a weighted average of within-group estimates based on within-group Standard Deviations}
+\item{\code{"RMSDF"}}{Root-Mean-Square estimator computed as a weighted average of within-group estimates based on within-group Standard Deviations}
 }
 
 Depending on the chart, a method may be available or not, or set as the default according to the following table:
@@ -37,7 +37,7 @@ Method \tab\tab \code{"xbar"} \tab \code{"R"} \tab \code{"S"} \cr
 \code{"RMSDF"} \tab\tab \tab not available \tab
 }
 
-Detailed definitions of formulae implemented are available in the SAS/QC 9.2 User's Guide.
+Detailed definitions of formulae implemented are available in the SAS/QC User's Guide.
 }
 \value{
 The function \code{stats.xbar} returns a list with components \code{statistics} and \code{center}.

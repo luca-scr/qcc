@@ -1,3 +1,9 @@
+Version 3.0 [NOT ON CRAN]
+   o Added funtion describe()
+   o Several modifications to plots appearance.
+   o Modification to rules for out-of-control points, with the implementation
+     of Western Eletric Rules (WER) which can be actived by users.
+
 Version 2.7 
    o Created an html vignette entitled "A quick tour of qcc".
    o Moved R News paper to documentation.

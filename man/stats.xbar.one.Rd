@@ -23,7 +23,7 @@ Methods  available for estimating the process standard deviation:
 \tabular{ll}{
 Method \tab Description \cr
 \code{"MR"} \tab moving range: this is estimate is based on the scaled mean of moving ranges \cr
-\code{"SD"} \tab sample standard deviation: this estimate is defined as as(x)/cd(n), where n = number of observations x.
+\code{"SD"} \tab sample standard deviation: this estimate is defined as sd(x)/cd(n), where n = number of individual measurements x.
 }
 }
 \value{

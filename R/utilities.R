@@ -1,3 +1,50 @@
+#-------------------------------------------------------------------#
+#                                                                   #
+# Miscellaneous functions                                           #
+#                                                                   #
+#-------------------------------------------------------------------#
+
+qcc.groups <- function(data, sample)
+{
+  if(length(data)!=length(sample))
+    stop("data and sample must be vectors of equal length")
+  x <- lapply(split(data, sample), as.vector)
+  lx <- sapply(x, length)
+  for(i in which(lx != max(lx)))
+      x[[i]] <- c(x[[i]], rep(NA, max(lx)-lx[i]))
+  x <- t(sapply(x, as.vector))
+  return(x)
+}
+
+qcc.overdispersion.test <- function(x, size, 
+                            type=ifelse(missing(size), "poisson", "binomial"))
+{
+  type <- match.arg(type, c("poisson", "binomial"))
+  if (type=="binomial" & missing(size))
+     stop("binomial data require argument \"size\"")
+  if (!missing(size))
+     if (length(x) != length(size))   
+        stop("arguments \"x\" and \"size\" must be vector of same length")
+
+  n <- length(x)
+  obs.var <- var(x)
+  if (type=="binomial")
+     { p <- sum(x)/sum(size)
+       theor.var <- mean(size)*p*(1-p) }
+  else if (type=="poisson")
+          { theor.var <- mean(x) }
+       else
+          stop("invalid \"type\" argument. See help.")
+
+  D <- (obs.var * (n-1)) / theor.var
+  p.value <- 1-pchisq(D, n-1)
+
+  out <- matrix(c(obs.var/theor.var, D, signif(p.value,5)), 1, 3)
+  rownames(out) <- paste(type, "data")
+  colnames(out) <- c("Obs.Var/Theor.Var", "Statistic", "p-value") 
+  names(dimnames(out)) <- c(paste("Overdispersion test"), "")
+  return(out)
+}
 
 blues.colors <- function (n) 
 {
@@ -7,12 +54,10 @@ blues.colors <- function (n)
 }
 
 
-#----------------------------------------------------------------------------#
-# print a short version of a matrix by allowing to select the number of 
-# head/tail rows and columns to display
-
 .printShortMatrix <- function(x, head = 2, tail = 1, chead = 5, ctail = 1, ...)
 { 
+# print a short version of a matrix by allowing to select 
+# the number of head/tail rows and columns to display
   x <- as.matrix(x)
   nr <- nrow(x)
   nc <- ncol(x)
@@ -43,29 +88,8 @@ blues.colors <- function (n)
   print(x, na.print = "", ...)
 }
 
-# old version
-# .printShortMatrix <- function(x, head = 2, tail = 1, ...)
-# { 
-#   x <- as.matrix(x)
-#   nr <- nrow(x)
-#   nc <- ncol(x)
-#   if(nr > 4)
-#     { rnames <- rownames(x)
-#       if(is.null(rnames)) 
-#         rnames <- paste("[", 1:nr, ",]", sep ="")
-#       x <- rbind(x[1:head,], rep(NA, nc), x[(nr-tail+1):nr,])
-#       rownames(x) <- c(rnames[1:head], "...", rnames[(nr-tail+1):nr])
-#       print(x, na.print = "", ...)
-#     }
-#   else
-#     { print(x, ...)}  
-# }
 
-#-------------------------------------------------------------------#
-#                                                                   #
-#
-# Options retrieval and setting
-#
+# Options retrieval and setting -------------------------------------------
 
 qcc.options <- function (...)
 {
@@ -92,28 +116,27 @@ qcc.options <- function (...)
   invisible(current)
 }
 
-".qcc.options" <- list(exp.R.unscaled = c(NA, 1.128, 1.693, 2.059, 2.326, 2.534, 2.704, 2.847, 2.970, 3.078, 3.173, 3.258, 3.336, 3.407, 3.472, 3.532, 3.588, 3.640, 3.689, 3.735, 3.778, 3.819, 3.858, 3.895, 3.931),
-                       se.R.unscaled = c(NA, 0.8525033, 0.8883697, 0.8798108, 0.8640855, 0.8480442, 0.8332108, 0.8198378, 0.8078413, 0.7970584, 0.7873230, 0.7784873, 0.7704257, 0.7630330, 0.7562217, 0.7499188, 0.7440627, 0.7386021, 0.7334929, 0.7286980, 0.7241851, 0.7199267, 0.7158987, 0.7120802, 0.7084528, 0.7050004, 0.7017086, 0.6985648, 0.6955576, 0.6926770, 0.6899137, 0.6872596, 0.6847074, 0.6822502, 0.6798821, 0.6775973, 0.6753910, 0.6732584, 0.6711952, 0.6691976, 0.6672619, 0.6653848, 0.6635632, 0.6617943, 0.6600754, 0.6584041, 0.6567780, 0.6551950, 0.6536532, 0.6521506),
-                      beyond.limits = list(pch=19, col="red"),
-                      violating.runs = list(pch=19, col="orange"),
-                      run.length = 7,
-                      # bg.margin = "lightgrey",
-                      bg.margin = "#E5E5E5",
-                      bg.figure = "white",
-                      cex = 1,
-                      font.stats = 1,
-                      cex.stats = 0.9)
+# TODO: reorganize...
 
-.onAttach <- function(library, pkg)
-{
-  ## we can't do this in .onLoad
-  unlockBinding(".qcc.options", asNamespace("qcc"))
-  description <- readLines(system.file("DESCRIPTION", package = "qcc"))
-  version <- grep("Version:", description, ignore.case = TRUE, value = TRUE)
-  version <- gsub(pattern = "Version:", replacement = "", version, ignore.case = TRUE)
-  version <- gsub(pattern = " ", replacement = "", version)
-  packageStartupMessage("Package 'qcc', version ", version)
-  packageStartupMessage("Type 'citation(\"qcc\")' for citing this R package in publications.")
-  invisible()
-}
+".qcc.options" <- list(
+  exp.R.unscaled = c(NA, 1.128, 1.693, 2.059, 2.326, 2.534, 2.704, 2.847, 2.970, 3.078, 3.173, 3.258, 3.336, 3.407, 3.472, 3.532, 3.588, 3.640, 3.689, 3.735, 3.778, 3.819, 3.858, 3.895, 3.931),
+  se.R.unscaled = c(NA, 0.8525033, 0.8883697, 0.8798108, 0.8640855, 0.8480442, 0.8332108, 0.8198378, 0.8078413, 0.7970584, 0.7873230, 0.7784873, 0.7704257, 0.7630330, 0.7562217, 0.7499188, 0.7440627, 0.7386021, 0.7334929, 0.7286980, 0.7241851, 0.7199267, 0.7158987, 0.7120802, 0.7084528, 0.7050004, 0.7017086, 0.6985648, 0.6955576, 0.6926770, 0.6899137, 0.6872596, 0.6847074, 0.6822502, 0.6798821, 0.6775973, 0.6753910, 0.6732584, 0.6711952, 0.6691976, 0.6672619, 0.6653848, 0.6635632, 0.6617943, 0.6600754, 0.6584041, 0.6567780, 0.6551950, 0.6536532, 0.6521506),
+  # TODO: remove
+  beyond.limits = list(pch=19, col="red"),
+  violating.runs = list(pch=19, col="orange"),
+  run.length = 7,
+  # TODO: remove
+  shr = list(col = c("#F03B20", "#FEB24C"),
+             pch = c(19, 20),
+             run.length = 7),
+  rules = list(col = c("#F03B20", "#FD8D3C", "#FEB24C", "#FED976"), 
+               pch = c(19, 15, 17, 20)),
+  zones = list(fill = "dodgerblue3",
+               lty = c(2,2,2), 
+               col = grey(c(0.1, 0.4, 0.7))),
+  bg.margin = grey(0.915),
+  bg.figure = "white",
+  cex = 1,
+  font.stats = 1,
+  cex.stats = 0.9)
 

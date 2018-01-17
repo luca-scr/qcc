@@ -26,5 +26,14 @@ export(pareto.chart, print.pareto.chart, plot.pareto.chart)
 S3method("print", "pareto.chart")
 S3method("plot", "pareto.chart")
   
+export(process.capability, print.process.capability, 
+       summary.process.capability, plot.process.capability)
+S3method("print", "process.capability")
+S3method("summary", "process.capability")
+S3method("plot", "process.capability")
+  
+export(describe, print.describe)
+S3method("print", "describe")
+
 exportPattern("^[^\\.]")
 
