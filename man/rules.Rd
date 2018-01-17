@@ -2,6 +2,13 @@
 \alias{shewhart.rules}
 \alias{beyond.limits}
 \alias{violating.runs}
+
+\alias{shewhartRules}
+\alias{violating.wer1}
+\alias{violating.wer2}
+\alias{violating.wer3}
+\alias{violating.wer4}
+
 \title{Functions specifying rules for Shewhart charts}
 \description{
 These functions are used to signal out of control points in Shewhart charts.}
@@ -17,6 +24,7 @@ violating.runs(object, run.length = qcc.options("run.length"))
   point as out of control.}
 }
 \details{
+TODO: to add recently added function for WER.
 The function \code{shewhart.rules} simply calls the \code{beyond.limits} and \code{violating.runs} functions which actually do the real calculations.
 }
 \value{

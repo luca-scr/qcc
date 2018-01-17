@@ -14,11 +14,9 @@ qcc(data, type, sizes, center, std.dev, limits,
     newlabels, nsigmas = 3, confidence.level,
     rules = shewhart.rules, plot = TRUE, \dots)
 
-\method{print}{qcc}(x, \dots)
+\method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
-\method{summary}{qcc}(object, digits = getOption("digits"), \dots)
-
-\method{plot}{qcc}(x, add.stats = TRUE, chart.all = TRUE, 
+\method{plot}{qcc}(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
      label.limits = c("LCL ", "UCL"), title, xlab, ylab, ylim, 
      axes.las = 0, digits = getOption("digits"),
      restore.par = TRUE, \dots)
@@ -82,6 +80,9 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{chart.all}{a logical value indicating whether both statistics for \code{data} and for \code{newdata} (if given) should be plotted.}
 
+\item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
+\code{qcc.options("zones")$fill}.}
+
 \item{label.limits}{a character vector specifying the labels for control limits.}
 
 \item{title}{a string giving the label for the main title.}
@@ -97,8 +98,6 @@ Several methods are available for estimating the standard deviation in case of a
 \item{digits}{the number of significant digits to use.}
 
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a control chart set this to \code{FALSE}.}
-
-\item{object}{an object of class 'qcc'.}
 
 \item{x}{an object of class 'qcc'.}
 

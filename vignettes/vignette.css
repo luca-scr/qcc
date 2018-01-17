@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body {
   background-color: #fff;
   margin: 1em auto;
@@ -5,7 +7,7 @@ body {
   overflow: visible;
   padding-left: 2em;
   padding-right: 2em;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.35;
 }
@@ -48,27 +50,29 @@ table {
   margin: 1em auto;
   border-width: 1px;
   border-color: #DDDDDD;
-  border-style: outset;
-  border-collapse: collapse;
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
 }
+
+th {
+  border-bottom: 1px solid #111;
+}
+
 table th {
-  border-width: 2px;
+  border-width: 1px;
   padding: 5px;
-  border-style: inset;
 }
+
 table td {
   border-width: 1px;
-  border-style: inset;
-  line-height: 18px;
+  line-height: 16px;
   padding: 5px 5px;
 }
-table, table th, table td {
-  border-left-style: none;
-  border-right-style: none;
-}
+
 table thead, table tr.even {
   background-color: #f7f7f7;
 }
+
 
 p {
   margin: 0.5em 0;
@@ -127,10 +131,11 @@ img {
 
 h1 {
   padding-top: 10px;
-  border-bottom: 4px solid #f7f7f7;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #f7f7f7;
   margin-top: 0;
-  font-size: 150%;
-  line-height: 30px;
+  font-size: 120%;
+  line-height: 10px;
 }
 
 h1.title {
@@ -141,18 +146,24 @@ h1.title {
 
 
 h2 {
-  border-bottom: 3px solid #f7f7f7;
   padding-top: 10px;
-  padding-bottom: 2px;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #f7f7f7;
   margin-left: 4px;
-  font-size: 120%;
+  font-size: 110%;
+}
+
+h2.title {
+  color: rgb(46,90,136);
+  font-size: 110%;
+  line-height: 10px;
 }
 
 h3 {
   border-bottom: 2px solid #f7f7f7;
   padding-top: 10px;
   margin-left: 8px;
-  font-size: 110%;
+  font-size: 105%;
 }
 
 h3.subtitle {

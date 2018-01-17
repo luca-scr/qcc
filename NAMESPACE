@@ -1,6 +1,7 @@
 # Import all packages listed as Imports or Depends
 import("stats", "utils", "graphics", "grDevices")
 importFrom("MASS", "mvrnorm")
+importFrom("cli", "rule")
 
 export(qcc, print.qcc, summary.qcc, plot.qcc)
 S3method("print", "qcc")
@@ -26,5 +27,14 @@ export(pareto.chart, print.pareto.chart, plot.pareto.chart)
 S3method("print", "pareto.chart")
 S3method("plot", "pareto.chart")
   
+export(process.capability, print.process.capability, 
+       summary.process.capability, plot.process.capability)
+S3method("print", "process.capability")
+S3method("summary", "process.capability")
+S3method("plot", "process.capability")
+  
+export(describe, print.describe)
+S3method("print", "describe")
+
 exportPattern("^[^\\.]")
 

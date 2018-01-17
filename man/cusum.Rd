@@ -13,11 +13,9 @@ cusum(data, sizes, center, std.dev, head.start = 0,
       decision.interval = 5, se.shift = 1, data.name, labels,
       newdata, newsizes, newlabels, plot = TRUE, \dots)
 
-\method{print}{cusum.qcc}(x, \dots)
+\method{print}{cusum.qcc}(x, digits = getOption("digits"), \dots)
 
-\method{summary}{cusum.qcc}(object, digits = getOption("digits"), \dots)
-
-\method{plot}{cusum.qcc}(x, add.stats = TRUE, chart.all = TRUE, 
+\method{plot}{cusum.qcc}(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
      label.bounds = c("LDB", "UDB"), title, xlab, ylab, ylim, 
      axes.las = 0, digits =  getOption("digits"),
      restore.par = TRUE, \dots)
@@ -57,6 +55,9 @@ value less than the \code{decision.interval} for a Fast Initial Response.}
 \item{add.stats}{a logical value indicating whether statistics and other information should be printed at the bottom of the chart.}
 
 \item{chart.all}{a logical value indicating whether both statistics for \code{data} and for \code{newdata} (if given) should be plotted.}
+
+\item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
+\code{qcc.options("zones")$fill}.}
 
 \item{label.bounds}{a character vector specifying the labels for the the decision interval boundaries.}
 
