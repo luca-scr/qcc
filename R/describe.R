@@ -1,7 +1,6 @@
 #
 # Descriptive statistics for a matrix or data frame.
 #
-# TODO: include also describe.by() ??
 
 describe <- function(data, by, ...)
 {
@@ -64,6 +63,7 @@ describe <- function(data, by, ...)
 
 print.describe <- function(x, digits = max(4, getOption("digits") - 3), ...)
 {
+
   if(!is.null(x$by))
   {
     by <- which(sapply(x, class) == "describe")

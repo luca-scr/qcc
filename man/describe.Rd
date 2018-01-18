@@ -19,10 +19,12 @@ describe(data, by, \dots)
 }
 
 \details{This function provides simple descriptive statistics for different types of variables, such as numeric, factor, and logical, conditioning or not on another variable.}
+
 %\value{}
 %\references{}
 \author{Luca Scrucca}
 %\note{}
+
 \seealso{\code{\link{summary}}, \code{\link{by}}}
 \examples{
 data(warpbreaks)
