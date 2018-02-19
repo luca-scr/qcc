@@ -13,14 +13,17 @@
   return(std.dev)
 }
 
-"limits.g" <- function (center, std.dev, sizes, conf) 
+"limits.g" <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {
-  if (conf >= 1) {
-    p <- 1/center
-    lcl <- center - conf * sqrt(1-p)/p
-    lcl[lcl < 0] <- 0
-    ucl <- center + conf * sqrt(1-p)/p
-    warning("The Geometric distribution is quite skewed, it is better to set conf at the required confidence level (0 < conf < 1) instead of as a multiplier of sigma.")
+  if(is.null(nsigmas) & is.null(conf))
+    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
+  if (is.null(conf)) 
+    {
+      p <- 1/center
+      lcl <- center - conf * sqrt(1-p)/p
+      lcl[lcl < 0] <- 0
+      ucl <- center + conf * sqrt(1-p)/p
+      warning("The Geometric distribution is quite skewed, it is better to set conf at the required confidence level (0 < conf < 1) instead of as a multiplier of sigma.")
   }
   else {
     if (conf > 0 & conf < 1) {

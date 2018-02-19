@@ -1,6 +1,7 @@
 \name{boiler}
 \alias{boiler}
 \docType{data}
+
 \title{Boiler temperature data}
 \description{
 Temperature readings from the eight configured burners on a boiler.
@@ -21,10 +22,12 @@ Temperature readings from the eight configured burners on a boiler.
 }
 %\details{}
 %\source{}
-\references{Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM, p. 86.}
+\references{
+Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM, p. 86.
+}
 \examples{
 data(boiler)
-summary(boiler)
+describe(boiler)
 boxplot(boiler)
 }
 \keyword{datasets}

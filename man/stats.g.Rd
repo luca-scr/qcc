@@ -10,8 +10,8 @@
 }
 \usage{
 stats.g(data, sizes)
-sd.g(data, sizes, ...)
-limits.g(center, std.dev, sizes, conf)
+sd.g(data, sizes, \dots)
+limits.g(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,10 +19,9 @@ limits.g(center, std.dev, sizes, conf)
   \item{center}{ sample center statistic }
   \item{sizes}{ sample sizes (not used) }
   \item{std.dev}{ standard deviation of geometric distribution }
-  \item{conf}{ a numeric value used to compute control limits,
-    specifying the number of standard deviations (if 'conf' > 1) or the
-    confidence level (if 0 < 'conf' < 1).}
-  \item{...}{further arguments are ignored.}
+  \item{nsigmas}{a numeric value specifying the number of sigmas to use for computing control limits. It is ignored when the \code{conf} argument is  provided.} 
+  \item{conf}{a numeric value \eqn{\in (0,1)} specifying the confidence level to use for computing control limits.}
+  \item{\dots}{catches further ignored arguments.}
 }
 \value{
   The function \code{stats.g()} returns a list with components \code{statistics} and \code{center}.
@@ -40,7 +39,8 @@ limits.g(center, std.dev, sizes, conf)
 }
 
 \references{
-Kaminsky, FC et. al. (1992) \emph{Statistical Control Charts Based on a Geometric Distribution}, Journal of Quality Technology, 24, pp 63--69. \cr
+Kaminsky, FC et. al. (1992) \emph{Statistical Control Charts Based on a Geometric Distribution}, Journal of Quality Technology, 24, pp 63--69.
+
 Yang, Z et. al. (2002) On the Performance of Geometric Charts with
 Estimated Control Limits, \emph{Journal of Quality Technology}, 34, pp 448--458.
 }

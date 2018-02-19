@@ -7,15 +7,19 @@
 \description{These functions are used to compute statistics required by the xbar chart.}
 \usage{
 stats.xbar(data, sizes)
-sd.xbar(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"))
-limits.xbar(center, std.dev, sizes, conf)
+sd.xbar(data, sizes, 
+        std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"), 
+        \dots)
+limits.xbar(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
 \arguments{
   \item{data}{the observed data values}
   \item{center}{sample/group center statistic}
   \item{sizes}{samples sizes. Optional}
   \item{std.dev}{within group standard deviation. Optional for \code{sd.xbar} function, required for \code{limits.xbar}. See details.}
-  \item{conf}{a numeric value used to compute control limits, specifying the number of standard deviations (if \code{conf} > 1) or the confidence level (if 0 < \code{conf} < 1).}
+  \item{nsigmas}{a numeric value specifying the number of sigmas to use for computing control limits. It is ignored when the \code{conf} argument is  provided.} 
+  \item{conf}{a numeric value \eqn{\in (0,1)} specifying the confidence level to use for computing control limits.}
+  \item{\dots}{catches further ignored arguments.}
 }
 \details{
 The following methods are available for estimating the process standard deviation:
@@ -47,8 +51,10 @@ The function \code{sd.xbar} returns \code{std.dev} the standard deviation of the
 The function \code{limits.xbar} returns a matrix with lower and upper control limits. 
 }
 \references{
-Burr, I.W. (1969) Control charts for measurements with varying sample sizes. \emph{Journal of Quality Technology}, 1(3), 163-167. \cr
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
+Burr, I.W. (1969) Control charts for measurements with varying sample sizes. \emph{Journal of Quality Technology}, 1(3), 163-167.
+
+Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
 \author{Luca Scrucca}

@@ -655,7 +655,7 @@ stats.xbar <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
-sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"))
+sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"), ...)
 {
   data <- as.matrix(data)
   if(missing(sizes))
@@ -772,7 +772,7 @@ stats.S <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
-sd.S <- function(data, sizes, std.dev = c("UWAVE-SD", "MVLUE-SD", "RMSDF"))
+sd.S <- function(data, sizes, std.dev = c("UWAVE-SD", "MVLUE-SD", "RMSDF"), ...)
 {
   if (!is.numeric(std.dev))
      std.dev <- match.arg(std.dev)
@@ -822,7 +822,7 @@ stats.R <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
-sd.R <- function(data, sizes, std.dev = c("UWAVE-R", "MVLUE-R"))
+sd.R <- function(data, sizes, std.dev = c("UWAVE-R", "MVLUE-R"), ...)
 {
   if (!is.numeric(std.dev))
      std.dev <- match.arg(std.dev)
@@ -866,7 +866,7 @@ stats.xbar.one <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
-sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2)
+sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
 {
   data <- as.vector(data)
   n <- length(data)

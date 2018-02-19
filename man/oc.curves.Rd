@@ -10,18 +10,28 @@
 \usage{
 oc.curves(object, \dots)
 
-oc.curves.xbar(object, n, c = seq(0, 5, length=101), 
-               nsigmas = object$nsigmas, identify=FALSE, restore.par=TRUE)
+oc.curves.xbar(object, n, c = seq(0, 5, length=101), nsigmas = object$nsigmas, 
+               lty = rep(1, length(n)), lwd = rep(2, length(n)), 
+               col = blues.colors(length(n)), 
+               identify=FALSE, restore.par=TRUE)
 
-oc.curves.R(object, n, c = seq(1, 6, length=101),
-            nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
+oc.curves.R(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
+            lty = rep(1, length(n)), lwd = rep(2, length(n)), 
+            col = blues.colors(length(n)), 
+            identify = FALSE, restore.par=TRUE)
 
-oc.curves.S(object, n, c = seq(1, 6, length=101),
-            nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
+oc.curves.S(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
+            lty = rep(1, length(n)), lwd = rep(2, length(n)), 
+            col = blues.colors(length(n)), 
+            identify = FALSE, restore.par=TRUE)
 
-oc.curves.p(object, nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
+oc.curves.p(object, nsigmas = object$nsigmas, 
+            lty = 1, lwd = 2, col = blues.colors(1),
+            identify = FALSE, restore.par=TRUE)
 
-oc.curves.c(object, nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE)
+oc.curves.c(object, nsigmas = object$nsigmas, 
+            lty = 1, lwd = 2, col = blues.colors(1),
+            identify = FALSE, restore.par=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,6 +43,7 @@ oc.curves.c(object, nsigmas = object$nsigmas, identify = FALSE, restore.par=TRUE
 computing control limits; if \code{nsigmas} is \code{NULL},
 \code{object$conf} is used to set up probability limits; \code{nsigmas}
 is ignored for types "p" and "c".}
+\item{lty, lwd, col}{values or vector of values controlling the line type, line width and colour of curves.}
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a chart set this to \code{FALSE}.}
 \item{\dots}{additional arguments to be passed to the generic function.}
 }
@@ -47,10 +58,14 @@ the "R" chart,
 are likely to be seriously affected by longer tails.}
 \value{The function invisibly returns a matrix or a vector of beta values, the probability of type II error.}
 \references{
-Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM. \cr
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
-Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc. \cr
-Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17. \cr
+Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
+
+Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+
+Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
+
+Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17.
+
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
 \author{Luca Scrucca}

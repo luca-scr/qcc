@@ -1,5 +1,13 @@
 .DS_Store
 ^misc$
-^.*\.Rproj$
+aux$
+log$
 ^\.Rproj\.user$
+^.*\.Rproj$
+^Makefile$
 ^revdep$
+^README\.Rmd$
+^README-.*\.png$
+^docs$
+^images$
+_pkgdown.yaml

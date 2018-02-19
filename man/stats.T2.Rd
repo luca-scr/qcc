@@ -3,6 +3,7 @@
 \alias{limits.T2}
 
 \title{Statistics used in computing and drawing the Hotelling T^2 chart for subgrouped data}
+
 \description{These functions are used to compute statistics required by the \eqn{T^2} chart.}
 
 \usage{
@@ -35,8 +36,10 @@ The function \code{limits.T2} returns a list with components:
 }
 
 \references{
-Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM. \cr
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
+Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
+
+Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+
 Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
 }
 

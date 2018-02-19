@@ -6,11 +6,10 @@
 
 \title{Process capability analysis}
 \description{Computes process capability indices for a 'qcc' object of type \code{"xbar"} and plot the histogram.}
+
 \usage{
 process.capability(object,spec.limits, target, std.dev, nsigmas, 
-                   confidence.level = 0.95, breaks = "scott", 
-                   add.stats = TRUE, print = TRUE, 
-                   digits = getOption("digits"), restore.par = TRUE)
+                   confidence.level = 0.95, plot = TRUE, \dots)
                    
 \method{print}{process.capability}(x, digits = getOption("digits"), \dots)
 
@@ -28,11 +27,15 @@ process.capability(object,spec.limits, target, std.dev, nsigmas,
 \item{std.dev}{a value specifying the within-group standard deviation. If not provided is taken from the 'qcc' object.}
 \item{nsigmas}{a numeric value specifying the number of sigmas to use. If not provided is taken from the 'qcc' object.}
 \item{confidence.level}{a numeric value between 0 and 1 specifying the level to use for computing confidence intervals.}
-\item{breaks}{a value or string used to draw the histogram. See the help for  \code{\link{hist}} for more details. }
+\item{plot}{a logical value; if \code{TRUE} the corresponding plot method is called.}
+\item{x}{an object of class 'process.capability'.}
 \item{add.stats}{a logical value indicating whether statistics and capability indices should be added at the bottom of the chart.}
+\item{breaks}{a value or string used to draw the histogram. See the help for  \code{\link{hist}} for more details.}
+\item{col, border}{values specifying the colour of the area and the border of the histogram.}
 \item{print}{a logical value indicating whether statistics and capability indices should be printed.}
 \item{digits}{the number of significant digits to use.}
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a chart set this to \code{FALSE}.}
+\item{\dots}{catches further ignored arguments.}
 }
 \details{
 This function calculates confidence limits for \eqn{C_p}{C_p} using the method described by Chou et al. (1990). 
@@ -50,10 +53,14 @@ Confidence limits for \eqn{C_{pm}}{C_pm} are based on the method of Boyles (1991
 \item{obs}{a vector of values giving the fraction of observations less than LSL and greater than USL.}
 }
 \references{
-Bissell, A.F. (1990) \emph{How reliable is your capability index?}, Applied Statistics, 39, 331-340. \cr
-Boyles, R.A. (1991) \emph{The Taguchi capability index}, Journal of Quality Technology, 23, 107-126. \cr
-Chou, Y., Owen D.B. and Borrego S.A. (1990) \emph{Lower Confidence Limits on Process Capability Indices}, Journal of Quality Technology, 22, 223-229. \cr
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
+Bissell, A.F. (1990) \emph{How reliable is your capability index?}, Applied Statistics, 39, 331-340.
+
+Boyles, R.A. (1991) \emph{The Taguchi capability index}, Journal of Quality Technology, 23, 107-126.
+
+Chou, Y., Owen D.B. and Borrego S.A. (1990) \emph{Lower Confidence Limits on Process Capability Indices}, Journal of Quality Technology, 22, 223-229.
+
+Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
 \author{Luca Scrucca}

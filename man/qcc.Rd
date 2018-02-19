@@ -9,10 +9,12 @@
 \description{Create an object of class 'qcc' to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.}
 
 \usage{
-qcc(data, type, sizes, center, std.dev, limits,
+qcc(data, 
+    type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), 
+    sizes, center, std.dev, limits,
     data.name, labels, newdata, newsizes, newdata.name,
     newlabels, nsigmas = 3, confidence.level,
-    rules = shewhart.rules, plot = TRUE, \dots)
+    rules = c(1,4), plot = TRUE, \dots)
 
 \method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
@@ -72,7 +74,7 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{confidence.level}{a numeric value between 0 and 1 specifying the confidence level of the computed probability limits.} 
 
-\item{rules}{a function of rules to apply to the chart. By default, the \code{shewhart.rules} function is used.}
+\item{rules}{a value or a vector of values specifying the rules to apply to the chart. See \code{\link{qccRules}} for possible values and their meaning.}
 
 \item{plot}{logical. If \code{TRUE} a Shewhart chart is plotted.}
 
@@ -110,10 +112,14 @@ Several methods are available for estimating the standard deviation in case of a
 \note{For a nice blog post discussing the \code{qcc} package, in particular how to implement the \emph{Western Eletric Rules (WER)}, see \url{http://blog.yhathq.com/posts/quality-control-in-r.html}.}
 
 \references{
-Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM. \cr
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
-Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc. \cr
-Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17. \cr
+Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
+
+Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+
+Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
+
+Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17. 
+
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
 

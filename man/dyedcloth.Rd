@@ -1,6 +1,7 @@
 \name{dyedcloth}
 \alias{dyedcloth}
 \docType{data}
+
 \title{Dyed cloth data}
 \description{
 In a textile finishing plant, dyed cloth is inspected for the occurrence of defects per 50 square meters. The data on ten rolls of cloth are presented.
@@ -15,12 +16,13 @@ In a textile finishing plant, dyed cloth is inspected for the occurrence of defe
 }
 %\details{}
 %\source{}
-\references{Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 183--184}
+\references{
+Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 183--184
+}
 \examples{
 data(dyedcloth)
-attach(dyedcloth)
-summary(dyedcloth)
-plot(x/size, type="b")
-detach(dyedcloth)
+describe(dyedcloth)
+dyedcloth <- transform(dyedcloth, sample = seq(nrow(dyedcloth)))
+plot(x/size ~ sample, data = dyedcloth, type="b")
 }
 \keyword{datasets}

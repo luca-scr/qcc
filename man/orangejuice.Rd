@@ -1,7 +1,9 @@
 \name{orangejuice}
 \alias{orangejuice}
 \docType{data}
+
 \title{Orange juice data}
+
 \description{
 Frozen orange juice concentrate is packed in 6-oz cardboard cans. These cans are formed on a machine by spinning them from cardboard stock and attaching a metal bottom panel. A can is then inspected to determine whether, when filled, the liquid could possible leak either on the side seam or around the bottom joint. If this occurs, a can is considered nonconforming.
 The data were collected as 30 samples of 50 cans each at half-hour intervals over a three-shift period in which the machine was in continuous operation.
@@ -24,12 +26,9 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 }
 \examples{
 data(orangejuice)
-orangejuice$d <- orangejuice$D/orangejuice$size
-attach(orangejuice)
-summary(orangejuice)
-boxplot(d ~ trial)
-mark <- ifelse(trial, 1, 2)
-plot(sample, d, type="b", col=mark, pch=mark)
-detach(orangejuice)
+orangejuice <- transform(orangejuice, d = D/size)
+describe(orangejuice[,-4], by = orangejuice$trial)
+boxplot(d ~ trial, data = orangejuice)
+plot(d ~ sample, data = orangejuice, type = "b", pch = ifelse(trial, 1, 19))
 }
 \keyword{datasets}

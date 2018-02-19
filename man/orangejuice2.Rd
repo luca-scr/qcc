@@ -1,7 +1,9 @@
 \name{orangejuice2}
 \alias{orangejuice2}
 \docType{data}
+
 \title{Orange juice data --  Part 2}
+
 \description{
 A full description of the problem is given in \code{\link{orangejuice}}. \cr
 
@@ -23,12 +25,9 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 }
 \examples{
 data(orangejuice2)
-orangejuice2$d <- orangejuice2$D/orangejuice2$size
-attach(orangejuice2)
-summary(orangejuice2)
-boxplot(d ~ trial)
-mark <- ifelse(trial, 1, 2)
-plot(sample, d, type="b", col=mark, pch=mark)
-detach(orangejuice2)
+orangejuice2 <- transform(orangejuice2, d = D/size)
+describe(orangejuice2[,-4], by = orangejuice2$trial)
+boxplot(d ~ trial, data = orangejuice2)
+plot(d ~ sample, data = orangejuice2, type = "b", pch = ifelse(trial, 1, 19))
 }
 \keyword{datasets}

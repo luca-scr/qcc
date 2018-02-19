@@ -7,16 +7,18 @@
 \description{These functions are used to compute statistics required by the xbar chart for one-at-time data.}
 \usage{
 stats.xbar.one(data, sizes)
-sd.xbar.one(data, sizes, std.dev = c("MR", "SD"), k=2)
-limits.xbar.one(center, std.dev, sizes, conf)
+sd.xbar.one(data, sizes, std.dev = c("MR", "SD"), r = 2, \dots)
+limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
 \arguments{
   \item{data}{the observed data values}
   \item{center}{sample/group center statistic.}
-  \item{sizes}{samples sizes. Not needed, size=1 is used.}
-  \item{k}{number of successive pairs of observations for computing the standard deviation based on moving ranges of k points.}
+  \item{sizes}{samples sizes. Not needed, \code{size = 1} is used.}
+  \item{r}{number of successive pairs of observations for computing the standard deviation based on moving ranges of r points.}
   \item{std.dev}{within group standard deviation. Optional for \code{sd.xbar.one} function, required for \code{limits.xbar.one}. See details.}
-  \item{conf}{a numeric value used to compute control limits, specifying the number of standard deviations (if \code{conf} > 1) or the confidence level (if 0 < \code{conf} < 1).}
+   \item{nsigmas}{a numeric value specifying the number of sigmas to use for computing control limits. It is ignored when the \code{conf} argument is  provided.} 
+  \item{conf}{a numeric value \eqn{\in (0,1)} specifying the confidence level to use for computing control limits.}
+  \item{\dots}{catches further ignored arguments.}
 }
 \details{
 Methods  available for estimating the process standard deviation:
@@ -34,8 +36,10 @@ The function \code{sd.xbar.one} returns \code{std.dev} the standard deviation of
 The function \code{limits.xbar.one} returns a matrix with lower and upper control limits. 
 }
 \references{
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. \cr
-Ryan T.P. (2000) \emph{Statistical Methods for Quality Improvement}, New York: John Wiley & Sons. \cr
+Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+
+Ryan T.P. (2000) \emph{Statistical Methods for Quality Improvement}, New York: John Wiley & Sons.
+
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
 \author{Luca Scrucca}

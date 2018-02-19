@@ -1,7 +1,9 @@
 \name{pcmanufact}
 \alias{pcmanufact}
 \docType{data}
+
 \title{Personal computer manufacturer data}
+
 \description{
 A personal computer manufacturer counts the number of nonconformities per unit on the final assembly line. He collects data on 20 samples of 5 computers each.
 }
@@ -15,12 +17,13 @@ A personal computer manufacturer counts the number of nonconformities per unit o
 }
 %\details{}
 %\source{}
-\references{Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 181--182}
+\references{
+Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 181--182
+}
 \examples{
 data(pcmanufact)
-attach(pcmanufact)
-summary(pcmanufact)
-plot(x/size, type="b")
-detach(pcmanufact)
+describe(pcmanufact)
+pcmanufact <- transform(pcmanufact, sample = seq(nrow(pcmanufact)))
+plot(x/size ~ sample, data = pcmanufact, type="b")
 }
 \keyword{datasets}

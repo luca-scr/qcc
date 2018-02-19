@@ -1,0 +1,6 @@
+urls:
+  reference: https://github.com/luca-scr/qcc/reference
+  article: https://github.com/luca-scr/qcc/articles
+articles:
+  qcc: qcc.html
+

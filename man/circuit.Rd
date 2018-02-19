@@ -1,6 +1,7 @@
 \name{circuit}
 \alias{circuit}
 \docType{data}
+
 \title{Circuit boards data}
 \description{
 Number of nonconformities observed in 26 successive samples of 100 printed circuit boards.
@@ -18,13 +19,14 @@ The last 20 samples are further samples collected on inspection units (each form
 }
 %\details{}
 %\source{}
-\references{Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 173--175}
+\references{
+Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 173--175
+}
 \examples{
 data(circuit)
-attach(circuit)
-summary(circuit)
-boxplot(x ~ trial)
-plot(x, type="b")
-detach(circuit)
+describe(circuit[,1:2], by = circuit$trial)
+boxplot(x/size ~ trial, data = circuit)
+circuit <- transform(circuit, sample = seq(nrow(circuit)))
+plot(x/size ~ sample, data = circuit, type="b")
 }
 \keyword{datasets}

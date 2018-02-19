@@ -1,5 +1,6 @@
 \name{antifreeze}
 \alias{antifreeze}
+\docType{data}
 
 \title{Water content of antifreeze data}
 \description{
@@ -14,10 +15,11 @@ Water content (in ppm) of batches of antifreeze.
 }
 %\details{}
 %\source{}
-\references{Wetherill, G.B. and Brown, D.W. (1991) Statistical Process Control. New York: Chapman & Hall, p. 120}
+\references{
+Wetherill, G.B. and Brown, D.W. (1991) Statistical Process Control. New York: Chapman & Hall, p. 120
+}
 \examples{
 data(antifreeze)
-summary(antifreeze)
-plot(antifreeze)
+describe(antifreeze)
 }
 \keyword{datasets}

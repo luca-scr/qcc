@@ -15,6 +15,7 @@ describe(data, by, \dots)
   \item{data}{a matrix or data.frame.}
   \item{by}{a factor or character vector specifying the conditioning variable.}
   \item{\dots}{additional arguments to be passed to the generic function.}
+  \item{x}{an object of class 'describe'.}
   \item{digits}{the number of significant digits to use.}
 }
 

@@ -131,7 +131,7 @@ shewhart.rules <- function(object, limits = object$limits, run.length = qcc.opti
 
 shewhartRules <- function(object, 
                            limits = object$limits, 
-                           run.length = qcc.options("shr")$run.length)
+                           run.length = qcc.options("run.length"))
 {
   # Return a vector of indices for cases (statistics & new.statistics) 
   # violating the two basic Shewhart rules (NA if no rule is violated)
@@ -156,7 +156,7 @@ beyond.limits <- function(object, limits = object$limits)
   return(c(index.above.ucl, index.below.lcl))
 }
 
-violating.runs <- function(object, run.length = qcc.options("shr")$run.length)
+violating.runs <- function(object, run.length = qcc.options("run.length"))
 {
   # Return indices of points violating runs
   if(run.length == 0)
