@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Descriptive statistics — describe • GA</title>
+<title>Descriptive statistics — describe • qcc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -69,12 +69,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -143,7 +138,7 @@ print(x, digits = max(4, getOption("digits") - 3), &#8230;)</pre>
 #&gt; tension Freq. Rel.Freq. Cum.Rel.Freq.
 #&gt;       L    18    0.3333        0.3333
 #&gt;       M    18    0.3333        0.6667
-#&gt;       H    18    0.3333        1.0000</div><div class='input'><span class='fu'>describe</span>(<span class='no'>warpbreaks</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>warpbreaks</span>$<span class='no'>tension</span>)</div><div class='output co'>#&gt; ── warpbreaks$tension = L ──────────────────────────────────────────────────────────────────────────────── 
+#&gt;       H    18    0.3333        1.0000</div><div class='input'><span class='fu'>describe</span>(<span class='no'>warpbreaks</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>warpbreaks</span>$<span class='no'>tension</span>)</div><div class='output co'>#&gt; ── warpbreaks$tension = L ─────────────────────────────────────────────────────────── 
 #&gt; 
 #&gt;        Obs  Mean Std.Dev. Min Q1 Median Q3 Max
 #&gt; breaks  18 36.39    16.45  14 26   29.5 51  70
@@ -152,7 +147,7 @@ print(x, digits = max(4, getOption("digits") - 3), &#8230;)</pre>
 #&gt;    A     9       0.5           0.5
 #&gt;    B     9       0.5           1.0
 #&gt; 
-#&gt; ── warpbreaks$tension = M ──────────────────────────────────────────────────────────────────────────────── 
+#&gt; ── warpbreaks$tension = M ─────────────────────────────────────────────────────────── 
 #&gt; 
 #&gt;        Obs  Mean Std.Dev. Min Q1 Median Q3 Max
 #&gt; breaks  18 26.39    9.121  12 18     27 35  42
@@ -161,7 +156,7 @@ print(x, digits = max(4, getOption("digits") - 3), &#8230;)</pre>
 #&gt;    A     9       0.5           0.5
 #&gt;    B     9       0.5           1.0
 #&gt; 
-#&gt; ── warpbreaks$tension = H ──────────────────────────────────────────────────────────────────────────────── 
+#&gt; ── warpbreaks$tension = H ─────────────────────────────────────────────────────────── 
 #&gt; 
 #&gt;        Obs  Mean Std.Dev. Min Q1 Median Q3 Max
 #&gt; breaks  18 21.67    8.353  10 15   20.5 26  43

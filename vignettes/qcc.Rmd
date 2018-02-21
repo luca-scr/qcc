@@ -1,5 +1,5 @@
 ---
-title: "A quick tour of **qcc**"
+title: "A quick tour of qcc"
 author: "Luca Scrucca"
 date: "`r format(Sys.time(), '%d %b %Y')`"
 output: 

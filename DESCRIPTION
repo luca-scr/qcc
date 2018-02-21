@@ -1,6 +1,6 @@
 Package: qcc
 Version: 3.0
-Date: 2018-02-18
+Date: 2018-02-19
 Title: Quality Control Charts
 Description: Shewhart quality control charts for continuous, attribute and count data. Cusum and EWMA charts. Operating characteristic curves. Process capability analysis. Pareto chart and cause-and-effect chart. Multivariate control charts.
 Authors@R: c(person("Luca", "Scrucca", role = c("aut", "cre"),
@@ -15,7 +15,8 @@ Imports: MASS, utils, graphics, grDevices, cli
 Suggests: knitr (>= 1.12), rmarkdown (>= 0.9)
 License: GPL (>= 2)
 VignetteBuilder: knitr
-URL: https://github.com/luca-scr/qcc
+URL: https://luca-scr.github.io/qcc/
+BugReports: https://github.com/luca-scr/qcc/issues
 Repository: CRAN
 ByteCompile: true
 LazyLoad: yes

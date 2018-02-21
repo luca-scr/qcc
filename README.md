@@ -70,4 +70,4 @@ devtools::install_github("luca-scr/qcc", build_vignettes = TRUE)
 ```
 
 The vignette is also available in the *Get Started* section on the
-GitHub web page of the package at <http://luca-scr.github.io/qcc/>.
+GitHub web page of the package at <https://luca-scr.github.io/qcc/>.
