@@ -7,13 +7,14 @@
 \description{Compute and print descriptive statistics for a matrix or data frame, eventually conditioning on another variable.}
 
 \usage{
-describe(data, by, \dots)
-\method{print}{describe}(x, digits = max(4, getOption("digits") - 3), \dots)
+describe(data, by, detail = FALSE, \dots)
+\method{print}{describe}(x, digits = getOption("digits") - 3, \dots)
 }
 
 \arguments{
   \item{data}{a matrix or data.frame.}
   \item{by}{a factor or character vector specifying the conditioning variable.}
+  \item{detail}{a logical specifying if detailed statistics should be provided.}
   \item{\dots}{additional arguments to be passed to the generic function.}
   \item{x}{an object of class 'describe'.}
   \item{digits}{the number of significant digits to use.}
@@ -30,6 +31,7 @@ describe(data, by, \dots)
 \examples{
 data(warpbreaks)
 describe(warpbreaks)
-describe(warpbreaks[,1:2], by = warpbreaks$tension)
+describe(warpbreaks, detail = TRUE)
+describe(warpbreaks, by = wool)
 }
 

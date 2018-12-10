@@ -31,19 +31,18 @@ qcc(data,
 
   \item{type}{a character string specifying the group statistics to compute. \cr
   Available methods are:
-
-\tabular{lll}{
-              \tab Statistic charted   \tab Chart description \cr
-\code{"xbar"} \tab mean                \tab means of a continuous process variable \cr
-\code{"R"}    \tab range               \tab ranges of a continuous process variable \cr
-\code{"S"}    \tab standard deviation  \tab standard deviations of a continuous variable \cr
-\code{"xbar.one"} \tab mean            \tab one-at-time data of a continuous process variable \cr
-\code{"p"}    \tab proportion          \tab proportion of nonconforming units \cr
-\code{"np"}   \tab count               \tab number of nonconforming units \cr
-\code{"c"}    \tab count               \tab nonconformities per unit \cr
-\code{"u"}    \tab count               \tab average nonconformities per unit \cr
-\code{"g"}    \tab count               \tab number of non-events between events
-}
+%\tabular{lll}{
+%              \tab Statistic charted   \tab Chart description \cr
+%\code{"xbar"} \tab mean                \tab means of a continuous process variable \cr
+%\code{"R"}    \tab range               \tab ranges of a continuous process variable \cr
+%\code{"S"}    \tab standard deviation  \tab standard deviations of a continuous variable \cr
+%\code{"xbar.one"} \tab mean            \tab one-at-time data of a continuous process variable \cr
+%\code{"p"}    \tab proportion          \tab proportion of nonconforming units \cr
+%\code{"np"}   \tab count               \tab number of nonconforming units \cr
+%\code{"c"}    \tab count               \tab nonconformities per unit \cr
+%\code{"u"}    \tab count               \tab average nonconformities per unit %\cr
+%\code{"g"}    \tab count               \tab number of non-events between events \cr
+%}
 
 Furthermore, a user specified type of chart, say \code{"newchart"}, can be provided. This requires the definition of \code{"stats.newchart"}, \code{"sd.newchart"}, and \code{"limits.newchart"}. As an example, see \code{\link{stats.xbar}}.
 }
@@ -109,12 +108,12 @@ Several methods are available for estimating the standard deviation in case of a
 
 \value{Returns an object of class 'qcc'.}
 
-\note{For a nice blog post discussing the \code{qcc} package, in particular how to implement the \emph{Western Eletric Rules (WER)}, see \url{http://blog.yhathq.com/posts/quality-control-in-r.html}.}
+\note{For a nice blog post discussing the \code{qcc} package, in particular how to implement the \emph{Western Eletric Rules (WER)}, see \url{http://blog.yhat.com/posts/quality-control-in-r.html}.}
 
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
 
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+Montgomery, D.C. (2009) \emph{Introduction to Statistical Quality Control}, 6th ed. New York: John Wiley & Sons.
 
 Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
 

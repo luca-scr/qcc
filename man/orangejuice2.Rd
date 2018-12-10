@@ -26,8 +26,8 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 \examples{
 data(orangejuice2)
 orangejuice2 <- transform(orangejuice2, d = D/size)
-describe(orangejuice2[,-4], by = orangejuice2$trial)
+describe(orangejuice2, by = trial)
 boxplot(d ~ trial, data = orangejuice2)
-plot(d ~ sample, data = orangejuice2, type = "b", pch = ifelse(trial, 1, 19))
+plot(d ~ sample, data = orangejuice2, type = "b", pch = ifelse(trial, 1, 19))
 }
 \keyword{datasets}

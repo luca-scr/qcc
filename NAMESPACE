@@ -36,5 +36,5 @@ S3method("plot", "process.capability")
 export(describe, print.describe)
 S3method("print", "describe")
 
-exportPattern("^[^\\.]")
+# exportPattern("^[^\\.]")
 

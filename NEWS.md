@@ -2,9 +2,10 @@
 
 - Modification to rules for out-of-control points, with the implementation of Western Eletric Rules (WER) which can be actived by users.
 - Several modifications to plots appearance.
-- Added funtion `describe()` to statistically describe variables in a data.frame according to the type numerical or factor.
+- Added funtion `describe()` to statistically describe variables in a data.frame according to the type.
 
 # qcc 2.7 
+
 - Created an html vignette entitled "A quick tour of qcc".
 - Moved R News paper to documentation.
 - Removed demos.
@@ -22,36 +23,44 @@
 - Included a link in the `qcc-package.Rd` to R News article.
 
 # qcc 2.6
+
 - Allow one sided specification limit in `process.capability()`. 
 - Add an example in qcc man page showing how to add warning limits.
 
 # qcc 2.5 
+
 - Bug fix for plotting np-chart with variable sample size.
 - Pdf files (previously included as vignettes) moved to inst/doc with corresponding index.html.
     
 # qcc 2.4
+
 - Added a demo showing how to extend the package by defining a new control chart, i.e. the standardized p chart.
 - Fix a bug in `qcc()` to allow a user defined control chart.
 
 # qcc 2.3
+
 - Fix a bug in pareto.chart when compute percentages based on quantiles for the right axis. Added the argument plot which if sets to FALSE won't produce the chart but only return a frequency summary table.
 - Added R-news article as vignette.
 - Modified the `qcc.option()` function so changing a parameter in `.qcc.options` inside a function will make the modification persistent even outside the function environment.
 - Bug fix in cusum function if a vector is provided as input with `sizes` > 1 but no `std.dev`.      
 
 # qcc 2.2
+
 - Removed code producing plots on process capability.
 
 # qcc 2.1
+
 - Some modifications and bug fixes to `pareto.chart()` function.
 
 # qcc 2.0
+
 - Multivariate control charts (T^2, T^2 for individual observations, Ellipse chart for bivariate data) have been included.
 - `sd.xbar.one` now allows to estimate the standard deviation by using the moving range (default as in the previous versions) or the method suggested by Ryan (2000) using the scaled std deviation of the observations.
 - `cusum()` and `ewma()` have been rewritten to be called directly with data and arguments. No need to create a `qcc` object before.
 - Added a `NAMESPACE`, exporting all functions with names not starting with a dot `.`. 
 
 # qcc 1.3
+
 - Redefined `std.dev` argument in `qcc()` function. It now allows to give a numerical value or a sting identifying a method for estimating the standard deviation of a continuous process variable. Thus, these methods are only available to "xbar", "R", and "S" charts. For details see `help(qcc)`.
 Functions involved in such change are `std.xbar()`, `std.R()`, `std.S()`, whereas the other `sd.*` functions only have "..." argument added.
 - If xbar chart is needed and the number of observations is larger than 25 use "RMSDF" method for computing process standard deviation.
@@ -60,6 +69,7 @@ Functions involved in such change are `std.xbar()`, `std.R()`, `std.S()`, wherea
 - Changed position of control limit labels in Shewhat and CusSum charts.
 
 # qcc 1.2
+
 - Added functions to plot Shewhart g chart (geometric distribution): `stats.g()`, `sd.g()`, `limits.g()`.  
 Contributed by Greg Snow (greg.snow@ihc.com).     
 - Bug fix in `violating.runs()`
@@ -69,9 +79,11 @@ Contributed by Greg Snow (greg.snow@ihc.com).
 - Added qcc_Rnews.pdf paper in doc directory
    
 # qcc 1.1
+
 - Fixed some minor bugs
 - Reworked on par settings to allow multiple figures
 - Corrected typos in `*.Rd` files
    
 # qcc 1.0 
+
 - Package release on CRAN.

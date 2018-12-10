@@ -24,7 +24,7 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 }
 \examples{
 data(circuit)
-describe(circuit[,1:2], by = circuit$trial)
+describe(circuit, by = trial)
 boxplot(x/size ~ trial, data = circuit)
 circuit <- transform(circuit, sample = seq(nrow(circuit)))
 plot(x/size ~ sample, data = circuit, type="b")

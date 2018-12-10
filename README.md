@@ -1,24 +1,21 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # qcc
 
-An R package for **quality control charting and statistical process
-control**.
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/qcc)](https://cran.r-project.org/package=qcc)
+[![CRAN\_MonthlyDownloads](http://cranlogs.r-pkg.org/badges/qcc)](https://cran.r-project.org/package=qcc)
+
+<!-- 
+# TODO: logo
+<img src="man/figures/logo.png" align="right" width="100px " alt=""/>
+-->
+
+An [R](https://www.r-project.org/) package for **quality control charting and statistical process control**.
 
 <center>
-
-<img src="images/qcc_ani.gif" alt="qcc animation" style="width: 70%" />
-
+<img src="man/figures/qcc_ani.gif" alt="qcc animation" style="width: 70%" />
 </center>
-
 <br>
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/GA)](https://cran.r-project.org/package=GA)
-[![CRAN\_MonthlyDownloads](http://cranlogs.r-pkg.org/badges/GA)](https://cran.r-project.org/package=GA)
-
-The **qcc** package provides quality control tools for statistical
-process control:
+The **qcc** package provides quality control tools for statistical process control:
 
   - Shewhart quality control charts for continuous, attribute and count
     data.
@@ -45,21 +42,14 @@ devtools::install_github("luca-scr/qcc")
 
 ## Usage
 
-Usage of the main functions and some examples are included in the
-following paper:
-
-Scrucca, L. (2004) qcc: an R package for quality control charting and
-statistical process control. *R News* 4/1, 11-17.
-<https://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf>
-
-which is available in the **Vignettes and other documentation** section
-of the help pages.
-
-See also the vignette *A quick tour of qcc*, which is available as
+Usage of the main functions and some examples are included in Scrucca (2004). 
+The vignette *A quick tour of qcc* is also available with the command:
 
 ``` r
 vignette("qcc")
 ```
+
+or through the GitHub web page of the package at <https://luca-scr.github.io/qcc/>.
 
 Note that if the package is installed from GitHub the vignette is not
 automatically created. However, it can be created when installing from
@@ -69,5 +59,10 @@ GitHub with the code:
 devtools::install_github("luca-scr/qcc", build_vignettes = TRUE)
 ```
 
-The vignette is also available in the *Get Started* section on the
-GitHub web page of the package at <https://luca-scr.github.io/qcc/>.
+## References
+
+Montgomery, D.C. (2009) *Introduction to Statistical Quality Control*, 6th ed. New York: John Wiley & Sons.
+
+Scrucca, L. (2004) [qcc: an R package for quality control charting and
+statistical process control](http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf). *R News* 4/1, 11-17. 
+

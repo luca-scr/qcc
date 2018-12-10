@@ -1,0 +1,19 @@
+a {
+  color: #2780e3;
+  text-decoration: none
+}
+
+a:hover, a:focus {
+  color: #165ba8;
+  text-decoration: underline;
+}
+
+.fl      {color: #1514b5;}
+.fu      {color: #000000;} /* function */
+.ch,.st  {color: #036a07;} /* string */
+.kw      {color: #264D66;} /* keyword */
+.co      {color: #888888;} /* comment */
+
+.message { color: black;   font-weight: bolder;}
+.error   { color: red;     font-weight: bolder;}
+.warning { color: orange;  font-weight: bolder;}

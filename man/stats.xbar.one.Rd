@@ -22,10 +22,9 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
 \details{
 Methods  available for estimating the process standard deviation:
-\tabular{ll}{
-Method \tab Description \cr
-\code{"MR"} \tab moving range: this is estimate is based on the scaled mean of moving ranges \cr
-\code{"SD"} \tab sample standard deviation: this estimate is defined as sd(x)/cd(n), where n = number of individual measurements x.
+\itemize{
+\item{\code{"MR"} = moving range:} this is estimate is based on the scaled mean of moving ranges
+\item{\code{"SD"} = sample standard deviation:} this estimate is defined as \code{sd(x)/cd(n)}, where \code{n} is the  number of individual measurements of \code{x}.
 }
 }
 \value{

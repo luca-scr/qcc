@@ -24,7 +24,7 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 }
 \examples{
 data(pistonrings)
-describe(pistonrings[,1:2], by = pistonrings$trial)
+describe(pistonrings, by = trial)
 boxplot(diameter ~ trial, data = pistonrings)
 plot(diameter ~ sample, data = pistonrings, cex=0.7)
 with(pistonrings, lines(tapply(diameter,sample,mean)))

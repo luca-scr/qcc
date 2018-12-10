@@ -30,7 +30,7 @@ For individual observations, where each sample has a single observation, users c
 \item{type}{a character string specifying the type of chart:
 
 \tabular{ll}{
-            \tab Chart description \cr
+             \tab Chart description \cr
 \code{"T2"} \tab Hotelling \eqn{T^2} chart for subgrouped data \cr
 \code{"T2.single"} \tab Hotelling \eqn{T^2} chart for individual observations \cr
 }

@@ -1,4 +1,5 @@
 .DS_Store
+.Rhistory
 ^misc$
 aux$
 log$
@@ -6,9 +7,7 @@ log$
 ^.*\.Rproj$
 ^Makefile$
 ^revdep$
-^README\.Rmd$
-^README-.*\.png$
+^cran-comments\.md$
 ^docs$
-^images$
-pkgdown.md
-_pkgdown.yaml
+^pkgdown$
+^cran-comments\.md$

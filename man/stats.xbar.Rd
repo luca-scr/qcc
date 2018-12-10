@@ -32,14 +32,14 @@ The following methods are available for estimating the process standard deviatio
 }
 
 Depending on the chart, a method may be available or not, or set as the default according to the following table:
-\tabular{lcccc}{
-Method \tab\tab \code{"xbar"} \tab \code{"R"} \tab \code{"S"} \cr
-\code{"UWAVE-R"} \tab\tab default \tab default \tab not available \cr
-\code{"UWAVE-SD"} \tab\tab  \tab not available \tab default \cr
-\code{"MVLUE-R"} \tab\tab \tab \tab not available  \cr
-\code{"MVLUE-SD"} \tab\tab \tab not available  \tab \cr
-\code{"RMSDF"} \tab\tab \tab not available \tab
-}
+%\tabular{lcccc}{
+%Method \tab\tab \code{"xbar"} \tab \code{"R"} \tab \code{"S"} \cr
+%\code{"UWAVE-R"} \tab\tab default \tab default \tab not available \cr
+%\code{"UWAVE-SD"} \tab\tab  \tab not available \tab default \cr
+%\code{"MVLUE-R"} \tab\tab \tab \tab not available  \cr
+%\code{"MVLUE-SD"} \tab\tab \tab not available  \tab \cr
+%\code{"RMSDF"} \tab\tab \tab not available \tab \cr
+%}
 
 Detailed definitions of formulae implemented are available in the SAS/QC User's Guide.
 }

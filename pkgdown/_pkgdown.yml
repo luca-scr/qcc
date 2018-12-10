@@ -1,0 +1,31 @@
+title: qcc
+
+url: https://github.com/luca-scr/qcc
+
+template:
+  params:
+    bootswatch: sandstone
+
+navbar:
+  left:
+    - text: "Vignette"
+      href: articles/qcc.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: "News"
+      href: news/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/luca-scr/qcc
+     
+figures:
+  dev: grDevices::png
+  dpi: 72
+  dev.args: []
+  fig.ext: png
+  fig.width: 7
+  fig.height: 6
+
+authors:
+  Luca Scrucca:
+    href: http://www.stat.unipg.it/luca
