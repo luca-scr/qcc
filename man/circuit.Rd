@@ -10,8 +10,9 @@ The last 20 samples are further samples collected on inspection units (each form
 }
 \usage{data(circuit)}
 \format{
-  A data frame with 46 observations on the following 3 variables.
+  A data frame with 46 observations on the following 4 variables.
   \describe{
+    \item{sample}{sample number}
     \item{x}{number of defectives in 100 printed circuit boards (inspection unit)}
     \item{size}{sample size}
     \item{trial}{trial sample indicator (TRUE/FALSE)}
@@ -26,7 +27,6 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 data(circuit)
 describe(circuit, by = trial)
 boxplot(x/size ~ trial, data = circuit)
-circuit <- transform(circuit, sample = seq(nrow(circuit)))
 plot(x/size ~ sample, data = circuit, type="b")
 }
 \keyword{datasets}

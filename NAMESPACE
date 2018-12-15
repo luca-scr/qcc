@@ -33,8 +33,11 @@ S3method("print", "process.capability")
 S3method("summary", "process.capability")
 S3method("plot", "process.capability")
   
+export(qcc.groups, qcc.options)
+       
 export(describe, print.describe)
 S3method("print", "describe")
 
-# exportPattern("^[^\\.]")
+exportPattern("^[^\\.]")
+# TODO: check what is exported and include directly
 

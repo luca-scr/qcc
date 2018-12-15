@@ -120,7 +120,8 @@ The last 20 samples are further samples collected on inspection units (each form
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 46 observations on the following 3 variables.</p><dl class='dl-horizontal'>
+    <p>A data frame with 46 observations on the following 4 variables.</p><dl class='dl-horizontal'>
+    <dt>sample</dt><dd><p>sample number</p></dd>
     <dt>x</dt><dd><p>number of defectives in 100 printed circuit boards (inspection unit)</p></dd>
     <dt>size</dt><dd><p>sample size</p></dd>
     <dt>trial</dt><dd><p>trial sample indicator (TRUE/FALSE)</p></dd>
@@ -135,16 +136,17 @@ The last 20 samples are further samples collected on inspection units (each form
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)
 <span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>circuit</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ───────────────────────────────────────────────────────────────── 
 #&gt; 
-#&gt;      Obs  Mean Std.Dev. Min Max
-#&gt; x     20  18.3    4.714   9  28
-#&gt; size  20 100.0    0.000 100 100
+#&gt;        Obs  Mean Std.Dev. Min Max
+#&gt; sample  20  36.5    5.916  27  46
+#&gt; x       20  18.3    4.714   9  28
+#&gt; size    20 100.0    0.000 100 100
 #&gt; 
 #&gt; ── trial = TRUE ────────────────────────────────────────────────────────────────── 
 #&gt; 
-#&gt;      Obs   Mean Std.Dev. Min Max
-#&gt; x     26  19.85    7.165   5  39
-#&gt; size  26 100.00    0.000 100 100</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>)</div><div class='img'><img src='circuit-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='no'>circuit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/transform'>transform</a></span>(<span class='no'>circuit</span>, <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>circuit</span>)))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"b"</span>)</div><div class='img'><img src='circuit-2.png' alt='' width='504' height='432' /></div></pre>
+#&gt;        Obs   Mean Std.Dev. Min Max
+#&gt; sample  26  13.50    7.649   1  26
+#&gt; x       26  19.85    7.165   5  39
+#&gt; size    26 100.00    0.000 100 100</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>)</div><div class='img'><img src='circuit-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"b"</span>)</div><div class='img'><img src='circuit-2.png' alt='' width='504' height='432' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

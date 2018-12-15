@@ -18,7 +18,7 @@ library(knitr)
 opts_chunk$set(fig.align = "center", 
                out.width = "90%",
                fig.width = 6, fig.height = 5,
-               dev.args=list(pointsize=10),
+               dev.args = list(pointsize=10),
                par = TRUE, # needed for setting hook 
                collapse = TRUE, # collapse input & ouput code in chunks
                warning = FALSE)
@@ -47,7 +47,7 @@ This vignette is written in R Markdown using the [knitr](https://cran.r-project.
 
 ```{r, message = FALSE, echo=1}
 library(qcc)
-qcc.options(bg.margin = "#F8F8F8")
+# qcc.options(bg.margin = "#F8F8F8")
 cat(qcc:::qccStartupMessage(), sep="")
 ```
 
@@ -57,7 +57,7 @@ cat(qcc:::qccStartupMessage(), sep="")
 
 ```{r}
 data(pistonrings)
-diameter <- with(pistonrings, qcc.groups(diameter, sample))
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 head(diameter)
 
 (q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
@@ -89,7 +89,7 @@ plot(q1, fill = FALSE)
 
 ```{r}
 out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
-diameter2 <- with(pistonrings, qcc.groups(diameter[-out], sample[-out]))
+diameter2 <- qcc.groups(diameter, sample, data = pistonrings[-out,])
 qcc(diameter2[1:25,], type="xbar")
 qcc(diameter2[1:25,], type="R")
 ```
@@ -218,7 +218,7 @@ The function `oc.curves()` is a generic function which calls the proper function
 
 ```{r}
 data(pistonrings)
-diameter <- with(pistonrings, qcc.groups(diameter, sample))
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 q <- qcc(diameter, type="xbar", nsigmas=3, plot=FALSE)
 beta <- oc.curves(q)
 round(beta, digits=4)
@@ -238,7 +238,7 @@ round(beta, digits=4)
 
 ```{r}
 data(pistonrings)
-diameter <- with(pistonrings, qcc.groups(diameter, sample))
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 
 (q1 <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1))
 (q2 <- cusum(diameter[1:25,], newdata=diameter[26:40,]))
@@ -249,7 +249,7 @@ plot(q2, chart.all=FALSE)
 
 ```{r}
 data(pistonrings)
-diameter <- with(pistonrings, qcc.groups(diameter, sample))
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 
 q1 <- ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 summary(q1)
@@ -268,7 +268,7 @@ summary(q3)
 
 ```{r}
 data(pistonrings)
-diameter <- with(pistonrings, qcc.groups(diameter, sample))
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 
 q1 <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
 process.capability(q1, spec.limits=c(73.95,74.05))

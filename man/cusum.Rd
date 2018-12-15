@@ -15,8 +15,12 @@ cusum(data, sizes, center, std.dev, head.start = 0,
 
 \method{print}{cusum.qcc}(x, digits = getOption("digits"), \dots)
 
-\method{plot}{cusum.qcc}(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
-     label.bounds = c("LDB", "UDB"), title, xlab, ylab, ylim, 
+\method{plot}{cusum.qcc}(x, 
+    add.stats = qcc.options("rules"), 
+    chart.all = qcc.options("chart.all"), 
+    fill = qcc.options("fill"),
+     label.bounds = c("LDB", "UDB"), 
+		 title, xlab, ylab, ylim, 
      axes.las = 0, digits =  getOption("digits"),
      restore.par = TRUE, \dots)
 }
@@ -101,17 +105,20 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ## Grouped-data
 ##
 data(pistonrings)
-attach(pistonrings)
-diameter <- qcc.groups(diameter, sample)
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 
-q <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
-summary(q)
+cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
 
 q <- cusum(diameter[1:25,], newdata=diameter[26:40,])
 summary(q)
 plot(q, chart.all=FALSE)
 
-detach(pistonrings)
+##
+## Individual observations: viscosity data (Montgomery, pag. 242)
+##
+x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 
+33.27, 33.49, 33.20, 33.62, 33.00, 33.54, 33.12, 33.84)
+cusum(x)
 }
 \keyword{htest}
 \keyword{hplot}

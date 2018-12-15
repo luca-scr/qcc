@@ -9,17 +9,22 @@
 mqcc(data, type = c("T2", "T2.single"), center, cov,
      limits = TRUE, pred.limits = FALSE,
      data.name, labels, newdata, newlabels, 
-     confidence.level = (1 - 0.0027)^p, rules = shewhart.rules,
+     confidence.level = (1 - 0.0027)^p, 
+		 rules = shewhart.rules,
      plot = TRUE, \dots)
 
 \method{print}{mqcc}(x, \dots)
 
 \method{summary}{mqcc}(object, digits = getOption("digits"), \dots)
 
-\method{plot}{mqcc}(x, add.stats = TRUE, chart.all = TRUE,
-     label.limits = c("LCL", "UCL"), label.pred.limits = c("LPL", "UPL"),
+\method{plot}{mqcc}(x, 
+     add.stats = qcc.options("rules"), 
+     chart.all = qcc.options("chart.all"), 
+     label.limits = c("LCL", "UCL"), 
+		 label.pred.limits = c("LPL", "UPL"),
      title, xlab, ylab, ylim, axes.las = 0, 
-     digits = getOption("digits"), restore.par = TRUE, \dots)
+     digits = getOption("digits"), 
+		 restore.par = TRUE, \dots)
 }
 
 \arguments{

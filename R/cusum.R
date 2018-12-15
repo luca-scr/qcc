@@ -201,7 +201,10 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
 
 summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 
-plot.cusum.qcc <- function(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
+plot.cusum.qcc <- function(x, 
+                           add.stats = qcc.options("add.stats"), 
+                           chart.all = qcc.options("chart.all"), 
+                           fill = qcc.options("fill"),
                            label.bounds = c("LDB", "UDB"), 
                            title, xlab, ylab, ylim, axes.las = 0,
                            digits = getOption("digits"),

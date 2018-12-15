@@ -249,7 +249,10 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
 summary.qcc <- function(object, ...) print.qcc(object, ...)
 
 
-plot.qcc <- function(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
+plot.qcc <- function(x, 
+                     add.stats = qcc.options("add.stats"), 
+                     chart.all = qcc.options("chart.all"), 
+                     fill = qcc.options("fill"),
                      label.limits = c("LCL ", "UCL"), 
                      title, xlab, ylab, ylim, axes.las = 0,
                      digits = getOption("digits"),
@@ -284,13 +287,15 @@ plot.qcc <- function(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
         }
     }
   
-  if (missing(title))
-  { if (is.null(newstats))
-    main.title <- paste(type, "chart for", data.name)
-  else if (chart.all)
-    main.title <- paste(type, "chart for", data.name, 
-                        "and", newdata.name)
-  else main.title <- paste(type, "chart for", newdata.name) 
+  if(missing(title))
+  { 
+    if(is.null(newstats))
+      main.title <- paste(type, "chart for", data.name)
+    else if(chart.all)
+           main.title <- paste(type, "chart for", data.name, 
+                                "and", newdata.name)
+         else 
+           main.title <- paste(type, "chart for", newdata.name) 
   }
   else main.title <- paste(title)
   cex.labels <- par("cex")*qcc.options("cex")

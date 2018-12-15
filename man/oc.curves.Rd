@@ -73,30 +73,22 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)
-attach(pistonrings)
-diameter <- qcc.groups(diameter, sample)
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 beta <- oc.curves.xbar(qcc(diameter, type="xbar", nsigmas=3, plot=FALSE))
 print(round(beta, digits=4))
 # or to identify points on the plot use
 \dontrun{oc.curves.xbar(qcc(diameter, type="xbar", nsigmas=3, plot=FALSE), identify=TRUE)}
-detach(pistonrings)
 
 data(orangejuice)
-attach(orangejuice)
-beta <- oc.curves(qcc(D[trial], sizes=size[trial], type="p", plot=FALSE))
+beta <- with(orangejuice,
+             oc.curves(qcc(D[trial], sizes=size[trial], type="p", plot=FALSE)))
 print(round(beta, digits=4))
-# or to identify points on the plot use
-\dontrun{oc.curves(qcc(D[trial], sizes=size[trial], type="p", plot=FALSE), identify=TRUE)}
-detach(orangejuice)
 
 data(circuit)
-attach(circuit)
-q <- qcc(x[trial], sizes=size[trial], type="c", plot=FALSE)
+q <- with(circuit,
+          qcc(x[trial], sizes=size[trial], type="c", plot=FALSE))
 beta <- oc.curves(q)
 print(round(beta, digits=4))
-# or to identify points on the plot use
-\dontrun{oc.curves(qcc(x[trial], sizes=size[trial], type="c", plot=FALSE), identify=TRUE)}
-detach(circuit)
 }
 \keyword{htest}
 \keyword{hplot}

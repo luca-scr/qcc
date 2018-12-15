@@ -193,7 +193,9 @@ summary.mqcc <- function(object, digits =  getOption("digits"), ...)
   invisible()        
 }
 
-plot.mqcc <- function(x, add.stats = TRUE, chart.all = TRUE, 
+plot.mqcc <- function(x, 
+                      add.stats = qcc.options("add.stats"), 
+                      chart.all = qcc.options("chart.all"), 
                       label.limits = c("LCL", "UCL"),
                       label.pred.limits = c("LPL", "UPL"),
                       title, xlab, ylab, ylim, axes.las = 0,

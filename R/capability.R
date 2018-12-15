@@ -155,7 +155,8 @@ print.process.capability <- function(x, digits = getOption("digits"), ...)
 summary.process.capability <- function(object, ...) 
   print.process.capability(object, ...)
 
-plot.process.capability <- function(x, add.stats = TRUE,
+plot.process.capability <- function(x, 
+                                    add.stats = qcc.options("add.stats"),
                                     breaks = "scott", 
                                     col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
                                     border = "white",

@@ -258,18 +258,57 @@ Several methods are available for estimating the standard deviation. See <code><
 <span class='co'>## Grouped-data</span>
 <span class='co'>##</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attach'>attach</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>)</div><div class='output co'>#&gt; <span class='error'>Error in qcc.groups(diameter, sample): could not find function "qcc.groups"</span></div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in diameter[1:25, ]: incorrect number of dimensions</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='error'>Error in object[[i]]: object of type 'closure' is not subsettable</span></div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span>  <span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in diameter[1:25, ]: incorrect number of dimensions</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='error'>Error in object[[i]]: object of type 'closure' is not subsettable</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='error'>Error in x(x): one of "yes", "no", "ask" or "default" expected.</span></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/detach'>detach</a></span>(<span class='no'>pistonrings</span>)
+<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
 
+<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ewma chart for diameter[1:25, ] 
+#&gt; 
+#&gt; Summary of group statistics:
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
+#&gt; 
+#&gt; Group sample size:  5
+#&gt; Number of groups:  25
+#&gt; Center of group statistics:  74.00118
+#&gt; Standard deviation:  0.009785039 
+#&gt; 
+#&gt; Smoothing parameter: 0.2 
+#&gt; Control limits:
+#&gt;          LCL      UCL
+#&gt; 1   73.99855 74.00380
+#&gt; 2   73.99781 74.00454
+#&gt; ...                  
+#&gt; 25  73.99680 74.00555</div><div class='input'>
+<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; ewma chart for diameter[1:25, ] 
+#&gt; 
+#&gt; Summary of group statistics:
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
+#&gt; 
+#&gt; Group sample size:  5
+#&gt; Number of groups:  25
+#&gt; Center of group statistics:  74.00118
+#&gt; Standard deviation:  0.009785039 
+#&gt; 
+#&gt; Summary of group statistics in diameter[26:40, ]:
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
+#&gt; 
+#&gt; Group sample size:  5
+#&gt; Number of groups:  15 
+#&gt; 
+#&gt; Smoothing parameter: 0.2 
+#&gt; Control limits:
+#&gt;          LCL      UCL
+#&gt; 1   73.99881 74.00354
+#&gt; 2   73.99815 74.00420
+#&gt; ...                  
+#&gt; 40  73.99724 74.00511</div><div class='input'>
 <span class='co'>##</span>
 <span class='co'>## Individual observations: viscosity data (Montgomery, pag. 242)</span>
 <span class='co'>##</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>33.75</span>, <span class='fl'>33.05</span>, <span class='fl'>34</span>, <span class='fl'>33.81</span>, <span class='fl'>33.46</span>, <span class='fl'>34.02</span>, <span class='fl'>33.68</span>,
 <span class='fl'>33.27</span>, <span class='fl'>33.49</span>, <span class='fl'>33.20</span>, <span class='fl'>33.62</span>, <span class='fl'>33.00</span>, <span class='fl'>33.54</span>, <span class='fl'>33.12</span>, <span class='fl'>33.84</span>)
-<span class='no'>q</span> <span class='kw'>&lt;-</span>  <span class='fu'>ewma</span>(<span class='no'>x</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>)</div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; ewma chart for x 
+<span class='fu'>ewma</span>(<span class='no'>x</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>)</div><div class='img'><img src='ewma-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ewma chart for x 
 #&gt; 
 #&gt; Summary of group statistics:
 #&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 

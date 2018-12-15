@@ -8,12 +8,13 @@
 \description{Computes process capability indices for a 'qcc' object of type \code{"xbar"} and plot the histogram.}
 
 \usage{
-process.capability(object,spec.limits, target, std.dev, nsigmas, 
+process.capability(object, spec.limits, target, std.dev, nsigmas, 
                    confidence.level = 0.95, plot = TRUE, \dots)
                    
 \method{print}{process.capability}(x, digits = getOption("digits"), \dots)
 
-\method{plot}{process.capability}(x, add.stats = TRUE,
+\method{plot}{process.capability}(x, 
+     add.stats = qcc.options("rules"), 
      breaks = "scott", 
      col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
      border = "white",
@@ -67,8 +68,7 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)
-attach(pistonrings)
-diameter <- qcc.groups(diameter, sample)
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 q <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
 process.capability(q, spec.limits=c(73.95,74.05))
 process.capability(q, spec.limits=c(73.95,74.05), target=74.02)

@@ -69,7 +69,7 @@
       <h1>A quick tour of qcc</h1>
                         <h4 class="author">Luca Scrucca</h4>
             
-            <h4 class="date">10 Dec 2018</h4>
+            <h4 class="date">15 Dec 2018</h4>
       
       
       <div class="hidden name"><code>qcc.Rmd</code></div>
@@ -107,7 +107,7 @@
 <h2 class="hasAnchor">
 <a href="#x-bar-chart" class="anchor"></a>x-bar chart</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
-<a class="sourceLine" id="cb2-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(pistonrings, <span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample))</a>
+<a class="sourceLine" id="cb2-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(diameter)</a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="co">##     [,1]   [,2]   [,3]   [,4]   [,5]</span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="co">## 1 74.030 74.002 74.019 73.992 74.008</span></a>
@@ -243,7 +243,7 @@ plot(q1, fill = FALSE)</a></code></pre>
 <h3 class="hasAnchor">
 <a href="#variable-control-limits" class="anchor"></a>Variable control limits</h3>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">out &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">64</span>, <span class="dv">65</span>, <span class="dv">74</span>, <span class="dv">75</span>, <span class="dv">85</span>, <span class="dv">99</span>, <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb15-2" title="2">diameter2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(pistonrings, <span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter[<span class="op">-</span>out], sample[<span class="op">-</span>out]))</a>
+<a class="sourceLine" id="cb15-2" title="2">diameter2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings[<span class="op">-</span>out,])</a>
 <a class="sourceLine" id="cb15-3" title="3"><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(diameter2[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code><a href="../reference/qcc.html">## xbar chart for diameter2[1:25, ] 
@@ -652,7 +652,7 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 <a href="#operating-characteristic-curves" class="anchor"></a>Operating Characteristic Curves</h1>
 <p>An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. The function <code><a href="../reference/oc.curves.html">oc.curves()</a></code> is a generic function which calls the proper function depending on the type of input <code>'qcc'</code> object.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
-<a class="sourceLine" id="cb45-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(pistonrings, <span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample))</a>
+<a class="sourceLine" id="cb45-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb45-3" title="3">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(diameter, <span class="dt">type=</span><span class="st">"xbar"</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb45-4" title="4">beta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/oc.curves.html">oc.curves</a></span>(q)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;"></p>
@@ -813,7 +813,7 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 <h1 class="hasAnchor">
 <a href="#cusum-chart" class="anchor"></a>Cusum chart</h1>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
-<a class="sourceLine" id="cb49-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(pistonrings, <span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample))</a>
+<a class="sourceLine" id="cb49-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb49-3" title="3"></a>
 <a class="sourceLine" id="cb49-4" title="4">(q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cusum.html">cusum</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">decision.interval =</span> <span class="dv">4</span>, <span class="dt">se.shift =</span> <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-20-1.png" width="90%" style="display: block; margin: auto;"></p>
@@ -859,7 +859,7 @@ plot(q2, chart.all=FALSE)</a></code></pre>
 <h1 class="hasAnchor">
 <a href="#ewma" class="anchor"></a>EWMA</h1>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
-<a class="sourceLine" id="cb52-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(pistonrings, <span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample))</a>
+<a class="sourceLine" id="cb52-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb52-3" title="3"></a>
 <a class="sourceLine" id="cb52-4" title="4">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ewma.html">ewma</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">lambda=</span><span class="fl">0.2</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;"></p>
@@ -941,7 +941,7 @@ plot(q2, chart.all=FALSE)</a></code></pre>
 <h1 class="hasAnchor">
 <a href="#process-capability-analysis" class="anchor"></a>Process capability analysis</h1>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
-<a class="sourceLine" id="cb56-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(pistonrings, <span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample))</a>
+<a class="sourceLine" id="cb56-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.groups.html">qcc.groups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb56-3" title="3"></a>
 <a class="sourceLine" id="cb56-4" title="4">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">type=</span><span class="st">"xbar"</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb56-5" title="5"><span class="kw"><a href="../reference/process.capability.html">process.capability</a></span>(q1, <span class="dt">spec.limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">73.95</span>,<span class="fl">74.05</span>))</a></code></pre></div>

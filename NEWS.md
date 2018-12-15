@@ -3,6 +3,9 @@
 - Modification to rules for out-of-control points, with the implementation of Western Eletric Rules (WER) which can be actived by users.
 - Several modifications to plots appearance.
 - Added funtion `describe()` to statistically describe variables in a data.frame according to the type.
+- `qcc.groups()` now has optional argument `data` to extract variables from 
+a data.frame.
+- removed usage of `attach/detach` from all examples and documentation.
 
 # qcc 2.7 
 

@@ -115,7 +115,8 @@
     <pre class="usage">mqcc(data, type = c("T2", "T2.single"), center, cov,
      limits = TRUE, pred.limits = FALSE,
      data.name, labels, newdata, newlabels, 
-     confidence.level = (1 - 0.0027)^p, rules = shewhart.rules,
+     confidence.level = (1 - 0.0027)^p, 
+		 rules = shewhart.rules,
      plot = TRUE, &#8230;)
 
 # S3 method for mqcc
@@ -125,10 +126,14 @@ print(x, &#8230;)
 summary(object, digits = getOption("digits"), &#8230;)
 
 # S3 method for mqcc
-plot(x, add.stats = TRUE, chart.all = TRUE,
-     label.limits = c("LCL", "UCL"), label.pred.limits = c("LPL", "UPL"),
+plot(x, 
+     add.stats = qcc.options("rules"), 
+     chart.all = qcc.options("chart.all"), 
+     label.limits = c("LCL", "UCL"), 
+		 label.pred.limits = c("LPL", "UPL"),
      title, xlab, ylab, ylim, axes.las = 0, 
-     digits = getOption("digits"), restore.par = TRUE, &#8230;)</pre>
+     digits = getOption("digits"), 
+		 restore.par = TRUE, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -320,11 +325,11 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt; 
 #&gt; Control limits:
 #&gt;  LCL      UCL
-#&gt;    0 11.03976</div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ellipseChart(q): could not find function "ellipseChart"</span></div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span>(<span class='no'>q</span>, <span class='kw'>show.id</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ellipseChart(q, show.id = TRUE): could not find function "ellipseChart"</span></div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>X</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-2.png' alt='' width='504' height='432' /></div><div class='input'>
+#&gt;    0 11.03976</div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span>(<span class='no'>q</span>)</div><div class='img'><img src='mqcc-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span>(<span class='no'>q</span>, <span class='kw'>show.id</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-3.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>X</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-4.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># Ryan (2000) discussed Xbar-charts for single variables computed adjusting the </span>
 <span class='co'># confidence level of the T^2 chart:</span>
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>))</div><div class='img'><img src='mqcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q1</span>)</div><div class='output co'>#&gt; xbar chart for X1 
+<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>))</div><div class='img'><img src='mqcc-5.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q1</span>)</div><div class='output co'>#&gt; xbar chart for X1 
 #&gt; 
 #&gt; Summary of group statistics:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -337,7 +342,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt; 
 #&gt; Control limits:
 #&gt;       LCL      UCL
-#&gt;  37.97352 82.77648</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>))</div><div class='img'><img src='mqcc-4.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q2</span>)</div><div class='output co'>#&gt; xbar chart for X2 
+#&gt;  37.97352 82.77648</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>))</div><div class='img'><img src='mqcc-6.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q2</span>)</div><div class='output co'>#&gt; xbar chart for X2 
 #&gt; 
 #&gt; Summary of group statistics:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -359,7 +364,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
      <span class='no'>Xnew</span>$<span class='no'>X1</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>1</span>]
      <span class='no'>Xnew</span>$<span class='no'>X2</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>2</span>]
    }
-<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>X</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>Xnew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-5.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
+<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>X</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>Xnew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-7.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; mqcc(data = X, type = "T2", pred.limits = TRUE, newdata = Xnew)
 #&gt; 
@@ -404,7 +409,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
      <span class='no'>Xnew</span>$<span class='no'>X1</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>1</span>]
      <span class='no'>Xnew</span>$<span class='no'>X2</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>2</span>]
    }
-<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>X</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>Xnew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-6.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
+<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>X</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>Xnew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-8.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; mqcc(data = X, type = "T2", pred.limits = TRUE, newdata = Xnew)
 #&gt; 
@@ -448,7 +453,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>boiler</span>)
 
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>)</div><div class='img'><img src='mqcc-7.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; 
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>)</div><div class='img'><img src='mqcc-9.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; mqcc(data = boiler, type = "T2.single", confidence.level = 0.999)
 #&gt; 
@@ -493,7 +498,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 <span class='co'># generate new "in control" data</span>
 <span class='no'>boilerNew</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>mvrnorm</a></span>(<span class='fl'>10</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>center</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>cov</span>)
 <span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>,
-           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>boilerNew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-8.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
+           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>boilerNew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-10.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; mqcc(data = boiler, type = "T2.single", pred.limits = TRUE, newdata = boilerNew,     confidence.level = 0.999)
 #&gt; 
@@ -549,7 +554,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 <span class='co'># generate new "out of control" data</span>
 <span class='no'>boilerNew</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>mvrnorm</a></span>(<span class='fl'>10</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>1.01</span>*<span class='no'>q</span>$<span class='no'>center</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>cov</span>)
 <span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>,
-           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>boilerNew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-9.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
+           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>boilerNew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-11.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; mqcc(data = boiler, type = "T2.single", pred.limits = TRUE, newdata = boilerNew,     confidence.level = 0.999)
 #&gt; 
@@ -605,7 +610,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 <span class='co'># provides "robust" estimates of means and covariance matrix</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MASS</span>)
 <span class='no'>rob</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/MASS/topics/cov.rob'>cov.rob</a></span>(<span class='no'>boiler</span>)
-<span class='no'>qrob</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='no'>rob</span>$<span class='no'>center</span>, <span class='kw'>cov</span> <span class='kw'>=</span> <span class='no'>rob</span>$<span class='no'>cov</span>)</div><div class='img'><img src='mqcc-10.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qrob</span>)</div><div class='output co'>#&gt; 
+<span class='no'>qrob</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='no'>rob</span>$<span class='no'>center</span>, <span class='kw'>cov</span> <span class='kw'>=</span> <span class='no'>rob</span>$<span class='no'>cov</span>)</div><div class='img'><img src='mqcc-12.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>qrob</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; mqcc(data = boiler, type = "T2.single", center = rob$center,     cov = rob$cov)
 #&gt; 

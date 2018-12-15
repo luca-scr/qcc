@@ -4,11 +4,17 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-qcc.groups <- function(data, sample)
+qcc.groups <- function(x, sample, data)
 {
-  if(length(data)!=length(sample))
-    stop("data and sample must be vectors of equal length")
-  x <- lapply(split(data, sample), as.vector)
+  if(!missing(data))
+  {
+    data <- as.data.frame(data)
+    x <- data[[deparse(substitute(x))]]
+    sample <- data[[deparse(substitute(sample))]]
+  }
+  if(length(x)!=length(sample))
+    stop("x and sample must be vectors of equal length")
+  x <- lapply(split(x, sample), as.vector)
   lx <- sapply(x, length)
   for(i in which(lx != max(lx)))
       x[[i]] <- c(x[[i]], rep(NA, max(lx)-lx[i]))
@@ -131,12 +137,16 @@ qcc.options <- function (...)
              run.length = 7),
   rules = list(col = c("#F03B20", "#FD8D3C", "#FEB24C", "#FED976"), 
                pch = c(19, 15, 17, 20)),
-  zones = list(fill = "dodgerblue3",
+  zones = list(fill = "#81a1c1",
                lty = c(2,2,2), 
                col = grey(c(0.1, 0.4, 0.7))),
   bg.margin = grey(0.915),
   bg.figure = "white",
   cex = 1,
   font.stats = 1,
-  cex.stats = 0.9)
+  cex.stats = 0.9,
+  add.stats = TRUE,
+  chart.all = TRUE, 
+  fill = TRUE)
+  
 

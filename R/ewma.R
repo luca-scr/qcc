@@ -216,8 +216,11 @@ print.ewma.qcc <- function(x, digits =  getOption("digits"), ...)
 summary.ewma.qcc <- function(object, ...) print.ewma.qcc(object, ...)
 
 
-plot.ewma.qcc <- function(x, add.stats = TRUE, chart.all = TRUE, 
-                          fill = TRUE, label.limits = c("LCL", "UCL"), 
+plot.ewma.qcc <- function(x, 
+                          add.stats = qcc.options("add.stats"), 
+                          chart.all = qcc.options("chart.all"), 
+                          fill = qcc.options("fill"), 
+                          label.limits = c("LCL", "UCL"), 
                           title, xlab, ylab, ylim, axes.las = 0,
                           digits = getOption("digits"),
                           restore.par = TRUE, ...) 

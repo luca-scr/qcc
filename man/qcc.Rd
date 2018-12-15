@@ -18,8 +18,12 @@ qcc(data,
 
 \method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
-\method{plot}{qcc}(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
-     label.limits = c("LCL ", "UCL"), title, xlab, ylab, ylim, 
+\method{plot}{qcc}(x,
+	   add.stats = qcc.options("rules"), 
+     chart.all = qcc.options("chart.all"), 
+     fill = qcc.options("fill"),
+     label.limits = c("LCL ", "UCL"), 
+		 title, xlab, ylab, ylim, 
      axes.las = 0, digits = getOption("digits"),
      restore.par = TRUE, \dots)
 }
@@ -132,8 +136,7 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ##  Continuous data 
 ##
 data(pistonrings)
-attach(pistonrings)
-diameter <- qcc.groups(diameter, sample)
+diameter <- qcc.groups(diameter, sample, data = pistonrings)
 
 qcc(diameter[1:25,], type="xbar")
 qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
@@ -156,7 +159,7 @@ abline(h = warn.limits, lty = 3, col = "chocolate")
 
 # variable control limits
 out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
-diameter <- qcc.groups(pistonrings$diameter[-out], sample[-out])
+diameter <- qcc.groups(diameter, sample, data = pistonrings[-out,])
 qcc(diameter[1:25,], type="xbar")
 qcc(diameter[1:25,], type="R")
 qcc(diameter[1:25,], type="S")
@@ -164,65 +167,63 @@ qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
 qcc(diameter[1:25,], type="R", newdata=diameter[26:40,])
 qcc(diameter[1:25,], type="S", newdata=diameter[26:40,])
 
-detach(pistonrings)
-
 ##
 ##  Attribute data 
 ##
 
 data(orangejuice)
-attach(orangejuice)
-qcc(D[trial], sizes=size[trial], type="p")
+
+with(orangejuice, 
+     qcc(D[trial], sizes=size[trial], type="p"))
 
 # remove out-of-control points (see help(orangejuice) for the reasons)
-inc <- setdiff(which(trial), c(15,23))
-q1 <- qcc(D[inc], sizes=size[inc], type="p")
-qcc(D[inc], sizes=size[inc], type="p", newdata=D[!trial], newsizes=size[!trial]) 
-detach(orangejuice)
+outofctrl <- c(15,23)
+q1 <- with(orangejuice[-outofctrl,], 
+           qcc(D[trial], sizes=size[trial], type="p"))
+with(orangejuice[-outofctrl,], 
+     qcc(D[trial], sizes=size[trial], type="p",
+         newdata=D[!trial], newsizes=size[!trial]))
 
 data(orangejuice2)
-attach(orangejuice2)
-names(D) <- sample
-qcc(D[trial], sizes=size[trial], type="p")
-q2 <- qcc(D[trial], sizes=size[trial], type="p", newdata=D[!trial], newsizes=size[!trial])
-detach(orangejuice2)
-
-# put on the same graph the two orange juice samples
-oldpar <- par(no.readonly = TRUE)
-par(mfrow=c(1,2), mar=c(5,5,3,0))
-plot(q1, title="First samples", ylim=c(0,0.5), add.stats=FALSE, restore.par=FALSE)
-par("mar"=c(5,0,3,3), yaxt="n")
-plot(q2, title="Second samples", add.stats=FALSE, ylim=c(0,0.5))
-par(oldpar)
+with(orangejuice2, 
+     qcc(D[trial], sizes=size[trial], type="p", labels = sample[trial]))
+q2 <- with(orangejuice2, 
+           qcc(D[trial], sizes=size[trial], type="p", labels = sample[trial],
+               newdata=D[!trial], newsizes=size[!trial], newlabels = sample[!trial]))
 
 data(circuit)
-attach(circuit)
-qcc(x[trial], sizes=size[trial], type="c")
+with(circuit, qcc(x[trial], sizes=size[trial], type="c"))
+
 # remove out-of-control points (see help(circuit) for the reasons)
-inc <- setdiff(which(trial), c(6,20))
-qcc(x[inc], sizes=size[inc], type="c", labels=inc)
-qcc(x[inc], sizes=size[inc], type="c", labels=inc, 
-    newdata=x[!trial], newsizes=size[!trial], newlabels=which(!trial))
-qcc(x[inc], sizes=size[inc], type="u", labels=inc, 
-    newdata=x[!trial], newsizes=size[!trial], newlabels=which(!trial))
-detach(circuit)
+outofctrl <- c(15,23)
+q1 <- with(orangejuice[-outofctrl,], 
+           qcc(D[trial], sizes=size[trial], type="p"))
+with(orangejuice[-outofctrl,], 
+     qcc(D[trial], sizes=size[trial], type="p",
+         newdata=D[!trial], newsizes=size[!trial]))
+
+outofctrl <- c(6,20)
+with(circuit[-outofctrl,], 
+     qcc(x[trial], sizes=size[trial], type="c", labels = sample[trial]))
+with(circuit[-outofctrl,], 
+     qcc(x[trial], sizes=size[trial], type="c", labels = sample[trial],
+         newdata = x[!trial], newsizes = size[!trial], newlabels = sample[!trial]))
+with(circuit[-outofctrl,], 
+     qcc(x[trial], sizes=size[trial], type="u", labels = sample[trial],
+         newdata = x[!trial], newsizes = size[!trial], newlabels = sample[!trial]))
 
 data(pcmanufact)
-attach(pcmanufact)
-qcc(x, sizes=size, type="u")
-detach(pcmanufact)
+with(pcmanufact, qcc(x, sizes=size, type="u"))
 
 data(dyedcloth)
-attach(dyedcloth)
-qcc(x, sizes=size, type="u")
+# variable control limits
+with(dyedcloth, qcc(x, sizes=size, type="u"))
 # standardized control chart
-q <- qcc(x, sizes=size, type="u", plot=FALSE)
+q <- with(dyedcloth, qcc(x, sizes=size, type="u", plot=FALSE))
 z <- (q$statistics - q$center)/sqrt(q$center/q$size)
-plot(z,  type="o", ylim=range(z,3,-3), pch=16)
-abline(h=0, lty=2)
-abline(h=c(-3,3), lty=2)
-detach(dyedcloth)
-
+qcc(z, sizes = 1, type = "u", title = "Standardized u chart",
+    center = 0, std.dev = 1, limits = c(-3,3))
+    
 ##
 ##  Continuous one-at-time data 
 ##
