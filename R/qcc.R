@@ -306,7 +306,7 @@ plot.qcc <- function(x,
   par(bg  = qcc.options("bg.margin"), 
       cex = oldpar$cex * qcc.options("cex"),
       # mgp = c(2.1, 0.8, 0),
-      mar = c(4.1,4.1,1.1,2.1),
+      mar = pmax(par("mar"), c(4.1,4.1,1.1,2.1), na.rm=TRUE),
       oma = if(add.stats) c(3.5*cex.stats, 0, 1.5*cex.labels, 0) 
             else          c(0, 0, 1.5*cex.labels, 0))
   
