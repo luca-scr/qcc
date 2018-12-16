@@ -14,7 +14,7 @@ process.capability(object, spec.limits, target, std.dev, nsigmas,
 \method{print}{process.capability}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{process.capability}(x, 
-     add.stats = qcc.options("rules"), 
+     add.stats = qcc.options("add.stats"), 
      breaks = "scott", 
      col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
      border = "white",

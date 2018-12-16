@@ -16,12 +16,12 @@ cusum(data, sizes, center, std.dev, head.start = 0,
 \method{print}{cusum.qcc}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{cusum.qcc}(x, 
-    add.stats = qcc.options("rules"), 
-    chart.all = qcc.options("chart.all"), 
-    fill = qcc.options("fill"),
-     label.bounds = c("LDB", "UDB"), 
-		 title, xlab, ylab, ylim, 
-     axes.las = 0, digits =  getOption("digits"),
+     add.stats = qcc.options("add.stats"), 
+     chart.all = qcc.options("chart.all"), 
+     fill = qcc.options("fill"),
+     label.bounds = c("LDB", "UDB"),
+     title, xlab, ylab, ylim, axes.las = 0, 
+     digits =  getOption("digits"),
      restore.par = TRUE, \dots)
 }
 \arguments{
@@ -91,7 +91,7 @@ Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Contro
 
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
 
-Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
+Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 
 Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17.
 
@@ -114,11 +114,12 @@ summary(q)
 plot(q, chart.all=FALSE)
 
 ##
-## Individual observations: viscosity data (Montgomery, pag. 242)
+## Individual observations
 ##
-x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 
-33.27, 33.49, 33.20, 33.62, 33.00, 33.54, 33.12, 33.84)
-cusum(x)
+data(viscosity)
+with(viscosity, 
+     cusum(viscosity[trial], labels = batch[trial],
+           newdata = viscosity[!trial], newlabels = batch[!trial]))
 }
 \keyword{htest}
 \keyword{hplot}

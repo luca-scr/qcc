@@ -69,7 +69,7 @@
       <h1>A quick tour of qcc</h1>
                         <h4 class="author">Luca Scrucca</h4>
             
-            <h4 class="date">15 Dec 2018</h4>
+            <h4 class="date">16 Dec 2018</h4>
       
       
       <div class="hidden name"><code>qcc.Rmd</code></div>
@@ -511,57 +511,71 @@ with(circuit, qcc(x[inc], sizes=size[inc], type="u", labels=inc,
 <div id="continuous-one-at-time-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#continuous-one-at-time-data" class="anchor"></a>Continuous one-at-time data</h3>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="co"># viscosity data (Montgomery, pag. 242)</span></a>
-<a class="sourceLine" id="cb35-2" title="2">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">33.75</span>, <span class="fl">33.05</span>, <span class="dv">34</span>, <span class="fl">33.81</span>, <span class="fl">33.46</span>, <span class="fl">34.02</span>, <span class="fl">33.68</span>, <span class="fl">33.27</span>, <span class="fl">33.49</span>, <span class="fl">33.20</span>,</a>
-<a class="sourceLine" id="cb35-3" title="3">       <span class="fl">33.62</span>, <span class="fl">33.00</span>, <span class="fl">33.54</span>, <span class="fl">33.12</span>, <span class="fl">33.84</span>)</a>
-<a class="sourceLine" id="cb35-4" title="4"><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar.one"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(viscosity)</a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(viscosity, </a>
+<a class="sourceLine" id="cb35-3" title="3">     <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(viscosity[trial], <span class="dt">type =</span> <span class="st">"xbar.one"</span>, <span class="dt">labels =</span> batch[trial]))</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;"></p>
-<pre><code><a href="../reference/qcc.html">## xbar.one chart for x 
+<pre><code><a href="https://www.rdocumentation.org/packages/base/topics/with">## xbar.one chart for viscosity[trial] 
 ## 
 ## Summary of group statistics:
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## 33.00000 33.23500 33.54000 33.52333 33.78000 34.02000 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 33.2700 33.7450 34.0350 34.0880 34.1375 35.9600 
 ## 
 ## Group sample size          = 1
-## Number of groups           = 15
-## Center of group statistics = 33.52333
-## Standard deviation         = 0.4261651 
+## Number of groups           = 20
+## Center of group statistics = 34.088
+## Standard deviation         = 0.5076521 
 ## 
 ## Control limits:
 ##       LCL      UCL
-##  32.24484 34.80183
-qcc(x, type="xbar.one", std.dev = "SD")</a></code></pre>
+##  32.56504 35.61096
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
+         std.dev = "SD"))</a></code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-14-2.png" width="90%" style="display: block; margin: auto;"></p>
-<pre><code><a href="../reference/qcc.html">## xbar.one chart for x 
+<pre><code>## xbar.one chart for viscosity[trial] 
 ## 
 ## Summary of group statistics:
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## 33.00000 33.23500 33.54000 33.52333 33.78000 34.02000 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 33.2700 33.7450 34.0350 34.0880 34.1375 35.9600 
 ## 
 ## Group sample size          = 1
-## Number of groups           = 15
-## Center of group statistics = 33.52333
-## Standard deviation         = 0.3415928 
+## Number of groups           = 20
+## Center of group statistics = 34.088
+## Standard deviation         = 0.5769854 
 ## 
 ## Control limits:
 ##       LCL      UCL
-##  32.49855 34.54811
-qcc(x, type="xbar.one", rules = 1:4)</a></code></pre>
+##  32.35704 35.81896
+# batch 4 is out-of-control because of a process temperature controller
+# failure; remove it and recompute
+viscosity &lt;- viscosity[-4,]
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
+         newdata = viscosity[!trial], newlabels = batch[!trial],
+         rules = 1:4))</code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-14-3.png" width="90%" style="display: block; margin: auto;"></p>
-<pre><code>## xbar.one chart for x 
+<pre><code>## xbar.one chart for viscosity[trial] 
 ## 
 ## Summary of group statistics:
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## 33.00000 33.23500 33.54000 33.52333 33.78000 34.02000 
+## 33.27000 33.74000 34.03000 33.98947 34.05000 34.70000 
 ## 
 ## Group sample size          = 1
-## Number of groups           = 15
-## Center of group statistics = 33.52333
-## Standard deviation         = 0.4261651 
+## Number of groups           = 19
+## Center of group statistics = 33.98947
+## Standard deviation         = 0.4117415 
+## 
+## Summary of group statistics in viscosity[!trial]:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
+## 
+## Group sample size          = 1
+## Number of groups           = 15 
 ## 
 ## Control limits:
-##       LCL      UCL
-##  32.24484 34.80183</code></pre>
+##       LCL     UCL
+##  32.75425 35.2247</code></pre>
 </div>
 <div id="standardized-p-chart" class="section level3">
 <h3 class="hasAnchor">
@@ -1020,29 +1034,16 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <div id="multivariate-quality-control-charts" class="section level1">
 <h1 class="hasAnchor">
 <a href="#multivariate-quality-control-charts" class="anchor"></a>Multivariate Quality Control Charts</h1>
-<p>Multivariate subgrouped data from Ryan (2000, Table 9.2) with <span class="math inline">\(p = 2\)</span> variables, <span class="math inline">\(m = 20\)</span> samples, and <span class="math inline">\(n = 4\)</span> sample size for each sample:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">X1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">72</span>, <span class="dv">56</span>, <span class="dv">55</span>, <span class="dv">44</span>, <span class="dv">97</span>, <span class="dv">83</span>, <span class="dv">47</span>, <span class="dv">88</span>, <span class="dv">57</span>, <span class="dv">26</span>, <span class="dv">46</span>, </a>
-<a class="sourceLine" id="cb61-2" title="2"><span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">71</span>, <span class="dv">67</span>, <span class="dv">55</span>, <span class="dv">49</span>, <span class="dv">72</span>, <span class="dv">61</span>, <span class="dv">35</span>, <span class="dv">84</span>, <span class="dv">87</span>, <span class="dv">73</span>, <span class="dv">80</span>, <span class="dv">26</span>, <span class="dv">89</span>, <span class="dv">66</span>, </a>
-<a class="sourceLine" id="cb61-3" title="3"><span class="dv">50</span>, <span class="dv">47</span>, <span class="dv">39</span>, <span class="dv">27</span>, <span class="dv">62</span>, <span class="dv">63</span>, <span class="dv">58</span>, <span class="dv">69</span>, <span class="dv">63</span>, <span class="dv">51</span>, <span class="dv">80</span>, <span class="dv">74</span>, <span class="dv">38</span>, <span class="dv">79</span>, <span class="dv">33</span>, <span class="dv">22</span>, </a>
-<a class="sourceLine" id="cb61-4" title="4"><span class="dv">54</span>, <span class="dv">48</span>, <span class="dv">91</span>, <span class="dv">53</span>, <span class="dv">84</span>, <span class="dv">41</span>, <span class="dv">52</span>, <span class="dv">63</span>, <span class="dv">78</span>, <span class="dv">82</span>, <span class="dv">69</span>, <span class="dv">70</span>, <span class="dv">72</span>, <span class="dv">55</span>, <span class="dv">61</span>, <span class="dv">62</span>, </a>
-<a class="sourceLine" id="cb61-5" title="5"><span class="dv">41</span>, <span class="dv">49</span>, <span class="dv">42</span>, <span class="dv">60</span>, <span class="dv">74</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">58</span>, <span class="dv">69</span>, <span class="dv">46</span>, <span class="dv">48</span>, <span class="dv">34</span>, <span class="dv">87</span>, <span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">94</span>, </a>
-<a class="sourceLine" id="cb61-6" title="6"><span class="dv">49</span>, <span class="dv">76</span>, <span class="dv">59</span>, <span class="dv">57</span>, <span class="dv">46</span>), <span class="dt">ncol =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb61-7" title="7">X2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">23</span>, <span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">9</span>, <span class="dv">36</span>, <span class="dv">30</span>, <span class="dv">12</span>, <span class="dv">31</span>, <span class="dv">14</span>, <span class="dv">7</span>, <span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb61-8" title="8"><span class="dv">11</span>, <span class="dv">22</span>, <span class="dv">21</span>, <span class="dv">18</span>, <span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">22</span>, <span class="dv">19</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">22</span>, <span class="dv">28</span>, <span class="dv">10</span>, <span class="dv">35</span>, <span class="dv">18</span>, </a>
-<a class="sourceLine" id="cb61-9" title="9"><span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">8</span>, <span class="dv">20</span>, <span class="dv">16</span>, <span class="dv">19</span>, <span class="dv">19</span>, <span class="dv">16</span>, <span class="dv">14</span>, <span class="dv">28</span>, <span class="dv">20</span>, <span class="dv">11</span>, <span class="dv">28</span>, <span class="dv">8</span>, <span class="dv">6</span>, </a>
-<a class="sourceLine" id="cb61-10" title="10"><span class="dv">15</span>, <span class="dv">14</span>, <span class="dv">36</span>, <span class="dv">14</span>, <span class="dv">30</span>, <span class="dv">8</span>, <span class="dv">35</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">31</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">16</span>, </a>
-<a class="sourceLine" id="cb61-11" title="11"><span class="dv">13</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">16</span>, <span class="dv">19</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">9</span>, <span class="dv">31</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">35</span>, </a>
-<a class="sourceLine" id="cb61-12" title="12"><span class="dv">12</span>, <span class="dv">26</span>, <span class="dv">17</span>, <span class="dv">14</span>, <span class="dv">16</span>), <span class="dt">ncol =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb61-13" title="13">X &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">X1 =</span> X1, <span class="dt">X2 =</span> X2) <span class="co"># a list of matrices, one for each variable</span></a>
-<a class="sourceLine" id="cb61-14" title="14"></a>
-<a class="sourceLine" id="cb61-15" title="15">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(X, <span class="dt">type =</span> <span class="st">"T2"</span>)</a></code></pre></div>
+<p>Multivariate subgrouped data from Ryan (2011, Table 9.2) with <span class="math inline">\(p = 2\)</span> variables, <span class="math inline">\(m = 20\)</span> samples, and <span class="math inline">\(n = 4\)</span> sample size for each sample:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(RyanMultivar)</a>
+<a class="sourceLine" id="cb61-2" title="2">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q)</a>
 <a class="sourceLine" id="cb62-2" title="2"><span class="co">## </span></a>
 <a class="sourceLine" id="cb62-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb62-4" title="4"><span class="co">## mqcc(data = X, type = "T2")</span></a>
+<a class="sourceLine" id="cb62-4" title="4"><span class="co">## mqcc(data = RyanMultivar, type = "T2")</span></a>
 <a class="sourceLine" id="cb62-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-6" title="6"><span class="co">## T2 chart for X </span></a>
+<a class="sourceLine" id="cb62-6" title="6"><span class="co">## T2 chart for RyanMultivar </span></a>
 <a class="sourceLine" id="cb62-7" title="7"><span class="co">## </span></a>
 <a class="sourceLine" id="cb62-8" title="8"><span class="co">## Summary of group statistics:</span></a>
 <a class="sourceLine" id="cb62-9" title="9"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
@@ -1069,11 +1070,11 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-23-2.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(q, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-23-3.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"></a>
-<a class="sourceLine" id="cb64-2" title="2">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(X, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-23-4.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Ryan (2000) discussed Xbar-charts for single variables computed adjusting the confidence level of the <span class="math inline">\(T^2\)</span> chart:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X1, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a></code></pre></div>
+<p>Ryan (2011) discussed Xbar-charts for single variables computed adjusting the confidence level of the <span class="math inline">\(T^2\)</span> chart:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">q1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(RyanMultivar, </a>
+<a class="sourceLine" id="cb65-2" title="2">           <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X1, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q1)</a>
 <a class="sourceLine" id="cb66-2" title="2"><span class="co">## xbar chart for X1 </span></a>
@@ -1090,7 +1091,8 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <a class="sourceLine" id="cb66-13" title="13"><span class="co">## Control limits:</span></a>
 <a class="sourceLine" id="cb66-14" title="14"><span class="co">##       LCL      UCL</span></a>
 <a class="sourceLine" id="cb66-15" title="15"><span class="co">##  37.97352 82.77648</span></a>
-<a class="sourceLine" id="cb66-16" title="16">q2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X2, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb66-16" title="16">q2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(RyanMultivar, </a>
+<a class="sourceLine" id="cb66-17" title="17">           <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X2, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-24-2.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q2)</a>
 <a class="sourceLine" id="cb67-2" title="2"><span class="co">## xbar chart for X2 </span></a>
@@ -1114,14 +1116,14 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <a class="sourceLine" id="cb68-4" title="4">     Xnew<span class="op">$</span>X1[,i] &lt;-<span class="st"> </span>x[,<span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb68-5" title="5">     Xnew<span class="op">$</span>X2[,i] &lt;-<span class="st"> </span>x[,<span class="dv">2</span>] </a>
 <a class="sourceLine" id="cb68-6" title="6">   }</a>
-<a class="sourceLine" id="cb68-7" title="7">qq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(X, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb68-7" title="7">qq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(qq)</a>
 <a class="sourceLine" id="cb69-2" title="2"><span class="co">## </span></a>
 <a class="sourceLine" id="cb69-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb69-4" title="4"><span class="co">## mqcc(data = X, type = "T2", pred.limits = TRUE, newdata = Xnew)</span></a>
+<a class="sourceLine" id="cb69-4" title="4"><span class="co">## mqcc(data = RyanMultivar, type = "T2", pred.limits = TRUE, newdata = Xnew)</span></a>
 <a class="sourceLine" id="cb69-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-6" title="6"><span class="co">## T2 chart for X </span></a>
+<a class="sourceLine" id="cb69-6" title="6"><span class="co">## T2 chart for RyanMultivar </span></a>
 <a class="sourceLine" id="cb69-7" title="7"><span class="co">## </span></a>
 <a class="sourceLine" id="cb69-8" title="8"><span class="co">## Summary of group statistics:</span></a>
 <a class="sourceLine" id="cb69-9" title="9"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
@@ -1155,8 +1157,7 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <a class="sourceLine" id="cb69-37" title="37"><span class="co">## Prediction limits:</span></a>
 <a class="sourceLine" id="cb69-38" title="38"><span class="co">##  LPL      UPL</span></a>
 <a class="sourceLine" id="cb69-39" title="39"><span class="co">##    0 12.20184</span></a>
-<a class="sourceLine" id="cb69-40" title="40"></a>
-<a class="sourceLine" id="cb69-41" title="41"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(qq, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb69-40" title="40"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(qq, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-25-2.png" width="90%" style="display: block; margin: auto;"></p>
 <p>Generate new “out of control” data:</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">Xnew &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">X1 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>), <span class="dt">X2 =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>))</a>
@@ -1165,14 +1166,14 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <a class="sourceLine" id="cb70-4" title="4">     Xnew<span class="op">$</span>X1[,i] &lt;-<span class="st"> </span>x[,<span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb70-5" title="5">     Xnew<span class="op">$</span>X2[,i] &lt;-<span class="st"> </span>x[,<span class="dv">2</span>] </a>
 <a class="sourceLine" id="cb70-6" title="6">   }</a>
-<a class="sourceLine" id="cb70-7" title="7">qq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(X, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb70-7" title="7">qq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(qq)</a>
 <a class="sourceLine" id="cb71-2" title="2"><span class="co">## </span></a>
 <a class="sourceLine" id="cb71-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb71-4" title="4"><span class="co">## mqcc(data = X, type = "T2", pred.limits = TRUE, newdata = Xnew)</span></a>
+<a class="sourceLine" id="cb71-4" title="4"><span class="co">## mqcc(data = RyanMultivar, type = "T2", pred.limits = TRUE, newdata = Xnew)</span></a>
 <a class="sourceLine" id="cb71-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-6" title="6"><span class="co">## T2 chart for X </span></a>
+<a class="sourceLine" id="cb71-6" title="6"><span class="co">## T2 chart for RyanMultivar </span></a>
 <a class="sourceLine" id="cb71-7" title="7"><span class="co">## </span></a>
 <a class="sourceLine" id="cb71-8" title="8"><span class="co">## Summary of group statistics:</span></a>
 <a class="sourceLine" id="cb71-9" title="9"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
@@ -1206,13 +1207,11 @@ process.capability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <a class="sourceLine" id="cb71-37" title="37"><span class="co">## Prediction limits:</span></a>
 <a class="sourceLine" id="cb71-38" title="38"><span class="co">##  LPL      UPL</span></a>
 <a class="sourceLine" id="cb71-39" title="39"><span class="co">##    0 12.20184</span></a>
-<a class="sourceLine" id="cb71-40" title="40"></a>
-<a class="sourceLine" id="cb71-41" title="41"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(qq, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb71-40" title="40"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(qq, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-26-2.png" width="90%" style="display: block; margin: auto;"></p>
 <p>Individual observations data:</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(boiler)</a>
-<a class="sourceLine" id="cb72-2" title="2"></a>
-<a class="sourceLine" id="cb72-3" title="3">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb72-2" title="2">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q1)</a>
 <a class="sourceLine" id="cb73-2" title="2"><span class="co">## </span></a>
@@ -1591,6 +1590,7 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Montgomery, D.C. (2009) <em>Introduction to Statistical Quality Control</em>, 6th ed. New York: John Wiley &amp; Sons.</p>
+<p>Ryan, T. P. (2011), , 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004) <a href="http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf">qcc: an R package for quality control charting and statistical process control</a>. <em>R News</em> 4/1, 11-17.</p>
 </div>
 </div>

@@ -86,7 +86,8 @@ ewma <- function(data, sizes, center, std.dev, lambda = 0.2, nsigmas = 3,
                stop("if provided the argument 'std.dev' must be a method available or a numerical value. See help(qcc).")  }
      }
 
-  names(statistics) <-  rownames(data) <-  labels
+  stopifnot(length(labels) == length(statistics))
+  names(statistics) <- rownames(data) <-  labels
   names(dimnames(data)) <- list("Group", "Samples")
   object <- list(call = call, type = "ewma", 
                  data.name = data.name, data = data, 
@@ -114,7 +115,8 @@ ewma <- function(data, sizes, center, std.dev, lambda = 0.2, nsigmas = 3,
               newlabels <- seq(start+1, start+length(newstats)) }
           else
             { newlabels <- rownames(newdata) }
-        }
+      }
+      stopifnot(length(newlabels) == length(newstats))
       names(newstats) <- newlabels
       object$newstats <- newstats
       object$newdata  <- newdata

@@ -15,9 +15,13 @@ ewma(data, sizes, center, std.dev, lambda = 0.2, nsigmas = 3,
 
 \method{print}{ewma.qcc}(x, digits = getOption("digits"), \dots)
 
-\method{plot}{ewma.qcc}(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
-     label.limits = c("LCL", "UCL"), title, xlab, ylab, ylim, 
-     axes.las = 0, digits = getOption("digits"),
+\method{plot}{ewma.qcc}(x, 
+     add.stats = qcc.options("add.stats"), 
+     chart.all = qcc.options("chart.all"), 
+     fill = qcc.options("fill"),
+     label.limits = c("LCL", "UCL"), 
+     title, xlab, ylab, ylim, axes.las = 0,
+     digits = getOption("digits"),
      restore.par = TRUE, \dots)
 }
 
@@ -85,7 +89,7 @@ Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Contro
 
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
 
-Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
+Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 
 Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17.
 
@@ -106,11 +110,13 @@ ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,], plot = FALSE) 
 
 ##
-## Individual observations: viscosity data (Montgomery, pag. 242)
+## Individual observations
 ##
-x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 
-33.27, 33.49, 33.20, 33.62, 33.00, 33.54, 33.12, 33.84)
-ewma(x, lambda=0.2, nsigmas=2.7)
+data(viscosity)
+with(viscosity, 
+     ewma(viscosity[trial], labels = batch[trial],
+          lambda = 0.2, nsigmas = 2.7,
+          newdata = viscosity[!trial], newlabels = batch[!trial]))
 }
 \keyword{htest}
 \keyword{hplot}

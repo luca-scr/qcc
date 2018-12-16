@@ -148,12 +148,19 @@ with(pcmanufact, qcc(x, sizes=size, type="u"))
 ###  Continuous one-at-time data 
 
 ```{r}
-# viscosity data (Montgomery, pag. 242)
-x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 33.27, 33.49, 33.20,
-       33.62, 33.00, 33.54, 33.12, 33.84)
-qcc(x, type="xbar.one")
-qcc(x, type="xbar.one", std.dev = "SD")
-qcc(x, type="xbar.one", rules = 1:4)
+data(viscosity)
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial]))
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
+         std.dev = "SD"))
+# batch 4 is out-of-control because of a process temperature controller
+# failure; remove it and recompute
+viscosity <- viscosity[-4,]
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
+         newdata = viscosity[!trial], newlabels = batch[!trial],
+         rules = 1:4))
 ```
 
 ### Standardized p chart
@@ -279,36 +286,24 @@ process.capability(q1, spec.limits = c(73.99, 74.1))
 
 # Multivariate Quality Control Charts
 
-Multivariate subgrouped data from Ryan (2000, Table 9.2) with $p = 2$ variables, $m = 20$ samples, and $n = 4$ sample size for each sample:
+Multivariate subgrouped data from Ryan (2011, Table 9.2) with $p = 2$ variables, $m = 20$ samples, and $n = 4$ sample size for each sample:
 ```{r}
-X1 <- matrix(c(72, 56, 55, 44, 97, 83, 47, 88, 57, 26, 46, 
-49, 71, 71, 67, 55, 49, 72, 61, 35, 84, 87, 73, 80, 26, 89, 66, 
-50, 47, 39, 27, 62, 63, 58, 69, 63, 51, 80, 74, 38, 79, 33, 22, 
-54, 48, 91, 53, 84, 41, 52, 63, 78, 82, 69, 70, 72, 55, 61, 62, 
-41, 49, 42, 60, 74, 58, 62, 58, 69, 46, 48, 34, 87, 55, 70, 94, 
-49, 76, 59, 57, 46), ncol = 4)
-X2 <- matrix(c(23, 14, 13, 9, 36, 30, 12, 31, 14, 7, 10, 
-11, 22, 21, 18, 15, 13, 22, 19, 10, 30, 31, 22, 28, 10, 35, 18, 
-11, 10, 11, 8, 20, 16, 19, 19, 16, 14, 28, 20, 11, 28, 8, 6, 
-15, 14, 36, 14, 30, 8, 35, 19, 27, 31, 17, 18, 20, 16, 18, 16, 
-13, 10, 9, 16, 25, 15, 18, 16, 19, 10, 30, 9, 31, 15, 20, 35, 
-12, 26, 17, 14, 16), ncol = 4)
-X <- list(X1 = X1, X2 = X2) # a list of matrices, one for each variable
-
-q <- mqcc(X, type = "T2")
+data(RyanMultivar)
+q <- mqcc(RyanMultivar, type = "T2")
 summary(q)
 ellipseChart(q)
 ellipseChart(q, show.id = TRUE)
-
-q <- mqcc(X, type = "T2", pred.limits = TRUE)
+q <- mqcc(RyanMultivar, type = "T2", pred.limits = TRUE)
 ```
 
 
-Ryan (2000) discussed Xbar-charts for single variables computed adjusting the confidence level of the $T^2$ chart:
+Ryan (2011) discussed Xbar-charts for single variables computed adjusting the confidence level of the $T^2$ chart:
 ```{r}
-q1 <- qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2))
+q1 <- with(RyanMultivar, 
+           qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2)))
 summary(q1)
-q2 <- qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2))
+q2 <- with(RyanMultivar, 
+           qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))
 summary(q2)
 ```
 
@@ -320,9 +315,8 @@ for(i in 1:4)
      Xnew$X1[,i] <- x[,1]
      Xnew$X2[,i] <- x[,2] 
    }
-qq <- mqcc(X, type = "T2", newdata = Xnew, pred.limits = TRUE)
+qq <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
 summary(qq)
-
 ellipseChart(qq, show.id = TRUE)
 ```
 
@@ -334,16 +328,14 @@ for(i in 1:4)
      Xnew$X1[,i] <- x[,1]
      Xnew$X2[,i] <- x[,2] 
    }
-qq <- mqcc(X, type = "T2", newdata = Xnew, pred.limits = TRUE)
+qq <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
 summary(qq)
-
 ellipseChart(qq, show.id = TRUE)
 ```
 
 Individual observations data:
 ```{r}
 data(boiler)
-
 q1 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999)
 summary(q1)
 ```
@@ -528,6 +520,8 @@ q <- qcc(x, type="S")
 ## References
 
 Montgomery, D.C. (2009) *Introduction to Statistical Quality Control*, 6th ed. New York: John Wiley & Sons.
+
+Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 
 Scrucca, L. (2004) [qcc: an R package for quality control charting and
 statistical process control](http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf). *R News* 4/1, 11-17. 

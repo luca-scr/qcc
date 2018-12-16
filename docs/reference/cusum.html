@@ -121,12 +121,12 @@ print(x, digits = getOption("digits"), &#8230;)
 
 # S3 method for cusum.qcc
 plot(x, 
-    add.stats = qcc.options("rules"), 
-    chart.all = qcc.options("chart.all"), 
-    fill = qcc.options("fill"),
-     label.bounds = c("LDB", "UDB"), 
-		 title, xlab, ylab, ylim, 
-     axes.las = 0, digits =  getOption("digits"),
+     add.stats = qcc.options("add.stats"), 
+     chart.all = qcc.options("chart.all"), 
+     fill = qcc.options("fill"),
+     label.bounds = c("LDB", "UDB"),
+     title, xlab, ylab, ylim, axes.las = 0, 
+     digits =  getOption("digits"),
      restore.par = TRUE, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -255,7 +255,7 @@ value less than the <code>decision.interval</code> for a Fast Initial Response.<
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
 <p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
-<p>Ryan, T. P. (2000), <em>Statistical Methods for Quality Improvement</em>, 2nd ed. New York: John Wiley &amp; Sons, Inc.</p>
+<p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
     
@@ -305,20 +305,28 @@ value less than the <code>decision.interval</code> for a Fast Initial Response.<
 #&gt; Decision interval (std.err.): 5 
 #&gt; Shift detection  (std. err.): 1 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='cusum-3.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'>##</span>
-<span class='co'>## Individual observations: viscosity data (Montgomery, pag. 242)</span>
+<span class='co'>## Individual observations</span>
 <span class='co'>##</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>33.75</span>, <span class='fl'>33.05</span>, <span class='fl'>34</span>, <span class='fl'>33.81</span>, <span class='fl'>33.46</span>, <span class='fl'>34.02</span>, <span class='fl'>33.68</span>,
-<span class='fl'>33.27</span>, <span class='fl'>33.49</span>, <span class='fl'>33.20</span>, <span class='fl'>33.62</span>, <span class='fl'>33.00</span>, <span class='fl'>33.54</span>, <span class='fl'>33.12</span>, <span class='fl'>33.84</span>)
-<span class='fu'>cusum</span>(<span class='no'>x</span>)</div><div class='img'><img src='cusum-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; cusum chart for x 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>viscosity</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
+     <span class='fu'>cusum</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
+           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='cusum-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; cusum chart for viscosity[trial] 
 #&gt; 
 #&gt; Summary of group statistics:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   33.00   33.23   33.54   33.52   33.78   34.02 
+#&gt;   33.27   33.74   34.03   34.09   34.14   35.96 
 #&gt; 
 #&gt; Group sample size:  1
-#&gt; Number of groups:  15
-#&gt; Center of group statistics:  33.52333
-#&gt; Standard deviation:  0.4261651 
+#&gt; Number of groups:  20
+#&gt; Center of group statistics:  34.088
+#&gt; Standard deviation:  0.5076521 
+#&gt; 
+#&gt; Summary of group statistics in viscosity[!trial]:
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
+#&gt; 
+#&gt; Group sample size:  1
+#&gt; Number of groups:  15 
 #&gt; 
 #&gt; Decision interval (std.err.): 5 
 #&gt; Shift detection  (std. err.): 1 </div></pre>

@@ -19,12 +19,12 @@ qcc(data,
 \method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{qcc}(x,
-	   add.stats = qcc.options("rules"), 
+	   add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
      label.limits = c("LCL ", "UCL"), 
-		 title, xlab, ylab, ylim, 
-     axes.las = 0, digits = getOption("digits"),
+		 title, xlab, ylab, ylim, axes.las = 0, 
+     digits = getOption("digits"),
      restore.par = TRUE, \dots)
 }
 \arguments{
@@ -119,7 +119,7 @@ Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Contro
 
 Montgomery, D.C. (2009) \emph{Introduction to Statistical Quality Control}, 6th ed. New York: John Wiley & Sons.
 
-Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
+Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 
 Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17. 
 
@@ -228,11 +228,15 @@ qcc(z, sizes = 1, type = "u", title = "Standardized u chart",
 ##  Continuous one-at-time data 
 ##
 
-# viscosity data (Montgomery, pag. 242)
-x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 33.27, 33.49, 33.20,
-       33.62, 33.00, 33.54, 33.12, 33.84)
-qcc(x, type="xbar.one")
-qcc(x, type="xbar.one", std.dev = "SD")
+data(viscosity)
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial]))
+# batch 4 is out-of-control because of a process temperature controller
+# failure; remove it and recompute
+viscosity <- viscosity[-4,]
+with(viscosity, 
+     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
+         newdata = viscosity[!trial], newlabels = batch[!trial]))
 }
 \keyword{htest}
 \keyword{hplot}

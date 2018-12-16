@@ -23,6 +23,19 @@ S3method("print", "mqcc")
 S3method("summary", "mqcc")
 S3method("plot", "mqcc")
 
+export(stats.c, stats.g, stats.np, stats.p, stats.R, 
+       stats.S, stats.T2, stats.T2.single, stats.u,
+       stats.xbar, stats.xbar.one)
+export(sd.c, sd.g, sd.np, sd.p, sd.R, 
+       sd.S, sd.u, sd.xbar, sd.xbar.one)
+export(limits.c, limits.g, limits.np, limits.p, limits.R,
+       limits.S, limits.T2, limits.T2.single, 
+       limits.u, limits.xbar, limits.xbar.one)
+
+export(qccRules,
+       violating.wer1, violating.wer2,
+       violating.wer3, violating.wer4)
+
 export(pareto.chart, print.pareto.chart, plot.pareto.chart)
 S3method("print", "pareto.chart")
 S3method("plot", "pareto.chart")
@@ -33,11 +46,17 @@ S3method("print", "process.capability")
 S3method("summary", "process.capability")
 S3method("plot", "process.capability")
   
-export(qcc.groups, qcc.options)
-       
+export(oc.curves, 
+       oc.curves.c, oc.curves.p, oc.curves.R,
+       oc.curves.S, oc.curves.xbar)
+
+export(qcc.options, qcc.groups, blues.colors,
+       ewmaSmooth, cause.and.effect, ellipseChart,
+       qcc.overdispersion.test)
+
 export(describe, print.describe)
 S3method("print", "describe")
 
-exportPattern("^[^\\.]")
-# TODO: check what is exported and include directly
+# exportPattern("^[^\\.]")
+# to check exported objects use getNamespaceExports("qcc")
 

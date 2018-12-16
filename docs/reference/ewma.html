@@ -120,9 +120,13 @@
 print(x, digits = getOption("digits"), &#8230;)
 
 # S3 method for ewma.qcc
-plot(x, add.stats = TRUE, chart.all = TRUE, fill = TRUE,
-     label.limits = c("LCL", "UCL"), title, xlab, ylab, ylim, 
-     axes.las = 0, digits = getOption("digits"),
+plot(x, 
+     add.stats = qcc.options("add.stats"), 
+     chart.all = qcc.options("chart.all"), 
+     fill = qcc.options("fill"),
+     label.limits = c("LCL", "UCL"), 
+     title, xlab, ylab, ylim, axes.las = 0,
+     digits = getOption("digits"),
      restore.par = TRUE, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -244,7 +248,7 @@ Several methods are available for estimating the standard deviation. See <code><
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
 <p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
-<p>Ryan, T. P. (2000), <em>Statistical Methods for Quality Improvement</em>, 2nd ed. New York: John Wiley &amp; Sons, Inc.</p>
+<p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
     
@@ -304,28 +308,37 @@ Several methods are available for estimating the standard deviation. See <code><
 #&gt; ...                  
 #&gt; 40  73.99724 74.00511</div><div class='input'>
 <span class='co'>##</span>
-<span class='co'>## Individual observations: viscosity data (Montgomery, pag. 242)</span>
+<span class='co'>## Individual observations</span>
 <span class='co'>##</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>33.75</span>, <span class='fl'>33.05</span>, <span class='fl'>34</span>, <span class='fl'>33.81</span>, <span class='fl'>33.46</span>, <span class='fl'>34.02</span>, <span class='fl'>33.68</span>,
-<span class='fl'>33.27</span>, <span class='fl'>33.49</span>, <span class='fl'>33.20</span>, <span class='fl'>33.62</span>, <span class='fl'>33.00</span>, <span class='fl'>33.54</span>, <span class='fl'>33.12</span>, <span class='fl'>33.84</span>)
-<span class='fu'>ewma</span>(<span class='no'>x</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>)</div><div class='img'><img src='ewma-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ewma chart for x 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>viscosity</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
+     <span class='fu'>ewma</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
+          <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='fl'>2.7</span>,
+          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='ewma-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ewma chart for viscosity[trial] 
 #&gt; 
 #&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.00000 33.23500 33.54000 33.52333 33.78000 34.02000 
+#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt; 33.2700 33.7450 34.0350 34.0880 34.1375 35.9600 
 #&gt; 
 #&gt; Group sample size:  1
-#&gt; Number of groups:  15
-#&gt; Center of group statistics:  33.52333
-#&gt; Standard deviation:  0.4261651 
+#&gt; Number of groups:  20
+#&gt; Center of group statistics:  34.088
+#&gt; Standard deviation:  0.5076521 
+#&gt; 
+#&gt; Summary of group statistics in viscosity[!trial]:
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
+#&gt; 
+#&gt; Group sample size:  1
+#&gt; Number of groups:  15 
 #&gt; 
 #&gt; Smoothing parameter: 0.2 
 #&gt; Control limits:
 #&gt;            LCL      UCL
-#&gt; [1,]  33.29320 33.75346
-#&gt; [2,]  33.22862 33.81804
+#&gt; [1,]  33.81387 34.36213
+#&gt; [2,]  33.73694 34.43906
 #&gt; ...                    
-#&gt; [15,] 33.14002 33.90664</div></pre>
+#&gt; [35,] 33.63111 34.54489</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

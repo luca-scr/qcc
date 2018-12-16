@@ -85,6 +85,7 @@ qcc <- function(data,
                stop("if provided the argument 'std.dev' must be a method available or a numerical value. See help(qcc).")  }
      }
 
+  stopifnot(length(labels) == length(statistics))
   names(statistics) <-  rownames(data) <-  labels
   names(dimnames(data)) <- list("Group", "Samples")
   rules <- as.numeric(rules)
@@ -121,7 +122,8 @@ qcc <- function(data,
                   newlabels <- seq(start+1, start+length(newstats)) }
              else
                 { newlabels <- rownames(newdata) }
-           }
+        }
+        stopifnot(length(newlabels) == length(newstats))
         names(newstats) <- newlabels
         object$newstats <- newstats
         object$newdata  <- newdata

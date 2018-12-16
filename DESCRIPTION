@@ -19,5 +19,5 @@ URL: https://luca-scr.github.io/qcc/
 BugReports: https://github.com/luca-scr/qcc/issues
 Repository: CRAN
 ByteCompile: true
-LazyLoad: yes
+LazyData: true
 RoxygenNote: 6.1.1

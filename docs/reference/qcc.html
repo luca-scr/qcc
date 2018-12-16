@@ -124,12 +124,12 @@ print(x, digits = getOption("digits"), &#8230;)
 
 # S3 method for qcc
 plot(x,
-	   add.stats = qcc.options("rules"), 
+	   add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
      label.limits = c("LCL ", "UCL"), 
-		 title, xlab, ylab, ylim, 
-     axes.las = 0, digits = getOption("digits"),
+		 title, xlab, ylab, ylim, axes.las = 0, 
+     digits = getOption("digits"),
      restore.par = TRUE, &#8230;)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -283,7 +283,7 @@ Several methods are available for estimating the standard deviation in case of a
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
 <p>Montgomery, D.C. (2009) <em>Introduction to Statistical Quality Control</em>, 6th ed. New York: John Wiley &amp; Sons.</p>
-<p>Ryan, T. P. (2000), <em>Statistical Methods for Quality Improvement</em>, 2nd ed. New York: John Wiley &amp; Sons, Inc.</p>
+<p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
     
@@ -821,36 +821,47 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='co'>##  Continuous one-at-time data </span>
 <span class='co'>##</span>
 
-<span class='co'># viscosity data (Montgomery, pag. 242)</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>33.75</span>, <span class='fl'>33.05</span>, <span class='fl'>34</span>, <span class='fl'>33.81</span>, <span class='fl'>33.46</span>, <span class='fl'>34.02</span>, <span class='fl'>33.68</span>, <span class='fl'>33.27</span>, <span class='fl'>33.49</span>, <span class='fl'>33.20</span>,
-       <span class='fl'>33.62</span>, <span class='fl'>33.00</span>, <span class='fl'>33.54</span>, <span class='fl'>33.12</span>, <span class='fl'>33.84</span>)
-<span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar.one"</span>)</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for x 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>viscosity</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
+     <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for viscosity[trial] 
 #&gt; 
 #&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.00000 33.23500 33.54000 33.52333 33.78000 34.02000 
+#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt; 33.2700 33.7450 34.0350 34.0880 34.1375 35.9600 
 #&gt; 
 #&gt; Group sample size          = 1
-#&gt; Number of groups           = 15
-#&gt; Center of group statistics = 33.52333
-#&gt; Standard deviation         = 0.4261651 
+#&gt; Number of groups           = 20
+#&gt; Center of group statistics = 34.088
+#&gt; Standard deviation         = 0.5076521 
 #&gt; 
 #&gt; Control limits:
 #&gt;       LCL      UCL
-#&gt;  32.24484 34.80183</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar.one"</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='st'>"SD"</span>)</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for x 
+#&gt;  32.56504 35.61096</div><div class='input'><span class='co'># batch 4 is out-of-control because of a process temperature controller</span>
+<span class='co'># failure; remove it and recompute</span>
+<span class='no'>viscosity</span> <span class='kw'>&lt;-</span> <span class='no'>viscosity</span>[-<span class='fl'>4</span>,]
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
+     <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
+         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for viscosity[trial] 
 #&gt; 
 #&gt; Summary of group statistics:
 #&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.00000 33.23500 33.54000 33.52333 33.78000 34.02000 
+#&gt; 33.27000 33.74000 34.03000 33.98947 34.05000 34.70000 
 #&gt; 
 #&gt; Group sample size          = 1
-#&gt; Number of groups           = 15
-#&gt; Center of group statistics = 33.52333
-#&gt; Standard deviation         = 0.3415928 
+#&gt; Number of groups           = 19
+#&gt; Center of group statistics = 33.98947
+#&gt; Standard deviation         = 0.4117415 
+#&gt; 
+#&gt; Summary of group statistics in viscosity[!trial]:
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
+#&gt; 
+#&gt; Group sample size          = 1
+#&gt; Number of groups           = 15 
 #&gt; 
 #&gt; Control limits:
-#&gt;       LCL      UCL
-#&gt;  32.49855 34.54811</div></pre>
+#&gt;       LCL     UCL
+#&gt;  32.75425 35.2247</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

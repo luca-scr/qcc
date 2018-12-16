@@ -6,14 +6,14 @@
 
 qcc.groups <- function(x, sample, data)
 {
+  # collect x and sample from data if provided
   if(!missing(data))
   {
-    data <- as.data.frame(data)
-    x <- data[[deparse(substitute(x))]]
-    sample <- data[[deparse(substitute(sample))]]
+    x      <- eval(substitute(x), data, parent.frame())
+    sample <- eval(substitute(sample), data, parent.frame())
   }
-  if(length(x)!=length(sample))
-    stop("x and sample must be vectors of equal length")
+  stopifnot(length(x) == length(sample))
+  #
   x <- lapply(split(x, sample), as.vector)
   lx <- sapply(x, length)
   for(i in which(lx != max(lx)))
@@ -23,7 +23,7 @@ qcc.groups <- function(x, sample, data)
 }
 
 qcc.overdispersion.test <- function(x, size, 
-                            type=ifelse(missing(size), "poisson", "binomial"))
+                            type = ifelse(missing(size), "poisson", "binomial"))
 {
   type <- match.arg(type, c("poisson", "binomial"))
   if (type=="binomial" & missing(size))

@@ -39,7 +39,7 @@ Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Contro
 
 Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
 
-Ryan, T. P. (2000), \emph{Statistical Methods for Quality Improvement}, 2nd ed. New York: John Wiley & Sons, Inc.
+Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 }
 
 \author{Luca Scrucca}

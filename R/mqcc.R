@@ -13,7 +13,8 @@
 mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
                  limits = TRUE, pred.limits = FALSE,
                  data.name, labels, newdata, newlabels, 
-                 confidence.level = (1-0.0027)^p, rules = shewhart.rules, 
+                 confidence.level = (1-0.0027)^p, 
+                 rules = shewhart.rules, # TODO: use new shewhartRules
                  plot = TRUE, ...)
 {
   call <- match.call()
@@ -56,6 +57,7 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
      stop(paste("function", stats, "is not defined"))
   stats <- do.call(stats, list(data, center = center, cov = cov))
   statistics <- stats$statistics
+  stopifnot(length(labels) == length(statistics))
   names(statistics) <-  labels
   names(stats$center) <- var.names
   dimnames(stats$cov) <- list(var.names, var.names)
@@ -89,6 +91,7 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
         }
       object$newdata  <- newdata
       object$newdata.name <- newdata.name
+      stopifnot(length(newlabels) == length(newstats))
       names(newstats$statistics) <- newlabels
       object$newstats <- newstats$statistics
       object$newmeans <- newstats$means
