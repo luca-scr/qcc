@@ -1,10 +1,13 @@
 #-------------------------------------------------------------------#
 #                                                                   #
-#                  Cause-and-Effect diagram                         #
+#                  Cause-and-Effect Diagram                         #
 #                                                                   #
 #-------------------------------------------------------------------#
 
-cause.and.effect <- function(cause, effect, title = "Cause-and-Effect diagram", cex=c(1,0.9,1), font=c(1,3,2))
+causeEffectDiagram <- function(cause, effect, 
+                               title = "Cause-and-Effect diagram", 
+                               cex = c(1,0.9,1), 
+                               font = c(1,3,2))
 {
 
   # running mean of successive pairs of obs

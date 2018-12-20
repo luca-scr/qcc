@@ -1,19 +1,20 @@
-\name{process.capability}
-\alias{process.capability}
-\alias{print.process.capability}
-\alias{summary.process.capability}
-\alias{plot.process.capability}
+\name{processCapability}
+\alias{processCapability}
+\alias{print.processCapability}
+\alias{summary.processCapability}
+\alias{plot.processCapability}
 
 \title{Process capability analysis}
-\description{Computes process capability indices for a 'qcc' object of type \code{"xbar"} and plot the histogram.}
+
+\description{Computes process capability indices for a \code{'qcc'} object of type \code{"xbar"} and plot the histogram.}
 
 \usage{
-process.capability(object, spec.limits, target, std.dev, nsigmas, 
-                   confidence.level = 0.95, plot = TRUE, \dots)
+processCapability(object, spec.limits, target, std.dev, nsigmas, 
+                  confidence.level = 0.95, plot = TRUE, \dots)
                    
-\method{print}{process.capability}(x, digits = getOption("digits"), \dots)
+\method{print}{processCapability}(x, digits = getOption("digits"), \dots)
 
-\method{plot}{process.capability}(x, 
+\method{plot}{processCapability}(x, 
      add.stats = qcc.options("add.stats"), 
      breaks = "scott", 
      col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
@@ -22,14 +23,14 @@ process.capability(object, spec.limits, target, std.dev, nsigmas,
      restore.par = TRUE, \dots)
 }
 \arguments{
-\item{object}{a 'qcc' object of type \code{"xbar"}}
+\item{object}{a \code{'qcc'} object of type \code{"xbar"}}
 \item{spec.limits}{a two-values vector specifying the lower and upper specification limits. For one-sided specification limits, the value of the missing limit must be set to \code{NA}.}
-\item{target}{a value specifying the target of the process. If missing the value from the 'qcc' object is used if not \code{NULL}, otherwise the target is set at the middle value between specification limits.}
-\item{std.dev}{a value specifying the within-group standard deviation. If not provided is taken from the 'qcc' object.}
-\item{nsigmas}{a numeric value specifying the number of sigmas to use. If not provided is taken from the 'qcc' object.}
+\item{target}{a value specifying the target of the process. If missing the value from the \code{'qcc'} object is used if not \code{NULL}, otherwise the target is set at the middle value between specification limits.}
+\item{std.dev}{a value specifying the within-group standard deviation. If not provided is taken from the \code{'qcc'} object.}
+\item{nsigmas}{a numeric value specifying the number of sigmas to use. If not provided is taken from the \code{'qcc'} object.}
 \item{confidence.level}{a numeric value between 0 and 1 specifying the level to use for computing confidence intervals.}
 \item{plot}{a logical value; if \code{TRUE} the corresponding plot method is called.}
-\item{x}{an object of class 'process.capability'.}
+\item{x}{an object of class {'processCapability'}.}
 \item{add.stats}{a logical value indicating whether statistics and capability indices should be added at the bottom of the chart.}
 \item{breaks}{a value or string used to draw the histogram. See the help for  \code{\link{hist}} for more details.}
 \item{col, border}{values specifying the colour of the area and the border of the histogram.}
@@ -68,12 +69,12 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)
-diameter <- qcc.groups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(diameter, sample, data = pistonrings)
 q <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
-process.capability(q, spec.limits=c(73.95,74.05))
-process.capability(q, spec.limits=c(73.95,74.05), target=74.02)
-process.capability(q, spec.limits=c(73.99,74.01))
-process.capability(q, spec.limits = c(73.99, 74.1))
+processCapability(q, spec.limits=c(73.95,74.05))
+processCapability(q, spec.limits=c(73.95,74.05), target=74.02)
+processCapability(q, spec.limits=c(73.99,74.01))
+processCapability(q, spec.limits = c(73.99, 74.1))
 }
 \keyword{htest}
 \keyword{hplot}

@@ -146,10 +146,9 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
   return(object)
 }
 
-print.mqcc <- function(x, ...) str(x,1)
-
-summary.mqcc <- function(object, digits =  getOption("digits"), ...)
+print.mqcc <- function(x, digits = getOption("digits"), ...)
 {
+  object <- x  # Argh.  Really want to use 'object' anyway
   cat("\nCall:\n",deparse(object$call),"\n\n",sep="")
   data <- object$data
   m <- unique(sapply(data, nrow))     # num. of samples
@@ -195,6 +194,8 @@ summary.mqcc <- function(object, digits =  getOption("digits"), ...)
       .printShortMatrix(pred.limits, digits = digits, ...) }
   invisible()        
 }
+
+summary.mqcc <- function(object, ...) print.mqcc(object, ...)
 
 plot.mqcc <- function(x, 
                       add.stats = qcc.options("add.stats"), 

@@ -4,10 +4,10 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-pareto.chart <- function(data, plot = TRUE, ...)
+paretoChart <- function(data, plot = TRUE, ...)
 { 
   call <- match.call(expand.dots = TRUE)
-  varname <- deparse(substitute(data))
+  data.name <- deparse(substitute(data))
   data <- as.table(data)
   if(length(dim(data))>1) 
     stop("only one-dimensional object (table, vector, etc.) may be provided")
@@ -19,61 +19,84 @@ pareto.chart <- function(data, plot = TRUE, ...)
                csum/max(csum, na.rm = TRUE)*100) 
   colnames(tab) <- c("Frequency", "Cum.Freq.", 
                      "Percentage", "Cum.Percent.")
-  names(dimnames(tab)) <- c("", paste("\nPareto chart analysis for", varname))
-  tab <- as.table(tab)
-  class(tab) <- c("pareto.chart", class(tab))
-  attr(tab, "call") <- call
-  attr(tab, "varname") <- varname
-  if(plot) plot(tab, ...)
-  return(tab)
+  names(dimnames(tab)) <- c(data.name, "")
+  
+  # create object of class 'paretoChart'
+  object <- list(call = call, 
+                 data.name = data.name, 
+                 tab = tab)
+  class(object) <- "paretoChart"
+  
+  if(plot) plot(object, ...)
+  return(object)
 }
 
-print.pareto.chart <- function(x, ...) print.table(x, ...)
-
-plot.pareto.chart <- function(x, xlab = NULL, 
-                              ylab = "Frequency", 
-                              ylab2 = "Cumulative Percentage", 
-                              cumperc = seq(0, 100, by = 25), 
-                              ylim = NULL, 
-                              main = NULL, 
-                              col = blues.colors(nlevels), 
-                              ...)
+print.paretoChart <- function(x, digits = getOption("digits") - 3, ...)
 {
-  call <- attr(x, "call")
-  nlevels <- nrow(x)
-  freq <- x[,1]
-  cumfreq <- x[,2]
+  object <- x   # Argh.  Really want to use 'object' anyway
+  cat(cli::rule(left = crayon::bold("Pareto Chart"), 
+                width = min(getOption("width"),50)), "\n")
+  print(object$tab, digits = digits, ...)
+}
+
+plot.paretoChart <- function(x, xlab = NULL, 
+                             ylab = "Frequency", 
+                             ylab2 = "Cumulative Percentage", 
+                             cumperc = seq(0, 100, by = 25), 
+                             ylim = NULL, 
+                             main = NULL, 
+                             col = blues.colors(nlevels), 
+                             ...)
+{
+  call <- x$call
+  freq <- x$tab[,1]
+  cumfreq <- x$tab[,2]
   cumperc <- cumperc[cumperc >= 0 & cumperc <= 100]
+  nlevels <- length(freq)
   q <- quantile(seq(0, max(cumfreq, na.rm = TRUE), 
                     by = max(cumfreq, na.rm = TRUE) / 100), 
                 cumperc/100)
   if(is.null(ylim)) ylim <- c(0, max(cumfreq, na.rm = TRUE)*1.05)
-  if(is.null(main)) main <- paste("Pareto Chart for", attr(x, "varname"))
-  # set las and mar if not provided by user
-  w <- max(sapply(rownames(x), nchar))
-  if(is.null(call$las)) las <- 3 else las <- call$las
-  if(is.null(call$mar))
-    { if (las==1) mar <- c(1,1,0,2)  
-      else        mar <- c(log(max(w),2),0,0,2) }
-  else mar <- call$mar
+  if(is.null(main)) main <- paste("Pareto Chart for", x$data.name)
   
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
+  plot.new()
+
+  # set las and mar if not provided by user
+  # browser()
+  w <- max(strwidth(rownames(x$tab), units = "inch"))
+  las <- if(is.null(call$las)) 3 else eval(call$las)
+  if(is.null(call$mar))
+  { 
+    c <- max(par("mar")/par("mai"))
+    mar <- c(3.1,4.1,1,4.1)
+    if(las==2 | las==3) mar[1] <- c*w+1
+  } else 
+  { 
+    mar <- eval(call$mar)
+  }
+  if(!is.null(xlab)) mar[1] <- mar[1] + 1.5
+  cex.labels <- par("cex")*qcc.options("cex")
+
   par(bg  = qcc.options("bg.margin"),
-      mar = pmax(par("mar")+mar,c(4.1,4.1,3.1,4.1)), 
-      las = las, 
-      cex = oldpar$cex*qcc.options("cex"))
+      oma = c(0, 0, 1.5*cex.labels, 0),
+      mar = mar) 
   #
-  pc <- barplot(x[,1], width = 1, space = 0.2, col = col,
-                ylim = ylim, ylab = ylab, xlab = xlab, yaxt = "n",  
-                ...)
+  pc <- barplot(freq, width = 1, space = 0.2, col = col,
+                ylim = ylim, ylab = ylab, xlab = xlab, yaxt = "n", 
+                cex.names = par("cex.axis")*0.9, 
+                cex.axis = par("cex.axis")*0.9, 
+                cex.lab = par("cex.axis")*0.9, 
+                las = las, ...)
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
-  box()
-  top.line <- par("mar")[3]/3
-  mtext(main, side = 3, line = top.line, las = 1,
+  
+  # box()
+  mtext(main, side = 3, outer = TRUE, 
+        line = 0, adj = 0, at = par("plt")[1],
         font = par("font.main"), 
-        cex  = qcc.options("cex"), 
+        cex  = par("cex")*qcc.options("cex"),
         col  = par("col.main"))
   # adding line for percentage level overwrite bars...
   abline(h = q, col = "lightgrey", lty = 3)
@@ -81,10 +104,9 @@ plot.pareto.chart <- function(x, xlab = NULL,
   rect(pc-0.5, rep(0,nlevels), pc+0.5, freq, col = col)
   lines(pc, cumfreq, type = "b", cex = 0.8*par("cex"), pch = 19)
   box()
-  axis(2, las = 3)
-  axis(4, at = q, las = 3, labels = paste(cumperc, "%", sep = ""))
-  mtext(ylab2, side = 4, line = 2.5, las = 3, 
-        cex = par("cex")*qcc.options("cex.stats"))
+  axis(2, las = las, cex.axis = par("cex.axis")*0.9)
+  axis(4, at = q, las = las, labels = paste(cumperc, "%", sep = ""),
+       cex.axis = par("cex.axis")*0.9)
+  mtext(ylab2, side = 4, line = 2.5, las = las, 
+        cex = par("cex.axis")*0.9)
 }
-
-

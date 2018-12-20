@@ -27,7 +27,7 @@ The **qcc** package provides quality control tools for statistical process contr
 
 ## Installation
 
-You can install the released version of qcc from CRAN:
+You can install the released version of **qcc** from CRAN:
 
 ``` r
 install.packages("qcc")
@@ -37,7 +37,7 @@ or the development version from GitHub:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("luca-scr/qcc")
+devtools::install_github("luca-scr/qcc", build_vignettes = TRUE)
 ```
 
 ## Usage
@@ -50,14 +50,6 @@ vignette("qcc")
 ```
 
 or through the GitHub web page of the package at <https://luca-scr.github.io/qcc/>.
-
-Note that if the package is installed from GitHub the vignette is not
-automatically created. However, it can be created when installing from
-GitHub with the code:
-
-``` r
-devtools::install_github("luca-scr/qcc", build_vignettes = TRUE)
-```
 
 ## References
 

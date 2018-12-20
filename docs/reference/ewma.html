@@ -108,7 +108,7 @@
 
     <div class="ref-description">
     
-    <p>Create an object of class 'ewma.qcc' to compute and draw an Exponential Weighted Moving Average (EWMA) chart for statistical quality control.</p>
+    <p>Create an object of class <code>'ewma.qcc'</code> to compute and draw an Exponential Weighted Moving Average (EWMA) chart for statistical quality control.</p>
     
     </div>
 
@@ -124,6 +124,7 @@ plot(x,
      add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
+     label.center = "CL",
      label.limits = c("LCL", "UCL"), 
      title, xlab, ylab, ylim, axes.las = 0,
      digits = getOption("digits"),
@@ -195,6 +196,10 @@ Several methods are available for estimating the standard deviation. See <code><
 <code>qcc.options("zones")$fill</code>.</p></td>
     </tr>
     <tr>
+      <th>label.center</th>
+      <td><p>a character  specifying the label for center line.</p></td>
+    </tr>
+    <tr>
       <th>label.limits</th>
       <td><p>a character vector specifying the labels for control limits.</p></td>
     </tr>
@@ -262,51 +267,42 @@ Several methods are available for estimating the standard deviation. See <code><
 <span class='co'>## Grouped-data</span>
 <span class='co'>##</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
+<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
 
-<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ewma chart for diameter[1:25, ] 
+<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
+#&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Group sample size:  5
-#&gt; Number of groups:  25
-#&gt; Center of group statistics:  74.00118
-#&gt; Standard deviation:  0.009785039 
+#&gt; Smoothing parameter        = 0.2 
+#&gt; Control limits at nsigmas  = 3 
+#&gt;         LCL      UCL
+#&gt; 1  73.99855 74.00380
+#&gt; 2  73.99781 74.00454
+#&gt; :                   
+#&gt; 25 73.99680 74.00555</div><div class='input'>
+<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
 #&gt; 
-#&gt; Smoothing parameter: 0.2 
-#&gt; Control limits:
-#&gt;          LCL      UCL
-#&gt; 1   73.99855 74.00380
-#&gt; 2   73.99781 74.00454
-#&gt; ...                  
-#&gt; 25  73.99680 74.00555</div><div class='input'>
-<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; ewma chart for diameter[1:25, ] 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
+#&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
+#&gt; New data (phase II)        = diameter[26:40, ] 
+#&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Group sample size:  5
-#&gt; Number of groups:  25
-#&gt; Center of group statistics:  74.00118
-#&gt; Standard deviation:  0.009785039 
-#&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
-#&gt; 
-#&gt; Group sample size:  5
-#&gt; Number of groups:  15 
-#&gt; 
-#&gt; Smoothing parameter: 0.2 
-#&gt; Control limits:
-#&gt;          LCL      UCL
-#&gt; 1   73.99881 74.00354
-#&gt; 2   73.99815 74.00420
-#&gt; ...                  
-#&gt; 40  73.99724 74.00511</div><div class='input'>
+#&gt; Smoothing parameter        = 0.2 
+#&gt; Control limits at nsigmas  = 2.7 
+#&gt;         LCL      UCL
+#&gt; 1  73.99881 74.00354
+#&gt; 2  73.99815 74.00420
+#&gt; :                   
+#&gt; 40 73.99724 74.00511</div><div class='input'>
 <span class='co'>##</span>
 <span class='co'>## Individual observations</span>
 <span class='co'>##</span>
@@ -314,31 +310,25 @@ Several methods are available for estimating the standard deviation. See <code><
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
      <span class='fu'>ewma</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
           <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='fl'>2.7</span>,
-          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='ewma-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ewma chart for viscosity[trial] 
+          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='ewma-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 33.2700 33.7450 34.0350 34.0880 34.1375 35.9600 
+#&gt; Data (phase I)             = viscosity[trial] 
+#&gt; Number of groups           = 20 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 34.088 
+#&gt; Standard deviation         = 0.5076521 
 #&gt; 
-#&gt; Group sample size:  1
-#&gt; Number of groups:  20
-#&gt; Center of group statistics:  34.088
-#&gt; Standard deviation:  0.5076521 
+#&gt; New data (phase II)        = viscosity[!trial] 
+#&gt; Number of groups           = 15 
+#&gt; Group sample size          = 1 
 #&gt; 
-#&gt; Summary of group statistics in viscosity[!trial]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
-#&gt; 
-#&gt; Group sample size:  1
-#&gt; Number of groups:  15 
-#&gt; 
-#&gt; Smoothing parameter: 0.2 
-#&gt; Control limits:
+#&gt; Smoothing parameter        = 0.2 
+#&gt; Control limits at nsigmas  = 2.7 
 #&gt;            LCL      UCL
 #&gt; [1,]  33.81387 34.36213
 #&gt; [2,]  33.73694 34.43906
-#&gt; ...                    
-#&gt; [35,] 33.63111 34.54489</div></pre>
+#&gt; :                      
+#&gt; [35,] 33.63111 34.54489</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

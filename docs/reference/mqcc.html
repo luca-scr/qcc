@@ -108,7 +108,7 @@
 
     <div class="ref-description">
     
-    <p>Create an object of class 'mqcc' to perform multivariate statistical quality control.</p>
+    <p>Create an object of class <code>'mqcc'</code> to perform multivariate statistical quality control.</p>
     
     </div>
 
@@ -120,10 +120,7 @@
      plot = TRUE, &#8230;)
 
 # S3 method for mqcc
-print(x, &#8230;)
-
-# S3 method for mqcc
-summary(object, digits = getOption("digits"), &#8230;)
+print(x, digits = getOption("digits"), &#8230;)
 
 # S3 method for mqcc
 plot(x, 
@@ -249,12 +246,8 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
       <td><p>a logical value indicating whether the previous <code>par</code> settings must be restored. If you need to add points, lines, etc. to a control chart set this to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>object</th>
-      <td><p>an object of class 'mqcc'.</p></td>
-    </tr>
-    <tr>
       <th>x</th>
-      <td><p>an object of class 'mqcc'.</p></td>
+      <td><p>an object of class <code>'mqcc'</code>.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -264,7 +257,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class 'mqcc'.</p>
+    <p>Returns an object of class <code>'mqcc'</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -315,32 +308,28 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 <span class='co'># Xbar-charts for single variables computed adjusting the </span>
 <span class='co'># confidence level of the T^2 chart:</span>
 <span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>RyanMultivar</span>,
-           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>)))</div><div class='img'><img src='mqcc-5.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q1</span>)</div><div class='output co'>#&gt; xbar chart for X1 
+           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>)))</div><div class='img'><img src='mqcc-5.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q1</span>)</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  40.000  54.000  61.375  60.375  68.250  81.250 
-#&gt; 
-#&gt; Group sample size          = 4
-#&gt; Number of groups           = 20
-#&gt; Center of group statistics = 60.375
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = X1 
+#&gt; Number of groups           = 20 
+#&gt; Group sample size          = 4 
+#&gt; Center of group statistics = 60.375 
 #&gt; Standard deviation         = 14.93443 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 2.999977 
 #&gt;       LCL      UCL
 #&gt;  37.97352 82.77648</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>RyanMultivar</span>,
-           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>)))</div><div class='img'><img src='mqcc-6.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q2</span>)</div><div class='output co'>#&gt; xbar chart for X2 
+           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>)))</div><div class='img'><img src='mqcc-6.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q2</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 10.5000 15.3750 19.0000 18.4875 21.5000 29.7500 
-#&gt; 
-#&gt; Group sample size          = 4
-#&gt; Number of groups           = 20
-#&gt; Center of group statistics = 18.4875
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = X2 
+#&gt; Number of groups           = 20 
+#&gt; Group sample size          = 4 
+#&gt; Center of group statistics = 18.4875 
 #&gt; Standard deviation         = 7.139388 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 2.999977 
 #&gt;     LCL     UCL
 #&gt;  7.7785 29.1965</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>MASS</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='input'><span class='co'># generate new "in control" data</span>
@@ -636,7 +625,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt; 
 #&gt; Control limits:
 #&gt;  LCL      UCL
-#&gt;    0 14.26225</div></pre>
+#&gt;    0 14.26225</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -156,62 +156,79 @@ print.ewma.qcc <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
   # cat("\nCall:\n",deparse(object$call),"\n\n",sep="")
+  cat(cli::rule(left = crayon::bold("EWMA Chart"), 
+                width = min(getOption("width"),50)), "\n\n")
+    
   data.name <- object$data.name
-  type <- object$type
-  cat(paste(type, "chart for", data.name, "\n"))
+  # type <- object$type
   statistics <- object$statistics
-  cat("\nSummary of group statistics:\n")
-  print(summary(statistics), digits = digits, ...)
+  # cat("\nSummary of group statistics:\n")
+  # print(summary(statistics), digits = digits, ...)
+
+  cat("Data (phase I)             =", data.name, "\n")
+  cat("Number of groups           =", length(statistics), "\n")
+
   sizes <- object$sizes
   if(length(unique(sizes))==1)
      sizes <- sizes[1]
   if(length(sizes) == 1)
-     cat("\nGroup sample size: ", format(sizes))
-  else {
-         cat("\nSummary of group sample sizes: ")
-         tab <- table(sizes)
-         print(matrix(c(as.numeric(names(tab)), tab), 
-                      ncol = length(tab), byrow = TRUE, 
-                      dimnames = list(c("  sizes", "  counts"),
-                      character(length(tab)))), 
-               digits = digits, ...)
-        }
-  cat("\nNumber of groups: ", length(statistics))
+  {
+    cat("Group sample size          =", signif(sizes), "\n")
+  } else 
+  {
+    cat("Group sample sizes         =")
+    tab <- table(sizes)
+    print(matrix(c(as.numeric(names(tab)), tab), 
+                 ncol = length(tab), byrow = TRUE, 
+                 dimnames = list(c("  sizes", "  counts"),
+                                 character(length(tab)))),
+          digits = digits, ...)
+  }
+
   center <- object$center
-  cat("\nCenter of group statistics: ", format(center, digits = digits))
+  cat("Center of group statistics =", signif(center, digits = digits), "\n")
+
   sd <- object$std.dev
-  cat("\nStandard deviation: ", format(sd, digits = digits), "\n")
+  cat("Standard deviation         =", signif(sd, digits = digits), "\n")
 
   newdata.name <- object$newdata.name
   newstats <- object$newstats
   if(!is.null(newstats)) 
-    { cat(paste("\nSummary of group statistics in ", 
-                newdata.name, ":\n", sep = ""))
-      print(summary(newstats), digits = digits, ...)
-      newsizes <- object$newsizes
-      if (length(unique(newsizes)) == 1)
-         newsizes <- newsizes[1]
-      if(length(newsizes) == 1)
-         cat("\nGroup sample size: ", format(newsizes))
-      else 
-         { cat("\nSummary of group sample sizes:\n")
-           new.tab <- table(newsizes)
-           print(matrix(c(as.numeric(names(new.tab)), new.tab),
-                        ncol = length(new.tab), byrow = TRUE, 
-                        dimnames = list(c("  sizes", "  counts"),
-                                        character(length(new.tab)))), 
-                 digits = digits, ...)
-         }
-      cat("\nNumber of groups: ", length(newstats), "\n")
-     }
+  { 
+    # cat(paste("\nSummary of group statistics in ", 
+    #           newdata.name, ":\n", sep = ""))
+    # print(summary(newstats), digits = digits, ...)
+    cat("\nNew data (phase II)        =", newdata.name, "\n")
+    cat("Number of groups           =", length(newstats), "\n")
+    newsizes <- object$newsizes
+    if (length(unique(newsizes)) == 1)
+      newsizes <- newsizes[1]
+    if(length(newsizes) == 1)
+    {
+      cat("Group sample size          =", signif(newsizes), "\n")
+    } else 
+    { 
+      cat("Group sample sizes         =")
+      new.tab <- table(newsizes)
+      print(matrix(c(as.numeric(names(new.tab)), new.tab),
+                   ncol = length(new.tab), byrow = TRUE, 
+                   dimnames = list(c("  sizes", "  counts"),
+                                   character(length(new.tab)))),
+            digits = digits, ...)
+    }
+  }
 
-  cat("\nSmoothing parameter:", signif(object$lambda, digits = digits), "\n")
+  cat("\nSmoothing parameter        =", 
+      signif(object$lambda, digits = digits), "\n")
 
   limits <- object$limits
-  if (!is.null(limits)) 
-     { cat("Control limits:\n")
-       .printShortMatrix(limits, digits = digits, ...) }
-       
+  if(!is.null(limits)) 
+  { 
+    cat("Control limits at nsigmas  =", object$nsigmas, "\n")    
+    # names(dimnames(limits)) <- c("Control limits             =", "")
+    .printShortMatrix(limits, digits = digits, ...) 
+  }
+
   invisible()
 }
 
@@ -222,6 +239,7 @@ plot.ewma.qcc <- function(x,
                           add.stats = qcc.options("add.stats"), 
                           chart.all = qcc.options("chart.all"), 
                           fill = qcc.options("fill"), 
+                          label.center = "CL",
                           label.limits = c("LCL", "UCL"), 
                           title, xlab, ylab, ylim, axes.las = 0,
                           digits = getOption("digits"),
@@ -296,6 +314,9 @@ plot.ewma.qcc <- function(x,
         cex  = par("cex")*qcc.options("cex"), 
         col  = par("col.main"))
   mtext(label.limits, side = 4, at = limits[nrow(limits),], 
+        las = 1, line = 0.1, col = gray(0.3), 
+        cex = par("cex")*qcc.options("cex.stats"))
+  mtext(label.center, side = 4, at = rev(center)[1], 
         las = 1, line = 0.1, col = gray(0.3), 
         cex = par("cex")*qcc.options("cex.stats"))
 

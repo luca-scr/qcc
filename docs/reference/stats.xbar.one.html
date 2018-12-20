@@ -145,7 +145,7 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)</pre>
     </tr>
     <tr>
       <th>conf</th>
-      <td><p>a numeric value \(\in (0,1)\) specifying the confidence level to use for computing control limits.</p></td>
+      <td><p>a numeric value in \((0,1)\) specifying the confidence level to use for computing control limits.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -184,32 +184,28 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)</pre>
        <span class='fl'>2.56</span>, <span class='fl'>2.70</span>, <span class='fl'>3.00</span>, <span class='fl'>2.81</span>, <span class='fl'>2.77</span>, <span class='fl'>2.89</span>, <span class='fl'>2.54</span>, <span class='fl'>2.98</span>, <span class='fl'>2.35</span>, <span class='fl'>2.53</span>)
 <span class='co'># the Shewhart control chart for one-at-time data</span>
 <span class='co'># 1) using MR (default)</span>
-<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar.one"</span>, <span class='kw'>data.name</span><span class='kw'>=</span><span class='st'>"Water content (in ppm) of batches of antifreeze"</span>)</div><div class='img'><img src='stats.xbar.one-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for Water content (in ppm) of batches of antifreeze 
+<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar.one"</span>, <span class='kw'>data.name</span><span class='kw'>=</span><span class='st'>"Water content (in ppm) of batches of antifreeze"</span>)</div><div class='img'><img src='stats.xbar.one-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 2.170000 2.440000 2.550000 2.569706 2.690000 3.000000 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 34
-#&gt; Center of group statistics = 2.569706
+#&gt; Chart type                 = xbar.one 
+#&gt; Data (phase I)             = Water content (in ppm) of batches of antifreeze 
+#&gt; Number of groups           = 34 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 2.569706 
 #&gt; Standard deviation         = 0.1794541 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL      UCL
 #&gt;  2.031344 3.108068</div><div class='input'><span class='co'># 2) using SD</span>
-<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar.one"</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='st'>"SD"</span>, <span class='kw'>data.name</span><span class='kw'>=</span><span class='st'>"Water content (in ppm) of batches of antifreeze"</span>)</div><div class='img'><img src='stats.xbar.one-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for Water content (in ppm) of batches of antifreeze 
+<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar.one"</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='st'>"SD"</span>, <span class='kw'>data.name</span><span class='kw'>=</span><span class='st'>"Water content (in ppm) of batches of antifreeze"</span>)</div><div class='img'><img src='stats.xbar.one-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 2.170000 2.440000 2.550000 2.569706 2.690000 3.000000 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 34
-#&gt; Center of group statistics = 2.569706
+#&gt; Chart type                 = xbar.one 
+#&gt; Data (phase I)             = Water content (in ppm) of batches of antifreeze 
+#&gt; Number of groups           = 34 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 2.569706 
 #&gt; Standard deviation         = 0.2216795 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL      UCL
 #&gt;  1.904667 3.234744</div><div class='input'>
 <span class='co'># "as the size increases further, we would expect sigma-hat to settle down</span>
@@ -219,7 +215,7 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)</pre>
 <span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>:<span class='fl'>24</span>
 <span class='kw'>for</span> (<span class='no'>j</span> <span class='kw'>in</span> <span class='no'>k</span>)
     <span class='no'>sigma</span>[<span class='no'>j</span>] <span class='kw'>&lt;-</span> <span class='fu'>sd.xbar.one</span>(<span class='no'>x</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='no'>j</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>k</span>, <span class='no'>sigma</span>[<span class='no'>k</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"b"</span>)     <span class='co'># plot estimates of sigma for </span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a></span>(<span class='no'>x</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>2</span>)   <span class='co'># different values of k</span></div><div class='img'><img src='stats.xbar.one-3.png' alt='' width='504' height='432' /></div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>k</span>, <span class='no'>sigma</span>[<span class='no'>k</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"b"</span>)     <span class='co'># plot estimates of sigma for </span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a></span>(<span class='no'>x</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>2</span>)   <span class='co'># different values of k</span></div><div class='img'><img src='stats.xbar.one-3.png' alt='' width='504' height='432' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

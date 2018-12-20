@@ -4,7 +4,7 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-qcc.groups <- function(x, sample, data)
+qccGroups <- function(x, sample, data)
 {
   # collect x and sample from data if provided
   if(!missing(data))
@@ -22,8 +22,8 @@ qcc.groups <- function(x, sample, data)
   return(x)
 }
 
-qcc.overdispersion.test <- function(x, size, 
-                            type = ifelse(missing(size), "poisson", "binomial"))
+qccOverdispersionTest <- function(x, size, 
+                                  type = ifelse(missing(size), "poisson", "binomial"))
 {
   type <- match.arg(type, c("poisson", "binomial"))
   if (type=="binomial" & missing(size))
@@ -67,37 +67,41 @@ blues.colors <- function (n)
   x <- as.matrix(x)
   nr <- nrow(x)
   nc <- ncol(x)
+  rnames <- rownames(x)
+  cnames <- colnames(x)
+  dnames <- names(dimnames(x))
+  
   if(is.na(head <- as.numeric(head))) head <- 2
   if(is.na(tail <- as.numeric(tail))) tail <- 1
   if(is.na(chead <- as.numeric(chead))) chead <- 5
   if(is.na(ctail <- as.numeric(ctail))) ctail <- 1
   
   if(nr > (head + tail + 1))
-    { rnames <- rownames(x)
-      if(is.null(rnames)) 
-        rnames <- paste("[", 1:nr, ",]", sep ="")
-      x <- rbind(x[1:head,,drop=FALSE], 
-                 rep(NA, nc), 
-                 x[(nr-tail+1):nr,,drop=FALSE])
-      rownames(x) <- c(rnames[1:head], "...", rnames[(nr-tail+1):nr])
+  { 
+    if(is.null(rnames)) 
+      rnames <- paste("[", 1:nr, ",]", sep ="")
+    x <- rbind(x[1:head,,drop=FALSE], 
+               rep(NA, nc), 
+               x[(nr-tail+1):nr,,drop=FALSE])
+    rownames(x) <- c(rnames[1:head], ":", rnames[(nr-tail+1):nr])
   }
   if(nc > (chead + ctail + 1))
-    { cnames <- colnames(x)
-      if(is.null(cnames)) 
-        cnames <- paste("[,", 1:nc, "]", sep ="")
-      x <- cbind(x[,1:chead,drop=FALSE], 
-                 rep(NA, nrow(x)), 
-                 x[,(nc-ctail+1):nc,drop=FALSE])
-      colnames(x) <- c(cnames[1:chead], "...", cnames[(nc-ctail+1):nc])
+  { 
+    if(is.null(cnames)) 
+      cnames <- paste("[,", 1:nc, "]", sep ="")
+    x <- cbind(x[,1:chead,drop=FALSE], 
+               rep(NA, nrow(x)), 
+               x[,(nc-ctail+1):nc,drop=FALSE])
+    colnames(x) <- c(cnames[1:chead], "...", cnames[(nc-ctail+1):nc])
   }
-          
+  names(dimnames(x)) <- dnames
   print(x, na.print = "", ...)
 }
 
 
 # Options retrieval and setting -------------------------------------------
 
-qcc.options <- function (...)
+qcc.options <- function(...)
 {
   current <- .qcc.options
   if(nargs() == 0) return(current)

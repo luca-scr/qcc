@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Operating Characteristic Function — oc.curves • qcc</title>
+<title>Operating Characteristic Function — ocCurves • qcc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Operating Characteristic Function — oc.curves" />
+<meta property="og:title" content="Operating Characteristic Function — ocCurves" />
 
 <meta property="og:description" content="Draws the operating characteristic curves for a 'qcc' object." />
 <meta name="twitter:card" content="summary" />
@@ -108,41 +108,41 @@
 
     <div class="ref-description">
     
-    <p>Draws the operating characteristic curves for a 'qcc' object.</p>
+    <p>Draws the operating characteristic curves for a <code>'qcc'</code> object.</p>
     
     </div>
 
-    <pre class="usage">oc.curves(object, &#8230;)
+    <pre class="usage">ocCurves(object, &#8230;)
 
-oc.curves.xbar(object, n, c = seq(0, 5, length=101), nsigmas = object$nsigmas, 
-               lty = rep(1, length(n)), lwd = rep(2, length(n)), 
-               col = blues.colors(length(n)), 
-               identify=FALSE, restore.par=TRUE)
+ocCurves.xbar(object, n, c = seq(0, 5, length=101), nsigmas = object$nsigmas, 
+              lty = rep(1, length(n)), lwd = rep(2, length(n)), 
+              col = blues.colors(length(n)), 
+              identify=FALSE, restore.par=TRUE)
 
-oc.curves.R(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
-            lty = rep(1, length(n)), lwd = rep(2, length(n)), 
-            col = blues.colors(length(n)), 
-            identify = FALSE, restore.par=TRUE)
+ocCurves.R(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
+           lty = rep(1, length(n)), lwd = rep(2, length(n)), 
+           col = blues.colors(length(n)), 
+           identify = FALSE, restore.par=TRUE)
 
-oc.curves.S(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
-            lty = rep(1, length(n)), lwd = rep(2, length(n)), 
-            col = blues.colors(length(n)), 
-            identify = FALSE, restore.par=TRUE)
+ocCurves.S(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
+           lty = rep(1, length(n)), lwd = rep(2, length(n)), 
+           col = blues.colors(length(n)), 
+           identify = FALSE, restore.par=TRUE)
 
-oc.curves.p(object, nsigmas = object$nsigmas, 
-            lty = 1, lwd = 2, col = blues.colors(1),
-            identify = FALSE, restore.par=TRUE)
+ocCurves.p(object, nsigmas = object$nsigmas, 
+           lty = 1, lwd = 2, col = blues.colors(1),
+           identify = FALSE, restore.par=TRUE)
 
-oc.curves.c(object, nsigmas = object$nsigmas, 
-            lty = 1, lwd = 2, col = blues.colors(1),
-            identify = FALSE, restore.par=TRUE)</pre>
+ocCurves.c(object, nsigmas = object$nsigmas, 
+           lty = 1, lwd = 2, col = blues.colors(1),
+           identify = FALSE, restore.par=TRUE)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an object of class 'qcc'.</p></td>
+      <td><p>an object of class <code>'qcc'</code>.</p></td>
     </tr>
     <tr>
       <th>identify</th>
@@ -179,14 +179,8 @@ is ignored for types "p" and "c".</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. <code>oc.curves</code> is a generic function which calls the proper function depending on the type of 'qcc' object. Further arguments provided through &#8230; are passed to the specific function depending on the type of chart.</p>
-<p>The probabilities are based on the conventional assumptions about
-process distributions: the normal distribution for "xbar" , "R", and "S",
-the binomial distribution for "p" and "np", and the Poisson distribution
-for "c" and "u". They are all sensitive to departures from those assumptions,
-but to varying degrees. The performance of the "S" chart, and especially
-the "R" chart,
-are likely to be seriously affected by longer tails.</p>
+    <p>An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. <code>ocCurves</code> is a generic function which calls the proper function depending on the type of <code>'qcc'</code> object. Further arguments provided through <code>&#8230;</code> are passed to the specific function depending on the type of chart.</p>
+<p>The probabilities are based on the conventional assumptions about process distributions: the normal distribution for <code>"xbar"</code>, <code>"R"</code>, and <code>"S"</code>, the binomial distribution for <code>"p"</code> and <code>"np"</code>, and the Poisson distribution for <code>"c"</code> and <code>"u"</code>. They are all sensitive to departures from those assumptions, but to varying degrees. The performance of the <code>"S"</code> chart, and especially the <code>"R"</code> chart, are likely to be seriously affected by longer tails.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -207,8 +201,8 @@ are likely to be seriously affected by longer tails.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>oc.curves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))</div><div class='img'><img src='oc.curves-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;                sample size
+<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
+<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))</div><div class='img'><img src='oc.curves-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;                sample size
 #&gt; shift (std.dev)    n=1    n=5   n=10   n=15   n=20
 #&gt;            0    0.9973 0.9973 0.9973 0.9973 0.9973
 #&gt;            0.05 0.9973 0.9971 0.9970 0.9968 0.9966
@@ -312,11 +306,11 @@ are likely to be seriously affected by longer tails.</p>
 #&gt;            4.95 0.0256 0.0000 0.0000 0.0000 0.0000
 #&gt;            5    0.0228 0.0000 0.0000 0.0000 0.0000</div><div class='input'># or to identify points on the plot use
 </div><span class='co'># NOT RUN {</span>
-<span class='fu'>oc.curves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>), <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>), <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 <span class='co'># }</span><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice</span>)
 <span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>,
-             <span class='fu'>oc.curves</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0   0.01   0.02   0.03   0.04   0.05   0.06   0.07   0.08   0.09    0.1 
+             <span class='fu'>ocCurves</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0   0.01   0.02   0.03   0.04   0.05   0.06   0.07   0.08   0.09    0.1 
 #&gt; 0.0000 0.0894 0.2642 0.4447 0.5995 0.7206 0.8100 0.8735 0.9173 0.9468 0.9662 
 #&gt;   0.11   0.12   0.13   0.14   0.15   0.16   0.17   0.18   0.19    0.2   0.21 
 #&gt; 0.9788 0.9869 0.9920 0.9951 0.9971 0.9983 0.9990 0.9993 0.9995 0.9995 0.9993 
@@ -339,7 +333,7 @@ are likely to be seriously affected by longer tails.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)
 <span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>,
           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>oc.curves</span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0      1      2      3      4      5      6      7      8      9     10 
+<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves</span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0      1      2      3      4      5      6      7      8      9     10 
 #&gt; 0.0000 0.0006 0.0166 0.0839 0.2149 0.3840 0.5543 0.6993 0.8088 0.8843 0.9329 
 #&gt;     11     12     13     14     15     16     17     18     19     20     21 
 #&gt; 0.9625 0.9797 0.9893 0.9945 0.9972 0.9986 0.9991 0.9992 0.9986 0.9972 0.9945 

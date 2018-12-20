@@ -6,27 +6,30 @@
 
 \title{Quality Control Charts}
 
-\description{Create an object of class 'qcc' to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.}
+\description{Create an object of class \code{'qcc'} to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.}
 
 \usage{
 qcc(data, 
     type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), 
     sizes, center, std.dev, limits,
-    data.name, labels, newdata, newsizes, newdata.name,
-    newlabels, nsigmas = 3, confidence.level,
+    data.name, labels, 
+    newdata, newsizes, newdata.name, newlabels, 
+    nsigmas = 3, confidence.level,
     rules = c(1,4), plot = TRUE, \dots)
 
 \method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{qcc}(x,
-	   add.stats = qcc.options("add.stats"), 
+     add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
-     label.limits = c("LCL ", "UCL"), 
-		 title, xlab, ylab, ylim, axes.las = 0, 
+     label.center = "CL",
+     label.limits = c("LCL ", "UCL"),
+     title, xlab, ylab, ylim, axes.las = 0, 
      digits = getOption("digits"),
      restore.par = TRUE, \dots)
 }
+
 \arguments{
 
   \item{data}{a data frame, a matrix or a vector containing observed data for
@@ -35,19 +38,18 @@ qcc(data,
 
   \item{type}{a character string specifying the group statistics to compute. \cr
   Available methods are:
-%\tabular{lll}{
-%              \tab Statistic charted   \tab Chart description \cr
-%\code{"xbar"} \tab mean                \tab means of a continuous process variable \cr
-%\code{"R"}    \tab range               \tab ranges of a continuous process variable \cr
-%\code{"S"}    \tab standard deviation  \tab standard deviations of a continuous variable \cr
-%\code{"xbar.one"} \tab mean            \tab one-at-time data of a continuous process variable \cr
-%\code{"p"}    \tab proportion          \tab proportion of nonconforming units \cr
-%\code{"np"}   \tab count               \tab number of nonconforming units \cr
-%\code{"c"}    \tab count               \tab nonconformities per unit \cr
-%\code{"u"}    \tab count               \tab average nonconformities per unit %\cr
-%\code{"g"}    \tab count               \tab number of non-events between events \cr
-%}
-
+ \tabular{lll}{
+              \tab Statistic charted   \tab Chart description \cr
+\code{"xbar"} \tab mean                \tab means of a continuous process variable \cr
+\code{"R"}    \tab range               \tab ranges of a continuous process variable \cr
+\code{"S"}    \tab standard deviation  \tab standard deviations of a continuous variable \cr
+\code{"xbar.one"} \tab mean            \tab one-at-time data of a continuous process variable \cr
+\code{"p"}    \tab proportion          \tab proportion of nonconforming units \cr
+\code{"np"}   \tab count               \tab number of nonconforming units \cr
+\code{"c"}    \tab count               \tab nonconformities per unit \cr
+\code{"u"}    \tab count               \tab average nonconformities per unit \cr
+\code{"g"}    \tab count               \tab number of non-events between events \cr
+}
 Furthermore, a user specified type of chart, say \code{"newchart"}, can be provided. This requires the definition of \code{"stats.newchart"}, \code{"sd.newchart"}, and \code{"limits.newchart"}. As an example, see \code{\link{stats.xbar}}.
 }
 
@@ -88,6 +90,8 @@ Several methods are available for estimating the standard deviation in case of a
 \item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
 \code{qcc.options("zones")$fill}.}
 
+\item{label.center}{a character  specifying the label for center line.}
+
 \item{label.limits}{a character vector specifying the labels for control limits.}
 
 \item{title}{a string giving the label for the main title.}
@@ -98,19 +102,19 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{ylim}{a numeric vector specifying the limits for the y-axis.}
 
-\item{axes.las}{numeric in \{0,1,2,3\} specifying the style of axis labels. See \code{help(par)}.}
+\item{axes.las}{numeric in \{0,1,2,3\} specifying the style of axis labels. See \code{\link{par}}.}
 
 \item{digits}{the number of significant digits to use.}
 
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a control chart set this to \code{FALSE}.}
 
-\item{x}{an object of class 'qcc'.}
+\item{x}{an object of class \code{'qcc'}.}
 
 \item{\dots}{additional arguments to be passed to the generic function.} 
 }
 %\details{}
 
-\value{Returns an object of class 'qcc'.}
+\value{Returns an object of class \code{'qcc'}.}
 
 \note{For a nice blog post discussing the \code{qcc} package, in particular how to implement the \emph{Western Eletric Rules (WER)}, see \url{http://blog.yhat.com/posts/quality-control-in-r.html}.}
 
@@ -129,14 +133,14 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \author{Luca Scrucca}
 %\note{ ~~further notes~~ }
 
-\seealso{\code{\link{shewhart.rules}}, \code{\link{cusum}}, \code{\link{ewma}}, \code{\link{oc.curves}}, \code{\link{process.capability}}, \code{\link{qcc.groups}} }
+\seealso{\code{\link{shewhart.rules}}, \code{\link{cusum}}, \code{\link{ewma}}, \code{\link{ocCurves}}, \code{\link{processCapability}}, \code{\link{qccGroups}} }
 
 \examples{
 ##
 ##  Continuous data 
 ##
 data(pistonrings)
-diameter <- qcc.groups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(diameter, sample, data = pistonrings)
 
 qcc(diameter[1:25,], type="xbar")
 qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
@@ -159,7 +163,7 @@ abline(h = warn.limits, lty = 3, col = "chocolate")
 
 # variable control limits
 out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
-diameter <- qcc.groups(diameter, sample, data = pistonrings[-out,])
+diameter <- qccGroups(diameter, sample, data = pistonrings[-out,])
 qcc(diameter[1:25,], type="xbar")
 qcc(diameter[1:25,], type="R")
 qcc(diameter[1:25,], type="S")

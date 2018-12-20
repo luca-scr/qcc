@@ -175,75 +175,96 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
   # cat("\nCall:\n",deparse(object$call),"\n\n",sep="")
+  cat(cli::rule(left = crayon::bold("Quality Control Chart"), 
+                width = min(getOption("width"),50)), "\n\n")
+
   data.name <- object$data.name
   type <- object$type
-  cat(paste(type, "chart for", data.name, "\n"))
   statistics <- object$statistics
-  cat("\nSummary of group statistics:\n")
-  print(summary(statistics), digits = digits, ...)
+  # cat(paste(type, "chart for", data.name, "\n"))
+  # cat("\nSummary of group statistics:\n")
+  # print(summary(statistics), digits = digits, ...)
+  
+  cat("Chart type                 =", type, "\n")
+  cat("Data (phase I)             =", data.name, "\n")
+  cat("Number of groups           =", length(statistics), "\n")
+
   sizes <- object$sizes
   if(length(unique(sizes))==1)
      sizes <- sizes[1]
   if(length(sizes) == 1)
-     cat("\nGroup sample size          =", format(sizes))
-  else {
-         cat("\nSummary of group sample sizes: ")
-         tab <- table(sizes)
-         print(matrix(c(as.numeric(names(tab)), tab), 
-                      ncol = length(tab), byrow = TRUE, 
-                      dimnames = list(c("  sizes", "  counts"),
-                      character(length(tab)))), 
-               digits = digits, ...)
-        }
-  cat("\nNumber of groups           =", length(statistics))
+  {
+    cat("Group sample size          =", signif(sizes), "\n")
+  } else 
+  {
+    cat("Group sample sizes         =")
+    tab <- table(sizes)
+    print(matrix(c(as.numeric(names(tab)), tab), 
+                 ncol = length(tab), byrow = TRUE, 
+                 dimnames = list(c("  sizes", "  counts"),
+                                 character(length(tab)))), 
+          digits = digits, ...)
+  }
   
   center <- object$center
   if(length(center) == 1)
-    { cat("\nCenter of group statistics =", format(center, digits = digits)) }
-  else
-    { out <- paste(format(center, digits = digits))
-      out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]      
-      out <- paste0(paste(out, collapse = " "), " ...")
-      cat("\nCenter of group statistics =", out, sep = "")
-    }
+  { 
+    cat("Center of group statistics =", signif(center, digits = digits), "\n")   } else
+  { 
+    out <- paste(signif(center, digits = digits))
+    out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]      
+    out <- paste0(paste(out, collapse = " "), " ...")
+    cat("Center of group statistics =", out, "\n", sep = "")
+  }
   
   sd <- object$std.dev
   if(length(sd) == 1)
-    { cat("\nStandard deviation         =", format(sd, digits = digits), "\n") }
-  else
-    { out <- paste(format(sd, digits = digits))
-      out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]
-      out <- paste0(paste(out, collapse = " "), " ...")
-      cat("\nStandard deviation         =", out, "\n", sep = "")
-    }
+  { 
+    cat("Standard deviation         =", signif(sd, digits = digits), "\n") 
+  } else
+  { 
+    out <- paste(signif(sd, digits = digits))
+    out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]
+    out <- paste0(paste(out, collapse = " "), " ...")
+    cat("Standard deviation         =", out, "\n", sep = "")
+  }
 
   newdata.name <- object$newdata.name
   newstats <- object$newstats
   if (!is.null(newstats)) 
-     { cat(paste("\nSummary of group statistics in ", 
-                 newdata.name, ":\n", sep = ""))
-       print(summary(newstats), digits = digits, ...)
-       newsizes <- object$newsizes
-       if (length(unique(newsizes)) == 1)
-          newsizes <- newsizes[1]
-       if (length(newsizes) == 1)
-             cat("\nGroup sample size          =", format(newsizes))
-       else 
-           { cat("\nSummary of group sample sizes:\n")
-             new.tab <- table(newsizes)
-             print(matrix(c(as.numeric(names(new.tab)), new.tab),
-                          ncol = length(new.tab), byrow = TRUE, 
-                          dimnames = list(c("  sizes", "  counts"),
-                                          character(length(new.tab)))), 
-                   digits = digits, ...)
-           }
-       cat("\nNumber of groups           =", length(newstats), "\n")
-     }
-
+  { 
+    # cat(cli::rule(line = 1, width = 50), "\n")
+    # cat(paste("\nSummary of group statistics in ", 
+    #           newdata.name, ":\n", sep = ""))
+    # print(summary(newstats), digits = digits, ...)
+    cat("\nNew data (phase II)        =", newdata.name, "\n")
+    cat("Number of groups           =", length(newstats), "\n")
+    newsizes <- object$newsizes
+    if (length(unique(newsizes)) == 1)
+      newsizes <- newsizes[1]
+    if (length(newsizes) == 1)
+    {
+      cat("Group sample size          =", signif(newsizes), "\n")
+    } else 
+    { cat("Group sample sizes         =")
+      new.tab <- table(newsizes)
+      print(matrix(c(as.numeric(names(new.tab)), new.tab),
+                   ncol = length(new.tab), byrow = TRUE, 
+                   dimnames = list(c("  sizes", "  counts"),
+                                   character(length(new.tab)))), 
+            digits = digits, ...)
+    }
+  }
+  
+  # cat(cli::rule(line = 1, width = 50), "\n")
   limits <- object$limits
-  if (!is.null(limits)) 
-     { cat("\nControl limits:\n")
-       .printShortMatrix(limits, digits = digits, ...) }
+  if(!is.null(limits)) 
+  { 
+    # cat("Control limits:\n")
+    cat("\nControl limits at nsigmas  =", object$nsigmas, "\n")    
+    # names(dimnames(limits)) <- c("Control limits             =", "")
+    .printShortMatrix(limits, digits = digits, ...) 
+  }
 
   invisible()
 }
@@ -255,6 +276,7 @@ plot.qcc <- function(x,
                      add.stats = qcc.options("add.stats"), 
                      chart.all = qcc.options("chart.all"), 
                      fill = qcc.options("fill"),
+                     label.center = "CL",
                      label.limits = c("LCL ", "UCL"), 
                      title, xlab, ylab, ylim, axes.las = 0,
                      digits = getOption("digits"),
@@ -393,7 +415,7 @@ plot.qcc <- function(x,
   mtext(label.limits, side = 4, at = c(rev(lcl)[1], rev(ucl)[1]), 
         las = 1, line = 0.1, col = gray(0.3), 
         cex = par("cex")*qcc.options("cex.stats"))
-  mtext("CL", side = 4, at = rev(center)[1], 
+  mtext(label.center, side = 4, at = rev(center)[1], 
         las = 1, line = 0.1, col = gray(0.3), 
         cex = par("cex")*qcc.options("cex.stats"))
   }
@@ -671,13 +693,13 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
     stop("group sizes must be larger than one")
   c4 <- qcc.c4
   if(!is.numeric(std.dev))
-    std.dev <- match.arg(std.dev)
+    std.dev <- match.arg(std.dev, choices = eval(formals(sd.xbar)$std.dev))
   if(is.numeric(std.dev))
     { sd <- std.dev }
   else
     { switch(std.dev, 
              "UWAVE-R" = {  R <- apply(data, 1, function(x) 
-                            diff(range(x, na.rm = TRUE)))
+                                       diff(range(x, na.rm = TRUE)))
                             d2 <- qcc.options("exp.R.unscaled")[sizes]
                             sd <- sum(R/d2)/length(sizes) 
                          }, 
@@ -701,41 +723,8 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
                           }
       )
     }
-#  if (missing(std.dev))
-#     var.within <- apply(data, 1, var, na.rm=TRUE)
-#  else 
-#     var.within <- std.dev^2
-#  var.df <- sum(sizes - 1)
-#  if (equal.sd) 
-#     { std.dev <- sqrt(sum((sizes - 1) * var.within)/var.df) / c4(var.df + 1) }
-#  else 
-#     { c <- c4(sizes)/(1 - c4(sizes)^2)
-#       std.dev <- sum(c * sqrt(var.within))/sum(c * c4(sizes)) }
   return(sd)
 }
-
-# limits.xbar <- function(center, std.dev, sizes, conf)
-# {
-#   if (length(unique(sizes))==1)
-#      sizes <- sizes[1]
-#   se.stats <- std.dev/sqrt(sizes)
-#   if (conf >= 1) 
-#      { lcl <- center - conf * se.stats
-#        ucl <- center + conf * se.stats
-#      }
-#   else 
-#      { if (conf > 0 & conf < 1) 
-#           { nsigmas <- qnorm(1 - (1 - conf)/2)
-#             lcl <- center - nsigmas * se.stats
-#             ucl <- center + nsigmas * se.stats
-#           }
-#        else stop("invalid 'conf' argument. See help.")
-#      }
-#   limits <- matrix(c(lcl, ucl), ncol = 2)
-#   rownames(limits) <- rep("", length = nrow(limits))
-#   colnames(limits) <- c("LCL", "UCL")
-#   return(limits)
-# }
 
 limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {

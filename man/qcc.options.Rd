@@ -1,7 +1,7 @@
 \name{qcc.options}
 \alias{qcc.options}
 
-\title{Set or return options for the 'qcc' package.}
+\title{Set or return options for the \pkg{qcc} package.}
 
 \description{This function can be used to control the behavior of the
 'qcc' library such as the background color, out-of-control points appearance,

@@ -4,7 +4,7 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-process.capability <- function(object, spec.limits, target, 
+processCapability <- function(object, spec.limits, target, 
                                std.dev, nsigmas, confidence.level = 0.95,
                                plot = TRUE, ...)
 {
@@ -109,63 +109,68 @@ process.capability <- function(object, spec.limits, target,
               obs = { obs <- c(obs.LSL, obs.USL)/100
                       names(obs) <- c("Obs < LSL", "Obs > USL")
                       obs } )
-  class(out) <- "process.capability"
+  class(out) <- "processCapability"
   if(plot) plot(out, ...) 
 
   return(out)
 }
 
-print.process.capability <- function(x, digits = getOption("digits"), ...)
+print.processCapability <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
-  cat("Process Capability Analysis\n\n")
-  # cat("\nCall:\n", deparse(match.call()), "\n\n", sep = "")
-  cat(paste(formatC("Number of obs = ", width=16), 
-            formatC(length(object$x), width=12, flag="-"), 
-            formatC("Target = ", width=10), 
-            ifelse(object$has.target, formatC(signif(object$target,digits=digits), flag="-"), ""),
+  cat(cli::rule(left = crayon::bold("Process Capability Analysis"), 
+                width = min(getOption("width"),50)), "\n\n")
+  
+  cat(paste(formatC("Number of obs = ", width=16),
+            formatC(length(object$data), width=12, flag="-"),
+            formatC("Target = ", width=10),
+            ifelse(object$has.target, 
+                   formatC(object$target, digits=digits, flag="-"), ""),
             "\n", sep=""))
-  cat(paste(formatC("Center = ", width=16), 
-            formatC(signif(object$center, digits=digits), width=12, flag="-"),
-            formatC("LSL = ", width=10), 
-            ifelse(is.na(object$spec.limits[1]), "", 
-                   formatC(signif(object$spec.limits[1], digits=digits), flag="-")),
+  cat(paste(formatC("Center        = ", width=16),
+            formatC(object$center, digits=digits, width=12, flag="-"),
+            formatC("LSL    = ", width=10),
+            ifelse(is.na(object$spec.limits[1]), "",
+                   formatC(object$spec.limits[1], digits=digits, flag="-")),
             "\n", sep=""))
-  cat(paste(formatC("StdDev = ", width=16), 
-            formatC(signif(object$std.dev, digits=digits), width=12, flag="-"),
-            formatC("USL = ", width=10), 
-            ifelse(is.na(object$spec.limits[2]), "", 
-                   formatC(signif(object$spec.limits[2], digits=digits), flag="-")),
+  cat(paste(formatC("StdDev        = ", width=16),
+            formatC(object$std.dev, digits=digits, width=12, flag="-"),
+            formatC("USL    = ", width=10),
+            ifelse(is.na(object$spec.limits[2]), "",
+                   formatC(object$spec.limits[2], digits=digits, flag="-")),
             "\n", sep=""))
-  cat("\nCapability indices:\n")
-  print(object$indices, digits=4, na.print="", print.gap=2)
+            
+  indices <- object$indices
+  names(dimnames(indices)) <- c("Capability indices", "")
+  print(indices, digits = 3, na.print="", print.gap=2)
+  
   cat("\n")
   cat(paste("Exp<LSL", ifelse(is.na(object$exp[1]), "\t", 
-                              paste(format(object$exp[1], digits=2), "%\t", sep="")), 
+                              paste(signif(object$exp[1], digits=2), "%\t", sep="")), 
             "Obs<LSL", ifelse(is.na(object$obs[1]), "", 
-                              paste(format(object$obs[1], digits=2), "%\n", sep=""))))
+                              paste(signif(object$obs[1], digits=2), "%\n", sep=""))))
   cat(paste("Exp>USL", ifelse(is.na(object$exp[2]), "\t", 
-                              paste(format(object$exp[2], digits=2), "%\t", sep="")),
+                              paste(signif(object$exp[2], digits=2), "%\t", sep="")),
             "Obs>USL", ifelse(is.na(object$obs[2]), "", 
-                              paste(format(object$obs[2], digits=2), "%\n", sep=""))))
+                              paste(signif(object$obs[2], digits=2), "%\n", sep=""))))
   
   invisible()
 }
 
-summary.process.capability <- function(object, ...) 
-  print.process.capability(object, ...)
+summary.processCapability <- function(object, ...) 
+  print.processCapability(object, ...)
 
-plot.process.capability <- function(x, 
-                                    add.stats = qcc.options("add.stats"),
-                                    breaks = "scott", 
-                                    col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
-                                    border = "white",
-                                    digits = getOption("digits"),
-                                    restore.par = TRUE, ...) 
+plot.processCapability <- function(x, 
+                                   add.stats = qcc.options("add.stats"),
+                                   breaks = "scott", 
+                                   col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
+                                   border = "white",
+                                   digits = getOption("digits"),
+                                   restore.par = TRUE, ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
-  if ((missing(object)) | (!inherits(object, "process.capability")))
-     stop("an object of class `process.capability' is required")
+  if ((missing(object)) | (!inherits(object, "processCapability")))
+     stop("an object of class `processCapability' is required")
 
   xlim <- range(object$data, object$spec.limits, object$target, na.rm = TRUE)
   xlim <- extendrange(r = xlim, f = 0.1)

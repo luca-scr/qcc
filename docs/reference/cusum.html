@@ -108,7 +108,7 @@
 
     <div class="ref-description">
     
-    <p>Create an object of class 'cusum.qcc' to compute a Cusum chart for statistical quality control.</p>
+    <p>Create an object of class <code>'cusum.qcc'</code> to compute a Cusum chart for statistical quality control.</p>
     
     </div>
 
@@ -235,7 +235,7 @@ value less than the <code>decision.interval</code> for a Fast Initial Response.<
     </tr>
     <tr>
       <th>x</th>
-      <td><p>an object of class 'cusum.qcc'.</p></td>
+      <td><p>an object of class <code>'cusum.qcc'</code>.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -249,7 +249,7 @@ value less than the <code>decision.interval</code> for a Fast Initial Response.<
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class 'cusum.qcc'.</p>
+    <p>Returns an object of class <code>'cusum.qcc'</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -269,67 +269,52 @@ value less than the <code>decision.interval</code> for a Fast Initial Response.<
 <span class='co'>## Grouped-data</span>
 <span class='co'>##</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
+<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
 
-<span class='fu'>cusum</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>decision.interval</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>se.shift</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='cusum-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; cusum chart for diameter[1:25, ] 
+<span class='fu'>cusum</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>decision.interval</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>se.shift</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='cusum-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Cusum Chart</span><span> ─────────────────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   73.99   74.00   74.00   74.00   74.00   74.01 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
+#&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Group sample size:  5
-#&gt; Number of groups:  25
-#&gt; Center of group statistics:  74.00118
-#&gt; Standard deviation:  0.009785039 
+#&gt; Decision interval (std.err.) = 4 
+#&gt; Shift detection   (std.err.) = 1 </div><div class='input'>
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>cusum</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='cusum-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Cusum Chart</span><span> ─────────────────────────────────── 
 #&gt; 
-#&gt; Decision interval (std.err.): 4 
-#&gt; Shift detection  (std. err.): 1 </div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>cusum</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='cusum-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; cusum chart for diameter[1:25, ] 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
+#&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   73.99   74.00   74.00   74.00   74.00   74.01 
+#&gt; New data (phase II)        = diameter[26:40, ] 
+#&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Group sample size:  5
-#&gt; Number of groups:  25
-#&gt; Center of group statistics:  74.00118
-#&gt; Standard deviation:  0.009785039 
-#&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
-#&gt; 
-#&gt; Group sample size:  5
-#&gt; Number of groups:  15 
-#&gt; 
-#&gt; Decision interval (std.err.): 5 
-#&gt; Shift detection  (std. err.): 1 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='cusum-3.png' alt='' width='504' height='432' /></div><div class='input'>
+#&gt; Decision interval (std.err.) = 5 
+#&gt; Shift detection   (std.err.) = 1 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='cusum-3.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'>##</span>
 <span class='co'>## Individual observations</span>
 <span class='co'>##</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>viscosity</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
      <span class='fu'>cusum</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
-           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='cusum-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; cusum chart for viscosity[trial] 
+           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='cusum-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Cusum Chart</span><span> ─────────────────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   33.27   33.74   34.03   34.09   34.14   35.96 
+#&gt; Data (phase I)             = viscosity[trial] 
+#&gt; Number of groups           = 20 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 34.088 
+#&gt; Standard deviation         = 0.5076521 
 #&gt; 
-#&gt; Group sample size:  1
-#&gt; Number of groups:  20
-#&gt; Center of group statistics:  34.088
-#&gt; Standard deviation:  0.5076521 
+#&gt; New data (phase II)        = viscosity[!trial] 
+#&gt; Number of groups           = 15 
+#&gt; Group sample size          = 1 
 #&gt; 
-#&gt; Summary of group statistics in viscosity[!trial]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
-#&gt; 
-#&gt; Group sample size:  1
-#&gt; Number of groups:  15 
-#&gt; 
-#&gt; Decision interval (std.err.): 5 
-#&gt; Shift detection  (std. err.): 1 </div></pre>
+#&gt; Decision interval (std.err.) = 5 
+#&gt; Shift detection   (std.err.) = 1 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

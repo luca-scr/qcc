@@ -13,7 +13,7 @@
     <loc>https://github.com/luca-scr/qcc/reference/boiler.html</loc>
   </url>
   <url>
-    <loc>https://github.com/luca-scr/qcc/reference/cause.and.effect.html</loc>
+    <loc>https://github.com/luca-scr/qcc/reference/causeEffectDiagram.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/circuit.html</loc>
@@ -49,7 +49,7 @@
     <loc>https://github.com/luca-scr/qcc/reference/orangejuice2.html</loc>
   </url>
   <url>
-    <loc>https://github.com/luca-scr/qcc/reference/pareto.chart.html</loc>
+    <loc>https://github.com/luca-scr/qcc/reference/paretoChart.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/pcmanufact.html</loc>
@@ -58,7 +58,10 @@
     <loc>https://github.com/luca-scr/qcc/reference/pistonrings.html</loc>
   </url>
   <url>
-    <loc>https://github.com/luca-scr/qcc/reference/process.capability.html</loc>
+    <loc>https://github.com/luca-scr/qcc/reference/processCapability.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/reference/qcc-deprecated.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/qcc-internal.html</loc>
@@ -70,13 +73,13 @@
     <loc>https://github.com/luca-scr/qcc/reference/qcc.html</loc>
   </url>
   <url>
-    <loc>https://github.com/luca-scr/qcc/reference/qcc.groups.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/luca-scr/qcc/reference/qcc.options.html</loc>
   </url>
   <url>
-    <loc>https://github.com/luca-scr/qcc/reference/qcc.overdispersion.test.html</loc>
+    <loc>https://github.com/luca-scr/qcc/reference/qccGroups.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/reference/qccOverdispersionTest.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/rules.html</loc>

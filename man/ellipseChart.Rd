@@ -12,7 +12,7 @@ ellipseChart(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{an object of class 'mqcc'.}
+  \item{object}{an object of class \code{'mqcc'}.}
   \item{chart.all}{a logical value indicating whether both statistics for \code{data} and for \code{newdata} (if given) should be plotted.}
   \item{show.id}{a logical value indicating whether to plot point labels (\code{TRUE}) or symbols (\code{FALSE}) for group means.}
   \item{ngrid}{a value for the size of the grid over which the ellipse is evaluated.}

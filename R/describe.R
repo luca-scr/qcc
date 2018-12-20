@@ -2,25 +2,37 @@
 # Descriptive statistics for a matrix or data frame
 #
 
-describe <- function(data, by, detail = FALSE, ...)
+describe <- function(data, by, detailed = FALSE, ...)
 {
   data_name <- deparse(substitute(data))
   if(!is.data.frame(data)) 
     data <- as.data.frame(data)
-  varnames <- colnames(data)
-    
+  vars_name <- colnames(data)
+  
   if(!missing(by))
   {
-    # TODO: check if ok when data is a matrix/data.frame
     by_name <- deparse(substitute(by))
-    if(is.null(data[[by_name]]))
-      stop(cat(by_name, "not available in data.frame", data_name))
-    by <- as.factor(data[[by_name]])
-    x <- split(data[setdiff(varnames, by_name)], by)
+    #
+    if(!is.null(data[[by_name]]))
+    { 
+      by <- as.factor(data[[by_name]])
+    } else
+    if(exists(by_name))
+    {
+      by <- as.factor(by)
+    } else
+    {
+      stop(by_name, "not available in data.frame", data_name, 
+           "or object not found")
+    }
+    #
+    x <- split(data[setdiff(vars_name, by_name)], by)
     out <- vector("list", length = nlevels(by))
+    # browser()
     for(i in seq(nlevels(by)))
     {
-      out[[i]] <- describe(x[[i]], detail = detail)
+      out[[i]] <- describe(x[[i]], detailed = detailed)
+      names(out[[i]]$describe) <- setdiff(vars_name, by_name)
     }
     names(out) <- levels(by)
     out$by <- by_name
@@ -28,9 +40,9 @@ describe <- function(data, by, detail = FALSE, ...)
     return(out)
   }
   
-  nvar <- length(varnames)
+  nvar <- length(vars_name)
   obj <- vector(mode="list", length=nvar)
-  names(obj) <- if(nvar > 1) varnames else data_name
+  names(obj) <- if(nvar > 1) vars_name else data_name
   type <- rep(NA, nvar)
 
   opt.warn <- options("warn")  # save default warning option
@@ -45,7 +57,7 @@ describe <- function(data, by, detail = FALSE, ...)
     if(is.factor(x) | typeof(x) == "character" | typeof(x) == "logical")
     { 
       type[j] <- "factor"
-      if(detail)
+      if(detailed)
       {
         out <- summary(as.factor(x))
         out <- cbind("Freq." = out, "Percent" = out/sum(out)*100, 
@@ -67,7 +79,7 @@ describe <- function(data, by, detail = FALSE, ...)
       type[j] <- "numeric"
       n.miss <- sum(is.na(x))
       x <- na.omit(x)
-      if(detail)
+      if(detailed)
       {
         out <- c(length(x), n.miss, mean(x), sd(x), fivenum(x),
                  skewness(x), kurtosis(x))

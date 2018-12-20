@@ -2,6 +2,7 @@
 import("stats", "utils", "graphics", "grDevices")
 importFrom("MASS", "mvrnorm")
 importFrom("cli", "rule")
+importFrom("crayon", "bold")
 
 export(qcc, print.qcc, summary.qcc, plot.qcc)
 S3method("print", "qcc")
@@ -33,29 +34,34 @@ export(limits.c, limits.g, limits.np, limits.p, limits.R,
        limits.u, limits.xbar, limits.xbar.one)
 
 export(qccRules,
-       violating.wer1, violating.wer2,
-       violating.wer3, violating.wer4)
+       qccRulesViolatingWER1, 
+       qccRulesViolatingWER2,
+       qccRulesViolatingWER3, 
+       qccRulesViolatingWER4)
 
-export(pareto.chart, print.pareto.chart, plot.pareto.chart)
-S3method("print", "pareto.chart")
-S3method("plot", "pareto.chart")
+export(paretoChart, print.paretoChart, plot.paretoChart)
+S3method("print", "paretoChart")
+S3method("plot", "paretoChart")
   
-export(process.capability, print.process.capability, 
-       summary.process.capability, plot.process.capability)
-S3method("print", "process.capability")
-S3method("summary", "process.capability")
-S3method("plot", "process.capability")
+export(processCapability, print.processCapability, 
+       summary.processCapability, plot.processCapability)
+S3method("print", "processCapability")
+S3method("summary", "processCapability")
+S3method("plot", "processCapability")
   
-export(oc.curves, 
-       oc.curves.c, oc.curves.p, oc.curves.R,
-       oc.curves.S, oc.curves.xbar)
+export(ocCurves, ocCurves.xbar, ocCurves.R,
+       ocCurves.S, ocCurves.c, ocCurves.p)
 
-export(qcc.options, qcc.groups, blues.colors,
-       ewmaSmooth, cause.and.effect, ellipseChart,
-       qcc.overdispersion.test)
+export(qcc.options, qccGroups, blues.colors,
+       ewmaSmooth, causeEffectDiagram, ellipseChart,
+       qccOverdispersionTest)
 
 export(describe, print.describe)
 S3method("print", "describe")
+
+# deprecated
+export(pareto.chart, process.capability, oc.curves, 
+       qcc.groups, cause.and.effect, qcc.overdispersion.test)
 
 # exportPattern("^[^\\.]")
 # to check exported objects use getNamespaceExports("qcc")

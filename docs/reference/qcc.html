@@ -108,15 +108,16 @@
 
     <div class="ref-description">
     
-    <p>Create an object of class 'qcc' to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.</p>
+    <p>Create an object of class <code>'qcc'</code> to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.</p>
     
     </div>
 
     <pre class="usage">qcc(data, 
     type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), 
     sizes, center, std.dev, limits,
-    data.name, labels, newdata, newsizes, newdata.name,
-    newlabels, nsigmas = 3, confidence.level,
+    data.name, labels, 
+    newdata, newsizes, newdata.name, newlabels, 
+    nsigmas = 3, confidence.level,
     rules = c(1,4), plot = TRUE, &#8230;)
 
 # S3 method for qcc
@@ -124,11 +125,12 @@ print(x, digits = getOption("digits"), &#8230;)
 
 # S3 method for qcc
 plot(x,
-	   add.stats = qcc.options("add.stats"), 
+     add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
-     label.limits = c("LCL ", "UCL"), 
-		 title, xlab, ylab, ylim, axes.las = 0, 
+     label.center = "CL",
+     label.limits = c("LCL ", "UCL"),
+     title, xlab, ylab, ylim, axes.las = 0, 
      digits = getOption("digits"),
      restore.par = TRUE, &#8230;)</pre>
     
@@ -144,19 +146,25 @@ plot(x,
     <tr>
       <th>type</th>
       <td><p>a character string specifying the group statistics to compute. <br />
-  Available methods are:
-<!-- %\tabular{lll}{ -->
-<!-- %              \tab Statistic charted   \tab Chart description \cr -->
-<!-- %\code{"xbar"} \tab mean                \tab means of a continuous process variable \cr -->
-<!-- %\code{"R"}    \tab range               \tab ranges of a continuous process variable \cr -->
-<!-- %\code{"S"}    \tab standard deviation  \tab standard deviations of a continuous variable \cr -->
-<!-- %\code{"xbar.one"} \tab mean            \tab one-at-time data of a continuous process variable \cr -->
-<!-- %\code{"p"}    \tab proportion          \tab proportion of nonconforming units \cr -->
-<!-- %\code{"np"}   \tab count               \tab number of nonconforming units \cr -->
-<!-- %\code{"c"}    \tab count               \tab nonconformities per unit \cr -->
-<!-- %\code{"u"}    \tab count               \tab average nonconformities per unit %\cr -->
-<!-- %\code{"g"}    \tab count               \tab number of non-events between events \cr -->
-<!-- %} --></p>
+  Available methods are:</p><table class='table'>
+<tr><td></td><td></td><td>Statistic charted</td></tr>
+<tr><td>Chart description</td><td></td><td><code>"xbar"</code></td></tr>
+<tr><td></td><td>mean</td><td>means of a continuous process variable</td></tr>
+<tr><td></td><td><code>"R"</code></td><td></td></tr>
+<tr><td>range</td><td>ranges of a continuous process variable</td><td></td></tr>
+<tr><td><code>"S"</code></td><td></td><td>standard deviation</td></tr>
+<tr><td>standard deviations of a continuous variable</td><td></td><td><code>"xbar.one"</code></td></tr>
+<tr><td></td><td>mean</td><td>one-at-time data of a continuous process variable</td></tr>
+<tr><td></td><td><code>"p"</code></td><td></td></tr>
+<tr><td>proportion</td><td>proportion of nonconforming units</td><td></td></tr>
+<tr><td><code>"np"</code></td><td></td><td>count</td></tr>
+<tr><td>number of nonconforming units</td><td></td><td><code>"c"</code></td></tr>
+<tr><td></td><td>count</td><td>nonconformities per unit</td></tr>
+<tr><td></td><td><code>"u"</code></td><td></td></tr>
+<tr><td>count</td><td>average nonconformities per unit</td><td></td></tr>
+<tr><td><code>"g"</code></td><td></td><td>count</td></tr>
+<tr><td>number of non-events between events</td><td></td><td></td></tr>
+</table>
 <p>Furthermore, a user specified type of chart, say <code>"newchart"</code>, can be provided. This requires the definition of <code>"stats.newchart"</code>, <code>"sd.newchart"</code>, and <code>"limits.newchart"</code>. As an example, see <code><a href='stats.xbar.html'>stats.xbar</a></code>.</p></td>
     </tr>
     <tr>
@@ -230,6 +238,10 @@ Several methods are available for estimating the standard deviation in case of a
 <code>qcc.options("zones")$fill</code>.</p></td>
     </tr>
     <tr>
+      <th>label.center</th>
+      <td><p>a character  specifying the label for center line.</p></td>
+    </tr>
+    <tr>
       <th>label.limits</th>
       <td><p>a character vector specifying the labels for control limits.</p></td>
     </tr>
@@ -251,7 +263,7 @@ Several methods are available for estimating the standard deviation in case of a
     </tr>
     <tr>
       <th>axes.las</th>
-      <td><p>numeric in {0,1,2,3} specifying the style of axis labels. See <code><a href='https://www.rdocumentation.org/packages/utils/topics/help'>help(par)</a></code>.</p></td>
+      <td><p>numeric in {0,1,2,3} specifying the style of axis labels. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -263,7 +275,7 @@ Several methods are available for estimating the standard deviation in case of a
     </tr>
     <tr>
       <th>x</th>
-      <td><p>an object of class 'qcc'.</p></td>
+      <td><p>an object of class <code>'qcc'</code>.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -273,7 +285,7 @@ Several methods are available for estimating the standard deviation in case of a
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class 'qcc'.</p>
+    <p>Returns an object of class <code>'qcc'</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -289,7 +301,7 @@ Several methods are available for estimating the standard deviation in case of a
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rules.html'>shewhart.rules</a></code>, <code><a href='cusum.html'>cusum</a></code>, <code><a href='ewma.html'>ewma</a></code>, <code><a href='oc.curves.html'>oc.curves</a></code>, <code><a href='process.capability.html'>process.capability</a></code>, <code><a href='qcc.groups.html'>qcc.groups</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rules.html'>shewhart.rules</a></code>, <code><a href='cusum.html'>cusum</a></code>, <code><a href='ewma.html'>ewma</a></code>, <code><a href='oc.curves.html'>ocCurves</a></code>, <code><a href='processCapability.html'>processCapability</a></code>, <code><a href='qccGroups.html'>qccGroups</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -297,149 +309,118 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='co'>##  Continuous data </span>
 <span class='co'>##</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
+<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
 
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar chart for diameter[1:25, ] 
+<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 74.00118
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
 #&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
-#&gt;  73.98805 74.0143</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar chart for diameter[1:25, ] 
+#&gt;  73.98805 74.0143</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 74.00118
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
 #&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
 #&gt;  73.98805 74.0143</div><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='qcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='qcc-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar chart for diameter[1:25, ] 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='qcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='qcc-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 74.00118
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
 #&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 2 
 #&gt;       LCL      UCL
-#&gt;  73.99242 74.00993</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>confidence.level</span><span class='kw'>=</span><span class='fl'>0.99</span>)</div><div class='img'><img src='qcc-5.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar chart for diameter[1:25, ] 
+#&gt;  73.99242 74.00993</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>confidence.level</span><span class='kw'>=</span><span class='fl'>0.99</span>)</div><div class='img'><img src='qcc-5.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99820 74.00080 74.00118 74.00420 74.01020 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 74.00118
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 74.00118 
 #&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 2.575829 
 #&gt;      LCL      UCL
 #&gt;  73.9899 74.01245</div><div class='input'>
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>)</div><div class='img'><img src='qcc-6.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; R chart for diameter[1:25, ] 
+<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>)</div><div class='img'><img src='qcc-6.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 0.00800 0.01800 0.02100 0.02276 0.02600 0.03900 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.02276
+#&gt; Chart type                 = R 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 0.02276 
 #&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL        UCL
-#&gt;    0 0.04812533</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-7.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; R chart for diameter[1:25, ] 
+#&gt;    0 0.04812533</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-7.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 0.00800 0.01800 0.02100 0.02276 0.02600 0.03900 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.02276
+#&gt; Chart type                 = R 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 0.02276 
 #&gt; Standard deviation         = 0.009785039 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
-#&gt; 0.01400000 0.01900000 0.02500000 0.02453333 0.02750000 0.04400000 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL        UCL
 #&gt;    0 0.04812533</div><div class='input'>
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>)</div><div class='img'><img src='qcc-8.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; S chart for diameter[1:25, ] 
+<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>)</div><div class='img'><img src='qcc-8.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-#&gt; 0.002863564 0.007314369 0.008467585 0.009240037 0.011928956 0.016177144 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.009240037
+#&gt; Chart type                 = S 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 0.009240037 
 #&gt; Standard deviation         = 0.009829977 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL        UCL
-#&gt;    0 0.01930242</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-9.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; S chart for diameter[1:25, ] 
+#&gt;    0 0.01930242</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-9.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-#&gt; 0.002863564 0.007314369 0.008467585 0.009240037 0.011928956 0.016177144 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.009240037
+#&gt; Chart type                 = S 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 0.009240037 
 #&gt; Standard deviation         = 0.009829977 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-#&gt; 0.005310367 0.007367603 0.010329569 0.009761757 0.011232319 0.016546903 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL        UCL
 #&gt;    0 0.01930242</div><div class='input'>
 <span class='co'># add warning limits at 2 std. deviations</span>
@@ -448,143 +429,116 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;  73.99242 74.00993</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>h</span> <span class='kw'>=</span> <span class='no'>warn.limits</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"chocolate"</span>)</div><div class='img'><img src='qcc-10.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># variable control limits</span>
 <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>45</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>85</span>, <span class='fl'>99</span>, <span class='fl'>100</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.groups.html'>qcc.groups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>[-<span class='no'>out</span>,])
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-11.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar chart for diameter[1:25, ] 
+<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>[-<span class='no'>out</span>,])
+<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-11.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99680 73.99980 74.00076 74.00425 74.01020 
-#&gt; 
-#&gt; Summary of group sample sizes:                
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample sizes         =               
 #&gt;   sizes  3 4  5
 #&gt;   counts 4 4 17
-#&gt; 
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 74.00075
+#&gt; Center of group statistics = 74.00075 
 #&gt; Standard deviation         = 0.009856701 
 #&gt; 
-#&gt; Control limits:
-#&gt;          LCL      UCL
-#&gt;     73.98753 74.01398
-#&gt;     73.98368 74.01782
-#&gt; ...                  
-#&gt;     73.98753 74.01398</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>)</div><div class='img'><img src='qcc-12.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; R chart for diameter[1:25, ] 
+#&gt; Control limits at nsigmas  = 3 
+#&gt;        LCL      UCL
+#&gt;   73.98753 74.01398
+#&gt;   73.98368 74.01782
+#&gt; :                  
+#&gt;   73.98753 74.01398</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>)</div><div class='img'><img src='qcc-12.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 0.00800 0.01600 0.02100 0.02168 0.02600 0.03900 
-#&gt; 
-#&gt; Summary of group sample sizes:                
+#&gt; Chart type                 = R 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample sizes         =               
 #&gt;   sizes  3 4  5
 #&gt;   counts 4 4 17
-#&gt; 
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.02230088
+#&gt; Center of group statistics = 0.02230088 
 #&gt; Standard deviation         = 0.009856701 
 #&gt; 
-#&gt; Control limits:
-#&gt;     LCL        UCL
-#&gt;       0 0.04785198
-#&gt;       0 0.04857007
-#&gt; ...               
-#&gt;       0 0.04785198</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>)</div><div class='img'><img src='qcc-13.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; S chart for diameter[1:25, ] 
+#&gt; Control limits at nsigmas  = 3 
+#&gt;   LCL        UCL
+#&gt;     0 0.04785198
+#&gt;     0 0.04857007
+#&gt; :               
+#&gt;     0 0.04785198</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>)</div><div class='img'><img src='qcc-13.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-#&gt; 0.002863564 0.006806859 0.008700575 0.009234812 0.011928956 0.016177144 
-#&gt; 
-#&gt; Summary of group sample sizes:                
+#&gt; Chart type                 = S 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample sizes         =               
 #&gt;   sizes  3 4  5
 #&gt;   counts 4 4 17
-#&gt; 
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.00938731
+#&gt; Center of group statistics = 0.00938731 
 #&gt; Standard deviation         = 0.009930923 
 #&gt; 
-#&gt; Control limits:
-#&gt;     LCL        UCL
-#&gt;       0 0.01955302
-#&gt;       0 0.02318885
-#&gt; ...               
-#&gt;       0 0.01955302</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-14.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar chart for diameter[1:25, ] 
+#&gt; Control limits at nsigmas  = 3 
+#&gt;   LCL        UCL
+#&gt;     0 0.01955302
+#&gt;     0 0.02318885
+#&gt; :               
+#&gt;     0 0.01955302</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-14.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99020 73.99680 73.99980 74.00076 74.00425 74.01020 
-#&gt; 
-#&gt; Summary of group sample sizes:                
+#&gt; Chart type                 = xbar 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample sizes         =               
 #&gt;   sizes  3 4  5
 #&gt;   counts 4 4 17
-#&gt; 
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 74.00075
+#&gt; Center of group statistics = 74.00075 
 #&gt; Standard deviation         = 0.009856701 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 73.99220 74.00290 74.00720 74.00765 74.01270 74.02340 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
-#&gt;          LCL      UCL
-#&gt;     73.98753 74.01398
-#&gt;     73.98368 74.01782
-#&gt; ...                  
-#&gt;     73.98753 74.01398</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-15.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; R chart for diameter[1:25, ] 
+#&gt; Control limits at nsigmas  = 3 
+#&gt;        LCL      UCL
+#&gt;   73.98753 74.01398
+#&gt;   73.98368 74.01782
+#&gt; :                  
+#&gt;   73.98753 74.01398</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-15.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 0.00800 0.01600 0.02100 0.02168 0.02600 0.03900 
-#&gt; 
-#&gt; Summary of group sample sizes:                
+#&gt; Chart type                 = R 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample sizes         =               
 #&gt;   sizes  3 4  5
 #&gt;   counts 4 4 17
-#&gt; 
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.02230088
+#&gt; Center of group statistics = 0.02230088 
 #&gt; Standard deviation         = 0.009856701 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
-#&gt; 0.01400000 0.01900000 0.02500000 0.02453333 0.02750000 0.04400000 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
-#&gt;     LCL        UCL
-#&gt;       0 0.04785198
-#&gt;       0 0.04857007
-#&gt; ...               
-#&gt;       0 0.04785198</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-16.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; S chart for diameter[1:25, ] 
+#&gt; Control limits at nsigmas  = 3 
+#&gt;   LCL        UCL
+#&gt;     0 0.04785198
+#&gt;     0 0.04857007
+#&gt; :               
+#&gt;     0 0.04785198</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-16.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-#&gt; 0.002863564 0.006806859 0.008700575 0.009234812 0.011928956 0.016177144 
-#&gt; 
-#&gt; Summary of group sample sizes:                
+#&gt; Chart type                 = S 
+#&gt; Data (phase I)             = diameter[1:25, ] 
+#&gt; Number of groups           = 25 
+#&gt; Group sample sizes         =               
 #&gt;   sizes  3 4  5
 #&gt;   counts 4 4 17
-#&gt; 
-#&gt; Number of groups           = 25
-#&gt; Center of group statistics = 0.00938731
+#&gt; Center of group statistics = 0.00938731 
 #&gt; Standard deviation         = 0.009930923 
 #&gt; 
-#&gt; Summary of group statistics in diameter[26:40, ]:
-#&gt;        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-#&gt; 0.005310367 0.007367603 0.010329569 0.009761757 0.011232319 0.016546903 
-#&gt; 
-#&gt; Group sample size          = 5
+#&gt; New data (phase II)        = diameter[26:40, ] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 5 
 #&gt; 
-#&gt; Control limits:
-#&gt;     LCL        UCL
-#&gt;       0 0.01955302
-#&gt;       0 0.02318885
-#&gt; ...               
-#&gt;       0 0.01955302</div><div class='input'>
+#&gt; Control limits at nsigmas  = 3 
+#&gt;   LCL        UCL
+#&gt;     0 0.01955302
+#&gt;     0 0.02318885
+#&gt; :               
+#&gt;     0 0.01955302</div><div class='input'>
 <span class='co'>##</span>
 <span class='co'>##  Attribute data </span>
 <span class='co'>##</span>
@@ -592,86 +546,75 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>,
-     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-17.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; p chart for D[trial] 
+     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-17.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; 0.0800000 0.1600000 0.2100000 0.2313333 0.2950000 0.4800000 
-#&gt; 
-#&gt; Group sample size          = 50
-#&gt; Number of groups           = 30
-#&gt; Center of group statistics = 0.2313333
+#&gt; Chart type                 = p 
+#&gt; Data (phase I)             = D[trial] 
+#&gt; Number of groups           = 30 
+#&gt; Group sample size          = 50 
+#&gt; Center of group statistics = 0.2313333 
 #&gt; Standard deviation         = 0.421685 
 #&gt; 
-#&gt; Control limits:
-#&gt;            LCL       UCL
-#&gt;     0.05242755 0.4102391
-#&gt;     0.05242755 0.4102391
-#&gt; ...                     
-#&gt;     0.05242755 0.4102391</div><div class='input'>
+#&gt; Control limits at nsigmas  = 3 
+#&gt;          LCL       UCL
+#&gt;   0.05242755 0.4102391
+#&gt;   0.05242755 0.4102391
+#&gt; :                     
+#&gt;   0.05242755 0.4102391</div><div class='input'>
 <span class='co'># remove out-of-control points (see help(orangejuice) for the reasons)</span>
 <span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
 <span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
            <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-18.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>,
-         <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-19.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; p chart for D[trial] 
+         <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-19.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   0.080   0.155   0.200   0.215   0.265   0.400 
-#&gt; 
-#&gt; Group sample size          = 50
-#&gt; Number of groups           = 28
-#&gt; Center of group statistics = 0.215
+#&gt; Chart type                 = p 
+#&gt; Data (phase I)             = D[trial] 
+#&gt; Number of groups           = 28 
+#&gt; Group sample size          = 50 
+#&gt; Center of group statistics = 0.215 
 #&gt; Standard deviation         = 0.4108223 
 #&gt; 
-#&gt; Summary of group statistics in D[!trial]:
-#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; 0.0400000 0.0800000 0.1100000 0.1108333 0.1200000 0.2400000 
-#&gt; 
-#&gt; Group sample size          = 50
+#&gt; New data (phase II)        = D[!trial] 
 #&gt; Number of groups           = 24 
+#&gt; Group sample size          = 50 
 #&gt; 
-#&gt; Control limits:
-#&gt;            LCL       UCL
-#&gt;     0.04070284 0.3892972
-#&gt;     0.04070284 0.3892972
-#&gt; ...                     
-#&gt;     0.04070284 0.3892972</div><div class='input'>
+#&gt; Control limits at nsigmas  = 3 
+#&gt;          LCL       UCL
+#&gt;   0.04070284 0.3892972
+#&gt;   0.04070284 0.3892972
+#&gt; :                     
+#&gt;   0.04070284 0.3892972</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice2</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice2</span>,
-     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-20.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; p chart for D[trial] 
+     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-20.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; 0.0400000 0.0800000 0.1100000 0.1108333 0.1200000 0.2400000 
-#&gt; 
-#&gt; Group sample size          = 50
-#&gt; Number of groups           = 24
-#&gt; Center of group statistics = 0.1108333
+#&gt; Chart type                 = p 
+#&gt; Data (phase I)             = D[trial] 
+#&gt; Number of groups           = 24 
+#&gt; Group sample size          = 50 
+#&gt; Center of group statistics = 0.1108333 
 #&gt; Standard deviation         = 0.3139256 
 #&gt; 
-#&gt; Control limits:
-#&gt;     LCL       UCL
-#&gt;       0 0.2440207
-#&gt;       0 0.2440207
-#&gt; ...              
-#&gt;       0 0.2440207</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice2</span>,
+#&gt; Control limits at nsigmas  = 3 
+#&gt;   LCL       UCL
+#&gt;     0 0.2440207
+#&gt;     0 0.2440207
+#&gt; :              
+#&gt;     0 0.2440207</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice2</span>,
            <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
                <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-21.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>))</div><div class='img'><img src='qcc-22.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; c chart for x[trial] 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>))</div><div class='img'><img src='qcc-22.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt;  5.00000 16.00000 19.00000 19.84615 24.00000 39.00000 
-#&gt; 
-#&gt; Group sample size          = 100
-#&gt; Number of groups           = 26
-#&gt; Center of group statistics = 19.84615
+#&gt; Chart type                 = c 
+#&gt; Data (phase I)             = x[trial] 
+#&gt; Number of groups           = 26 
+#&gt; Group sample size          = 100 
+#&gt; Center of group statistics = 19.84615 
 #&gt; Standard deviation         = 4.454902 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL      UCL
 #&gt;  6.481447 33.21086</div><div class='input'>
 <span class='co'># remove out-of-control points (see help(circuit) for the reasons)</span>
@@ -679,142 +622,118 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
            <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-23.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>,
-         <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-24.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; p chart for D[trial] 
+         <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-24.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   0.080   0.155   0.200   0.215   0.265   0.400 
-#&gt; 
-#&gt; Group sample size          = 50
-#&gt; Number of groups           = 28
-#&gt; Center of group statistics = 0.215
+#&gt; Chart type                 = p 
+#&gt; Data (phase I)             = D[trial] 
+#&gt; Number of groups           = 28 
+#&gt; Group sample size          = 50 
+#&gt; Center of group statistics = 0.215 
 #&gt; Standard deviation         = 0.4108223 
 #&gt; 
-#&gt; Summary of group statistics in D[!trial]:
-#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; 0.0400000 0.0800000 0.1100000 0.1108333 0.1200000 0.2400000 
-#&gt; 
-#&gt; Group sample size          = 50
+#&gt; New data (phase II)        = D[!trial] 
 #&gt; Number of groups           = 24 
+#&gt; Group sample size          = 50 
 #&gt; 
-#&gt; Control limits:
-#&gt;            LCL       UCL
-#&gt;     0.04070284 0.3892972
-#&gt;     0.04070284 0.3892972
-#&gt; ...                     
-#&gt;     0.04070284 0.3892972</div><div class='input'>
+#&gt; Control limits at nsigmas  = 3 
+#&gt;          LCL       UCL
+#&gt;   0.04070284 0.3892972
+#&gt;   0.04070284 0.3892972
+#&gt; :                     
+#&gt;   0.04070284 0.3892972</div><div class='input'>
 <span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>6</span>,<span class='fl'>20</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
-     <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-25.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; c chart for x[trial] 
+     <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-25.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 10.00000 16.00000 19.00000 19.66667 24.00000 31.00000 
-#&gt; 
-#&gt; Group sample size          = 100
-#&gt; Number of groups           = 24
-#&gt; Center of group statistics = 19.66667
+#&gt; Chart type                 = c 
+#&gt; Data (phase I)             = x[trial] 
+#&gt; Number of groups           = 24 
+#&gt; Group sample size          = 100 
+#&gt; Center of group statistics = 19.66667 
 #&gt; Standard deviation         = 4.434712 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
 #&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
-         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-26.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; c chart for x[trial] 
+         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-26.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 10.00000 16.00000 19.00000 19.66667 24.00000 31.00000 
-#&gt; 
-#&gt; Group sample size          = 100
-#&gt; Number of groups           = 24
-#&gt; Center of group statistics = 19.66667
+#&gt; Chart type                 = c 
+#&gt; Data (phase I)             = x[trial] 
+#&gt; Number of groups           = 24 
+#&gt; Group sample size          = 100 
+#&gt; Center of group statistics = 19.66667 
 #&gt; Standard deviation         = 4.434712 
 #&gt; 
-#&gt; Summary of group statistics in x[!trial]:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;    9.00   15.75   18.50   18.30   21.00   28.00 
-#&gt; 
-#&gt; Group sample size          = 100
+#&gt; New data (phase II)        = x[!trial] 
 #&gt; Number of groups           = 20 
+#&gt; Group sample size          = 100 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
 #&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
-         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-27.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; u chart for x[trial] 
+         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-27.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; 0.1000000 0.1600000 0.1900000 0.1966667 0.2400000 0.3100000 
-#&gt; 
-#&gt; Group sample size          = 100
-#&gt; Number of groups           = 24
-#&gt; Center of group statistics = 0.1966667
+#&gt; Chart type                 = u 
+#&gt; Data (phase I)             = x[trial] 
+#&gt; Number of groups           = 24 
+#&gt; Group sample size          = 100 
+#&gt; Center of group statistics = 0.1966667 
 #&gt; Standard deviation         = 0.4434712 
 #&gt; 
-#&gt; Summary of group statistics in x[!trial]:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.0900  0.1575  0.1850  0.1830  0.2100  0.2800 
-#&gt; 
-#&gt; Group sample size          = 100
+#&gt; New data (phase II)        = x[!trial] 
 #&gt; Number of groups           = 20 
+#&gt; Group sample size          = 100 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;         LCL      UCL
 #&gt;  0.06362532 0.329708</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pcmanufact</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>pcmanufact</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-28.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; u chart for x 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>pcmanufact</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-28.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;    1.00    1.40    2.00    1.93    2.25    3.20 
-#&gt; 
-#&gt; Group sample size          = 5
-#&gt; Number of groups           = 20
-#&gt; Center of group statistics = 1.93
+#&gt; Chart type                 = u 
+#&gt; Data (phase I)             = x 
+#&gt; Number of groups           = 20 
+#&gt; Group sample size          = 5 
+#&gt; Center of group statistics = 1.93 
 #&gt; Standard deviation         = 1.389244 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;         LCL      UCL
 #&gt;  0.06613305 3.793867</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dyedcloth</span>)
 <span class='co'># variable control limits</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-29.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; u chart for x 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-29.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; 0.7368421 1.1750000 1.5119048 1.3972447 1.5721154 1.8400000 
-#&gt; 
-#&gt; Summary of group sample sizes:                                  
+#&gt; Chart type                 = u 
+#&gt; Data (phase I)             = x 
+#&gt; Number of groups           = 10 
+#&gt; Group sample sizes         =                                 
 #&gt;   sizes  8 9.5 10 10.5 12 12.5 13
 #&gt;   counts 1 1.0  3  1.0  2  1.0  1
-#&gt; 
-#&gt; Number of groups           = 10
-#&gt; Center of group statistics = 1.423256
+#&gt; Center of group statistics = 1.423256 
 #&gt; Standard deviation         = 1.193003 
 #&gt; 
-#&gt; Control limits:
-#&gt;           LCL      UCL
-#&gt;     0.2914739 2.555038
-#&gt;     0.1578852 2.688626
-#&gt; ...                   
-#&gt;     0.4109593 2.435552</div><div class='input'><span class='co'># standardized control chart</span>
+#&gt; Control limits at nsigmas  = 3 
+#&gt;         LCL      UCL
+#&gt;   0.2914739 2.555038
+#&gt;   0.1578852 2.688626
+#&gt; :                   
+#&gt;   0.4109593 2.435552</div><div class='input'><span class='co'># standardized control chart</span>
 <span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
 <span class='no'>z</span> <span class='kw'>&lt;-</span> (<span class='no'>q</span>$<span class='no'>statistics</span> - <span class='no'>q</span>$<span class='no'>center</span>)/<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>sqrt</a></span>(<span class='no'>q</span>$<span class='no'>center</span>/<span class='no'>q</span>$<span class='no'>size</span>)
 <span class='fu'>qcc</span>(<span class='no'>z</span>, <span class='kw'>sizes</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"u"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Standardized u chart"</span>,
-    <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'std.dev' is not used when limits is given</span></div><div class='img'><img src='qcc-30.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; u chart for z 
+    <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'std.dev' is not used when limits is given</span></div><div class='img'><img src='qcc-30.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
-#&gt; -1.7733982 -0.6580486  0.2275337 -0.0361942  0.4356558  1.2350458 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 10
-#&gt; Center of group statistics = 0
+#&gt; Chart type                 = u 
+#&gt; Data (phase I)             = z 
+#&gt; Number of groups           = 10 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 0 
 #&gt; Standard deviation         = 1 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL  UCL
 #&gt;    -3   3</div><div class='input'>
 <span class='co'>##</span>
@@ -823,45 +742,38 @@ Several methods are available for estimating the standard deviation in case of a
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>viscosity</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
-     <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for viscosity[trial] 
+     <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt; 33.2700 33.7450 34.0350 34.0880 34.1375 35.9600 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 20
-#&gt; Center of group statistics = 34.088
+#&gt; Chart type                 = xbar.one 
+#&gt; Data (phase I)             = viscosity[trial] 
+#&gt; Number of groups           = 20 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 34.088 
 #&gt; Standard deviation         = 0.5076521 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL      UCL
 #&gt;  32.56504 35.61096</div><div class='input'><span class='co'># batch 4 is out-of-control because of a process temperature controller</span>
 <span class='co'># failure; remove it and recompute</span>
 <span class='no'>viscosity</span> <span class='kw'>&lt;-</span> <span class='no'>viscosity</span>[-<span class='fl'>4</span>,]
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
      <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
-         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; xbar.one chart for viscosity[trial] 
+         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.27000 33.74000 34.03000 33.98947 34.05000 34.70000 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 19
-#&gt; Center of group statistics = 33.98947
+#&gt; Chart type                 = xbar.one 
+#&gt; Data (phase I)             = viscosity[trial] 
+#&gt; Number of groups           = 19 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 33.98947 
 #&gt; Standard deviation         = 0.4117415 
 #&gt; 
-#&gt; Summary of group statistics in viscosity[!trial]:
-#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#&gt; 33.27000 34.34000 34.55000 34.43867 34.72500 35.40000 
-#&gt; 
-#&gt; Group sample size          = 1
+#&gt; New data (phase II)        = viscosity[!trial] 
 #&gt; Number of groups           = 15 
+#&gt; Group sample size          = 1 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
-#&gt;  32.75425 35.2247</div></pre>
+#&gt;  32.75425 35.2247</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

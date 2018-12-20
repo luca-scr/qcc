@@ -1,12 +1,12 @@
-\name{qcc.overdispersion.test}
-\alias{qcc.overdispersion.test}
+\name{qccOverdispersionTest}
+\alias{qccOverdispersionTest}
 
 \title{Overdispersion test for binomial and poisson data}
 
 \description{This function allows to test for overdispersed data in the binomial and poisson case.}
 
 \usage{
-qcc.overdispersion.test(x, size, 
+qccOverdispersionTest(x, size, 
   type = ifelse(missing(size), "poisson", "binomial"))
 }
 \arguments{
@@ -21,8 +21,7 @@ where \eqn{s^2} is the observed variance, \eqn{\sigma^2} is the theoretical vari
 }
 \value{The function returns a matrix of results.}
 \references{
-Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process
-Control}, New York, Chapman and Hall, pp. 216--218
+Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}, New York, Chapman and Hall, pp. 216--218
 }
 \author{Luca Scrucca}
 %\note{}
@@ -32,11 +31,11 @@ Control}, New York, Chapman and Hall, pp. 216--218
 x <- c(12,11,18,11,10,16,9,11,14,15,11,9,10,13,12,
        8,12,13,10,12,13,16,12,18,16,10,16,10,12,14)
 size <- rep(50, length(x))
-qcc.overdispersion.test(x,size)
+qccOverdispersionTest(x, size)
 
 x <- c(11,8,13,11,13,17,25,23,11,16,9,15,10,16,12,
        8,9,15,4,12,12,12,15,17,14,17,12,12,7,16)
-qcc.overdispersion.test(x)
+qccOverdispersionTest(x)
 }
 \keyword{htest}
 

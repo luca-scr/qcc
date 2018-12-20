@@ -3,8 +3,11 @@
 \alias{print.mqcc}
 \alias{summary.mqcc}
 \alias{plot.mqcc}
+
 \title{Multivariate Quality Control Charts}
-\description{Create an object of class 'mqcc' to perform multivariate statistical quality control.}
+
+\description{Create an object of class \code{'mqcc'} to perform multivariate statistical quality control.}
+
 \usage{
 mqcc(data, type = c("T2", "T2.single"), center, cov,
      limits = TRUE, pred.limits = FALSE,
@@ -13,9 +16,7 @@ mqcc(data, type = c("T2", "T2.single"), center, cov,
      rules = shewhart.rules,
      plot = TRUE, \dots)
 
-\method{print}{mqcc}(x, \dots)
-
-\method{summary}{mqcc}(object, digits = getOption("digits"), \dots)
+\method{print}{mqcc}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{mqcc}(x, 
      add.stats = qcc.options("add.stats"), 
@@ -86,15 +87,13 @@ By default is set at \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variabl
 
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a control chart set this to \code{FALSE}.}
 
-\item{object}{an object of class 'mqcc'.}
-
-\item{x}{an object of class 'mqcc'.}
+\item{x}{an object of class \code{'mqcc'}.}
 
 \item{\dots}{additional arguments to be passed to the generic function.} 
 }
 
 %\details{}
-\value{Returns an object of class 'mqcc'.}
+\value{Returns an object of class \code{'mqcc'}.}
 
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.

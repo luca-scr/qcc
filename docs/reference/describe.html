@@ -112,7 +112,7 @@
     
     </div>
 
-    <pre class="usage">describe(data, by, detail = FALSE, &#8230;)
+    <pre class="usage">describe(data, by, detailed = FALSE, &#8230;)
 # S3 method for describe
 print(x, digits = getOption("digits") - 3, &#8230;)</pre>
     
@@ -121,14 +121,14 @@ print(x, digits = getOption("digits") - 3, &#8230;)</pre>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a matrix or data.frame.</p></td>
+      <td><p>a matrix or data frame.</p></td>
     </tr>
     <tr>
       <th>by</th>
-      <td><p>a factor or character vector specifying the conditioning variable.</p></td>
+      <td><p>a factor or character vector specifying the conditioning variable. This may be a variable included in <code>data</code> or an object defined in the current environment.</p></td>
     </tr>
     <tr>
-      <th>detail</th>
+      <th>detailed</th>
       <td><p>a logical specifying if detailed statistics should be provided.</p></td>
     </tr>
     <tr>
@@ -137,7 +137,7 @@ print(x, digits = getOption("digits") - 3, &#8230;)</pre>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>an object of class 'describe'.</p></td>
+      <td><p>an object of class <code>'describe'</code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -173,7 +173,7 @@ print(x, digits = getOption("digits") - 3, &#8230;)</pre>
 #&gt; tension Freq. Percent Cum.Percent
 #&gt;       L    18   33.33       33.33
 #&gt;       M    18   33.33       66.67
-#&gt;       H    18   33.33      100.00</div><div class='input'><span class='fu'>describe</span>(<span class='no'>warpbreaks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>wool</span>)</div><div class='output co'>#&gt; ── wool = A ───────────────────────────────────────────────────────────────────────── 
+#&gt;       H    18   33.33      100.00</div><div class='input'><span class='fu'>describe</span>(<span class='no'>warpbreaks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>wool</span>)</div><div class='output co'>#&gt; ── wool = A ──────────────────────────────────────────────────────────────────────── 
 #&gt; 
 #&gt;        Obs  Mean Std.Dev. Min Max
 #&gt; breaks  27 31.04    15.85  10  70
@@ -181,7 +181,7 @@ print(x, digits = getOption("digits") - 3, &#8230;)</pre>
 #&gt;         L M H
 #&gt; tension 9 9 9
 #&gt; 
-#&gt; ── wool = B ───────────────────────────────────────────────────────────────────────── 
+#&gt; ── wool = B ──────────────────────────────────────────────────────────────────────── 
 #&gt; 
 #&gt;        Obs  Mean Std.Dev. Min Max
 #&gt; breaks  27 25.26    9.301  13  44

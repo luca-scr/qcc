@@ -1,10 +1,10 @@
 #-------------------------------------------------------------------#
 #                                                                   #
-#          Operating Characteristic Function                        #
+#          Operating Characteristic Curves                          #
 #                                                                   #
 #-------------------------------------------------------------------#
 
-oc.curves <- function(object, ...)
+ocCurves <- function(object, ...)
 {
 # Draws the operating characteristic curves for the qcc object 
 
@@ -16,33 +16,33 @@ oc.curves <- function(object, ...)
      stop("Operating characteristic curves available only for equal sample sizes!")
 
   beta <- switch(object$type,
-                 xbar = oc.curves.xbar(object, ...),
-                 R    = oc.curves.R(object, ...),
-                 S    = oc.curves.S(object, ...),
+                 xbar = ocCurves.xbar(object, ...),
+                 R    = ocCurves.R(object, ...),
+                 S    = ocCurves.S(object, ...),
                  np   =,
-                 p    = oc.curves.p(object, ...),
+                 p    = ocCurves.p(object, ...),
                  u    =,
-                 c    = oc.curves.c(object, ...))
+                 c    = ocCurves.c(object, ...))
   if (is.null(beta))
      stop("Operating characteristic curves not available for this type of chart.")
 
   invisible(beta)
 }
 
-oc.curves.xbar <- function(object, n, c = seq(0, 5, length=101), 
-                           nsigmas = object$nsigmas, 
-                           lty = rep(1,length(n)),
-                           lwd = rep(2,length(n)),
-                           col = blues.colors(length(n)),
-                           identify=FALSE, 
-                           restore.par=TRUE)
+ocCurves.xbar <- function(object, n, c = seq(0, 5, length=101), 
+                          nsigmas = object$nsigmas, 
+                          lty = rep(1,length(n)),
+                          lwd = rep(2,length(n)),
+                          col = blues.colors(length(n)),
+                          identify=FALSE, 
+                          restore.par=TRUE)
 {
 # Draw the operating-characteristic curves for the xbar-chart with nsigmas
 # limits. The values on the vertical axis give the probability of not detecting
 # a shift of c*sigma in the mean on the first sample following the shift.
 
   if (!(object$type == "xbar"))
-     stop("not a `qcc' object of type \"xbar\".")
+     stop("not a 'qcc' object of type \"xbar\".")
 
   size <- unique(object$sizes)
   if (length(size) > 1)
@@ -103,7 +103,7 @@ oc.curves.xbar <- function(object, n, c = seq(0, 5, length=101),
   invisible(beta)
 }
 
-oc.curves.p <- function(object, nsigmas = object$nsigmas, 
+ocCurves.p <- function(object, nsigmas = object$nsigmas, 
                         lty = 1, lwd = 2, col = blues.colors(1),
                         identify = FALSE, restore.par = TRUE)
 {
@@ -166,7 +166,7 @@ oc.curves.p <- function(object, nsigmas = object$nsigmas,
   invisible(beta)  
 }
 
-oc.curves.c <- function(object, nsigmas = object$nsigmas, 
+ocCurves.c <- function(object, nsigmas = object$nsigmas, 
                         lty = 1, lwd = 2, col = blues.colors(1),
                         identify = FALSE, restore.par = TRUE)
 {
@@ -235,7 +235,7 @@ oc.curves.c <- function(object, nsigmas = object$nsigmas,
   invisible(beta)
 }
 
-oc.curves.R <- function(object, n, c = seq(1, 6, length=101), 
+ocCurves.R <- function(object, n, c = seq(1, 6, length=101), 
                         nsigmas = object$nsigmas, 
                         lty = rep(1,length(n)),
                         lwd = rep(2,length(n)),
@@ -330,7 +330,7 @@ oc.curves.R <- function(object, n, c = seq(1, 6, length=101),
   invisible(beta)
 }
 
-oc.curves.S <- function(object, n, c = seq(1, 6, length=101), 
+ocCurves.S <- function(object, n, c = seq(1, 6, length=101), 
                         nsigmas = object$nsigmas, 
                         lty = rep(1,length(n)),
                         lwd = rep(2,length(n)),

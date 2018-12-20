@@ -34,8 +34,7 @@
   
 <meta property="og:title" content="Statistics used in computing and drawing a Shewhart g chart — stats.g" />
 
-<meta property="og:description" content="These functions are used to compute statistics required by the g chart
-  (geometric distribution) for use with the qcc package." />
+<meta property="og:description" content="These functions are used to compute statistics required by the g chart (geometric distribution) for use with the qcc package." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,8 +108,7 @@
 
     <div class="ref-description">
     
-    <p>These functions are used to compute statistics required by the g chart
-  (geometric distribution) for use with the qcc package.</p>
+    <p>These functions are used to compute statistics required by the g chart (geometric distribution) for use with the <span class="pkg">qcc</span> package.</p>
     
     </div>
 
@@ -143,7 +141,7 @@ limits.g(center, std.dev, sizes, nsigmas = NULL, conf = NULL)</pre>
     </tr>
     <tr>
       <th>conf</th>
-      <td><p>a numeric value \(\in (0,1)\) specifying the confidence level to use for computing control limits.</p></td>
+      <td><p>a numeric value in \((0,1)\) specifying the confidence level to use for computing control limits.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -185,32 +183,28 @@ a multiplier of sigma.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>success</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Binomial'>rbinom</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>)
 <span class='no'>num.noevent</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/diff'>diff</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/which'>which</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='no'>success</span>)<span class='kw'>==</span><span class='fl'>1</span>))-<span class='fl'>1</span>
-<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>success</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"np"</span>, <span class='kw'>sizes</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='stats.g-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; np chart for success 
+<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>success</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"np"</span>, <span class='kw'>sizes</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='stats.g-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   0.000   0.000   0.000   0.011   0.000   1.000 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 1000
-#&gt; Center of group statistics = 0.011
+#&gt; Chart type                 = np 
+#&gt; Data (phase I)             = success 
+#&gt; Number of groups           = 1000 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 0.011 
 #&gt; Standard deviation         = 0.1043024 
 #&gt; 
-#&gt; Control limits:
+#&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL       UCL
-#&gt;    0 0.3239073</div><div class='input'><span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>num.noevent</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"g"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The Geometric distribution is quite skewed, it is better to set conf at the required confidence level (0 &lt; conf &lt; 1) instead of as a multiplier of sigma.</span></div><div class='img'><img src='stats.g-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; g chart for num.noevent 
+#&gt;    0 0.3239073</div><div class='input'><span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>num.noevent</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"g"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The Geometric distribution is quite skewed, it is better to set conf at the required confidence level (0 &lt; conf &lt; 1) instead of as a multiplier of sigma.</span></div><div class='img'><img src='stats.g-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
-#&gt; Summary of group statistics:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;     4.0    16.0    42.0    89.0   110.5   366.0 
-#&gt; 
-#&gt; Group sample size          = 1
-#&gt; Number of groups           = 11
-#&gt; Center of group statistics = 89
+#&gt; Chart type                 = g 
+#&gt; Data (phase I)             = num.noevent 
+#&gt; Number of groups           = 11 
+#&gt; Group sample size          = 1 
+#&gt; Center of group statistics = 89 
 #&gt; Standard deviation         = 88.49859 
 #&gt; 
-#&gt; Control limits:
-#&gt;      LCL UCL</div></pre>
+#&gt; Control limits at nsigmas  = 3 
+#&gt;      LCL UCL</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

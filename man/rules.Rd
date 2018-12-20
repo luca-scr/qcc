@@ -4,10 +4,10 @@
 \alias{beyond.limits}
 \alias{violating.runs}
 \alias{shewhartRules}
-\alias{violating.wer1}
-\alias{violating.wer2}
-\alias{violating.wer3}
-\alias{violating.wer4}
+\alias{qccRulesViolatingWER1}
+\alias{qccRulesViolatingWER2}
+\alias{qccRulesViolatingWER3}
+\alias{qccRulesViolatingWER4}
 
 \title{Functions specifying rules for Shewhart charts}
 \description{
@@ -24,7 +24,7 @@ violating.runs(object, run.length = qcc.options("run.length"))
 qccRules(object, rules = object$rules)
 }
 \arguments{
-  \item{object}{an object of class 'qcc'.}
+  \item{object}{an object of class \code{'qcc'}.}
   \item{limits}{control limits}
   \item{run.length}{the maximum value of a run before to signal a
   point as out of control.}

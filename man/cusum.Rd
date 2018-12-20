@@ -6,7 +6,7 @@
 \alias{plot.cusum.qcc}
 
 \title{Cusum chart}
-\description{Create an object of class 'cusum.qcc' to compute a Cusum chart for statistical quality control.}
+\description{Create an object of class \code{'cusum.qcc'} to compute a Cusum chart for statistical quality control.}
 
 \usage{
 cusum(data, sizes, center, std.dev, head.start = 0,
@@ -79,13 +79,13 @@ value less than the \code{decision.interval} for a Fast Initial Response.}
 
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a control chart set this to \code{FALSE}.}
 
-\item{x}{an object of class 'cusum.qcc'.}
+\item{x}{an object of class \code{'cusum.qcc'}.}
 
 \item{\dots}{additional arguments to be passed to the generic function.} 
 }
 \details{Cusum charts display how the group summary statistics deviate above or below the process center or target value, relative to the standard errors of the summary statistics. Useful to detect small and permanent variation on the mean of the process.
 }
-\value{Returns an object of class 'cusum.qcc'.}
+\value{Returns an object of class \code{'cusum.qcc'}.}
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
 
@@ -105,7 +105,7 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ## Grouped-data
 ##
 data(pistonrings)
-diameter <- qcc.groups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(diameter, sample, data = pistonrings)
 
 cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
 

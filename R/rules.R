@@ -17,29 +17,29 @@ qccRules <- function(object, rules = object$rules)
   out <- rep(NA, length(stats))
   if(any(rules == 4)) 
   {  
-    wer <- violating.wer4(object)
+    wer <- qccRulesViolatingWER4(object)
     out[wer] <- 4
   }
   if(any(rules == 3)) 
   {  
-    wer <- violating.wer3(object)
+    wer <- qccRulesViolatingWER3(object)
     out[wer] <- 3
   }
   if(any(rules == 2)) 
   {  
-    wer <- violating.wer2(object)
+    wer <- qccRulesViolatingWER2(object)
     out[wer] <- 2
   }
   if(any(rules == 1)) 
   {  
-    wer <- violating.wer1(object)
+    wer <- qccRulesViolatingWER1(object)
     out[wer] <- 1
   }
   attr(out, "WesternElectricRules") <- rules
   return(out)
 }
 
-violating.wer1 <- function(object)
+qccRulesViolatingWER1 <- function(object)
 {
   # Return cases beyond control limits (WER #1)
   limits <- object$limits
@@ -51,10 +51,10 @@ violating.wer1 <- function(object)
   return(c(index.above.ucl, index.below.lcl))
 }
 
-violating.wer2 <- function(object, 
-                           run.points = 2,
-                           run.length = 3,
-                           k = object$nsigmas*2/3)
+qccRulesViolatingWER2 <- function(object, 
+                                  run.points = 2,
+                                  run.length = 3,
+                                  k = object$nsigmas*2/3)
 {
   # Return indices of points violating runs
   center     <- object$center
@@ -74,15 +74,15 @@ violating.wer2 <- function(object,
   return(c(viol.above, viol.below))
 }
 
-violating.wer3 <- function(object, ...)
+qccRulesViolatingWER3 <- function(object, ...)
 {
-  violating.wer2(object, 
-                 run.points = 4,
-                 run.length = 5,
-                 k = object$nsigmas*1/3)
+  qccRulesViolatingWER2(object, 
+                        run.points = 4,
+                        run.length = 5,
+                        k = object$nsigmas*1/3)
 }  
 
-violating.wer4 <- function(object)
+qccRulesViolatingWER4 <- function(object)
 {
   # Return indices of points violating runs (WER #4)
   run.length <- 8

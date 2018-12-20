@@ -18,7 +18,7 @@ limits.xbar(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   \item{sizes}{samples sizes. Optional}
   \item{std.dev}{within group standard deviation. Optional for \code{sd.xbar} function, required for \code{limits.xbar}. See details.}
   \item{nsigmas}{a numeric value specifying the number of sigmas to use for computing control limits. It is ignored when the \code{conf} argument is  provided.} 
-  \item{conf}{a numeric value \eqn{\in (0,1)} specifying the confidence level to use for computing control limits.}
+  \item{conf}{a numeric value in \eqn{(0,1)} specifying the confidence level to use for computing control limits.}
   \item{\dots}{catches further ignored arguments.}
 }
 \details{

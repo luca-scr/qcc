@@ -6,7 +6,7 @@
 \alias{plot.ewma.qcc}
 
 \title{EWMA chart}
-\description{Create an object of class 'ewma.qcc' to compute and draw an Exponential Weighted Moving Average (EWMA) chart for statistical quality control.}
+\description{Create an object of class \code{'ewma.qcc'} to compute and draw an Exponential Weighted Moving Average (EWMA) chart for statistical quality control.}
 
 \usage{
 ewma(data, sizes, center, std.dev, lambda = 0.2, nsigmas = 3, 
@@ -19,6 +19,7 @@ ewma(data, sizes, center, std.dev, lambda = 0.2, nsigmas = 3,
      add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
+     label.center = "CL",
      label.limits = c("LCL", "UCL"), 
      title, xlab, ylab, ylim, axes.las = 0,
      digits = getOption("digits"),
@@ -59,6 +60,8 @@ Several methods are available for estimating the standard deviation. See \code{\
 \item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
 \code{qcc.options("zones")$fill}.}
 
+\item{label.center}{a character  specifying the label for center line.}
+
 \item{label.limits}{a character vector specifying the labels for control limits.}
 
 \item{title}{a string giving the label for the main title.}
@@ -75,14 +78,14 @@ Several methods are available for estimating the standard deviation. See \code{\
 
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a control chart set this to \code{FALSE}.}
 
-\item{x}{an object of class 'ewma.qcc'.}
+\item{x}{an object of class {'ewma.qcc'}.}
 
 \item{\dots}{additional arguments to be passed to the generic function.} 
 }
 
 \details{EWMA chart smooths a series of data based on a moving average with weights which decay exponentially. Useful to detect small and permanent variation on the mean of the process.
 }
-\value{Returns an object of class 'ewma.qcc'.}
+\value{Returns an object of class {'ewma.qcc'}.}
 
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
@@ -103,7 +106,7 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ## Grouped-data
 ##
 data(pistonrings)
-diameter <- qcc.groups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(diameter, sample, data = pistonrings)
 
 ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 
