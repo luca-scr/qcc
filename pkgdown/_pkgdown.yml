@@ -1,3 +1,12 @@
+# pkgdown definition file <http://pkgdown.r-lib.org>
+#
+# Install:
+# install.packages("pkgdown")
+#
+# Usage:
+# pkgdown::build_site()
+#
+
 title: qcc
 
 url: https://github.com/luca-scr/qcc

@@ -23,10 +23,10 @@ opts_chunk$set(fig.align = "center",
                collapse = TRUE, # collapse input & ouput code in chunks
                warning = FALSE)
 
-# knit_hooks$set(par = function(before, options, envir)
-#   { if(before && options$fig.show != "none") 
-#        par(family = "Lato")
-# })
+knit_hooks$set(par = function(before, options, envir)
+{ if(before && options$fig.show != "none") 
+     par(mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
+})
 ```
        
 # Introduction
@@ -228,17 +228,17 @@ data(pistonrings)
 diameter <- qccGroups(diameter, sample, data = pistonrings)
 q <- qcc(diameter, type="xbar", nsigmas=3, plot=FALSE)
 beta <- ocCurves(q)
-round(beta, digits=4)
+print(head(beta, n = 10), digits = 4)
 
 data(orangejuice)
 q <- with(orangejuice, qcc(D[trial], sizes=size[trial], type="p", plot=FALSE))
 beta <- ocCurves(q)
-round(beta, digits=4)
+print(head(beta, n = 10), digits = 4)
 
 data(circuit)
 q <- with(circuit, qcc(x[trial], sizes=size[trial], type="c", plot=FALSE))
 beta <- ocCurves(q)
-round(beta, digits=4)
+print(head(beta, n = 10), digits = 4)
 ```
 
 # Cusum chart
@@ -247,9 +247,10 @@ round(beta, digits=4)
 data(pistonrings)
 diameter <- qccGroups(diameter, sample, data = pistonrings)
 
-(q1 <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1))
-(q2 <- cusum(diameter[1:25,], newdata=diameter[26:40,]))
-plot(q2, chart.all=FALSE)
+cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+
+(q <- cusum(diameter[1:25,], newdata = diameter[26:40,]))
+plot(q, chart.all=FALSE)
 ```
 
 # EWMA
@@ -258,17 +259,16 @@ plot(q2, chart.all=FALSE)
 data(pistonrings)
 diameter <- qccGroups(diameter, sample, data = pistonrings)
 
-q1 <- ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
-summary(q1)
+ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 
-q2 <-  ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, 
-            newdata=diameter[26:40,]) 
-summary(q2)
+ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,])
+```
 
-x <- c(33.75, 33.05, 34, 33.81, 33.46, 34.02, 33.68, 33.27, 
-       33.49, 33.20, 33.62, 33.00, 33.54, 33.12, 33.84)
-q3 <-  ewma(x, lambda=0.2, nsigmas=2.7)
-summary(q3)
+```{r}
+data(viscosity)
+with(viscosity, 
+     ewma(viscosity[trial], lambda=0.2, nsigmas=2.7,
+          newdata = viscosity[!trial]))
 ```
 
 # Process capability analysis
@@ -277,11 +277,15 @@ summary(q3)
 data(pistonrings)
 diameter <- qccGroups(diameter, sample, data = pistonrings)
 
-q1 <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
-processCapability(q1, spec.limits=c(73.95,74.05))
-processCapability(q1, spec.limits=c(73.95,74.05), target=74.02)
-processCapability(q1, spec.limits=c(73.99,74.01))
-processCapability(q1, spec.limits = c(73.99, 74.1))
+q <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
+
+processCapability(q, spec.limits=c(73.95,74.05))
+
+processCapability(q, spec.limits=c(73.95,74.05), target=74.02)
+
+processCapability(q, spec.limits=c(73.99,74.01))
+
+processCapability(q, spec.limits = c(73.99, 74.1))
 ```
 
 # Multivariate Quality Control Charts
@@ -289,22 +293,22 @@ processCapability(q1, spec.limits = c(73.99, 74.1))
 Multivariate subgrouped data from Ryan (2011, Table 9.2) with $p = 2$ variables, $m = 20$ samples, and $n = 4$ sample size for each sample:
 ```{r}
 data(RyanMultivar)
-q <- mqcc(RyanMultivar, type = "T2")
-summary(q)
+(q <- mqcc(RyanMultivar, type = "T2"))
+
 ellipseChart(q)
+
 ellipseChart(q, show.id = TRUE)
+
 q <- mqcc(RyanMultivar, type = "T2", pred.limits = TRUE)
 ```
 
-
 Ryan (2011) discussed Xbar-charts for single variables computed adjusting the confidence level of the $T^2$ chart:
 ```{r}
-q1 <- with(RyanMultivar, 
-           qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2)))
-summary(q1)
-q2 <- with(RyanMultivar, 
-           qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))
-summary(q2)
+with(RyanMultivar, 
+     qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2)))
+
+with(RyanMultivar, 
+     qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))
 ```
 
 Generate new "in control" data:
@@ -315,9 +319,8 @@ for(i in 1:4)
      Xnew$X1[,i] <- x[,1]
      Xnew$X2[,i] <- x[,2] 
    }
-qq <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
-summary(qq)
-ellipseChart(qq, show.id = TRUE)
+(q <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE))
+ellipseChart(q, show.id = TRUE)
 ```
 
 Generate new "out of control" data:
@@ -328,37 +331,32 @@ for(i in 1:4)
      Xnew$X1[,i] <- x[,1]
      Xnew$X2[,i] <- x[,2] 
    }
-qq <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
-summary(qq)
-ellipseChart(qq, show.id = TRUE)
+(q <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE))
+ellipseChart(q, show.id = TRUE)
 ```
 
 Individual observations data:
 ```{r}
 data(boiler)
-q1 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999)
-summary(q1)
+(q <- mqcc(boiler, type = "T2.single", confidence.level = 0.999))
 ```
 Generate new "in control" data:
 ```{r}
-boilerNew <- MASS::mvrnorm(10, mu = q1$center, Sigma = q1$cov)
-q2 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
-          newdata = boilerNew, pred.limits = TRUE)
-summary(q2)
+boilerNew <- MASS::mvrnorm(10, mu = q$center, Sigma = q$cov)
+mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+     newdata = boilerNew, pred.limits = TRUE)
 ```
 Generate new "out of control" data:
 ```{r}
-boilerNew <- MASS::mvrnorm(10, mu = 1.01*q1$center, Sigma = q1$cov)
-q3 <- mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
-          newdata = boilerNew, pred.limits = TRUE)
-summary(q3)
+boilerNew <- MASS::mvrnorm(10, mu = 1.01*q$center, Sigma = q$cov)
+mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+     newdata = boilerNew, pred.limits = TRUE)
 ```
 
 Recompute by providing "robust" estimates for the means and the covariance matrix:
 ```{r}
 rob <- MASS::cov.rob(boiler)
-q4 <- mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
-summary(q4)
+mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
 ```
 
 # Pareto chart
@@ -530,11 +528,18 @@ q <- qcc(x, type="R")
 q <- qcc(x, type="S")
 ```
 
-## References
+# References
 
 Montgomery, D.C. (2009) *Introduction to Statistical Quality Control*, 6th ed. New York: John Wiley & Sons.
 
-Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
+Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd ed. New York: John Wiley & Sons.
 
 Scrucca, L. (2004) [qcc: an R package for quality control charting and
 statistical process control](http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf). *R News* 4/1, 11-17. 
+
+----
+
+```{r}
+devtools::session_info()
+```
+

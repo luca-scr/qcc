@@ -132,21 +132,21 @@ This dataset contains samples taken after the machine adjustment was made." />
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice2</span>)
 <span class='no'>orangejuice2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/transform'>transform</a></span>(<span class='no'>orangejuice2</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='no'>D</span>/<span class='no'>size</span>)
-<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>orangejuice2</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ─────────────────────────────────────────────────────────────────── 
+<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>orangejuice2</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ───────────────────────────────────────────────────────────────────── 
 #&gt; 
-#&gt;        Obs   Mean Std.Dev.   Min   Max
-#&gt; sample  40 74.500 11.69045 55.00 94.00
-#&gt; D       40  5.450  2.25263  1.00 11.00
-#&gt; size    40 50.000  0.00000 50.00 50.00
-#&gt; d       40  0.109  0.04505  0.02  0.22
+#&gt;        Obs   Mean   StdDev   Min Median   Max
+#&gt; sample  40 74.500 11.69045 55.00   74.5 94.00
+#&gt; D       40  5.450  2.25263  1.00    5.0 11.00
+#&gt; size    40 50.000  0.00000 50.00   50.0 50.00
+#&gt; d       40  0.109  0.04505  0.02    0.1  0.22
 #&gt; 
-#&gt; ── trial = TRUE ──────────────────────────────────────────────────────────────────── 
+#&gt; ── trial = TRUE ────────────────────────────────────────────────────────────────────── 
 #&gt; 
-#&gt;        Obs    Mean Std.Dev.   Min   Max
-#&gt; sample  24 42.5000  7.07107 31.00 54.00
-#&gt; D       24  5.5417  2.14637  2.00 12.00
-#&gt; size    24 50.0000  0.00000 50.00 50.00
-#&gt; d       24  0.1108  0.04293  0.04  0.24</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>d</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>orangejuice2</span>)</div><div class='img'><img src='orangejuice2-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>d</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>orangejuice2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>trial</span>, <span class='fl'>1</span>, <span class='fl'>19</span>))</div><div class='img'><img src='orangejuice2-2.png' alt='' width='504' height='432' /></div></pre>
+#&gt;        Obs    Mean  StdDev   Min Median   Max
+#&gt; sample  24 42.5000 7.07107 31.00  42.50 54.00
+#&gt; D       24  5.5417 2.14637  2.00   5.50 12.00
+#&gt; size    24 50.0000 0.00000 50.00  50.00 50.00
+#&gt; d       24  0.1108 0.04293  0.04   0.11  0.24</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>d</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>orangejuice2</span>)</div><div class='img'><img src='orangejuice2-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>d</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>orangejuice2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>trial</span>, <span class='fl'>1</span>, <span class='fl'>19</span>))</div><div class='img'><img src='orangejuice2-2.png' alt='' width='504' height='432' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

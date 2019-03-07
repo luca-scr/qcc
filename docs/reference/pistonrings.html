@@ -129,17 +129,17 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>pistonrings</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ─────────────────────────────────────────────────────────────────── 
+<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>pistonrings</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ───────────────────────────────────────────────────────────────────── 
 #&gt; 
-#&gt;          Obs  Mean Std.Dev.   Min   Max
-#&gt; diameter  75 74.01  0.01241 73.98 74.04
-#&gt; sample    75 33.00  4.34959 26.00 40.00
+#&gt;          Obs  Mean  StdDev   Min Median   Max
+#&gt; diameter  75 74.01 0.01241 73.98     74 74.04
+#&gt; sample    75 33.00 4.34959 26.00     33 40.00
 #&gt; 
-#&gt; ── trial = TRUE ──────────────────────────────────────────────────────────────────── 
+#&gt; ── trial = TRUE ────────────────────────────────────────────────────────────────────── 
 #&gt; 
-#&gt;          Obs Mean Std.Dev.   Min   Max
-#&gt; diameter 125   74  0.01007 73.97 74.03
-#&gt; sample   125   13  7.24012  1.00 25.00</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>diameter</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)</div><div class='img'><img src='pistonrings-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>diameter</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.7</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>pistonrings</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tapply'>tapply</a></span>(<span class='no'>diameter</span>,<span class='no'>sample</span>,<span class='no'>mean</span>)))</div><div class='img'><img src='pistonrings-2.png' alt='' width='504' height='432' /></div></pre>
+#&gt;          Obs Mean  StdDev   Min Median   Max
+#&gt; diameter 125   74 0.01007 73.97     74 74.03
+#&gt; sample   125   13 7.24012  1.00     13 25.00</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>diameter</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)</div><div class='img'><img src='pistonrings-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>diameter</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.7</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>pistonrings</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tapply'>tapply</a></span>(<span class='no'>diameter</span>,<span class='no'>sample</span>,<span class='no'>mean</span>)))</div><div class='img'><img src='pistonrings-2.png' alt='' width='504' height='432' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

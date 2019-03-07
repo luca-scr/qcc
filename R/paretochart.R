@@ -61,7 +61,7 @@ plot.paretoChart <- function(x, xlab = NULL,
   
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
-  plot.new()
+  # plot.new()
 
   # set las and mar if not provided by user
   # browser()

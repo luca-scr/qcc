@@ -69,7 +69,7 @@
       <h1>A quick tour of qcc</h1>
                         <h4 class="author">Luca Scrucca</h4>
             
-            <h4 class="date">20 Dec 2018</h4>
+            <h4 class="date">07 Mar 2019</h4>
       
       
       <div class="hidden name"><code>qcc.Rmd</code></div>
@@ -596,7 +596,7 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 <a class="sourceLine" id="cb45-3" title="3">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(diameter, <span class="dt">type=</span><span class="st">"xbar"</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb45-4" title="4">beta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/oc.curves.html">ocCurves</a></span>(q)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(beta, <span class="dt">digits=</span><span class="dv">4</span>)</a>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(beta, <span class="dt">n =</span> <span class="dv">10</span>), <span class="dt">digits =</span> <span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb46-2" title="2"><span class="co">##                sample size</span></a>
 <a class="sourceLine" id="cb46-3" title="3"><span class="co">## shift (std.dev)    n=1    n=5   n=10   n=15   n=20</span></a>
 <a class="sourceLine" id="cb46-4" title="4"><span class="co">##            0    0.9973 0.9973 0.9973 0.9973 0.9973</span></a>
@@ -609,145 +609,26 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 <a class="sourceLine" id="cb46-11" title="11"><span class="co">##            0.35 0.9956 0.9866 0.9708 0.9500 0.9243</span></a>
 <a class="sourceLine" id="cb46-12" title="12"><span class="co">##            0.4  0.9950 0.9823 0.9586 0.9266 0.8871</span></a>
 <a class="sourceLine" id="cb46-13" title="13"><span class="co">##            0.45 0.9943 0.9769 0.9426 0.8957 0.8383</span></a>
-<a class="sourceLine" id="cb46-14" title="14"><span class="co">##            0.5  0.9936 0.9701 0.9220 0.8562 0.7775</span></a>
-<a class="sourceLine" id="cb46-15" title="15"><span class="co">##            0.55 0.9927 0.9616 0.8963 0.8078 0.7055</span></a>
-<a class="sourceLine" id="cb46-16" title="16"><span class="co">##            0.6  0.9916 0.9514 0.8649 0.7505 0.6243</span></a>
-<a class="sourceLine" id="cb46-17" title="17"><span class="co">##            0.65 0.9905 0.9390 0.8275 0.6853 0.5371</span></a>
-<a class="sourceLine" id="cb46-18" title="18"><span class="co">##            0.7  0.9892 0.9243 0.7842 0.6137 0.4481</span></a>
-<a class="sourceLine" id="cb46-19" title="19"><span class="co">##            0.75 0.9877 0.9071 0.7351 0.5379 0.3616</span></a>
-<a class="sourceLine" id="cb46-20" title="20"><span class="co">##            0.8  0.9860 0.8871 0.6809 0.4608 0.2817</span></a>
-<a class="sourceLine" id="cb46-21" title="21"><span class="co">##            0.85 0.9842 0.8642 0.6225 0.3851 0.2115</span></a>
-<a class="sourceLine" id="cb46-22" title="22"><span class="co">##            0.9  0.9821 0.8383 0.5612 0.3136 0.1527</span></a>
-<a class="sourceLine" id="cb46-23" title="23"><span class="co">##            0.95 0.9798 0.8094 0.4983 0.2485 0.1059</span></a>
-<a class="sourceLine" id="cb46-24" title="24"><span class="co">##            1    0.9772 0.7775 0.4355 0.1913 0.0705</span></a>
-<a class="sourceLine" id="cb46-25" title="25"><span class="co">##            1.05 0.9744 0.7428 0.3743 0.1431 0.0450</span></a>
-<a class="sourceLine" id="cb46-26" title="26"><span class="co">##            1.1  0.9713 0.7055 0.3161 0.1038 0.0275</span></a>
-<a class="sourceLine" id="cb46-27" title="27"><span class="co">##            1.15 0.9678 0.6659 0.2622 0.0730 0.0161</span></a>
-<a class="sourceLine" id="cb46-28" title="28"><span class="co">##            1.2  0.9641 0.6243 0.2134 0.0497 0.0090</span></a>
-<a class="sourceLine" id="cb46-29" title="29"><span class="co">##            1.25 0.9599 0.5812 0.1703 0.0328 0.0048</span></a>
-<a class="sourceLine" id="cb46-30" title="30"><span class="co">##            1.3  0.9554 0.5371 0.1333 0.0209 0.0024</span></a>
-<a class="sourceLine" id="cb46-31" title="31"><span class="co">##            1.35 0.9505 0.4925 0.1022 0.0129 0.0012</span></a>
-<a class="sourceLine" id="cb46-32" title="32"><span class="co">##            1.4  0.9452 0.4481 0.0768 0.0077 0.0006</span></a>
-<a class="sourceLine" id="cb46-33" title="33"><span class="co">##            1.45 0.9394 0.4043 0.0564 0.0045 0.0002</span></a>
-<a class="sourceLine" id="cb46-34" title="34"><span class="co">##            1.5  0.9332 0.3616 0.0406 0.0025 0.0001</span></a>
-<a class="sourceLine" id="cb46-35" title="35"><span class="co">##            1.55 0.9265 0.3206 0.0286 0.0013 0.0000</span></a>
-<a class="sourceLine" id="cb46-36" title="36"><span class="co">##            1.6  0.9192 0.2817 0.0197 0.0007 0.0000</span></a>
-<a class="sourceLine" id="cb46-37" title="37"><span class="co">##            1.65 0.9115 0.2453 0.0133 0.0003 0.0000</span></a>
-<a class="sourceLine" id="cb46-38" title="38"><span class="co">##            1.7  0.9032 0.2115 0.0088 0.0002 0.0000</span></a>
-<a class="sourceLine" id="cb46-39" title="39"><span class="co">##            1.75 0.8943 0.1806 0.0056 0.0001 0.0000</span></a>
-<a class="sourceLine" id="cb46-40" title="40"><span class="co">##            1.8  0.8849 0.1527 0.0036 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-41" title="41"><span class="co">##            1.85 0.8749 0.1278 0.0022 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-42" title="42"><span class="co">##            1.9  0.8643 0.1059 0.0013 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-43" title="43"><span class="co">##            1.95 0.8531 0.0869 0.0008 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-44" title="44"><span class="co">##            2    0.8413 0.0705 0.0004 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-45" title="45"><span class="co">##            2.05 0.8289 0.0566 0.0002 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-46" title="46"><span class="co">##            2.1  0.8159 0.0450 0.0001 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-47" title="47"><span class="co">##            2.15 0.8023 0.0353 0.0001 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-48" title="48"><span class="co">##            2.2  0.7881 0.0275 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-49" title="49"><span class="co">##            2.25 0.7734 0.0211 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-50" title="50"><span class="co">##            2.3  0.7580 0.0161 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-51" title="51"><span class="co">##            2.35 0.7422 0.0121 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-52" title="52"><span class="co">##            2.4  0.7257 0.0090 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-53" title="53"><span class="co">##            2.45 0.7088 0.0066 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-54" title="54"><span class="co">##            2.5  0.6915 0.0048 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-55" title="55"><span class="co">##            2.55 0.6736 0.0034 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-56" title="56"><span class="co">##            2.6  0.6554 0.0024 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-57" title="57"><span class="co">##            2.65 0.6368 0.0017 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-58" title="58"><span class="co">##            2.7  0.6179 0.0012 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-59" title="59"><span class="co">##            2.75 0.5987 0.0008 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-60" title="60"><span class="co">##            2.8  0.5793 0.0006 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-61" title="61"><span class="co">##            2.85 0.5596 0.0004 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-62" title="62"><span class="co">##            2.9  0.5398 0.0002 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-63" title="63"><span class="co">##            2.95 0.5199 0.0002 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-64" title="64"><span class="co">##            3    0.5000 0.0001 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-65" title="65"><span class="co">##            3.05 0.4801 0.0001 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-66" title="66"><span class="co">##            3.1  0.4602 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-67" title="67"><span class="co">##            3.15 0.4404 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-68" title="68"><span class="co">##            3.2  0.4207 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-69" title="69"><span class="co">##            3.25 0.4013 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-70" title="70"><span class="co">##            3.3  0.3821 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-71" title="71"><span class="co">##            3.35 0.3632 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-72" title="72"><span class="co">##            3.4  0.3446 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-73" title="73"><span class="co">##            3.45 0.3264 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-74" title="74"><span class="co">##            3.5  0.3085 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-75" title="75"><span class="co">##            3.55 0.2912 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-76" title="76"><span class="co">##            3.6  0.2743 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-77" title="77"><span class="co">##            3.65 0.2578 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-78" title="78"><span class="co">##            3.7  0.2420 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-79" title="79"><span class="co">##            3.75 0.2266 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-80" title="80"><span class="co">##            3.8  0.2119 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-81" title="81"><span class="co">##            3.85 0.1977 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-82" title="82"><span class="co">##            3.9  0.1841 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-83" title="83"><span class="co">##            3.95 0.1711 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-84" title="84"><span class="co">##            4    0.1587 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-85" title="85"><span class="co">##            4.05 0.1469 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-86" title="86"><span class="co">##            4.1  0.1357 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-87" title="87"><span class="co">##            4.15 0.1251 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-88" title="88"><span class="co">##            4.2  0.1151 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-89" title="89"><span class="co">##            4.25 0.1056 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-90" title="90"><span class="co">##            4.3  0.0968 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-91" title="91"><span class="co">##            4.35 0.0885 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-92" title="92"><span class="co">##            4.4  0.0808 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-93" title="93"><span class="co">##            4.45 0.0735 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-94" title="94"><span class="co">##            4.5  0.0668 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-95" title="95"><span class="co">##            4.55 0.0606 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-96" title="96"><span class="co">##            4.6  0.0548 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-97" title="97"><span class="co">##            4.65 0.0495 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-98" title="98"><span class="co">##            4.7  0.0446 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-99" title="99"><span class="co">##            4.75 0.0401 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-100" title="100"><span class="co">##            4.8  0.0359 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-101" title="101"><span class="co">##            4.85 0.0322 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-102" title="102"><span class="co">##            4.9  0.0287 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-103" title="103"><span class="co">##            4.95 0.0256 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-104" title="104"><span class="co">##            5    0.0228 0.0000 0.0000 0.0000 0.0000</span></a>
-<a class="sourceLine" id="cb46-105" title="105"></a>
-<a class="sourceLine" id="cb46-106" title="106"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(orangejuice)</a>
-<a class="sourceLine" id="cb46-107" title="107">q &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(orangejuice, <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(D[trial], <span class="dt">sizes=</span>size[trial], <span class="dt">type=</span><span class="st">"p"</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb46-108" title="108">beta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/oc.curves.html">ocCurves</a></span>(q)</a></code></pre></div>
+<a class="sourceLine" id="cb46-14" title="14"></a>
+<a class="sourceLine" id="cb46-15" title="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(orangejuice)</a>
+<a class="sourceLine" id="cb46-16" title="16">q &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(orangejuice, <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(D[trial], <span class="dt">sizes=</span>size[trial], <span class="dt">type=</span><span class="st">"p"</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb46-17" title="17">beta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/oc.curves.html">ocCurves</a></span>(q)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-19-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(beta, <span class="dt">digits=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb47-2" title="2"><span class="co">##      0   0.01   0.02   0.03   0.04   0.05   0.06   0.07   0.08   0.09 </span></a>
-<a class="sourceLine" id="cb47-3" title="3"><span class="co">## 0.0000 0.0894 0.2642 0.4447 0.5995 0.7206 0.8100 0.8735 0.9173 0.9468 </span></a>
-<a class="sourceLine" id="cb47-4" title="4"><span class="co">##    0.1   0.11   0.12   0.13   0.14   0.15   0.16   0.17   0.18   0.19 </span></a>
-<a class="sourceLine" id="cb47-5" title="5"><span class="co">## 0.9662 0.9788 0.9869 0.9920 0.9951 0.9971 0.9983 0.9990 0.9993 0.9995 </span></a>
-<a class="sourceLine" id="cb47-6" title="6"><span class="co">##    0.2   0.21   0.22   0.23   0.24   0.25   0.26   0.27   0.28   0.29 </span></a>
-<a class="sourceLine" id="cb47-7" title="7"><span class="co">## 0.9995 0.9993 0.9987 0.9978 0.9962 0.9937 0.9900 0.9845 0.9768 0.9662 </span></a>
-<a class="sourceLine" id="cb47-8" title="8"><span class="co">##    0.3   0.31   0.32   0.33   0.34   0.35   0.36   0.37   0.38   0.39 </span></a>
-<a class="sourceLine" id="cb47-9" title="9"><span class="co">## 0.9522 0.9343 0.9118 0.8844 0.8518 0.8139 0.7711 0.7236 0.6722 0.6176 </span></a>
-<a class="sourceLine" id="cb47-10" title="10"><span class="co">##    0.4   0.41   0.42   0.43   0.44   0.45   0.46   0.47   0.48   0.49 </span></a>
-<a class="sourceLine" id="cb47-11" title="11"><span class="co">## 0.5610 0.5035 0.4461 0.3901 0.3365 0.2862 0.2398 0.1980 0.1609 0.1287 </span></a>
-<a class="sourceLine" id="cb47-12" title="12"><span class="co">##    0.5   0.51   0.52   0.53   0.54   0.55   0.56   0.57   0.58   0.59 </span></a>
-<a class="sourceLine" id="cb47-13" title="13"><span class="co">## 0.1013 0.0784 0.0596 0.0446 0.0327 0.0235 0.0166 0.0115 0.0078 0.0052 </span></a>
-<a class="sourceLine" id="cb47-14" title="14"><span class="co">##    0.6   0.61   0.62   0.63   0.64   0.65   0.66   0.67   0.68   0.69 </span></a>
-<a class="sourceLine" id="cb47-15" title="15"><span class="co">## 0.0034 0.0021 0.0013 0.0008 0.0005 0.0003 0.0002 0.0001 0.0000 0.0000 </span></a>
-<a class="sourceLine" id="cb47-16" title="16"><span class="co">##    0.7   0.71   0.72   0.73   0.74   0.75   0.76   0.77   0.78   0.79 </span></a>
-<a class="sourceLine" id="cb47-17" title="17"><span class="co">## 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 </span></a>
-<a class="sourceLine" id="cb47-18" title="18"><span class="co">##    0.8   0.81   0.82   0.83   0.84   0.85   0.86   0.87   0.88   0.89 </span></a>
-<a class="sourceLine" id="cb47-19" title="19"><span class="co">## 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 </span></a>
-<a class="sourceLine" id="cb47-20" title="20"><span class="co">##    0.9   0.91   0.92   0.93   0.94   0.95   0.96   0.97   0.98   0.99 </span></a>
-<a class="sourceLine" id="cb47-21" title="21"><span class="co">## 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 </span></a>
-<a class="sourceLine" id="cb47-22" title="22"><span class="co">##      1 </span></a>
-<a class="sourceLine" id="cb47-23" title="23"><span class="co">## 0.0000</span></a>
-<a class="sourceLine" id="cb47-24" title="24"></a>
-<a class="sourceLine" id="cb47-25" title="25"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(circuit)</a>
-<a class="sourceLine" id="cb47-26" title="26">q &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(circuit, <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x[trial], <span class="dt">sizes=</span>size[trial], <span class="dt">type=</span><span class="st">"c"</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb47-27" title="27">beta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/oc.curves.html">ocCurves</a></span>(q)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(beta, <span class="dt">n =</span> <span class="dv">10</span>), <span class="dt">digits =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb47-2" title="2"><span class="co">##       0    0.01    0.02    0.03    0.04    0.05    0.06    0.07    0.08 </span></a>
+<a class="sourceLine" id="cb47-3" title="3"><span class="co">## 0.00000 0.08944 0.26423 0.44472 0.59952 0.72057 0.81000 0.87351 0.91729 </span></a>
+<a class="sourceLine" id="cb47-4" title="4"><span class="co">##    0.09 </span></a>
+<a class="sourceLine" id="cb47-5" title="5"><span class="co">## 0.94676</span></a>
+<a class="sourceLine" id="cb47-6" title="6"></a>
+<a class="sourceLine" id="cb47-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(circuit)</a>
+<a class="sourceLine" id="cb47-8" title="8">q &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(circuit, <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x[trial], <span class="dt">sizes=</span>size[trial], <span class="dt">type=</span><span class="st">"c"</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb47-9" title="9">beta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/oc.curves.html">ocCurves</a></span>(q)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-19-3.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(beta, <span class="dt">digits=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb48-2" title="2"><span class="co">##      0      1      2      3      4      5      6      7      8      9 </span></a>
-<a class="sourceLine" id="cb48-3" title="3"><span class="co">## 0.0000 0.0006 0.0166 0.0839 0.2149 0.3840 0.5543 0.6993 0.8088 0.8843 </span></a>
-<a class="sourceLine" id="cb48-4" title="4"><span class="co">##     10     11     12     13     14     15     16     17     18     19 </span></a>
-<a class="sourceLine" id="cb48-5" title="5"><span class="co">## 0.9329 0.9625 0.9797 0.9893 0.9945 0.9972 0.9986 0.9991 0.9992 0.9986 </span></a>
-<a class="sourceLine" id="cb48-6" title="6"><span class="co">##     20     21     22     23     24     25     26     27     28     29 </span></a>
-<a class="sourceLine" id="cb48-7" title="7"><span class="co">## 0.9972 0.9945 0.9895 0.9813 0.9686 0.9502 0.9249 0.8918 0.8505 0.8011 </span></a>
-<a class="sourceLine" id="cb48-8" title="8"><span class="co">##     30     31     32     33     34     35     36     37     38     39 </span></a>
-<a class="sourceLine" id="cb48-9" title="9"><span class="co">## 0.7444 0.6818 0.6150 0.5461 0.4772 0.4102 0.3470 0.2888 0.2365 0.1907 </span></a>
-<a class="sourceLine" id="cb48-10" title="10"><span class="co">##     40     41     42     43     44     45     46     47     48     49 </span></a>
-<a class="sourceLine" id="cb48-11" title="11"><span class="co">## 0.1514 0.1184 0.0912 0.0693 0.0519 0.0383 0.0280 0.0201 0.0143 0.0101 </span></a>
-<a class="sourceLine" id="cb48-12" title="12"><span class="co">##     50     51     52     53     54     55     56     57     58     59 </span></a>
-<a class="sourceLine" id="cb48-13" title="13"><span class="co">## 0.0070 0.0048 0.0033 0.0022 0.0015 0.0010 0.0006 0.0004 0.0003 0.0002 </span></a>
-<a class="sourceLine" id="cb48-14" title="14"><span class="co">##     60     61     62     63     64     65 </span></a>
-<a class="sourceLine" id="cb48-15" title="15"><span class="co">## 0.0001 0.0001 0.0000 0.0000 0.0000 0.0000</span></a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(beta, <span class="dt">n =</span> <span class="dv">10</span>), <span class="dt">digits =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="co">##         0         1         2         3         4         5         6 </span></a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="co">## 0.0000000 0.0005942 0.0165636 0.0839179 0.2148696 0.3840393 0.5543204 </span></a>
+<a class="sourceLine" id="cb48-4" title="4"><span class="co">##         7         8         9 </span></a>
+<a class="sourceLine" id="cb48-5" title="5"><span class="co">## 0.6992917 0.8087639 0.8843095</span></a></code></pre></div>
 </div>
 <div id="cusum-chart" class="section level1">
 <h1 class="hasAnchor">
@@ -755,7 +636,7 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
 <a class="sourceLine" id="cb49-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qccGroups.html">qccGroups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb49-3" title="3"></a>
-<a class="sourceLine" id="cb49-4" title="4">(q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cusum.html">cusum</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">decision.interval =</span> <span class="dv">4</span>, <span class="dt">se.shift =</span> <span class="dv">1</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb49-4" title="4"><span class="kw"><a href="../reference/cusum.html">cusum</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">decision.interval =</span> <span class="dv">4</span>, <span class="dt">se.shift =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-20-1.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code>## ── Cusum Chart ─────────────────────────────────── 
 ## 
@@ -767,7 +648,8 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 ## 
 ## Decision interval (std.err.) = 4 
 ## Shift detection   (std.err.) = 1
-(q2 &lt;- cusum(diameter[1:25,], newdata=diameter[26:40,]))</code></pre>
+
+(q &lt;- cusum(diameter[1:25,], newdata = diameter[26:40,]))</code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-20-2.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">## ── Cusum Chart ─────────────────────────────────── 
 ## 
@@ -783,7 +665,7 @@ qcc(x, type="p.std", size=n)</a></code></pre>
 ## 
 ## Decision interval (std.err.) = 5 
 ## Shift detection   (std.err.) = 1
-plot(q2, chart.all=FALSE)</a></code></pre>
+plot(q, chart.all=FALSE)</a></code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-20-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="ewma" class="section level1">
@@ -792,79 +674,80 @@ plot(q2, chart.all=FALSE)</a></code></pre>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
 <a class="sourceLine" id="cb52-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qccGroups.html">qccGroups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
 <a class="sourceLine" id="cb52-3" title="3"></a>
-<a class="sourceLine" id="cb52-4" title="4">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ewma.html">ewma</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">lambda=</span><span class="fl">0.2</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb52-4" title="4"><span class="kw"><a href="../reference/ewma.html">ewma</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">lambda=</span><span class="fl">0.2</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q1)</a>
-<a class="sourceLine" id="cb53-2" title="2"><span class="co">## ── EWMA Chart ──────────────────────────────────── </span></a>
-<a class="sourceLine" id="cb53-3" title="3"><span class="co">## </span></a>
-<a class="sourceLine" id="cb53-4" title="4"><span class="co">## Data (phase I)             = diameter[1:25, ] </span></a>
-<a class="sourceLine" id="cb53-5" title="5"><span class="co">## Number of groups           = 25 </span></a>
-<a class="sourceLine" id="cb53-6" title="6"><span class="co">## Group sample size          = 5 </span></a>
-<a class="sourceLine" id="cb53-7" title="7"><span class="co">## Center of group statistics = 74.00118 </span></a>
-<a class="sourceLine" id="cb53-8" title="8"><span class="co">## Standard deviation         = 0.009785039 </span></a>
-<a class="sourceLine" id="cb53-9" title="9"><span class="co">## </span></a>
-<a class="sourceLine" id="cb53-10" title="10"><span class="co">## Smoothing parameter        = 0.2 </span></a>
-<a class="sourceLine" id="cb53-11" title="11"><span class="co">## Control limits at nsigmas  = 3 </span></a>
-<a class="sourceLine" id="cb53-12" title="12"><span class="co">##         LCL      UCL</span></a>
-<a class="sourceLine" id="cb53-13" title="13"><span class="co">## 1  73.99855 74.00380</span></a>
-<a class="sourceLine" id="cb53-14" title="14"><span class="co">## 2  73.99781 74.00454</span></a>
-<a class="sourceLine" id="cb53-15" title="15"><span class="co">## :                   </span></a>
-<a class="sourceLine" id="cb53-16" title="16"><span class="co">## 25 73.99680 74.00555</span></a>
-<a class="sourceLine" id="cb53-17" title="17"></a>
-<a class="sourceLine" id="cb53-18" title="18">q2 &lt;-<span class="st">  </span><span class="kw"><a href="../reference/ewma.html">ewma</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">lambda=</span><span class="fl">0.2</span>, <span class="dt">nsigmas=</span><span class="fl">2.7</span>, </a>
-<a class="sourceLine" id="cb53-19" title="19">            <span class="dt">newdata=</span>diameter[<span class="dv">26</span><span class="op">:</span><span class="dv">40</span>,]) </a></code></pre></div>
+<pre><code><a href="../reference/ewma.html">## ── EWMA Chart ──────────────────────────────────── 
+## 
+## Data (phase I)             = diameter[1:25, ] 
+## Number of groups           = 25 
+## Group sample size          = 5 
+## Center of group statistics = 74.00118 
+## Standard deviation         = 0.009785039 
+## 
+## Smoothing parameter        = 0.2 
+## Control limits at nsigmas  = 3 
+##         LCL      UCL
+## 1  73.99855 74.00380
+## 2  73.99781 74.00454
+## :                   
+## 25 73.99680 74.00555
+
+ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,])</a></code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-21-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q2)</a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="co">## ── EWMA Chart ──────────────────────────────────── </span></a>
-<a class="sourceLine" id="cb54-3" title="3"><span class="co">## </span></a>
-<a class="sourceLine" id="cb54-4" title="4"><span class="co">## Data (phase I)             = diameter[1:25, ] </span></a>
-<a class="sourceLine" id="cb54-5" title="5"><span class="co">## Number of groups           = 25 </span></a>
-<a class="sourceLine" id="cb54-6" title="6"><span class="co">## Group sample size          = 5 </span></a>
-<a class="sourceLine" id="cb54-7" title="7"><span class="co">## Center of group statistics = 74.00118 </span></a>
-<a class="sourceLine" id="cb54-8" title="8"><span class="co">## Standard deviation         = 0.009785039 </span></a>
-<a class="sourceLine" id="cb54-9" title="9"><span class="co">## </span></a>
-<a class="sourceLine" id="cb54-10" title="10"><span class="co">## New data (phase II)        = diameter[26:40, ] </span></a>
-<a class="sourceLine" id="cb54-11" title="11"><span class="co">## Number of groups           = 15 </span></a>
-<a class="sourceLine" id="cb54-12" title="12"><span class="co">## Group sample size          = 5 </span></a>
-<a class="sourceLine" id="cb54-13" title="13"><span class="co">## </span></a>
-<a class="sourceLine" id="cb54-14" title="14"><span class="co">## Smoothing parameter        = 0.2 </span></a>
-<a class="sourceLine" id="cb54-15" title="15"><span class="co">## Control limits at nsigmas  = 2.7 </span></a>
-<a class="sourceLine" id="cb54-16" title="16"><span class="co">##         LCL      UCL</span></a>
-<a class="sourceLine" id="cb54-17" title="17"><span class="co">## 1  73.99881 74.00354</span></a>
-<a class="sourceLine" id="cb54-18" title="18"><span class="co">## 2  73.99815 74.00420</span></a>
-<a class="sourceLine" id="cb54-19" title="19"><span class="co">## :                   </span></a>
-<a class="sourceLine" id="cb54-20" title="20"><span class="co">## 40 73.99724 74.00511</span></a>
-<a class="sourceLine" id="cb54-21" title="21"></a>
-<a class="sourceLine" id="cb54-22" title="22">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">33.75</span>, <span class="fl">33.05</span>, <span class="dv">34</span>, <span class="fl">33.81</span>, <span class="fl">33.46</span>, <span class="fl">34.02</span>, <span class="fl">33.68</span>, <span class="fl">33.27</span>, </a>
-<a class="sourceLine" id="cb54-23" title="23">       <span class="fl">33.49</span>, <span class="fl">33.20</span>, <span class="fl">33.62</span>, <span class="fl">33.00</span>, <span class="fl">33.54</span>, <span class="fl">33.12</span>, <span class="fl">33.84</span>)</a>
-<a class="sourceLine" id="cb54-24" title="24">q3 &lt;-<span class="st">  </span><span class="kw"><a href="../reference/ewma.html">ewma</a></span>(x, <span class="dt">lambda=</span><span class="fl">0.2</span>, <span class="dt">nsigmas=</span><span class="fl">2.7</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-3.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q3)</a>
-<a class="sourceLine" id="cb55-2" title="2"><span class="co">## ── EWMA Chart ──────────────────────────────────── </span></a>
-<a class="sourceLine" id="cb55-3" title="3"><span class="co">## </span></a>
-<a class="sourceLine" id="cb55-4" title="4"><span class="co">## Data (phase I)             = x </span></a>
-<a class="sourceLine" id="cb55-5" title="5"><span class="co">## Number of groups           = 15 </span></a>
-<a class="sourceLine" id="cb55-6" title="6"><span class="co">## Group sample size          = 1 </span></a>
-<a class="sourceLine" id="cb55-7" title="7"><span class="co">## Center of group statistics = 33.52333 </span></a>
-<a class="sourceLine" id="cb55-8" title="8"><span class="co">## Standard deviation         = 0.4261651 </span></a>
-<a class="sourceLine" id="cb55-9" title="9"><span class="co">## </span></a>
-<a class="sourceLine" id="cb55-10" title="10"><span class="co">## Smoothing parameter        = 0.2 </span></a>
-<a class="sourceLine" id="cb55-11" title="11"><span class="co">## Control limits at nsigmas  = 2.7 </span></a>
-<a class="sourceLine" id="cb55-12" title="12"><span class="co">##            LCL      UCL</span></a>
-<a class="sourceLine" id="cb55-13" title="13"><span class="co">## [1,]  33.29320 33.75346</span></a>
-<a class="sourceLine" id="cb55-14" title="14"><span class="co">## [2,]  33.22862 33.81804</span></a>
-<a class="sourceLine" id="cb55-15" title="15"><span class="co">## :                      </span></a>
-<a class="sourceLine" id="cb55-16" title="16"><span class="co">## [15,] 33.14002 33.90664</span></a></code></pre></div>
+<pre><code>## ── EWMA Chart ──────────────────────────────────── 
+## 
+## Data (phase I)             = diameter[1:25, ] 
+## Number of groups           = 25 
+## Group sample size          = 5 
+## Center of group statistics = 74.00118 
+## Standard deviation         = 0.009785039 
+## 
+## New data (phase II)        = diameter[26:40, ] 
+## Number of groups           = 15 
+## Group sample size          = 5 
+## 
+## Smoothing parameter        = 0.2 
+## Control limits at nsigmas  = 2.7 
+##         LCL      UCL
+## 1  73.99881 74.00354
+## 2  73.99815 74.00420
+## :                   
+## 40 73.99724 74.00511</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(viscosity)</a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(viscosity, </a>
+<a class="sourceLine" id="cb55-3" title="3">     <span class="kw"><a href="../reference/ewma.html">ewma</a></span>(viscosity[trial], <span class="dt">lambda=</span><span class="fl">0.2</span>, <span class="dt">nsigmas=</span><span class="fl">2.7</span>,</a>
+<a class="sourceLine" id="cb55-4" title="4">          <span class="dt">newdata =</span> viscosity[<span class="op">!</span>trial]))</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;"></p>
+<pre><code>## ── EWMA Chart ──────────────────────────────────── 
+## 
+## Data (phase I)             = viscosity[trial] 
+## Number of groups           = 20 
+## Group sample size          = 1 
+## Center of group statistics = 34.088 
+## Standard deviation         = 0.5076521 
+## 
+## New data (phase II)        = viscosity[!trial] 
+## Number of groups           = 15 
+## Group sample size          = 1 
+## 
+## Smoothing parameter        = 0.2 
+## Control limits at nsigmas  = 2.7 
+##            LCL      UCL
+## [1,]  33.81387 34.36213
+## [2,]  33.73694 34.43906
+## :                      
+## [35,] 33.63111 34.54489</code></pre>
 </div>
 <div id="process-capability-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#process-capability-analysis" class="anchor"></a>Process capability analysis</h1>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
-<a class="sourceLine" id="cb56-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qccGroups.html">qccGroups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
-<a class="sourceLine" id="cb56-3" title="3"></a>
-<a class="sourceLine" id="cb56-4" title="4">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">type=</span><span class="st">"xbar"</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb56-5" title="5"><span class="kw"><a href="../reference/processCapability.html">processCapability</a></span>(q1, <span class="dt">spec.limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">73.95</span>,<span class="fl">74.05</span>))</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(pistonrings)</a>
+<a class="sourceLine" id="cb57-2" title="2">diameter &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qccGroups.html">qccGroups</a></span>(diameter, sample, <span class="dt">data =</span> pistonrings)</a>
+<a class="sourceLine" id="cb57-3" title="3"></a>
+<a class="sourceLine" id="cb57-4" title="4">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(diameter[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,], <span class="dt">type=</span><span class="st">"xbar"</span>, <span class="dt">nsigmas=</span><span class="dv">3</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb57-5" title="5"></a>
+<a class="sourceLine" id="cb57-6" title="6"><span class="kw"><a href="../reference/processCapability.html">processCapability</a></span>(q, <span class="dt">spec.limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">73.95</span>,<span class="fl">74.05</span>))</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code><a href="../reference/processCapability.html">## ── Process Capability Analysis ─────────────────── 
 ## 
 ## Number of obs = 125          Target = 74      
@@ -880,8 +763,9 @@ plot(q2, chart.all=FALSE)</a></code></pre>
 ## 
 ## Exp&lt;LSL 0%    Obs&lt;LSL 0%
 ## Exp&gt;USL 0%    Obs&gt;USL 0%
-processCapability(q1, spec.limits=c(73.95,74.05), target=74.02)</a></code></pre>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-2.png" width="90%" style="display: block; margin: auto;"></p>
+
+processCapability(q, spec.limits=c(73.95,74.05), target=74.02)</a></code></pre>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-2.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code><a href="../reference/processCapability.html">## ── Process Capability Analysis ─────────────────── 
 ## 
 ## Number of obs = 125          Target = 74.02   
@@ -897,8 +781,9 @@ processCapability(q1, spec.limits=c(73.95,74.05), target=74.02)</a></code></pre>
 ## 
 ## Exp&lt;LSL 0%    Obs&lt;LSL 0%
 ## Exp&gt;USL 0%    Obs&gt;USL 0%
-processCapability(q1, spec.limits=c(73.99,74.01))</a></code></pre>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-3.png" width="90%" style="display: block; margin: auto;"></p>
+
+processCapability(q, spec.limits=c(73.99,74.01))</a></code></pre>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-3.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code><a href="../reference/processCapability.html">## ── Process Capability Analysis ─────────────────── 
 ## 
 ## Number of obs = 125          Target = 74      
@@ -914,8 +799,9 @@ processCapability(q1, spec.limits=c(73.99,74.01))</a></code></pre>
 ## 
 ## Exp&lt;LSL 0.13%     Obs&lt;LSL 0.12%
 ## Exp&gt;USL 0.18%     Obs&gt;USL 0.16%
-processCapability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-4.png" width="90%" style="display: block; margin: auto;"></p>
+
+processCapability(q, spec.limits = c(73.99, 74.1))</a></code></pre>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-4.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code>## ── Process Capability Analysis ─────────────────── 
 ## 
 ## Number of obs = 125          Target = 74.045  
@@ -936,396 +822,391 @@ processCapability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <h1 class="hasAnchor">
 <a href="#multivariate-quality-control-charts" class="anchor"></a>Multivariate Quality Control Charts</h1>
 <p>Multivariate subgrouped data from Ryan (2011, Table 9.2) with <span class="math inline">\(p = 2\)</span> variables, <span class="math inline">\(m = 20\)</span> samples, and <span class="math inline">\(n = 4\)</span> sample size for each sample:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(RyanMultivar)</a>
-<a class="sourceLine" id="cb61-2" title="2">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q)</a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb62-4" title="4"><span class="co">## mqcc(data = RyanMultivar, type = "T2")</span></a>
-<a class="sourceLine" id="cb62-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-6" title="6"><span class="co">## T2 chart for RyanMultivar </span></a>
-<a class="sourceLine" id="cb62-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb62-9" title="9"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
-<a class="sourceLine" id="cb62-10" title="10"><span class="co">##  0.12429  1.32496  2.50272  6.47013  5.34912 63.76042 </span></a>
-<a class="sourceLine" id="cb62-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-12" title="12"><span class="co">## Number of variables:  2</span></a>
-<a class="sourceLine" id="cb62-13" title="13"><span class="co">## Number of groups:  20</span></a>
-<a class="sourceLine" id="cb62-14" title="14"><span class="co">## Group sample size:  4</span></a>
-<a class="sourceLine" id="cb62-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb62-17" title="17"><span class="co">##      X1      X2 </span></a>
-<a class="sourceLine" id="cb62-18" title="18"><span class="co">## 60.3750 18.4875 </span></a>
-<a class="sourceLine" id="cb62-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb62-21" title="21"><span class="co">##          X1        X2</span></a>
-<a class="sourceLine" id="cb62-22" title="22"><span class="co">## X1 222.0333 103.11667</span></a>
-<a class="sourceLine" id="cb62-23" title="23"><span class="co">## X2 103.1167  56.57917</span></a>
-<a class="sourceLine" id="cb62-24" title="24"><span class="co">## |S|:  1929.414 </span></a>
-<a class="sourceLine" id="cb62-25" title="25"><span class="co">## </span></a>
-<a class="sourceLine" id="cb62-26" title="26"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb62-27" title="27"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb62-28" title="28"><span class="co">##    0 11.03976</span></a>
-<a class="sourceLine" id="cb62-29" title="29"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(q)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(q, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-3.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-4.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Ryan (2011) discussed Xbar-charts for single variables computed adjusting the confidence level of the <span class="math inline">\(T^2\)</span> chart:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">q1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(RyanMultivar, </a>
-<a class="sourceLine" id="cb65-2" title="2">           <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X1, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(RyanMultivar)</a>
+<a class="sourceLine" id="cb62-2" title="2">(q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>))</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q1)</a>
-<a class="sourceLine" id="cb66-2" title="2"><span class="co">## ── Quality Control Chart ───────────────────────── </span></a>
-<a class="sourceLine" id="cb66-3" title="3"><span class="co">## </span></a>
-<a class="sourceLine" id="cb66-4" title="4"><span class="co">## Chart type                 = xbar </span></a>
-<a class="sourceLine" id="cb66-5" title="5"><span class="co">## Data (phase I)             = X1 </span></a>
-<a class="sourceLine" id="cb66-6" title="6"><span class="co">## Number of groups           = 20 </span></a>
-<a class="sourceLine" id="cb66-7" title="7"><span class="co">## Group sample size          = 4 </span></a>
-<a class="sourceLine" id="cb66-8" title="8"><span class="co">## Center of group statistics = 60.375 </span></a>
-<a class="sourceLine" id="cb66-9" title="9"><span class="co">## Standard deviation         = 14.93443 </span></a>
-<a class="sourceLine" id="cb66-10" title="10"><span class="co">## </span></a>
-<a class="sourceLine" id="cb66-11" title="11"><span class="co">## Control limits at nsigmas  = 2.999977 </span></a>
-<a class="sourceLine" id="cb66-12" title="12"><span class="co">##       LCL      UCL</span></a>
-<a class="sourceLine" id="cb66-13" title="13"><span class="co">##  37.97352 82.77648</span></a>
-<a class="sourceLine" id="cb66-14" title="14">q2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(RyanMultivar, </a>
-<a class="sourceLine" id="cb66-15" title="15">           <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X2, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
+<pre><code><a href="../reference/ellipseChart.html">## 
+## Call:
+## mqcc(data = RyanMultivar, type = "T2")
+## 
+## T2 chart for RyanMultivar 
+## 
+## Summary of group statistics:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.12429  1.32496  2.50272  6.47013  5.34912 63.76042 
+## 
+## Number of variables:  2
+## Number of groups:  20
+## Group sample size:  4
+## 
+## Center: 
+##      X1      X2 
+## 60.3750 18.4875 
+## 
+## Covariance matrix:
+##          X1        X2
+## X1 222.0333 103.11667
+## X2 103.1167  56.57917
+## |S|:  1929.414 
+## 
+## Control limits:
+##  LCL      UCL
+##    0 11.03976
+
+ellipseChart(q)</a></code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-24-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q2)</a>
-<a class="sourceLine" id="cb67-2" title="2"><span class="co">## ── Quality Control Chart ───────────────────────── </span></a>
-<a class="sourceLine" id="cb67-3" title="3"><span class="co">## </span></a>
-<a class="sourceLine" id="cb67-4" title="4"><span class="co">## Chart type                 = xbar </span></a>
-<a class="sourceLine" id="cb67-5" title="5"><span class="co">## Data (phase I)             = X2 </span></a>
-<a class="sourceLine" id="cb67-6" title="6"><span class="co">## Number of groups           = 20 </span></a>
-<a class="sourceLine" id="cb67-7" title="7"><span class="co">## Group sample size          = 4 </span></a>
-<a class="sourceLine" id="cb67-8" title="8"><span class="co">## Center of group statistics = 18.4875 </span></a>
-<a class="sourceLine" id="cb67-9" title="9"><span class="co">## Standard deviation         = 7.139388 </span></a>
-<a class="sourceLine" id="cb67-10" title="10"><span class="co">## </span></a>
-<a class="sourceLine" id="cb67-11" title="11"><span class="co">## Control limits at nsigmas  = 2.999977 </span></a>
-<a class="sourceLine" id="cb67-12" title="12"><span class="co">##     LCL     UCL</span></a>
-<a class="sourceLine" id="cb67-13" title="13"><span class="co">##  7.7785 29.1965</span></a></code></pre></div>
-<p>Generate new “in control” data:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">Xnew &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">X1 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>), <span class="dt">X2 =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb68-2" title="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb68-3" title="3">   { x &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> q<span class="op">$</span>center, <span class="dt">Sigma =</span> q<span class="op">$</span>cov)</a>
-<a class="sourceLine" id="cb68-4" title="4">     Xnew<span class="op">$</span>X1[,i] &lt;-<span class="st"> </span>x[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb68-5" title="5">     Xnew<span class="op">$</span>X2[,i] &lt;-<span class="st"> </span>x[,<span class="dv">2</span>] </a>
-<a class="sourceLine" id="cb68-6" title="6">   }</a>
-<a class="sourceLine" id="cb68-7" title="7">qq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"></a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(q, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-24-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"></a>
+<a class="sourceLine" id="cb65-2" title="2">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-24-4.png" width="90%" style="display: block; margin: auto;"></p>
+<p>Ryan (2011) discussed Xbar-charts for single variables computed adjusting the confidence level of the <span class="math inline">\(T^2\)</span> chart:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(RyanMultivar, </a>
+<a class="sourceLine" id="cb66-2" title="2">     <span class="kw"><a href="../reference/qcc.html">qcc</a></span>(X1, <span class="dt">type =</span> <span class="st">"xbar"</span>, <span class="dt">confidence.level =</span> q<span class="op">$</span>confidence.level<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(qq)</a>
-<a class="sourceLine" id="cb69-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb69-4" title="4"><span class="co">## mqcc(data = RyanMultivar, type = "T2", pred.limits = TRUE, newdata = Xnew)</span></a>
-<a class="sourceLine" id="cb69-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-6" title="6"><span class="co">## T2 chart for RyanMultivar </span></a>
-<a class="sourceLine" id="cb69-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb69-9" title="9"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
-<a class="sourceLine" id="cb69-10" title="10"><span class="co">##  0.12429  1.32496  2.50272  6.47013  5.34912 63.76042 </span></a>
-<a class="sourceLine" id="cb69-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-12" title="12"><span class="co">## Number of variables:  2</span></a>
-<a class="sourceLine" id="cb69-13" title="13"><span class="co">## Number of groups:  20</span></a>
-<a class="sourceLine" id="cb69-14" title="14"><span class="co">## Group sample size:  4</span></a>
-<a class="sourceLine" id="cb69-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb69-17" title="17"><span class="co">##      X1      X2 </span></a>
-<a class="sourceLine" id="cb69-18" title="18"><span class="co">## 60.3750 18.4875 </span></a>
-<a class="sourceLine" id="cb69-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb69-21" title="21"><span class="co">##          X1        X2</span></a>
-<a class="sourceLine" id="cb69-22" title="22"><span class="co">## X1 222.0333 103.11667</span></a>
-<a class="sourceLine" id="cb69-23" title="23"><span class="co">## X2 103.1167  56.57917</span></a>
-<a class="sourceLine" id="cb69-24" title="24"><span class="co">## |S|:  1929.414 </span></a>
-<a class="sourceLine" id="cb69-25" title="25"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-26" title="26"><span class="co">## Summary of group statistics in Xnew:</span></a>
-<a class="sourceLine" id="cb69-27" title="27"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
-<a class="sourceLine" id="cb69-28" title="28"><span class="co">## 0.076147 0.202025 0.488041 2.186538 3.635782 7.519320 </span></a>
-<a class="sourceLine" id="cb69-29" title="29"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-30" title="30"><span class="co">## Number of groups:  10</span></a>
-<a class="sourceLine" id="cb69-31" title="31"><span class="co">## Group sample size:  4</span></a>
-<a class="sourceLine" id="cb69-32" title="32"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-33" title="33"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb69-34" title="34"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb69-35" title="35"><span class="co">##    0 11.03976</span></a>
-<a class="sourceLine" id="cb69-36" title="36"><span class="co">## </span></a>
-<a class="sourceLine" id="cb69-37" title="37"><span class="co">## Prediction limits:</span></a>
-<a class="sourceLine" id="cb69-38" title="38"><span class="co">##  LPL      UPL</span></a>
-<a class="sourceLine" id="cb69-39" title="39"><span class="co">##    0 12.20184</span></a>
-<a class="sourceLine" id="cb69-40" title="40"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(qq, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code><a href="https://www.rdocumentation.org/packages/base/topics/with">## ── Quality Control Chart ───────────────────────── 
+## 
+## Chart type                 = xbar 
+## Data (phase I)             = X1 
+## Number of groups           = 20 
+## Group sample size          = 4 
+## Center of group statistics = 60.375 
+## Standard deviation         = 14.93443 
+## 
+## Control limits at nsigmas  = 2.999977 
+##       LCL      UCL
+##  37.97352 82.77648
+
+with(RyanMultivar, 
+     qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))</a></code></pre>
 <p><img src="qcc_files/figure-html/unnamed-chunk-25-2.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Generate new “out of control” data:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">Xnew &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">X1 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>), <span class="dt">X2 =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb70-2" title="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb70-3" title="3">   { x &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> <span class="fl">1.2</span><span class="op">*</span>q<span class="op">$</span>center, <span class="dt">Sigma =</span> q<span class="op">$</span>cov)</a>
-<a class="sourceLine" id="cb70-4" title="4">     Xnew<span class="op">$</span>X1[,i] &lt;-<span class="st"> </span>x[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb70-5" title="5">     Xnew<span class="op">$</span>X2[,i] &lt;-<span class="st"> </span>x[,<span class="dv">2</span>] </a>
-<a class="sourceLine" id="cb70-6" title="6">   }</a>
-<a class="sourceLine" id="cb70-7" title="7">qq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(qq)</a>
-<a class="sourceLine" id="cb71-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb71-4" title="4"><span class="co">## mqcc(data = RyanMultivar, type = "T2", pred.limits = TRUE, newdata = Xnew)</span></a>
-<a class="sourceLine" id="cb71-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-6" title="6"><span class="co">## T2 chart for RyanMultivar </span></a>
-<a class="sourceLine" id="cb71-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb71-9" title="9"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
-<a class="sourceLine" id="cb71-10" title="10"><span class="co">##  0.12429  1.32496  2.50272  6.47013  5.34912 63.76042 </span></a>
-<a class="sourceLine" id="cb71-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-12" title="12"><span class="co">## Number of variables:  2</span></a>
-<a class="sourceLine" id="cb71-13" title="13"><span class="co">## Number of groups:  20</span></a>
-<a class="sourceLine" id="cb71-14" title="14"><span class="co">## Group sample size:  4</span></a>
-<a class="sourceLine" id="cb71-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb71-17" title="17"><span class="co">##      X1      X2 </span></a>
-<a class="sourceLine" id="cb71-18" title="18"><span class="co">## 60.3750 18.4875 </span></a>
-<a class="sourceLine" id="cb71-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb71-21" title="21"><span class="co">##          X1        X2</span></a>
-<a class="sourceLine" id="cb71-22" title="22"><span class="co">## X1 222.0333 103.11667</span></a>
-<a class="sourceLine" id="cb71-23" title="23"><span class="co">## X2 103.1167  56.57917</span></a>
-<a class="sourceLine" id="cb71-24" title="24"><span class="co">## |S|:  1929.414 </span></a>
-<a class="sourceLine" id="cb71-25" title="25"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-26" title="26"><span class="co">## Summary of group statistics in Xnew:</span></a>
-<a class="sourceLine" id="cb71-27" title="27"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
-<a class="sourceLine" id="cb71-28" title="28"><span class="co">## 0.015862 3.041182 5.910745 5.089889 6.849545 9.290972 </span></a>
-<a class="sourceLine" id="cb71-29" title="29"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-30" title="30"><span class="co">## Number of groups:  10</span></a>
-<a class="sourceLine" id="cb71-31" title="31"><span class="co">## Group sample size:  4</span></a>
-<a class="sourceLine" id="cb71-32" title="32"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-33" title="33"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb71-34" title="34"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb71-35" title="35"><span class="co">##    0 11.03976</span></a>
-<a class="sourceLine" id="cb71-36" title="36"><span class="co">## </span></a>
-<a class="sourceLine" id="cb71-37" title="37"><span class="co">## Prediction limits:</span></a>
-<a class="sourceLine" id="cb71-38" title="38"><span class="co">##  LPL      UPL</span></a>
-<a class="sourceLine" id="cb71-39" title="39"><span class="co">##    0 12.20184</span></a>
-<a class="sourceLine" id="cb71-40" title="40"><span class="kw"><a href="../reference/ellipseChart.html">ellipseChart</a></span>(qq, <span class="dt">show.id =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-26-2.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Individual observations data:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(boiler)</a>
-<a class="sourceLine" id="cb72-2" title="2">q1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q1)</a>
-<a class="sourceLine" id="cb73-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb73-4" title="4"><span class="co">## mqcc(data = boiler, type = "T2.single", confidence.level = 0.999)</span></a>
-<a class="sourceLine" id="cb73-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-6" title="6"><span class="co">## T2.single chart for boiler </span></a>
-<a class="sourceLine" id="cb73-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb73-9" title="9"><span class="co">##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></a>
-<a class="sourceLine" id="cb73-10" title="10"><span class="co">##  1.316342  5.305689  7.074224  7.680000  9.775744 17.575293 </span></a>
-<a class="sourceLine" id="cb73-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-12" title="12"><span class="co">## Number of variables:  8</span></a>
-<a class="sourceLine" id="cb73-13" title="13"><span class="co">## Number of groups:  25</span></a>
-<a class="sourceLine" id="cb73-14" title="14"><span class="co">## Group sample size:  1</span></a>
-<a class="sourceLine" id="cb73-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb73-17" title="17"><span class="co">##     t1     t2     t3     t4     t5     t6     t7     t8 </span></a>
-<a class="sourceLine" id="cb73-18" title="18"><span class="co">## 525.00 513.56 538.92 521.68 503.80 512.44 478.72 477.24 </span></a>
-<a class="sourceLine" id="cb73-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb73-21" title="21"><span class="co">##            t1        t2        t3         t4         t5         t6</span></a>
-<a class="sourceLine" id="cb73-22" title="22"><span class="co">## t1 54.0000000 0.9583333 20.583333 31.2916667 20.3333333 -2.2916667</span></a>
-<a class="sourceLine" id="cb73-23" title="23"><span class="co">## t2  0.9583333 4.8400000  2.963333  2.6866667  0.3250000  3.0766667</span></a>
-<a class="sourceLine" id="cb73-24" title="24"><span class="co">## t3 20.5833333 2.9633333 22.993333 10.0566667  4.9833333  2.0366667</span></a>
-<a class="sourceLine" id="cb73-25" title="25"><span class="co">## t4 31.2916667 2.6866667 10.056667 22.3100000 13.5583333 -2.2700000</span></a>
-<a class="sourceLine" id="cb73-26" title="26"><span class="co">## t5 20.3333333 0.3250000  4.983333 13.5583333 11.4166667 -1.6583333</span></a>
-<a class="sourceLine" id="cb73-27" title="27"><span class="co">## t6 -2.2916667 3.0766667  2.036667 -2.2700000 -1.6583333  4.5066667</span></a>
-<a class="sourceLine" id="cb73-28" title="28"><span class="co">## t7 20.3750000 0.7050000  6.476667 12.6983333 10.6500000 -0.7466667</span></a>
-<a class="sourceLine" id="cb73-29" title="29"><span class="co">## t8  0.2083333 3.4433333  2.770000  0.1633333 -0.2833333  3.7233333</span></a>
-<a class="sourceLine" id="cb73-30" title="30"><span class="co">##            t7         t8</span></a>
-<a class="sourceLine" id="cb73-31" title="31"><span class="co">## t1 20.3750000  0.2083333</span></a>
-<a class="sourceLine" id="cb73-32" title="32"><span class="co">## t2  0.7050000  3.4433333</span></a>
-<a class="sourceLine" id="cb73-33" title="33"><span class="co">## t3  6.4766667  2.7700000</span></a>
-<a class="sourceLine" id="cb73-34" title="34"><span class="co">## t4 12.6983333  0.1633333</span></a>
-<a class="sourceLine" id="cb73-35" title="35"><span class="co">## t5 10.6500000 -0.2833333</span></a>
-<a class="sourceLine" id="cb73-36" title="36"><span class="co">## t6 -0.7466667  3.7233333</span></a>
-<a class="sourceLine" id="cb73-37" title="37"><span class="co">## t7 11.6266667  0.5283333</span></a>
-<a class="sourceLine" id="cb73-38" title="38"><span class="co">## t8  0.5283333  3.8566667</span></a>
-<a class="sourceLine" id="cb73-39" title="39"><span class="co">## |S|:  8313.241 </span></a>
-<a class="sourceLine" id="cb73-40" title="40"><span class="co">## </span></a>
-<a class="sourceLine" id="cb73-41" title="41"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb73-42" title="42"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb73-43" title="43"><span class="co">##    0 17.41705</span></a></code></pre></div>
+<pre><code>## ── Quality Control Chart ───────────────────────── 
+## 
+## Chart type                 = xbar 
+## Data (phase I)             = X2 
+## Number of groups           = 20 
+## Group sample size          = 4 
+## Center of group statistics = 18.4875 
+## Standard deviation         = 7.139388 
+## 
+## Control limits at nsigmas  = 2.999977 
+##     LCL     UCL
+##  7.7785 29.1965</code></pre>
 <p>Generate new “in control” data:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">boilerNew &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> q1<span class="op">$</span>center, <span class="dt">Sigma =</span> q1<span class="op">$</span>cov)</a>
-<a class="sourceLine" id="cb74-2" title="2">q2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>, </a>
-<a class="sourceLine" id="cb74-3" title="3">          <span class="dt">newdata =</span> boilerNew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q2)</a>
-<a class="sourceLine" id="cb75-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb75-4" title="4"><span class="co">## mqcc(data = boiler, type = "T2.single", pred.limits = TRUE, newdata = boilerNew,     confidence.level = 0.999)</span></a>
-<a class="sourceLine" id="cb75-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-6" title="6"><span class="co">## T2.single chart for boiler </span></a>
-<a class="sourceLine" id="cb75-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb75-9" title="9"><span class="co">##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></a>
-<a class="sourceLine" id="cb75-10" title="10"><span class="co">##  1.316342  5.305689  7.074224  7.680000  9.775744 17.575293 </span></a>
-<a class="sourceLine" id="cb75-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-12" title="12"><span class="co">## Number of variables:  8</span></a>
-<a class="sourceLine" id="cb75-13" title="13"><span class="co">## Number of groups:  25</span></a>
-<a class="sourceLine" id="cb75-14" title="14"><span class="co">## Group sample size:  1</span></a>
-<a class="sourceLine" id="cb75-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb75-17" title="17"><span class="co">##     t1     t2     t3     t4     t5     t6     t7     t8 </span></a>
-<a class="sourceLine" id="cb75-18" title="18"><span class="co">## 525.00 513.56 538.92 521.68 503.80 512.44 478.72 477.24 </span></a>
-<a class="sourceLine" id="cb75-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb75-21" title="21"><span class="co">##            t1        t2        t3         t4         t5         t6</span></a>
-<a class="sourceLine" id="cb75-22" title="22"><span class="co">## t1 54.0000000 0.9583333 20.583333 31.2916667 20.3333333 -2.2916667</span></a>
-<a class="sourceLine" id="cb75-23" title="23"><span class="co">## t2  0.9583333 4.8400000  2.963333  2.6866667  0.3250000  3.0766667</span></a>
-<a class="sourceLine" id="cb75-24" title="24"><span class="co">## t3 20.5833333 2.9633333 22.993333 10.0566667  4.9833333  2.0366667</span></a>
-<a class="sourceLine" id="cb75-25" title="25"><span class="co">## t4 31.2916667 2.6866667 10.056667 22.3100000 13.5583333 -2.2700000</span></a>
-<a class="sourceLine" id="cb75-26" title="26"><span class="co">## t5 20.3333333 0.3250000  4.983333 13.5583333 11.4166667 -1.6583333</span></a>
-<a class="sourceLine" id="cb75-27" title="27"><span class="co">## t6 -2.2916667 3.0766667  2.036667 -2.2700000 -1.6583333  4.5066667</span></a>
-<a class="sourceLine" id="cb75-28" title="28"><span class="co">## t7 20.3750000 0.7050000  6.476667 12.6983333 10.6500000 -0.7466667</span></a>
-<a class="sourceLine" id="cb75-29" title="29"><span class="co">## t8  0.2083333 3.4433333  2.770000  0.1633333 -0.2833333  3.7233333</span></a>
-<a class="sourceLine" id="cb75-30" title="30"><span class="co">##            t7         t8</span></a>
-<a class="sourceLine" id="cb75-31" title="31"><span class="co">## t1 20.3750000  0.2083333</span></a>
-<a class="sourceLine" id="cb75-32" title="32"><span class="co">## t2  0.7050000  3.4433333</span></a>
-<a class="sourceLine" id="cb75-33" title="33"><span class="co">## t3  6.4766667  2.7700000</span></a>
-<a class="sourceLine" id="cb75-34" title="34"><span class="co">## t4 12.6983333  0.1633333</span></a>
-<a class="sourceLine" id="cb75-35" title="35"><span class="co">## t5 10.6500000 -0.2833333</span></a>
-<a class="sourceLine" id="cb75-36" title="36"><span class="co">## t6 -0.7466667  3.7233333</span></a>
-<a class="sourceLine" id="cb75-37" title="37"><span class="co">## t7 11.6266667  0.5283333</span></a>
-<a class="sourceLine" id="cb75-38" title="38"><span class="co">## t8  0.5283333  3.8566667</span></a>
-<a class="sourceLine" id="cb75-39" title="39"><span class="co">## |S|:  8313.241 </span></a>
-<a class="sourceLine" id="cb75-40" title="40"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-41" title="41"><span class="co">## Summary of group statistics in boilerNew:</span></a>
-<a class="sourceLine" id="cb75-42" title="42"><span class="co">##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></a>
-<a class="sourceLine" id="cb75-43" title="43"><span class="co">##  2.645080  5.727432  8.331542  8.813197 11.858673 15.675310 </span></a>
-<a class="sourceLine" id="cb75-44" title="44"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-45" title="45"><span class="co">## Number of groups:  10</span></a>
-<a class="sourceLine" id="cb75-46" title="46"><span class="co">## Group sample size:  1</span></a>
-<a class="sourceLine" id="cb75-47" title="47"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-48" title="48"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb75-49" title="49"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb75-50" title="50"><span class="co">##    0 17.41705</span></a>
-<a class="sourceLine" id="cb75-51" title="51"><span class="co">## </span></a>
-<a class="sourceLine" id="cb75-52" title="52"><span class="co">## Prediction limits:</span></a>
-<a class="sourceLine" id="cb75-53" title="53"><span class="co">##  LPL      UPL</span></a>
-<a class="sourceLine" id="cb75-54" title="54"><span class="co">##    0 70.02943</span></a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">Xnew &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">X1 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>), <span class="dt">X2 =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb69-2" title="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb69-3" title="3">   { x &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> q<span class="op">$</span>center, <span class="dt">Sigma =</span> q<span class="op">$</span>cov)</a>
+<a class="sourceLine" id="cb69-4" title="4">     Xnew<span class="op">$</span>X1[,i] &lt;-<span class="st"> </span>x[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb69-5" title="5">     Xnew<span class="op">$</span>X2[,i] &lt;-<span class="st"> </span>x[,<span class="dv">2</span>] </a>
+<a class="sourceLine" id="cb69-6" title="6">   }</a>
+<a class="sourceLine" id="cb69-7" title="7">(q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;"></p>
+<pre><code><a href="../reference/ellipseChart.html">## 
+## Call:
+## mqcc(data = RyanMultivar, type = "T2", pred.limits = TRUE, newdata = Xnew)
+## 
+## T2 chart for RyanMultivar 
+## 
+## Summary of group statistics:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.12429  1.32496  2.50272  6.47013  5.34912 63.76042 
+## 
+## Number of variables:  2
+## Number of groups:  20
+## Group sample size:  4
+## 
+## Center: 
+##      X1      X2 
+## 60.3750 18.4875 
+## 
+## Covariance matrix:
+##          X1        X2
+## X1 222.0333 103.11667
+## X2 103.1167  56.57917
+## |S|:  1929.414 
+## 
+## Summary of group statistics in Xnew:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## 0.076147 0.202025 0.488041 2.186538 3.635782 7.519320 
+## 
+## Number of groups:  10
+## Group sample size:  4
+## 
+## Control limits:
+##  LCL      UCL
+##    0 11.03976
+## 
+## Prediction limits:
+##  LPL      UPL
+##    0 12.20184
+ellipseChart(q, show.id = TRUE)</a></code></pre>
+<p><img src="qcc_files/figure-html/unnamed-chunk-26-2.png" width="90%" style="display: block; margin: auto;"></p>
 <p>Generate new “out of control” data:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">boilerNew &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> <span class="fl">1.01</span><span class="op">*</span>q1<span class="op">$</span>center, <span class="dt">Sigma =</span> q1<span class="op">$</span>cov)</a>
-<a class="sourceLine" id="cb76-2" title="2">q3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>, </a>
-<a class="sourceLine" id="cb76-3" title="3">          <span class="dt">newdata =</span> boilerNew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">Xnew &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">X1 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>), <span class="dt">X2 =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="ot">NA</span>, <span class="dv">10</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb71-2" title="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb71-3" title="3">   { x &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> <span class="fl">1.2</span><span class="op">*</span>q<span class="op">$</span>center, <span class="dt">Sigma =</span> q<span class="op">$</span>cov)</a>
+<a class="sourceLine" id="cb71-4" title="4">     Xnew<span class="op">$</span>X1[,i] &lt;-<span class="st"> </span>x[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb71-5" title="5">     Xnew<span class="op">$</span>X2[,i] &lt;-<span class="st"> </span>x[,<span class="dv">2</span>] </a>
+<a class="sourceLine" id="cb71-6" title="6">   }</a>
+<a class="sourceLine" id="cb71-7" title="7">(q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(RyanMultivar, <span class="dt">type =</span> <span class="st">"T2"</span>, <span class="dt">newdata =</span> Xnew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;"></p>
+<pre><code><a href="../reference/ellipseChart.html">## 
+## Call:
+## mqcc(data = RyanMultivar, type = "T2", pred.limits = TRUE, newdata = Xnew)
+## 
+## T2 chart for RyanMultivar 
+## 
+## Summary of group statistics:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.12429  1.32496  2.50272  6.47013  5.34912 63.76042 
+## 
+## Number of variables:  2
+## Number of groups:  20
+## Group sample size:  4
+## 
+## Center: 
+##      X1      X2 
+## 60.3750 18.4875 
+## 
+## Covariance matrix:
+##          X1        X2
+## X1 222.0333 103.11667
+## X2 103.1167  56.57917
+## |S|:  1929.414 
+## 
+## Summary of group statistics in Xnew:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## 0.015862 3.041182 5.910745 5.089889 6.849545 9.290972 
+## 
+## Number of groups:  10
+## Group sample size:  4
+## 
+## Control limits:
+##  LCL      UCL
+##    0 11.03976
+## 
+## Prediction limits:
+##  LPL      UPL
+##    0 12.20184
+ellipseChart(q, show.id = TRUE)</a></code></pre>
+<p><img src="qcc_files/figure-html/unnamed-chunk-27-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p>Individual observations data:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(boiler)</a>
+<a class="sourceLine" id="cb73-2" title="2">(q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>))</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;"></p>
+<pre><code>## 
+## Call:
+## mqcc(data = boiler, type = "T2.single", confidence.level = 0.999)
+## 
+## T2.single chart for boiler 
+## 
+## Summary of group statistics:
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##  1.316342  5.305689  7.074224  7.680000  9.775744 17.575293 
+## 
+## Number of variables:  8
+## Number of groups:  25
+## Group sample size:  1
+## 
+## Center: 
+##     t1     t2     t3     t4     t5     t6     t7     t8 
+## 525.00 513.56 538.92 521.68 503.80 512.44 478.72 477.24 
+## 
+## Covariance matrix:
+##            t1        t2        t3         t4         t5         t6
+## t1 54.0000000 0.9583333 20.583333 31.2916667 20.3333333 -2.2916667
+## t2  0.9583333 4.8400000  2.963333  2.6866667  0.3250000  3.0766667
+## t3 20.5833333 2.9633333 22.993333 10.0566667  4.9833333  2.0366667
+## t4 31.2916667 2.6866667 10.056667 22.3100000 13.5583333 -2.2700000
+## t5 20.3333333 0.3250000  4.983333 13.5583333 11.4166667 -1.6583333
+## t6 -2.2916667 3.0766667  2.036667 -2.2700000 -1.6583333  4.5066667
+## t7 20.3750000 0.7050000  6.476667 12.6983333 10.6500000 -0.7466667
+## t8  0.2083333 3.4433333  2.770000  0.1633333 -0.2833333  3.7233333
+##            t7         t8
+## t1 20.3750000  0.2083333
+## t2  0.7050000  3.4433333
+## t3  6.4766667  2.7700000
+## t4 12.6983333  0.1633333
+## t5 10.6500000 -0.2833333
+## t6 -0.7466667  3.7233333
+## t7 11.6266667  0.5283333
+## t8  0.5283333  3.8566667
+## |S|:  8313.241 
+## 
+## Control limits:
+##  LCL      UCL
+##    0 17.41705</code></pre>
+<p>Generate new “in control” data:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">boilerNew &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> q<span class="op">$</span>center, <span class="dt">Sigma =</span> q<span class="op">$</span>cov)</a>
+<a class="sourceLine" id="cb75-2" title="2"><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>, </a>
+<a class="sourceLine" id="cb75-3" title="3">     <span class="dt">newdata =</span> boilerNew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q3)</a>
-<a class="sourceLine" id="cb77-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb77-4" title="4"><span class="co">## mqcc(data = boiler, type = "T2.single", pred.limits = TRUE, newdata = boilerNew,     confidence.level = 0.999)</span></a>
-<a class="sourceLine" id="cb77-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-6" title="6"><span class="co">## T2.single chart for boiler </span></a>
-<a class="sourceLine" id="cb77-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb77-9" title="9"><span class="co">##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></a>
-<a class="sourceLine" id="cb77-10" title="10"><span class="co">##  1.316342  5.305689  7.074224  7.680000  9.775744 17.575293 </span></a>
-<a class="sourceLine" id="cb77-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-12" title="12"><span class="co">## Number of variables:  8</span></a>
-<a class="sourceLine" id="cb77-13" title="13"><span class="co">## Number of groups:  25</span></a>
-<a class="sourceLine" id="cb77-14" title="14"><span class="co">## Group sample size:  1</span></a>
-<a class="sourceLine" id="cb77-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb77-17" title="17"><span class="co">##     t1     t2     t3     t4     t5     t6     t7     t8 </span></a>
-<a class="sourceLine" id="cb77-18" title="18"><span class="co">## 525.00 513.56 538.92 521.68 503.80 512.44 478.72 477.24 </span></a>
-<a class="sourceLine" id="cb77-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb77-21" title="21"><span class="co">##            t1        t2        t3         t4         t5         t6</span></a>
-<a class="sourceLine" id="cb77-22" title="22"><span class="co">## t1 54.0000000 0.9583333 20.583333 31.2916667 20.3333333 -2.2916667</span></a>
-<a class="sourceLine" id="cb77-23" title="23"><span class="co">## t2  0.9583333 4.8400000  2.963333  2.6866667  0.3250000  3.0766667</span></a>
-<a class="sourceLine" id="cb77-24" title="24"><span class="co">## t3 20.5833333 2.9633333 22.993333 10.0566667  4.9833333  2.0366667</span></a>
-<a class="sourceLine" id="cb77-25" title="25"><span class="co">## t4 31.2916667 2.6866667 10.056667 22.3100000 13.5583333 -2.2700000</span></a>
-<a class="sourceLine" id="cb77-26" title="26"><span class="co">## t5 20.3333333 0.3250000  4.983333 13.5583333 11.4166667 -1.6583333</span></a>
-<a class="sourceLine" id="cb77-27" title="27"><span class="co">## t6 -2.2916667 3.0766667  2.036667 -2.2700000 -1.6583333  4.5066667</span></a>
-<a class="sourceLine" id="cb77-28" title="28"><span class="co">## t7 20.3750000 0.7050000  6.476667 12.6983333 10.6500000 -0.7466667</span></a>
-<a class="sourceLine" id="cb77-29" title="29"><span class="co">## t8  0.2083333 3.4433333  2.770000  0.1633333 -0.2833333  3.7233333</span></a>
-<a class="sourceLine" id="cb77-30" title="30"><span class="co">##            t7         t8</span></a>
-<a class="sourceLine" id="cb77-31" title="31"><span class="co">## t1 20.3750000  0.2083333</span></a>
-<a class="sourceLine" id="cb77-32" title="32"><span class="co">## t2  0.7050000  3.4433333</span></a>
-<a class="sourceLine" id="cb77-33" title="33"><span class="co">## t3  6.4766667  2.7700000</span></a>
-<a class="sourceLine" id="cb77-34" title="34"><span class="co">## t4 12.6983333  0.1633333</span></a>
-<a class="sourceLine" id="cb77-35" title="35"><span class="co">## t5 10.6500000 -0.2833333</span></a>
-<a class="sourceLine" id="cb77-36" title="36"><span class="co">## t6 -0.7466667  3.7233333</span></a>
-<a class="sourceLine" id="cb77-37" title="37"><span class="co">## t7 11.6266667  0.5283333</span></a>
-<a class="sourceLine" id="cb77-38" title="38"><span class="co">## t8  0.5283333  3.8566667</span></a>
-<a class="sourceLine" id="cb77-39" title="39"><span class="co">## |S|:  8313.241 </span></a>
-<a class="sourceLine" id="cb77-40" title="40"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-41" title="41"><span class="co">## Summary of group statistics in boilerNew:</span></a>
-<a class="sourceLine" id="cb77-42" title="42"><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></a>
-<a class="sourceLine" id="cb77-43" title="43"><span class="co">## 10.96932 17.74969 20.01953 19.49853 21.08603 26.19957 </span></a>
-<a class="sourceLine" id="cb77-44" title="44"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-45" title="45"><span class="co">## Number of groups:  10</span></a>
-<a class="sourceLine" id="cb77-46" title="46"><span class="co">## Group sample size:  1</span></a>
-<a class="sourceLine" id="cb77-47" title="47"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-48" title="48"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb77-49" title="49"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb77-50" title="50"><span class="co">##    0 17.41705</span></a>
-<a class="sourceLine" id="cb77-51" title="51"><span class="co">## </span></a>
-<a class="sourceLine" id="cb77-52" title="52"><span class="co">## Prediction limits:</span></a>
-<a class="sourceLine" id="cb77-53" title="53"><span class="co">##  LPL      UPL</span></a>
-<a class="sourceLine" id="cb77-54" title="54"><span class="co">##    0 70.02943</span></a></code></pre></div>
-<p>Recompute by providing “robust” estimates for the means and the covariance matrix:</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">rob &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/cov.rob">cov.rob</a></span>(boiler)</a>
-<a class="sourceLine" id="cb78-2" title="2">q4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">center =</span> rob<span class="op">$</span>center, <span class="dt">cov =</span> rob<span class="op">$</span>cov)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## mqcc(data = boiler, type = "T2.single", pred.limits = TRUE, newdata = boilerNew,     confidence.level = 0.999)
+## 
+## T2.single chart for boiler 
+## 
+## Summary of group statistics:
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##  1.316342  5.305689  7.074224  7.680000  9.775744 17.575293 
+## 
+## Number of variables:  8
+## Number of groups:  25
+## Group sample size:  1
+## 
+## Center: 
+##     t1     t2     t3     t4     t5     t6     t7     t8 
+## 525.00 513.56 538.92 521.68 503.80 512.44 478.72 477.24 
+## 
+## Covariance matrix:
+##            t1        t2        t3         t4         t5         t6
+## t1 54.0000000 0.9583333 20.583333 31.2916667 20.3333333 -2.2916667
+## t2  0.9583333 4.8400000  2.963333  2.6866667  0.3250000  3.0766667
+## t3 20.5833333 2.9633333 22.993333 10.0566667  4.9833333  2.0366667
+## t4 31.2916667 2.6866667 10.056667 22.3100000 13.5583333 -2.2700000
+## t5 20.3333333 0.3250000  4.983333 13.5583333 11.4166667 -1.6583333
+## t6 -2.2916667 3.0766667  2.036667 -2.2700000 -1.6583333  4.5066667
+## t7 20.3750000 0.7050000  6.476667 12.6983333 10.6500000 -0.7466667
+## t8  0.2083333 3.4433333  2.770000  0.1633333 -0.2833333  3.7233333
+##            t7         t8
+## t1 20.3750000  0.2083333
+## t2  0.7050000  3.4433333
+## t3  6.4766667  2.7700000
+## t4 12.6983333  0.1633333
+## t5 10.6500000 -0.2833333
+## t6 -0.7466667  3.7233333
+## t7 11.6266667  0.5283333
+## t8  0.5283333  3.8566667
+## |S|:  8313.241 
+## 
+## Summary of group statistics in boilerNew:
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##  2.645080  5.727432  8.331542  8.813197 11.858673 15.675310 
+## 
+## Number of groups:  10
+## Group sample size:  1
+## 
+## Control limits:
+##  LCL      UCL
+##    0 17.41705
+## 
+## Prediction limits:
+##  LPL      UPL
+##    0 70.02943</code></pre>
+<p>Generate new “out of control” data:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">boilerNew &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/mvrnorm">mvrnorm</a></span>(<span class="dv">10</span>, <span class="dt">mu =</span> <span class="fl">1.01</span><span class="op">*</span>q<span class="op">$</span>center, <span class="dt">Sigma =</span> q<span class="op">$</span>cov)</a>
+<a class="sourceLine" id="cb77-2" title="2"><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">confidence.level =</span> <span class="fl">0.999</span>, </a>
+<a class="sourceLine" id="cb77-3" title="3">     <span class="dt">newdata =</span> boilerNew, <span class="dt">pred.limits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-30-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(q4)</a>
-<a class="sourceLine" id="cb79-2" title="2"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-3" title="3"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb79-4" title="4"><span class="co">## mqcc(data = boiler, type = "T2.single", center = rob$center,     cov = rob$cov)</span></a>
-<a class="sourceLine" id="cb79-5" title="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-6" title="6"><span class="co">## T2.single chart for boiler </span></a>
-<a class="sourceLine" id="cb79-7" title="7"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-8" title="8"><span class="co">## Summary of group statistics:</span></a>
-<a class="sourceLine" id="cb79-9" title="9"><span class="co">##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></a>
-<a class="sourceLine" id="cb79-10" title="10"><span class="co">##   1.65952   5.49131   7.78149  24.30886  12.68586 202.57977 </span></a>
-<a class="sourceLine" id="cb79-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-12" title="12"><span class="co">## Number of variables:  8</span></a>
-<a class="sourceLine" id="cb79-13" title="13"><span class="co">## Number of groups:  25</span></a>
-<a class="sourceLine" id="cb79-14" title="14"><span class="co">## Group sample size:  1</span></a>
-<a class="sourceLine" id="cb79-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-16" title="16"><span class="co">## Center: </span></a>
-<a class="sourceLine" id="cb79-17" title="17"><span class="co">##       t1       t2       t3       t4       t5       t6       t7       t8 </span></a>
-<a class="sourceLine" id="cb79-18" title="18"><span class="co">## 526.0455 513.4545 540.2273 521.7727 503.9091 512.5909 479.0000 477.3636 </span></a>
-<a class="sourceLine" id="cb79-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-20" title="20"><span class="co">## Covariance matrix:</span></a>
-<a class="sourceLine" id="cb79-21" title="21"><span class="co">##           t1        t2         t3         t4         t5         t6</span></a>
-<a class="sourceLine" id="cb79-22" title="22"><span class="co">## t1 34.045455 2.7878788 12.3701299 25.7251082 16.2900433 -4.5043290</span></a>
-<a class="sourceLine" id="cb79-23" title="23"><span class="co">## t2  2.787879 5.2121212  4.9870130  3.4891775  0.8051948  3.5281385</span></a>
-<a class="sourceLine" id="cb79-24" title="24"><span class="co">## t3 12.370130 4.9870130 10.3744589 10.9112554  4.4978355  0.9545455</span></a>
-<a class="sourceLine" id="cb79-25" title="25"><span class="co">## t4 25.725108 3.4891775 10.9112554 20.7554113 12.4069264 -3.0021645</span></a>
-<a class="sourceLine" id="cb79-26" title="26"><span class="co">## t5 16.290043 0.8051948  4.4978355 12.4069264 10.9437229 -2.1341991</span></a>
-<a class="sourceLine" id="cb79-27" title="27"><span class="co">## t6 -4.504329 3.5281385  0.9545455 -3.0021645 -2.1341991  4.8246753</span></a>
-<a class="sourceLine" id="cb79-28" title="28"><span class="co">## t7 14.285714 1.4761905  4.1428571 11.0476190  9.7142857 -1.2857143</span></a>
-<a class="sourceLine" id="cb79-29" title="29"><span class="co">## t8 -1.398268 3.9220779  2.1038961 -0.1991342 -0.5367965  3.9653680</span></a>
-<a class="sourceLine" id="cb79-30" title="30"><span class="co">##            t7         t8</span></a>
-<a class="sourceLine" id="cb79-31" title="31"><span class="co">## t1 14.2857143 -1.3982684</span></a>
-<a class="sourceLine" id="cb79-32" title="32"><span class="co">## t2  1.4761905  3.9220779</span></a>
-<a class="sourceLine" id="cb79-33" title="33"><span class="co">## t3  4.1428571  2.1038961</span></a>
-<a class="sourceLine" id="cb79-34" title="34"><span class="co">## t4 11.0476190 -0.1991342</span></a>
-<a class="sourceLine" id="cb79-35" title="35"><span class="co">## t5  9.7142857 -0.5367965</span></a>
-<a class="sourceLine" id="cb79-36" title="36"><span class="co">## t6 -1.2857143  3.9653680</span></a>
-<a class="sourceLine" id="cb79-37" title="37"><span class="co">## t7 10.1904762  0.2380952</span></a>
-<a class="sourceLine" id="cb79-38" title="38"><span class="co">## t8  0.2380952  4.1471861</span></a>
-<a class="sourceLine" id="cb79-39" title="39"><span class="co">## |S|:  316.2932 </span></a>
-<a class="sourceLine" id="cb79-40" title="40"><span class="co">## </span></a>
-<a class="sourceLine" id="cb79-41" title="41"><span class="co">## Control limits:</span></a>
-<a class="sourceLine" id="cb79-42" title="42"><span class="co">##  LCL      UCL</span></a>
-<a class="sourceLine" id="cb79-43" title="43"><span class="co">##    0 14.26225</span></a></code></pre></div>
+<pre><code>## 
+## Call:
+## mqcc(data = boiler, type = "T2.single", pred.limits = TRUE, newdata = boilerNew,     confidence.level = 0.999)
+## 
+## T2.single chart for boiler 
+## 
+## Summary of group statistics:
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##  1.316342  5.305689  7.074224  7.680000  9.775744 17.575293 
+## 
+## Number of variables:  8
+## Number of groups:  25
+## Group sample size:  1
+## 
+## Center: 
+##     t1     t2     t3     t4     t5     t6     t7     t8 
+## 525.00 513.56 538.92 521.68 503.80 512.44 478.72 477.24 
+## 
+## Covariance matrix:
+##            t1        t2        t3         t4         t5         t6
+## t1 54.0000000 0.9583333 20.583333 31.2916667 20.3333333 -2.2916667
+## t2  0.9583333 4.8400000  2.963333  2.6866667  0.3250000  3.0766667
+## t3 20.5833333 2.9633333 22.993333 10.0566667  4.9833333  2.0366667
+## t4 31.2916667 2.6866667 10.056667 22.3100000 13.5583333 -2.2700000
+## t5 20.3333333 0.3250000  4.983333 13.5583333 11.4166667 -1.6583333
+## t6 -2.2916667 3.0766667  2.036667 -2.2700000 -1.6583333  4.5066667
+## t7 20.3750000 0.7050000  6.476667 12.6983333 10.6500000 -0.7466667
+## t8  0.2083333 3.4433333  2.770000  0.1633333 -0.2833333  3.7233333
+##            t7         t8
+## t1 20.3750000  0.2083333
+## t2  0.7050000  3.4433333
+## t3  6.4766667  2.7700000
+## t4 12.6983333  0.1633333
+## t5 10.6500000 -0.2833333
+## t6 -0.7466667  3.7233333
+## t7 11.6266667  0.5283333
+## t8  0.5283333  3.8566667
+## |S|:  8313.241 
+## 
+## Summary of group statistics in boilerNew:
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## 10.96932 17.74969 20.01953 19.49853 21.08603 26.19957 
+## 
+## Number of groups:  10
+## Group sample size:  1
+## 
+## Control limits:
+##  LCL      UCL
+##    0 17.41705
+## 
+## Prediction limits:
+##  LPL      UPL
+##    0 70.02943</code></pre>
+<p>Recompute by providing “robust” estimates for the means and the covariance matrix:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">rob &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MASS/topics/cov.rob">cov.rob</a></span>(boiler)</a>
+<a class="sourceLine" id="cb79-2" title="2"><span class="kw"><a href="../reference/mqcc.html">mqcc</a></span>(boiler, <span class="dt">type =</span> <span class="st">"T2.single"</span>, <span class="dt">center =</span> rob<span class="op">$</span>center, <span class="dt">cov =</span> rob<span class="op">$</span>cov)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-31-1.png" width="90%" style="display: block; margin: auto;"></p>
+<pre><code>## 
+## Call:
+## mqcc(data = boiler, type = "T2.single", center = rob$center,     cov = rob$cov)
+## 
+## T2.single chart for boiler 
+## 
+## Summary of group statistics:
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   1.65952   5.49131   7.78149  24.30886  12.68586 202.57977 
+## 
+## Number of variables:  8
+## Number of groups:  25
+## Group sample size:  1
+## 
+## Center: 
+##       t1       t2       t3       t4       t5       t6       t7       t8 
+## 526.0455 513.4545 540.2273 521.7727 503.9091 512.5909 479.0000 477.3636 
+## 
+## Covariance matrix:
+##           t1        t2         t3         t4         t5         t6
+## t1 34.045455 2.7878788 12.3701299 25.7251082 16.2900433 -4.5043290
+## t2  2.787879 5.2121212  4.9870130  3.4891775  0.8051948  3.5281385
+## t3 12.370130 4.9870130 10.3744589 10.9112554  4.4978355  0.9545455
+## t4 25.725108 3.4891775 10.9112554 20.7554113 12.4069264 -3.0021645
+## t5 16.290043 0.8051948  4.4978355 12.4069264 10.9437229 -2.1341991
+## t6 -4.504329 3.5281385  0.9545455 -3.0021645 -2.1341991  4.8246753
+## t7 14.285714 1.4761905  4.1428571 11.0476190  9.7142857 -1.2857143
+## t8 -1.398268 3.9220779  2.1038961 -0.1991342 -0.5367965  3.9653680
+##            t7         t8
+## t1 14.2857143 -1.3982684
+## t2  1.4761905  3.9220779
+## t3  4.1428571  2.1038961
+## t4 11.0476190 -0.1991342
+## t5  9.7142857 -0.5367965
+## t6 -1.2857143  3.9653680
+## t7 10.1904762  0.2380952
+## t8  0.2380952  4.1471861
+## |S|:  316.2932 
+## 
+## Control limits:
+##  LCL      UCL
+##    0 14.26225</code></pre>
 </div>
 <div id="pareto-chart" class="section level1">
 <h1 class="hasAnchor">
 <a href="#pareto-chart" class="anchor"></a>Pareto chart</h1>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">defect &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">80</span>, <span class="dv">27</span>, <span class="dv">66</span>, <span class="dv">94</span>, <span class="dv">33</span>)</a>
-<a class="sourceLine" id="cb80-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(defect) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"price code"</span>, <span class="st">"schedule date"</span>, <span class="st">"supplier code"</span>, <span class="st">"contact num."</span>, <span class="st">"part num."</span>)</a>
-<a class="sourceLine" id="cb80-3" title="3"><span class="kw"><a href="../reference/paretoChart.html">paretoChart</a></span>(defect, <span class="dt">ylab =</span> <span class="st">"Error frequency"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-31-1.png" width="90%" style="display: block; margin: auto;"><img src="qcc_files/figure-html/unnamed-chunk-31-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1">defect &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">80</span>, <span class="dv">27</span>, <span class="dv">66</span>, <span class="dv">94</span>, <span class="dv">33</span>)</a>
+<a class="sourceLine" id="cb81-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(defect) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"price code"</span>, <span class="st">"schedule date"</span>, <span class="st">"supplier code"</span>, <span class="st">"contact num."</span>, <span class="st">"part num."</span>)</a>
+<a class="sourceLine" id="cb81-3" title="3"><span class="kw"><a href="../reference/paretoChart.html">paretoChart</a></span>(defect, <span class="dt">ylab =</span> <span class="st">"Error frequency"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-32-1.png" width="90%" style="display: block; margin: auto;"></p>
 <pre><code>## ── Pareto Chart ────────────────────────────────── 
 ##                
 ## defect          Frequency Cum.Freq. Percentage Cum.Percent.
@@ -1338,27 +1219,27 @@ processCapability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <div id="cause-and-effect-diagram" class="section level1">
 <h1 class="hasAnchor">
 <a href="#cause-and-effect-diagram" class="anchor"></a>Cause and effect diagram</h1>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw"><a href="../reference/causeEffectDiagram.html">causeEffectDiagram</a></span>(<span class="dt">cause =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">Measurements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Micrometers"</span>, </a>
-<a class="sourceLine" id="cb82-2" title="2">                                                 <span class="st">"Microscopes"</span>, </a>
-<a class="sourceLine" id="cb82-3" title="3">                                                 <span class="st">"Inspectors"</span>),</a>
-<a class="sourceLine" id="cb82-4" title="4">                                <span class="dt">Materials =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Alloys"</span>, </a>
-<a class="sourceLine" id="cb82-5" title="5">                                              <span class="st">"Lubricants"</span>, </a>
-<a class="sourceLine" id="cb82-6" title="6">                                              <span class="st">"Suppliers"</span>),</a>
-<a class="sourceLine" id="cb82-7" title="7">                                <span class="dt">Personnel =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Shifts"</span>, </a>
-<a class="sourceLine" id="cb82-8" title="8">                                              <span class="st">"Supervisors"</span>, </a>
-<a class="sourceLine" id="cb82-9" title="9">                                              <span class="st">"Training"</span>, </a>
-<a class="sourceLine" id="cb82-10" title="10">                                              <span class="st">"Operators"</span>),</a>
-<a class="sourceLine" id="cb82-11" title="11">                                <span class="dt">Environment =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Condensation"</span>, </a>
-<a class="sourceLine" id="cb82-12" title="12">                                                <span class="st">"Moisture"</span>),</a>
-<a class="sourceLine" id="cb82-13" title="13">                                <span class="dt">Methods =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Brake"</span>,</a>
-<a class="sourceLine" id="cb82-14" title="14">                                            <span class="st">"Engager"</span>, </a>
-<a class="sourceLine" id="cb82-15" title="15">                                            <span class="st">"Angle"</span>),</a>
-<a class="sourceLine" id="cb82-16" title="16">                                <span class="dt">Machines =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Speed"</span>, </a>
-<a class="sourceLine" id="cb82-17" title="17">                                             <span class="st">"Lathes"</span>, </a>
-<a class="sourceLine" id="cb82-18" title="18">                                             <span class="st">"Bits"</span>, </a>
-<a class="sourceLine" id="cb82-19" title="19">                                             <span class="st">"Sockets"</span>)),</a>
-<a class="sourceLine" id="cb82-20" title="20">                   <span class="dt">effect =</span> <span class="st">"Surface Flaws"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-32-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="kw"><a href="../reference/causeEffectDiagram.html">causeEffectDiagram</a></span>(<span class="dt">cause =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">Measurements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Micrometers"</span>, </a>
+<a class="sourceLine" id="cb83-2" title="2">                                                 <span class="st">"Microscopes"</span>, </a>
+<a class="sourceLine" id="cb83-3" title="3">                                                 <span class="st">"Inspectors"</span>),</a>
+<a class="sourceLine" id="cb83-4" title="4">                                <span class="dt">Materials =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Alloys"</span>, </a>
+<a class="sourceLine" id="cb83-5" title="5">                                              <span class="st">"Lubricants"</span>, </a>
+<a class="sourceLine" id="cb83-6" title="6">                                              <span class="st">"Suppliers"</span>),</a>
+<a class="sourceLine" id="cb83-7" title="7">                                <span class="dt">Personnel =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Shifts"</span>, </a>
+<a class="sourceLine" id="cb83-8" title="8">                                              <span class="st">"Supervisors"</span>, </a>
+<a class="sourceLine" id="cb83-9" title="9">                                              <span class="st">"Training"</span>, </a>
+<a class="sourceLine" id="cb83-10" title="10">                                              <span class="st">"Operators"</span>),</a>
+<a class="sourceLine" id="cb83-11" title="11">                                <span class="dt">Environment =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Condensation"</span>, </a>
+<a class="sourceLine" id="cb83-12" title="12">                                                <span class="st">"Moisture"</span>),</a>
+<a class="sourceLine" id="cb83-13" title="13">                                <span class="dt">Methods =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Brake"</span>,</a>
+<a class="sourceLine" id="cb83-14" title="14">                                            <span class="st">"Engager"</span>, </a>
+<a class="sourceLine" id="cb83-15" title="15">                                            <span class="st">"Angle"</span>),</a>
+<a class="sourceLine" id="cb83-16" title="16">                                <span class="dt">Machines =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Speed"</span>, </a>
+<a class="sourceLine" id="cb83-17" title="17">                                             <span class="st">"Lathes"</span>, </a>
+<a class="sourceLine" id="cb83-18" title="18">                                             <span class="st">"Bits"</span>, </a>
+<a class="sourceLine" id="cb83-19" title="19">                                             <span class="st">"Sockets"</span>)),</a>
+<a class="sourceLine" id="cb83-20" title="20">                   <span class="dt">effect =</span> <span class="st">"Surface Flaws"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-33-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="process-variation-examples" class="section level1">
 <h1 class="hasAnchor">
@@ -1368,34 +1249,34 @@ processCapability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <h2 class="hasAnchor">
 <a href="#simple-random-variation" class="anchor"></a>Simple random variation</h2>
 <p><span class="math inline">\(x_{ij} = \mu + \sigma_W \epsilon_{ij}\)</span></p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb83-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb83-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb83-4" title="4">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(mu <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb83-5" title="5">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-34-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-34-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-34-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb84-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb84-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb84-4" title="4">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(mu <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb84-5" title="5">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-35-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-35-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-35-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="between-and-within-sample-extra-variation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#between-and-within-sample-extra-variation" class="anchor"></a>Between and within sample extra variation</h2>
 <p><span class="math inline">\(x_{ij} = \mu + \sigma_B u_i + \sigma_W \epsilon_{ij}\)</span></p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb86-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb86-3" title="3">sigma_B &lt;-<span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb86-4" title="4">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb86-5" title="5">u &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/vector">as.vector</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">50</span>), rep, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb86-6" title="6">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>sigma_B<span class="op">*</span>u <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
-<a class="sourceLine" id="cb86-7" title="7">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb86-8" title="8">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-35-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-35-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-35-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb87-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb87-3" title="3">sigma_B &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb87-4" title="4">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb87-5" title="5">u &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/vector">as.vector</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">50</span>), rep, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb87-6" title="6">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>sigma_B<span class="op">*</span>u <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
+<a class="sourceLine" id="cb87-7" title="7">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb87-8" title="8">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-36-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-36-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-36-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="autocorrelation" class="section level2">
 <h2 class="hasAnchor">
@@ -1403,23 +1284,23 @@ processCapability(q1, spec.limits = c(73.99, 74.1))</a></code></pre>
 <p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}\)</span><br>
 where <span class="math inline">\(W_i = \rho W_{i-1} + \sigma_B u_i = \sigma_B u_i + \rho \sigma_B u_{i-1} + \rho^2 \sigma_B u_{i-2} + \ldots\)</span>,<br>
 and <span class="math inline">\(W_0 = 0\)</span>.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb89-2" title="2">rho &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
-<a class="sourceLine" id="cb89-3" title="3">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb89-4" title="4">sigma_B &lt;-<span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb89-5" title="5">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb89-6" title="6">u &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb89-7" title="7">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">0</span>,<span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb89-8" title="8"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(W))</a>
-<a class="sourceLine" id="cb89-9" title="9">    W[i] &lt;-<span class="st"> </span>rho<span class="op">*</span>W[i<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span>sigma_B<span class="op">*</span>u[i]</a>
-<a class="sourceLine" id="cb89-10" title="10">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>sigma_B<span class="op">*</span>u <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
-<a class="sourceLine" id="cb89-11" title="11">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb89-12" title="12">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-36-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-36-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-36-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb90-2" title="2">rho &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
+<a class="sourceLine" id="cb90-3" title="3">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb90-4" title="4">sigma_B &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb90-5" title="5">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb90-6" title="6">u &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb90-7" title="7">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">0</span>,<span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb90-8" title="8"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(W))</a>
+<a class="sourceLine" id="cb90-9" title="9">    W[i] &lt;-<span class="st"> </span>rho<span class="op">*</span>W[i<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span>sigma_B<span class="op">*</span>u[i]</a>
+<a class="sourceLine" id="cb90-10" title="10">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>sigma_B<span class="op">*</span>u <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
+<a class="sourceLine" id="cb90-11" title="11">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb90-12" title="12">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-37-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-37-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-37-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="recurring-cycles" class="section level2">
 <h2 class="hasAnchor">
@@ -1427,82 +1308,142 @@ and <span class="math inline">\(W_0 = 0\)</span>.</p>
 <p>Assume we have 3 working turns of 8 hours each for each working day, so <span class="math inline">\(8 \times 3 = 24\)</span> points in time, and at each point we sample 5 units.</p>
 <p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}\)</span><br>
 where <span class="math inline">\(W_i\)</span> (<span class="math inline">\(i=1,\ldots,8\)</span>) is the cycle.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb92-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb92-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">120</span>, <span class="dt">sd=</span><span class="fl">0.3</span>)</a>
-<a class="sourceLine" id="cb92-4" title="4">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">-2</span>) <span class="co"># assumed workers cycle</span></a>
-<a class="sourceLine" id="cb92-5" title="5">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(W, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">5</span>,<span class="dv">8</span>)), <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb92-6" title="6">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>W <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
-<a class="sourceLine" id="cb92-7" title="7">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">5</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb92-8" title="8">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-37-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-37-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-37-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb93-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb93-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">120</span>, <span class="dt">sd=</span><span class="fl">0.3</span>)</a>
+<a class="sourceLine" id="cb93-4" title="4">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">-2</span>) <span class="co"># assumed workers cycle</span></a>
+<a class="sourceLine" id="cb93-5" title="5">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(W, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">5</span>,<span class="dv">8</span>)), <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb93-6" title="6">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>W <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
+<a class="sourceLine" id="cb93-7" title="7">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">5</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb93-8" title="8">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-38-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-38-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-38-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="trends" class="section level2">
 <h2 class="hasAnchor">
 <a href="#trends" class="anchor"></a>Trends</h2>
 <p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}\)</span><br>
 where <span class="math inline">\(W_i = 0.2 i\)</span></p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb95-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb95-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb95-4" title="4">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="fl">0.2</span><span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">5</span>,<span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb95-5" title="5">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>W <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
-<a class="sourceLine" id="cb95-6" title="6">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb95-7" title="7">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-38-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-38-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-38-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">mu &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb96-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb96-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb96-4" title="4">W &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="fl">0.2</span><span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">5</span>,<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb96-5" title="5">x &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>W <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
+<a class="sourceLine" id="cb96-6" title="6">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb96-7" title="7">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-39-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-39-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="mixture" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mixture" class="anchor"></a>Mixture</h2>
 <p><span class="math inline">\(x_{ij} = \mu_1 p + \mu_2 (1-p) + \sigma_W \epsilon_{ij}\)</span><br>
 where <span class="math inline">\(p = \Pr(\text{Process #1})\)</span>.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">mu1 &lt;-<span class="st"> </span><span class="dv">90</span></a>
-<a class="sourceLine" id="cb98-2" title="2">mu2 &lt;-<span class="st"> </span><span class="dv">110</span></a>
-<a class="sourceLine" id="cb98-3" title="3">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb98-4" title="4">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb98-5" title="5">p &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(<span class="dv">50</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb98-6" title="6">mu &lt;-<span class="st"> </span>mu1<span class="op">*</span>p <span class="op">+</span><span class="st"> </span>mu2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p)</a>
-<a class="sourceLine" id="cb98-7" title="7">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(mu, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(mu))) <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
-<a class="sourceLine" id="cb98-8" title="8">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb98-9" title="9">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-39-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-39-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1">mu1 &lt;-<span class="st"> </span><span class="dv">90</span></a>
+<a class="sourceLine" id="cb99-2" title="2">mu2 &lt;-<span class="st"> </span><span class="dv">110</span></a>
+<a class="sourceLine" id="cb99-3" title="3">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb99-4" title="4">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb99-5" title="5">p &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(<span class="dv">50</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb99-6" title="6">mu &lt;-<span class="st"> </span>mu1<span class="op">*</span>p <span class="op">+</span><span class="st"> </span>mu2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p)</a>
+<a class="sourceLine" id="cb99-7" title="7">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(mu, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">10</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(mu))) <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
+<a class="sourceLine" id="cb99-8" title="8">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb99-9" title="9">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-40-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-40-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="sudden-jumps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sudden-jumps" class="anchor"></a>Sudden jumps</h2>
 <p><span class="math inline">\(x_{ij} = \mu_i + \sigma_W \epsilon_{ij}\)</span><br>
 where <span class="math inline">\(\mu_i\)</span> is the mean of the process for state <span class="math inline">\(i\)</span> (<span class="math inline">\(i=1,\ldots,k)\)</span>.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1">mu &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">95</span>,<span class="dv">110</span>,<span class="dv">100</span>,<span class="dv">90</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">20</span>,<span class="dv">35</span>,<span class="dv">25</span>,<span class="dv">20</span>))</a>
-<a class="sourceLine" id="cb101-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb101-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb101-4" title="4">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(mu, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">5</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(mu))) <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
-<a class="sourceLine" id="cb101-5" title="5">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb101-6" title="6">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-40-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-40-3.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">mu &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">95</span>,<span class="dv">110</span>,<span class="dv">100</span>,<span class="dv">90</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">20</span>,<span class="dv">35</span>,<span class="dv">25</span>,<span class="dv">20</span>))</a>
+<a class="sourceLine" id="cb102-2" title="2">sigma_W &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb102-3" title="3">epsilon &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb102-4" title="4">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(mu, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">5</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(mu))) <span class="op">+</span><span class="st"> </span>sigma_W<span class="op">*</span>epsilon</a>
+<a class="sourceLine" id="cb102-5" title="5">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(x, <span class="dt">ncol=</span><span class="dv">10</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb102-6" title="6">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"xbar"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-41-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"R"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-41-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qcc.html">qcc</a></span>(x, <span class="dt">type=</span><span class="st">"S"</span>)</a></code></pre></div>
+<p><img src="qcc_files/figure-html/unnamed-chunk-41-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+</div>
+<div id="references" class="section level1">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
 <p>Montgomery, D.C. (2009) <em>Introduction to Statistical Quality Control</em>, 6th ed. New York: John Wiley &amp; Sons.</p>
-<p>Ryan, T. P. (2011), , 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
+<p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons.</p>
 <p>Scrucca, L. (2004) <a href="http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf">qcc: an R package for quality control charting and statistical process control</a>. <em>R News</em> 4/1, 11-17.</p>
-</div>
+<hr>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">session_info</a></span>()</a>
+<a class="sourceLine" id="cb105-2" title="2"><span class="co">## ─ Session info ──────────────────────────────────────────────────────────</span></a>
+<a class="sourceLine" id="cb105-3" title="3"><span class="co">##  setting  value                       </span></a>
+<a class="sourceLine" id="cb105-4" title="4"><span class="co">##  version  R version 3.5.2 (2018-12-20)</span></a>
+<a class="sourceLine" id="cb105-5" title="5"><span class="co">##  os       macOS Sierra 10.12.5        </span></a>
+<a class="sourceLine" id="cb105-6" title="6"><span class="co">##  system   x86_64, darwin15.6.0        </span></a>
+<a class="sourceLine" id="cb105-7" title="7"><span class="co">##  ui       X11                         </span></a>
+<a class="sourceLine" id="cb105-8" title="8"><span class="co">##  language (EN)                        </span></a>
+<a class="sourceLine" id="cb105-9" title="9"><span class="co">##  collate  en_US.UTF-8                 </span></a>
+<a class="sourceLine" id="cb105-10" title="10"><span class="co">##  ctype    en_US.UTF-8                 </span></a>
+<a class="sourceLine" id="cb105-11" title="11"><span class="co">##  tz       Europe/Rome                 </span></a>
+<a class="sourceLine" id="cb105-12" title="12"><span class="co">##  date     2019-03-07                  </span></a>
+<a class="sourceLine" id="cb105-13" title="13"><span class="co">## </span></a>
+<a class="sourceLine" id="cb105-14" title="14"><span class="co">## ─ Packages ──────────────────────────────────────────────────────────────</span></a>
+<a class="sourceLine" id="cb105-15" title="15"><span class="co">##  package     * version  date       lib source        </span></a>
+<a class="sourceLine" id="cb105-16" title="16"><span class="co">##  assertthat    0.2.0    2017-04-11 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-17" title="17"><span class="co">##  backports     1.1.3    2018-12-14 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-18" title="18"><span class="co">##  callr         3.1.1    2018-12-21 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-19" title="19"><span class="co">##  cli           1.0.1    2018-09-25 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-20" title="20"><span class="co">##  commonmark    1.7      2018-12-01 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-21" title="21"><span class="co">##  crayon        1.3.4    2017-09-16 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-22" title="22"><span class="co">##  desc          1.2.0    2018-05-01 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-23" title="23"><span class="co">##  devtools      2.0.1    2018-10-26 [1] CRAN (R 3.5.2)</span></a>
+<a class="sourceLine" id="cb105-24" title="24"><span class="co">##  digest        0.6.18   2018-10-10 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-25" title="25"><span class="co">##  evaluate      0.12     2018-10-09 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-26" title="26"><span class="co">##  fs            1.2.6    2018-08-23 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-27" title="27"><span class="co">##  glue          1.3.0    2018-07-17 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-28" title="28"><span class="co">##  htmltools     0.3.6    2017-04-28 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-29" title="29"><span class="co">##  knitr       * 1.21     2018-12-10 [1] CRAN (R 3.5.2)</span></a>
+<a class="sourceLine" id="cb105-30" title="30"><span class="co">##  magrittr      1.5      2014-11-22 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-31" title="31"><span class="co">##  MASS          7.3-51.1 2018-11-01 [2] CRAN (R 3.5.2)</span></a>
+<a class="sourceLine" id="cb105-32" title="32"><span class="co">##  memoise       1.1.0    2017-04-21 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-33" title="33"><span class="co">##  pkgbuild      1.0.2    2018-10-16 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-34" title="34"><span class="co">##  pkgdown       1.3.0    2018-12-07 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-35" title="35"><span class="co">##  pkgload       1.0.2    2018-10-29 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-36" title="36"><span class="co">##  prettyunits   1.0.2    2015-07-13 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-37" title="37"><span class="co">##  processx      3.2.1    2018-12-05 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-38" title="38"><span class="co">##  ps            1.3.0    2018-12-21 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-39" title="39"><span class="co">##  qcc         * 3.0      2019-03-07 [1] CRAN (R 3.5.2)</span></a>
+<a class="sourceLine" id="cb105-40" title="40"><span class="co">##  R6            2.3.0    2018-10-04 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-41" title="41"><span class="co">##  Rcpp          1.0.0    2018-11-07 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-42" title="42"><span class="co">##  remotes       2.0.2    2018-10-30 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-43" title="43"><span class="co">##  rlang         0.3.1    2019-01-08 [1] CRAN (R 3.5.2)</span></a>
+<a class="sourceLine" id="cb105-44" title="44"><span class="co">##  rmarkdown     1.11     2018-12-08 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-45" title="45"><span class="co">##  roxygen2      6.1.1    2018-11-07 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-46" title="46"><span class="co">##  rprojroot     1.3-2    2018-01-03 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-47" title="47"><span class="co">##  rstudioapi    0.9.0    2019-01-09 [1] CRAN (R 3.5.2)</span></a>
+<a class="sourceLine" id="cb105-48" title="48"><span class="co">##  sessioninfo   1.1.1    2018-11-05 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-49" title="49"><span class="co">##  stringi       1.2.4    2018-07-20 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-50" title="50"><span class="co">##  stringr       1.3.1    2018-05-10 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-51" title="51"><span class="co">##  testthat      2.0.1    2018-10-13 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-52" title="52"><span class="co">##  usethis       1.4.0    2018-08-14 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-53" title="53"><span class="co">##  withr         2.1.2    2018-03-15 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-54" title="54"><span class="co">##  xfun          0.4      2018-10-23 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-55" title="55"><span class="co">##  xml2          1.2.0    2018-01-24 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-56" title="56"><span class="co">##  yaml          2.2.0    2018-07-25 [1] CRAN (R 3.5.0)</span></a>
+<a class="sourceLine" id="cb105-57" title="57"><span class="co">## </span></a>
+<a class="sourceLine" id="cb105-58" title="58"><span class="co">## [1] /Library/Frameworks/R.framework/Rlib</span></a>
+<a class="sourceLine" id="cb105-59" title="59"><span class="co">## [2] /Library/Frameworks/R.framework/Versions/3.5/Resources/library</span></a></code></pre></div>
 </div>
   </div>
 
@@ -1540,9 +1481,9 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
       <li><a href="#trends">Trends</a></li>
       <li><a href="#mixture">Mixture</a></li>
       <li><a href="#sudden-jumps">Sudden jumps</a></li>
-      <li><a href="#references">References</a></li>
       </ul>
 </li>
+      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>

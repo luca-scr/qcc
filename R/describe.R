@@ -83,13 +83,13 @@ describe <- function(data, by, detailed = FALSE, ...)
       {
         out <- c(length(x), n.miss, mean(x), sd(x), fivenum(x),
                  skewness(x), kurtosis(x))
-        names(out) <- c("Obs", "NAs", "Mean", "Std.Dev.", 
+        names(out) <- c("Obs", "NAs", "Mean", "StdDev", 
                         "Min", "Q1", "Median", "Q3", "Max",
                         "Skewness", "Kurtosis")
       } else
       {
-        out <- c(length(x), mean(x), sd(x), min(x), max(x))
-        names(out) <- c("Obs", "Mean", "Std.Dev.", "Min", "Max")
+        out <- c(length(x), mean(x), sd(x), min(x), median(x), max(x))
+        names(out) <- c("Obs", "Mean", "StdDev", "Min", "Median", "Max")
       }
       obj[[j]] <- out
     }
