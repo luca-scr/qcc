@@ -108,7 +108,8 @@ print.describe <- function(x, digits = getOption("digits") - 3, ...)
     by <- which(sapply(x, class) == "describe")
     for(i in by)
     {
-      cat(cli::rule(left = paste(x$by, "=", names(x)[i])), "\n\n")
+      cat(cli::rule(left = paste(x$by, "=", names(x)[i]),
+                    width = getOption("width")), "\n")
       print(x[[i]])
       if(i < length(by)) cat("\n")
     }
