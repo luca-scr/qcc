@@ -61,10 +61,8 @@ plot.paretoChart <- function(x, xlab = NULL,
   
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
-  # plot.new()
 
   # set las and mar if not provided by user
-  # browser()
   w <- max(strwidth(rownames(x$tab), units = "inch"))
   las <- if(is.null(call$las)) 3 else eval(call$las)
   if(is.null(call$mar))
@@ -78,20 +76,24 @@ plot.paretoChart <- function(x, xlab = NULL,
   }
   if(!is.null(xlab)) mar[1] <- mar[1] + 1.5
   cex.labels <- par("cex")*qcc.options("cex")
-
+  
   par(bg  = qcc.options("bg.margin"),
       oma = c(0, 0, 1.5*cex.labels, 0),
       mar = mar) 
-  #
-  pc <- barplot(freq, width = 1, space = 0.2, col = col,
-                ylim = ylim, ylab = ylab, xlab = xlab, yaxt = "n", 
-                cex.names = par("cex.axis")*0.9, 
-                cex.axis = par("cex.axis")*0.9, 
-                cex.lab = par("cex.axis")*0.9, 
-                las = las, ...)
+  
+  dots <- list(...)
+  args <- list("width" = 1, "space" = 0.2, 
+               "col" = col, "las" = las,
+               "ylim" = ylim, "ylab" = ylab, 
+               "yaxt" = "n", "xlab" = xlab, 
+               "cex.names" = par("cex.axis")*0.9, 
+               "cex.axis" = par("cex.axis")*0.9, 
+               "cex.lab" = par("cex.axis")*0.9)
+  args[names(dots)] <- dots
+
+  pc <- do.call("barplot", c(list(freq), args))
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
-  
   # box()
   mtext(main, side = 3, outer = TRUE, 
         line = 0, adj = 0, at = par("plt")[1],

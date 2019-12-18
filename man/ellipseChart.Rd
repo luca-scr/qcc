@@ -18,7 +18,7 @@ ellipseChart(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   \item{ngrid}{a value for the size of the grid over which the ellipse is evaluated.}
   \item{confidence.level}{a numeric value between 0 and 1 specifying the confidence level of the computed probability limits.}
   \item{correct.multiple}{a logical value indicating whether to correct or not for multiple comparisons.}
-  \item{title}{a string giving the label for the main title.}
+  \item{title}{a string giving the label for the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
   \item{xlim}{a numeric vector specifying the limits for the x-axis.}
   \item{ylim}{a numeric vector specifying the limits for the y-axis.}
   \item{xlab}{a string giving the label for the x-axis.}

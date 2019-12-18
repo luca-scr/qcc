@@ -314,14 +314,14 @@ plot.qcc <- function(x,
   if(missing(title))
   { 
     if(is.null(newstats))
-      main.title <- paste(type, "chart for", data.name)
+      title <- paste(type, "chart for", data.name)
     else if(chart.all)
-           main.title <- paste(type, "chart for", data.name, 
-                                "and", newdata.name)
+           title <- paste(type, "chart for", data.name, "and", newdata.name)
          else 
-           main.title <- paste(type, "chart for", newdata.name) 
+           title <- paste(type, "chart for", newdata.name) 
   }
-  else main.title <- paste(title)
+  if(isFALSE(title) | is.na(title)) title <- ""
+  
   cex.labels <- par("cex")*qcc.options("cex")
   cex.stats <- par("cex")*qcc.options("cex.stats")
   
@@ -349,7 +349,7 @@ plot.qcc <- function(x,
        cex.axis = par("cex.axis")*0.9)
   axis(2, las = axes.las, cex.axis = par("cex.axis")*0.9)
   box()
-  mtext(main.title, side = 3, outer = TRUE, 
+  mtext(title, side = 3, outer = TRUE, 
         line = 0, adj = 0, at = par("plt")[1],
         font = par("font.main"), 
         cex  = par("cex")*qcc.options("cex"), 

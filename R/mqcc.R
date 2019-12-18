@@ -237,13 +237,15 @@ plot.mqcc <- function(x,
      }
   #
   if(missing(title))
-    { if(is.null(newstats))
-         main.title <- paste(type, "Chart\nfor", data.name)
-       else if(chart.all)
-               main.title <- paste(type, "Chart\nfor", data.name, 
-                                   "and", newdata.name)
-            else main.title <- paste(type, "Chart\nfor", newdata.name) }
-  else main.title <- paste(title)
+  { 
+    if(is.null(newstats))
+       title <- paste(type, "Chart\nfor", data.name)
+    else if(chart.all)
+           title <- paste(type, "Chart\nfor", data.name, "and", newdata.name)
+         else 
+           title <- paste(type, "Chart\nfor", newdata.name) 
+  }
+  if(isFALSE(title) | is.na(title)) title <- ""
 
   oldpar <- par(no.readonly = TRUE)
   if(restore.par) on.exit(par(oldpar))
@@ -266,9 +268,9 @@ plot.mqcc <- function(x,
                    as.character(indices) else names(statistics))
   axis(2, las = axes.las)
   box()
-  top.line <- par("mar")[3]-length(capture.output(cat(main.title)))
+  top.line <- par("mar")[3]-length(capture.output(cat(title)))
   top.line <- top.line - if(chart.all & (!is.null(newstats))) 0.1 else 0.5
-  mtext(main.title, side = 3, line = top.line,
+  mtext(title, side = 3, line = top.line,
         font = par("font.main"), 
         cex  = qcc.options("cex"), 
         col  = par("col.main"))
@@ -418,15 +420,18 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   if(missing(ylim))
      ylim <- range(pretty(stats[,2],1), q2$limits)
   if(missing(title))
-    { if(is.null(object$newstats))
-           main.title <- paste("Ellipse chart\nfor", object$data.name)
-      else if(chart.all)
-                main.title <- paste("Ellipse chart\nfor", 
-                                    object$data.name, "and",
-                                    object$newdata.name)
-           else main.title <- paste("Ellipse chart\nfor", 
-                                    object$newdata.name) }
-  else main.title <- paste(title)
+  { 
+    if(is.null(object$newstats))
+       title <- paste("Ellipse chart\nfor", object$data.name)
+    else if(chart.all)
+           title <- paste("Ellipse chart\nfor", 
+                          object$data.name, "and",
+                          object$newdata.name)
+         else 
+           title <- paste("Ellipse chart\nfor", 
+                          object$newdata.name) 
+  }
+  if(isFALSE(title) | is.na(title)) title <- ""
   #
   grid <- cbind(seq(xlim[1], xlim[2], length = ngrid),
                 seq(ylim[1], ylim[2], length = ngrid))
@@ -450,8 +455,8 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
   box()
-  top.line <- par("mar")[3]-length(capture.output(cat(main.title)))-0.5
-  mtext(main.title, side = 3, line = top.line,
+  top.line <- par("mar")[3]-length(capture.output(cat(title)))-0.5
+  mtext(title, side = 3, line = top.line,
         font = par("font.main"), 
         cex  = qcc.options("cex"), 
         col  = par("col.main"))
