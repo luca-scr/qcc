@@ -14,7 +14,6 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
                  limits = TRUE, pred.limits = FALSE,
                  data.name, labels, newdata, newlabels, 
                  confidence.level = (1-0.0027)^p, 
-                 rules = shewhart.rules, # TODO: use new shewhartRules
                  plot = TRUE, ...)
 {
   call <- match.call()
@@ -61,12 +60,15 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
   names(statistics) <-  labels
   names(stats$center) <- var.names
   dimnames(stats$cov) <- list(var.names, var.names)
-  #
+
+  # create object of class 'mqcc'
   object <- list(call = call, data.name = data.name,
                  var.names = var.names, data = data,
                  type = type,  confidence.level = confidence.level,
                  statistics = statistics,  means = stats$means,
                  center = stats$center, cov = stats$cov)
+  class(object) <- "mqcc"
+
   # check for new data provided and update object
   if(!missing(newdata))
     { newdata.name <- deparse(substitute(newdata))
@@ -131,16 +133,19 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
       dimnames(pred.limits) <- list(rep("",nrow(pred.limits)), c("LPL ", "UPL"))
     }
   object$pred.limits  <- pred.limits
-  #
-  if(is.function(rules)) 
-    { violations <- rules(object, run.length = 0) 
-      violations$beyond.pred.limits <- 
-        rules(object, run.length = 0, limits = object$pred.limits)$beyond.limits }
-  else violations <- NULL
+
+  # identify violating rules observations
+  violations <- rep(NA, length(statistics))
+  if(is.numeric(object$limits))
+  {
+    violations[qccRulesViolatingWER1(object, limits = object$limits)] <- 1
+  }
+  if(is.numeric(object$pred.limits))
+  {
+    violations[qccRulesViolatingWER1(object, limits = object$pred.limits)] <- 2
+  }
   object$violations <- violations
-  #
-  class(object) <- "mqcc"
-  #           
+    
   if(plot) plot(object, ...) 
   #
   return(object)
@@ -149,49 +154,55 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
 print.mqcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x  # Argh.  Really want to use 'object' anyway
-  cat("\nCall:\n",deparse(object$call),"\n\n",sep="")
+  # cat("\nCall:\n",deparse(object$call),"\n\n",sep="")
+  cat(cli::rule(left = crayon::bold("Multivariate Quality Control Chart"), 
+                width = min(getOption("width"),50)), "\n\n")
+
   data <- object$data
   m <- unique(sapply(data, nrow))     # num. of samples
   n <- unique(sapply(data, ncol))     # samples sizes
   p <- length(data)                   # num. of variables
   data.name <- object$data.name
   type <- object$type
-  cat(paste(type, "chart for", data.name, "\n"))
-  statistics <- object$statistics
-  cat("\nSummary of group statistics:\n")
-  print(summary(statistics), digits = digits, ...)
-  cat("\nNumber of variables: ",p)
-  cat("\nNumber of groups: ", m)
-  cat("\nGroup sample size: ", n)
-  cat("\n\nCenter: \n")
-  print(object$center, digits = digits, ...)
-  cat("\nCovariance matrix:\n")
-  print(object$cov, digits = digits, ...)
-  cat("|S|: ", format(det(object$cov), digits = digits), "\n")
-  #
+  
+  cat("Chart type                 =", type, "\n")
+  cat("Data (phase I)             =", data.name, "\n")
+  cat("Number of groups           =", m, "\n")
+  cat("Group sample size          =", n, "\n")
+  cat("Center = \n")
+  print(object$center, digits = digits)
+  cat("Covariance matrix = \n")
+  print(object$cov, digits = digits)
+  cat("|S| =", format(det(object$cov), digits = digits), "\n")
+  
   newdata.name <- object$newdata.name
   newstats <- object$newstats
   if(!is.null(newstats)) 
-    { newdata <- object$newdata
-      m <- unique(sapply(newdata, nrow))     # num. of samples
-      n <- unique(sapply(newdata, ncol))     # samples sizes
-      p <- length(newdata)                   # num. of variables
-      cat(paste("\nSummary of group statistics in ", 
-                newdata.name, ":\n", sep = ""))
-      print(summary(newstats), digits = digits, ...)
-      cat("\nNumber of groups: ", m)
-      cat("\nGroup sample size: ", n)
-      cat("\n")
-    }
-  #
+  { 
+    newdata <- object$newdata
+    m <- unique(sapply(newdata, nrow))     # num. of samples
+    n <- unique(sapply(newdata, ncol))     # samples sizes
+    # p <- length(newdata)                   # num. of variables
+    cat("\n")
+    cat("New data (phase II)        =", newdata.name, "\n")
+    cat("Number of groups           =", m, "\n")
+    cat("Group sample size          =", n, "\n")
+  }
+  
   ctrl.limits <- object$limits
-  pred.limits <- object$pred.limits
   if(!is.null(ctrl.limits)) 
-    { cat("\nControl limits:\n")
-      .printShortMatrix(ctrl.limits, digits = digits, ...) }
+  { 
+    cat("\nControl limits:\n")
+    .printShortMatrix(ctrl.limits, digits = digits, ...) 
+  }
+
+  pred.limits <- object$pred.limits
   if(!is.null(pred.limits)) 
-    { cat("\nPrediction limits:\n")
-      .printShortMatrix(pred.limits, digits = digits, ...) }
+  { 
+    cat("\nPrediction limits:\n")
+    .printShortMatrix(pred.limits, digits = digits, ...) 
+  }
+  
   invisible()        
 }
 
@@ -200,10 +211,11 @@ summary.mqcc <- function(object, ...) print.mqcc(object, ...)
 plot.mqcc <- function(x, 
                       add.stats = qcc.options("add.stats"), 
                       chart.all = qcc.options("chart.all"), 
+                      fill = qcc.options("fill"),
                       label.limits = c("LCL", "UCL"),
                       label.pred.limits = c("LPL", "UPL"),
                       title, xlab, ylab, ylim, axes.las = 0,
-                      digits =  getOption("digits"),
+                      digits = getOption("digits"),
                       restore.par = TRUE, ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
@@ -238,19 +250,22 @@ plot.mqcc <- function(x,
   #
   if(missing(title))
     { if(is.null(newstats))
-         main.title <- paste(type, "Chart\nfor", data.name)
+         main.title <- paste(type, "chart for", data.name)
        else if(chart.all)
-               main.title <- paste(type, "Chart\nfor", data.name, 
+               main.title <- paste(type, "chart for", data.name, 
                                    "and", newdata.name)
-            else main.title <- paste(type, "Chart\nfor", newdata.name) }
+            else main.title <- paste(type, "chart for", newdata.name) }
   else main.title <- paste(title)
-
+  cex.labels <- par("cex")*qcc.options("cex")
+  cex.stats <- par("cex")*qcc.options("cex.stats")
+  
   oldpar <- par(no.readonly = TRUE)
   if(restore.par) on.exit(par(oldpar))
-  mar <- pmax(oldpar$mar, c(4.1,4.1,3.1,2.1))
   par(bg  = qcc.options("bg.margin"), 
       cex = oldpar$cex * qcc.options("cex"),
-      mar = if(add.stats) pmax(mar, c(7.6,0,0,0)) else mar)
+      mar = pmax(par("mar"), c(4.1,4.1,1.1,2.1), na.rm=TRUE),
+      oma = if(add.stats) c(3.5*cex.stats, 0, 1.5*cex.labels, 0) 
+            else          c(0, 0, 1.5*cex.labels, 0))
 
   # plot Shewhart chart
   plot(indices, statistics, type = "n",
@@ -263,108 +278,131 @@ plot.mqcc <- function(x,
        col = qcc.options("bg.figure"))
   axis(1, at = indices, las = axes.las,
        labels = if(is.null(names(statistics))) 
-                   as.character(indices) else names(statistics))
-  axis(2, las = axes.las)
+                   as.character(indices) else names(statistics),
+       cex.axis = par("cex.axis")*0.9)
+  axis(2, las = axes.las, cex.axis = par("cex.axis")*0.9)
   box()
-  top.line <- par("mar")[3]-length(capture.output(cat(main.title)))
-  top.line <- top.line - if(chart.all & (!is.null(newstats))) 0.1 else 0.5
-  mtext(main.title, side = 3, line = top.line,
+  mtext(main.title, side = 3, outer = TRUE, 
+        line = 0, adj = 0, at = par("plt")[1],
         font = par("font.main"), 
-        cex  = qcc.options("cex"), 
+        cex  = par("cex")*qcc.options("cex"), 
         col  = par("col.main"))
-  
-  lines(indices, statistics, type = "b", pch=20) 
 
-  if(is.numeric(limits))
-    { abline(h = limits, lty = 2)
-      mtext(label.limits, side = 4, at = c(limits[1], limits[2]), 
-           las = 1, line = 0.1, col = gray(0.3))
+  # draw prediction or control limits
+  if(!is.null(pred.limits))
+  {
+    if(fill)
+    { # fill the in-control area
+      polygon(par("usr")[c(1,2,2,1)], pred.limits[c(1,1,2,2)], border = FALSE, 
+              col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
+    } else
+    { 
+      abline(h = pred.limits,
+             lty = qcc.options("zones")$lty[1], 
+             col = qcc.options("zones")$col[1])
     }
-  if(is.numeric(pred.limits))
-    { abline(h = pred.limits, lty = 3)
-      mtext(label.pred.limits, side = 4, 
-            at = c(pred.limits[1], pred.limits[2]), 
-            las = 1, line = 0.1, col = gray(0.3),
-            cex = par("cex"))
+    mtext(label.pred.limits, side = 4, at = c(pred.limits[1], pred.limits[2]), 
+          las = 1, line = 0.1, col = gray(0.3),
+          cex = par("cex")*qcc.options("cex.stats"))
+  }
+  if(!is.null(limits))
+  {
+    if(fill)
+    { # fill the in-control area
+      polygon(par("usr")[c(1,2,2,1)], limits[c(1,1,2,2)], border = FALSE, 
+              col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
+    } else
+    { 
+      abline(h = limits,
+             lty = qcc.options("zones")$lty[1], 
+             col = qcc.options("zones")$col[1])
     }
-  #
-  if(is.null(qcc.options("beyond.limits")))
-     stop(".qcc.options$beyond.limits undefined. See help(qcc.options).")
-  if(length(violations$beyond.limits))
-    { v <- violations$beyond.limits
-      if(!chart.all & !is.null(newstats))
-        { v <- v - length(stats) 
-          v <- v[v>0] }
-      points(indices[v], statistics[v], 
-             col = qcc.options("beyond.limits")$col, 
-             pch = qcc.options("beyond.limits")$pch) 
-    }
+    mtext(label.limits, side = 4, at = c(limits[1], limits[2]), 
+          las = 1, line = 0.1, col = gray(0.3),
+          cex = par("cex")*qcc.options("cex.stats"))
+  }
+  
+  # draw lines & points
+  lines(indices, statistics, type = "b", pch = NA)
+  col <- rep(palette()[1], length(indices))
+  pch <- rep(20, length(indices))
+  if(!is.null(violations))
+  { 
+    i <- indices %in% which(violations > 0)
+    col[i] <- qcc.options("rules")$col[1]
+    pch[i] <- qcc.options("rules")$pch[1]
+  }
+  points(indices, statistics, col = col, pch = pch)
 
   if(chart.all & (!is.null(newstats)))
-    { len.obj.stats <- length(object$statistics)
-      len.new.stats <- length(statistics) - len.obj.stats
-      abline(v = len.obj.stats + 0.5, lty = 3)
-      mtext(# paste("Calibration data in", data.name),
-            "Calibration data", cex = par("cex")*0.8,
-            at = len.obj.stats/2, line = 0, adj = 0.5)
-      mtext(# paste("New data in", object$newdata.name),  
-            "New data", cex = par("cex")*0.8, 
-            at = len.obj.stats + len.new.stats/2, line = 0, adj = 0.5)
+  { 
+    len.obj.stats <- length(object$statistics)
+    len.new.stats <- length(statistics) - len.obj.stats
+    abline(v = len.obj.stats + 0.5, lty = 3)
+    mtext("Calibration data", cex = par("cex")*0.8,
+          at = len.obj.stats/2, line = 0, adj = 0.5)
+    mtext("New data", cex = par("cex")*0.8, 
+          at = len.obj.stats + len.new.stats/2, line = 0, adj = 0.5)
   }
-  #
+
   if(add.stats) 
-    { # computes the x margins of the figure region
-      plt <- par()$plt; usr <- par()$usr
-      px <- diff(usr[1:2])/diff(plt[1:2])
-      xfig <- c(usr[1]-px*plt[1], usr[2]+px*(1-plt[2]))
-      at.col <- xfig[1] + diff(xfig[1:2])*c(0.15, 0.45, 0.75)
-      top.line <- 4.5
-      # write info at bottom
-      mtext(paste("Number of groups = ", length(statistics), sep = ""), 
-            side = 1, line = top.line, adj = 0, at = at.col[1],
+  { 
+    at <- c(0.10,0.40,0.65) 
+    # TOREMOVE computes the x margins of the figure region
+    # plt <- par()$plt; usr <- par()$usr
+    # px <- diff(usr[1:2])/diff(plt[1:2])
+    # xfig <- c(usr[1]-px*plt[1], usr[2]+px*(1-plt[2]))
+    # at.col <- xfig[1] + diff(xfig[1:2])*c(0.15, 0.45, 0.75)
+    # top.line <- 4.5
+    # write info at bottom
+    mtext(paste("Number of groups = ", length(statistics), sep = ""), 
+          side = 1, outer = TRUE, line = 0*cex.stats, adj = 0, at = at[1],
+          font = qcc.options("font.stats"),
+          cex = par("cex")*qcc.options("cex.stats"))
+    mtext(paste("Sample size = ", signif(n, digits), sep = ""),
+          side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[1],
+          font = qcc.options("font.stats"),
+          cex = par("cex")*qcc.options("cex.stats"))
+    mtext(paste("|S| = ", signif(var, digits), sep = ""),
+          side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[1],
+          font = qcc.options("font.stats"),
+          cex = par("cex")*qcc.options("cex.stats"))
+    #
+    if(is.numeric(limits))
+    { 
+      mtext(paste(label.limits[1], " = ", signif(limits[1], digits), sep = ""), 
+            side = 1, outer = TRUE, line = 0*cex.stats, adj = 0, at = at[2],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Sample size = ", signif(n, digits), sep = ""),
-            side = 1, line = top.line+1, adj = 0, at = at.col[1],
+      mtext(paste(label.limits[2], " = ", signif(limits[2], digits), sep = ""),
+            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[2],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("|S| = ", signif(var, digits), sep = ""),
-            side = 1, line = top.line+2, adj = 0, at = at.col[1],
+      mtext(paste("Num. beyond limits =",
+                  sum(violations==1, na.rm=TRUE)), 
+            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[2],
             font = qcc.options("font.stats"),
             cex = par("cex")*qcc.options("cex.stats"))
-      #
-      if(is.numeric(limits))
-        { mtext(paste(label.limits[1], " = ", signif(limits[1], digits), sep = ""), 
-                side = 1, line = top.line, adj = 0, at = at.col[2],
-                font = qcc.options("font.stats"),
-                cex = par("cex")*qcc.options("cex.stats"))
-          mtext(paste(label.limits[2], " = ", signif(limits[2], digits), sep = ""),
-                side = 1, line = top.line+1, adj = 0, at = at.col[2],
-                font = qcc.options("font.stats"),
-                cex = par("cex")*qcc.options("cex.stats"))
-          mtext(paste("Num. beyond limits =",
-                      length(unique(violations$beyond.limits))), 
-                side = 1, line = top.line+2, adj = 0, at = at.col[2],
-                font = qcc.options("font.stats"),
-                cex = par("cex")*qcc.options("cex.stats"))
-        }        
-      #
-      if(is.numeric(pred.limits))
-        { mtext(paste(label.pred.limits[1], " = ", signif(pred.limits[1], digits), sep = ""),
-                side = 1, line = top.line, adj = 0, at = at.col[3],
-                font = qcc.options("font.stats"),
-                cex = par("cex")*qcc.options("cex.stats"))
-          mtext(paste(label.pred.limits[2], " = ", signif(pred.limits[2], digits), sep = ""),
-                side = 1, line = top.line+1, adj = 0, at = at.col[3],
-                font = qcc.options("font.stats"),
-                cex = par("cex")*qcc.options("cex.stats"))
-          mtext(paste("Num. beyond limits =",
-                      length(unique(violations$beyond.pred.limits))), 
-                      side = 1, line = top.line+2, adj = 0, at = at.col[3],
-                font = qcc.options("font.stats"),
-                cex = par("cex")*qcc.options("cex.stats"))
-        }        
-    }
+    }        
+    #
+    if(is.numeric(pred.limits))
+    { 
+      mtext(paste(label.pred.limits[1], " = ", signif(pred.limits[1], digits), sep = ""),
+            side = 1, outer = TRUE, line = 0*cex.stats, adj = 0, at = at[3],
+            font = qcc.options("font.stats"),
+            cex = par("cex")*qcc.options("cex.stats"))
+      mtext(paste(label.pred.limits[2], " = ", signif(pred.limits[2], digits), sep = ""),
+            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[3],
+            font = qcc.options("font.stats"),
+            cex = par("cex")*qcc.options("cex.stats"))
+      mtext(paste("Num. beyond limits =",
+                  sum(violations==2, na.rm=TRUE)), 
+            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[3],
+            font = qcc.options("font.stats"),
+            cex = par("cex")*qcc.options("cex.stats"))
+    }        
+  }
+  
   invisible() 
 }
 
@@ -419,9 +457,9 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
      ylim <- range(pretty(stats[,2],1), q2$limits)
   if(missing(title))
     { if(is.null(object$newstats))
-           main.title <- paste("Ellipse chart\nfor", object$data.name)
+           main.title <- paste("Ellipse chart for", object$data.name)
       else if(chart.all)
-                main.title <- paste("Ellipse chart\nfor", 
+                main.title <- paste("Ellipse chart for", 
                                     object$data.name, "and",
                                     object$newdata.name)
            else main.title <- paste("Ellipse chart\nfor", 
@@ -437,11 +475,15 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   T2    <- matrix(T2, ngrid, ngrid)
   q <- object$limits[2]
   
+  cex.labels <- par("cex")*qcc.options("cex")
+  cex.stats <- par("cex")*qcc.options("cex.stats")
+  
   oldpar <- par(no.readonly = TRUE)
   if(restore.par) on.exit(par(oldpar))
   par(bg  = qcc.options("bg.margin"), 
       cex = oldpar$cex * qcc.options("cex"),
-      mar = pmax(oldpar$mar, c(4.1,4.1,3.1,2.1)))
+      mar = pmax(par("mar"), c(4.1,4.1,1.1,2.1), na.rm=TRUE),
+      oma = c(0, 0, 1.5*cex.labels, 0))
 
   # plot ellipse chart
   plot(stats, type = "n", xlim = xlim, ylim = ylim, 
@@ -450,34 +492,34 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
   box()
-  top.line <- par("mar")[3]-length(capture.output(cat(main.title)))-0.5
-  mtext(main.title, side = 3, line = top.line,
+  mtext(main.title, side = 3, outer = TRUE, 
+        line = 0, adj = 0, at = par("plt")[1],
         font = par("font.main"), 
-        cex  = qcc.options("cex"), 
+        cex  = par("cex")*qcc.options("cex"), 
         col  = par("col.main"))
   
   contour(grid[,1], grid[,2], T2, levels = q, drawlabels = FALSE, add=TRUE)
   points(center[1], center[2], pch=3, cex=2)
 
-  v <- object$violations$beyond.limits
+  v <- which(object$violations > 0)
+  col    <- rep(palette()[1], nrow(stats))
+  col[v] <- qcc.options("rules")$col[1]
+  pch    <- rep(1, nrow(stats))
+  pch[v] <- qcc.options("rules")$pch[1]
   if(show.id) 
-    { text(stats, labels = names(object$statistics), 
-           cex = 0.8*qcc.options("cex"),
-           col = { col <- rep(1, nrow(stats))
-                   col[v] <- qcc.options("beyond.limits")$col
-                   col })
-  }
-  else        
-    { points(stats, ...) 
-      if(length(v))
-        { points(stats[v,,drop=FALSE], 
-                 col = qcc.options("beyond.limits")$col, 
-                 pch = qcc.options("beyond.limits")$pch)}
+  { 
+    text(stats, labels = names(object$statistics), 
+         cex = 0.8*qcc.options("cex"), col = col)
+  } else        
+  { 
+    points(stats, col = col, pch = pch) 
   }
 
   if(!is.null(q1) & !is.null(q2)) 
-    { abline(v=q1$limits, lty=2)
-      abline(h=q2$limits, lty=2) }
+  { 
+    abline(v = q1$limits, lty = 2)
+    abline(h = q2$limits, lty = 2) 
+  }
   #
   invisible() 
 }

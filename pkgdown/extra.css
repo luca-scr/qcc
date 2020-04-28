@@ -3,6 +3,49 @@ a {
   text-decoration: none
 }
 
+.navbar-default {
+  background-color: #0c0c0d;
+  border-color: #0c0c0d
+}
+
+.navbar-default .navbar-nav > li > a 
+{
+  color: #b0bec5
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #b0bec5
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #b0bec5
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: #0c0c0d
+}
+
+.navbar-default .navbar-link {
+    color: #b0bec5
+}
+
+.navbar-default .navbar-link:hover {
+    color: #ffffff
+}
+
+.navbar-default .btn-link {
+    color: #b0bec5
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #b0bec5
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: #b0bec5
+}
+
+
 a:hover, a:focus {
   color: #165ba8;
   text-decoration: underline;

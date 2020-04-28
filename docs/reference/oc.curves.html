@@ -8,21 +8,29 @@
 
 <title>Operating Characteristic Function — ocCurves • qcc</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +40,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Operating Characteristic Function — ocCurves" />
 
+<meta property="og:title" content="Operating Characteristic Function — ocCurves" />
 <meta property="og:description" content="Draws the operating characteristic curves for a 'qcc' object." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,9 +57,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +90,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
@@ -96,6 +104,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -107,36 +116,34 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Draws the operating characteristic curves for a <code>'qcc'</code> object.</p>
-    
     </div>
 
-    <pre class="usage">ocCurves(object, &#8230;)
+    <pre class="usage"><span class='fu'>ocCurves</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-ocCurves.xbar(object, n, c = seq(0, 5, length=101), nsigmas = object$nsigmas, 
-              lty = rep(1, length(n)), lwd = rep(2, length(n)), 
-              col = blues.colors(length(n)), 
-              identify=FALSE, restore.par=TRUE)
+<span class='fu'>ocCurves.xbar</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>101</span>), <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
+              <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
+              <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
+              <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 
-ocCurves.R(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
-           lty = rep(1, length(n)), lwd = rep(2, length(n)), 
-           col = blues.colors(length(n)), 
-           identify = FALSE, restore.par=TRUE)
+<span class='fu'>ocCurves.R</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>6</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>101</span>), <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
+           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
+           <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
+           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 
-ocCurves.S(object, n, c = seq(1, 6, length=101), nsigmas = object$nsigmas, 
-           lty = rep(1, length(n)), lwd = rep(2, length(n)), 
-           col = blues.colors(length(n)), 
-           identify = FALSE, restore.par=TRUE)
+<span class='fu'>ocCurves.S</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>6</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>101</span>), <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
+           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
+           <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
+           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 
-ocCurves.p(object, nsigmas = object$nsigmas, 
-           lty = 1, lwd = 2, col = blues.colors(1),
-           identify = FALSE, restore.par=TRUE)
+<span class='fu'>ocCurves.p</span>(<span class='no'>object</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
+           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fl'>1</span>),
+           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 
-ocCurves.c(object, nsigmas = object$nsigmas, 
-           lty = 1, lwd = 2, col = blues.colors(1),
-           identify = FALSE, restore.par=TRUE)</pre>
-    
+<span class='fu'>ocCurves.c</span>(<span class='no'>object</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
+           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fl'>1</span>),
+           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -146,7 +153,7 @@ ocCurves.c(object, nsigmas = object$nsigmas,
     </tr>
     <tr>
       <th>identify</th>
-      <td><p>logical specifying whether to interactively identify points on the plot (see help for <code><a href='https://www.rdocumentation.org/packages/graphics/topics/identify'>identify</a></code>).</p></td>
+      <td><p>logical specifying whether to interactively identify points on the plot (see help for <code><a href='https://rdrr.io/r/graphics/identify.html'>identify</a></code>).</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -172,20 +179,18 @@ is ignored for types "p" and "c".</p></td>
       <td><p>a logical value indicating whether the previous <code>par</code> settings must be restored. If you need to add points, lines, etc. to a chart set this to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>additional arguments to be passed to the generic function.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. <code>ocCurves</code> is a generic function which calls the proper function depending on the type of <code>'qcc'</code> object. Further arguments provided through <code>&#8230;</code> are passed to the specific function depending on the type of chart.</p>
+    <p>An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. <code>ocCurves</code> is a generic function which calls the proper function depending on the type of <code>'qcc'</code> object. Further arguments provided through <code>...</code> are passed to the specific function depending on the type of chart.</p>
 <p>The probabilities are based on the conventional assumptions about process distributions: the normal distribution for <code>"xbar"</code>, <code>"R"</code>, and <code>"S"</code>, the binomial distribution for <code>"p"</code> and <code>"np"</code>, and the Poisson distribution for <code>"c"</code> and <code>"u"</code>. They are all sensitive to departures from those assumptions, but to varying degrees. The performance of the <code>"S"</code> chart, and especially the <code>"R"</code> chart, are likely to be seriously affected by longer tails.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The function invisibly returns a matrix or a vector of beta values, the probability of type II error.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
@@ -193,16 +198,14 @@ is ignored for types "p" and "c".</p></td>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='qcc.html'>qcc</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
 <span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))</div><div class='img'><img src='oc.curves-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;                sample size
+<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))</div><div class='img'><img src='oc.curves-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;                sample size
 #&gt; shift (std.dev)    n=1    n=5   n=10   n=15   n=20
 #&gt;            0    0.9973 0.9973 0.9973 0.9973 0.9973
 #&gt;            0.05 0.9973 0.9971 0.9970 0.9968 0.9966
@@ -304,13 +307,12 @@ is ignored for types "p" and "c".</p></td>
 #&gt;            4.85 0.0322 0.0000 0.0000 0.0000 0.0000
 #&gt;            4.9  0.0287 0.0000 0.0000 0.0000 0.0000
 #&gt;            4.95 0.0256 0.0000 0.0000 0.0000 0.0000
-#&gt;            5    0.0228 0.0000 0.0000 0.0000 0.0000</div><div class='input'># or to identify points on the plot use
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>), <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='co'># }</span><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice</span>)
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>,
-             <span class='fu'>ocCurves</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0   0.01   0.02   0.03   0.04   0.05   0.06   0.07   0.08   0.09    0.1 
+#&gt;            5    0.0228 0.0000 0.0000 0.0000 0.0000</div><div class='input'><span class='co'># or to identify points on the plot use</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>), <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>orangejuice</span>)
+<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>,
+             <span class='fu'>ocCurves</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0   0.01   0.02   0.03   0.04   0.05   0.06   0.07   0.08   0.09    0.1 
 #&gt; 0.0000 0.0894 0.2642 0.4447 0.5995 0.7206 0.8100 0.8735 0.9173 0.9468 0.9662 
 #&gt;   0.11   0.12   0.13   0.14   0.15   0.16   0.17   0.18   0.19    0.2   0.21 
 #&gt; 0.9788 0.9869 0.9920 0.9951 0.9971 0.9983 0.9990 0.9993 0.9995 0.9995 0.9993 
@@ -330,10 +332,10 @@ is ignored for types "p" and "c".</p></td>
 #&gt; 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 
 #&gt;   0.99      1 
 #&gt; 0.0000 0.0000 </div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>,
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>circuit</span>)
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>,
           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves</span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0      1      2      3      4      5      6      7      8      9     10 
+<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves</span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0      1      2      3      4      5      6      7      8      9     10 
 #&gt; 0.0000 0.0006 0.0166 0.0839 0.2149 0.3840 0.5543 0.6993 0.8088 0.8843 0.9329 
 #&gt;     11     12     13     14     15     16     17     18     19     20     21 
 #&gt; 0.9625 0.9797 0.9893 0.9945 0.9972 0.9986 0.9991 0.9992 0.9986 0.9972 0.9945 
@@ -346,26 +348,13 @@ is ignored for types "p" and "c".</p></td>
 #&gt;     55     56     57     58     59     60     61     62     63     64     65 
 #&gt; 0.0010 0.0006 0.0004 0.0003 0.0002 0.0001 0.0001 0.0000 0.0000 0.0000 0.0000 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Luca Scrucca</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -373,13 +362,16 @@ is ignored for types "p" and "c".</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

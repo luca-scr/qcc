@@ -8,21 +8,29 @@
 
 <title>Quality Control Charts — qcc • qcc</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +40,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Quality Control Charts — qcc" />
 
+<meta property="og:title" content="Quality Control Charts — qcc" />
 <meta property="og:description" content="Create an object of class 'qcc' to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,9 +57,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +90,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
@@ -96,6 +104,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -107,33 +116,31 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Create an object of class <code>'qcc'</code> to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.</p>
-    
     </div>
 
-    <pre class="usage">qcc(data, 
-    type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), 
-    sizes, center, std.dev, limits,
-    data.name, labels, 
-    newdata, newsizes, newdata.name, newlabels, 
-    nsigmas = 3, confidence.level,
-    rules = c(1,4), plot = TRUE, &#8230;)
+    <pre class="usage"><span class='fu'>qcc</span>(<span class='no'>data</span>,
+    <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"xbar"</span>, <span class='st'>"R"</span>, <span class='st'>"S"</span>, <span class='st'>"xbar.one"</span>, <span class='st'>"p"</span>, <span class='st'>"np"</span>, <span class='st'>"c"</span>, <span class='st'>"u"</span>, <span class='st'>"g"</span>),
+    <span class='no'>sizes</span>, <span class='no'>center</span>, <span class='no'>std.dev</span>, <span class='no'>limits</span>,
+    <span class='no'>data.name</span>, <span class='no'>labels</span>,
+    <span class='no'>newdata</span>, <span class='no'>newsizes</span>, <span class='no'>newdata.name</span>, <span class='no'>newlabels</span>,
+    <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>confidence.level</span>,
+    <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-# S3 method for qcc
-print(x, digits = getOption("digits"), &#8230;)
+<span class='co'># S3 method for qcc</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>), <span class='no'>...</span>)
 
-# S3 method for qcc
-plot(x,
-     add.stats = qcc.options("add.stats"), 
-     chart.all = qcc.options("chart.all"), 
-     fill = qcc.options("fill"),
-     label.center = "CL",
-     label.limits = c("LCL ", "UCL"),
-     title, xlab, ylab, ylim, axes.las = 0, 
-     digits = getOption("digits"),
-     restore.par = TRUE, &#8230;)</pre>
-    
+<span class='co'># S3 method for qcc</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
+     <span class='kw'>add.stats</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"add.stats"</span>),
+     <span class='kw'>chart.all</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"chart.all"</span>),
+     <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"fill"</span>),
+     <span class='kw'>label.center</span> <span class='kw'>=</span> <span class='st'>"CL"</span>,
+     <span class='kw'>label.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"LCL "</span>, <span class='st'>"UCL"</span>),
+     <span class='no'>title</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>, <span class='no'>ylim</span>, <span class='kw'>axes.las</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+     <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>),
+     <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -147,23 +154,16 @@ plot(x,
       <th>type</th>
       <td><p>a character string specifying the group statistics to compute. <br />
   Available methods are:</p><table class='table'>
-<tr><td></td><td></td><td>Statistic charted</td></tr>
-<tr><td>Chart description</td><td></td><td><code>"xbar"</code></td></tr>
-<tr><td></td><td>mean</td><td>means of a continuous process variable</td></tr>
-<tr><td></td><td><code>"R"</code></td><td></td></tr>
-<tr><td>range</td><td>ranges of a continuous process variable</td><td></td></tr>
-<tr><td><code>"S"</code></td><td></td><td>standard deviation</td></tr>
-<tr><td>standard deviations of a continuous variable</td><td></td><td><code>"xbar.one"</code></td></tr>
-<tr><td></td><td>mean</td><td>one-at-time data of a continuous process variable</td></tr>
-<tr><td></td><td><code>"p"</code></td><td></td></tr>
-<tr><td>proportion</td><td>proportion of nonconforming units</td><td></td></tr>
-<tr><td><code>"np"</code></td><td></td><td>count</td></tr>
-<tr><td>number of nonconforming units</td><td></td><td><code>"c"</code></td></tr>
-<tr><td></td><td>count</td><td>nonconformities per unit</td></tr>
-<tr><td></td><td><code>"u"</code></td><td></td></tr>
-<tr><td>count</td><td>average nonconformities per unit</td><td></td></tr>
-<tr><td><code>"g"</code></td><td></td><td>count</td></tr>
-<tr><td>number of non-events between events</td><td></td><td></td></tr>
+<tr><td></td><td>Statistic charted</td><td>Chart description</td></tr>
+<tr><td><code>"xbar"</code></td><td>mean</td><td>means of a continuous process variable</td></tr>
+<tr><td><code>"R"</code></td><td>range</td><td>ranges of a continuous process variable</td></tr>
+<tr><td><code>"S"</code></td><td>standard deviation</td><td>standard deviations of a continuous variable</td></tr>
+<tr><td><code>"xbar.one"</code></td><td>mean</td><td>one-at-time data of a continuous process variable</td></tr>
+<tr><td><code>"p"</code></td><td>proportion</td><td>proportion of nonconforming units</td></tr>
+<tr><td><code>"np"</code></td><td>count</td><td>number of nonconforming units</td></tr>
+<tr><td><code>"c"</code></td><td>count</td><td>nonconformities per unit</td></tr>
+<tr><td><code>"u"</code></td><td>count</td><td>average nonconformities per unit</td></tr>
+<tr><td><code>"g"</code></td><td>count</td><td>number of non-events between events</td></tr>
 </table>
 <p>Furthermore, a user specified type of chart, say <code>"newchart"</code>, can be provided. This requires the definition of <code>"stats.newchart"</code>, <code>"sd.newchart"</code>, and <code>"limits.newchart"</code>. As an example, see <code><a href='stats.xbar.html'>stats.xbar</a></code>.</p></td>
     </tr>
@@ -263,7 +263,7 @@ Several methods are available for estimating the standard deviation in case of a
     </tr>
     <tr>
       <th>axes.las</th>
-      <td><p>numeric in {0,1,2,3} specifying the style of axis labels. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></code>.</p></td>
+      <td><p>numeric in {0,1,2,3} specifying the style of axis labels. See <code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -278,19 +278,17 @@ Several methods are available for estimating the standard deviation in case of a
       <td><p>an object of class <code>'qcc'</code>.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>additional arguments to be passed to the generic function.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns an object of class <code>'qcc'</code>.</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For a nice blog post discussing the <code>qcc</code> package, in particular how to implement the <em>Western Eletric Rules (WER)</em>, see <a href='http://blog.yhat.com/posts/quality-control-in-r.html'>http://blog.yhat.com/posts/quality-control-in-r.html</a>.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
@@ -298,17 +296,15 @@ Several methods are available for estimating the standard deviation in case of a
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rules.html'>shewhart.rules</a></code>, <code><a href='cusum.html'>cusum</a></code>, <code><a href='ewma.html'>ewma</a></code>, <code><a href='oc.curves.html'>ocCurves</a></code>, <code><a href='processCapability.html'>processCapability</a></code>, <code><a href='qccGroups.html'>qccGroups</a></code></p></div>
-    
+    <div class='dont-index'><p><code><a href='rules.html'>qccRules</a></code>, <code><a href='cusum.html'>cusum</a></code>, <code><a href='ewma.html'>ewma</a></code>, <code><a href='oc.curves.html'>ocCurves</a></code>, <code><a href='processCapability.html'>processCapability</a></code>, <code><a href='qccGroups.html'>qccGroups</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>##</span>
 <span class='co'>##  Continuous data </span>
 <span class='co'>##</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pistonrings</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
 <span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
 
 <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
@@ -338,7 +334,7 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
 #&gt;  73.98805 74.0143</div><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='qcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='qcc-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='qcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='qcc-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar 
 #&gt; Data (phase I)             = diameter[1:25, ] 
@@ -426,9 +422,9 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='co'># add warning limits at 2 std. deviations</span>
 <span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 (<span class='no'>warn.limits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='stats.xbar.html'>limits.xbar</a></span>(<span class='no'>q</span>$<span class='no'>center</span>, <span class='no'>q</span>$<span class='no'>std.dev</span>, <span class='no'>q</span>$<span class='no'>sizes</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;       LCL      UCL
-#&gt;  73.99242 74.00993</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>h</span> <span class='kw'>=</span> <span class='no'>warn.limits</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"chocolate"</span>)</div><div class='img'><img src='qcc-10.png' alt='' width='504' height='432' /></div><div class='input'>
+#&gt;  73.99242 74.00993</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span> <span class='kw'>=</span> <span class='no'>warn.limits</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"chocolate"</span>)</div><div class='img'><img src='qcc-10.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># variable control limits</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>45</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>85</span>, <span class='fl'>99</span>, <span class='fl'>100</span>)
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>45</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>85</span>, <span class='fl'>99</span>, <span class='fl'>100</span>)
 <span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>[-<span class='no'>out</span>,])
 <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-11.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
@@ -543,9 +539,9 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='co'>##  Attribute data </span>
 <span class='co'>##</span>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>orangejuice</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>,
      <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-17.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = p 
@@ -562,9 +558,9 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; :                     
 #&gt;   0.05242755 0.4102391</div><div class='input'>
 <span class='co'># remove out-of-control points (see help(orangejuice) for the reasons)</span>
-<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
-           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-18.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
+<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
+<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
+           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-18.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>,
          <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-19.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
@@ -585,8 +581,8 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;   0.04070284 0.3892972
 #&gt; :                     
 #&gt;   0.04070284 0.3892972</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>orangejuice2</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice2</span>,
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>orangejuice2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice2</span>,
      <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-20.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = p 
@@ -601,11 +597,11 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;     0 0.2440207
 #&gt;     0 0.2440207
 #&gt; :              
-#&gt;     0 0.2440207</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice2</span>,
+#&gt;     0 0.2440207</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice2</span>,
            <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
                <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-21.png' alt='' width='504' height='432' /></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>))</div><div class='img'><img src='qcc-22.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>circuit</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>))</div><div class='img'><img src='qcc-22.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = c 
 #&gt; Data (phase I)             = x[trial] 
@@ -618,9 +614,9 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;       LCL      UCL
 #&gt;  6.481447 33.21086</div><div class='input'>
 <span class='co'># remove out-of-control points (see help(circuit) for the reasons)</span>
-<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
-           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-23.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
+<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
+<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
+           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-23.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>,
          <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-24.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
@@ -641,8 +637,8 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;   0.04070284 0.3892972
 #&gt; :                     
 #&gt;   0.04070284 0.3892972</div><div class='input'>
-<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>6</span>,<span class='fl'>20</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
+<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>6</span>,<span class='fl'>20</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-25.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = c 
@@ -654,7 +650,7 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
-#&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
+#&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-26.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
@@ -671,7 +667,7 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
-#&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
+#&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
      <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-27.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
@@ -689,8 +685,8 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; Control limits at nsigmas  = 3 
 #&gt;         LCL      UCL
 #&gt;  0.06362532 0.329708</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pcmanufact</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>pcmanufact</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-28.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pcmanufact</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>pcmanufact</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-28.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = u 
 #&gt; Data (phase I)             = x 
@@ -702,9 +698,9 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; Control limits at nsigmas  = 3 
 #&gt;         LCL      UCL
 #&gt;  0.06613305 3.793867</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dyedcloth</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dyedcloth</span>)
 <span class='co'># variable control limits</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-29.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-29.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = u 
 #&gt; Data (phase I)             = x 
@@ -721,10 +717,10 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;   0.1578852 2.688626
 #&gt; :                   
 #&gt;   0.4109593 2.435552</div><div class='input'><span class='co'># standardized control chart</span>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
-<span class='no'>z</span> <span class='kw'>&lt;-</span> (<span class='no'>q</span>$<span class='no'>statistics</span> - <span class='no'>q</span>$<span class='no'>center</span>)/<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>sqrt</a></span>(<span class='no'>q</span>$<span class='no'>center</span>/<span class='no'>q</span>$<span class='no'>size</span>)
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
+<span class='no'>z</span> <span class='kw'>&lt;-</span> (<span class='no'>q</span>$<span class='no'>statistics</span> - <span class='no'>q</span>$<span class='no'>center</span>)/<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>q</span>$<span class='no'>center</span>/<span class='no'>q</span>$<span class='no'>size</span>)
 <span class='fu'>qcc</span>(<span class='no'>z</span>, <span class='kw'>sizes</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"u"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Standardized u chart"</span>,
-    <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'std.dev' is not used when limits is given</span></div><div class='img'><img src='qcc-30.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+    <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'std.dev' is not used when limits is given</span></div><div class='img'><img src='qcc-30.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = u 
 #&gt; Data (phase I)             = z 
@@ -740,8 +736,8 @@ Several methods are available for estimating the standard deviation in case of a
 <span class='co'>##  Continuous one-at-time data </span>
 <span class='co'>##</span>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>viscosity</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>viscosity</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>viscosity</span>,
      <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar.one 
@@ -756,7 +752,7 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;  32.56504 35.61096</div><div class='input'><span class='co'># batch 4 is out-of-control because of a process temperature controller</span>
 <span class='co'># failure; remove it and recompute</span>
 <span class='no'>viscosity</span> <span class='kw'>&lt;-</span> <span class='no'>viscosity</span>[-<span class='fl'>4</span>,]
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>viscosity</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>viscosity</span>,
      <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
@@ -775,26 +771,13 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;       LCL     UCL
 #&gt;  32.75425 35.2247</div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Luca Scrucca</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -802,13 +785,16 @@ Several methods are available for estimating the standard deviation in case of a
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

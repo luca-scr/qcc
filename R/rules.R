@@ -11,8 +11,8 @@ qccRules <- function(object, rules = object$rules)
   # Return a vector of indices for cases (statistics & new.statistics) 
   # in object violating specified rules (NA if no rule is violated)
   rules <- as.numeric(rules)
-  if(!inherits(object, "qcc"))
-    stop("input object must be of class 'qcc'")
+  if(!(inherits(object, "qcc") | inherits(object, "mqcc")))
+    stop("input object must be of class 'qcc' or 'mqcc'")
   stats <- c(object$statistics, object$newstats)
   out <- rep(NA, length(stats))
   if(any(rules == 4)) 
@@ -39,10 +39,9 @@ qccRules <- function(object, rules = object$rules)
   return(out)
 }
 
-qccRulesViolatingWER1 <- function(object)
+qccRulesViolatingWER1 <- function(object, limits = object$limits)
 {
   # Return cases beyond control limits (WER #1)
-  limits <- object$limits
   statistics <- c(object$statistics, object$newstats) 
   lcl <- limits[,1]
   ucl <- limits[,2]
@@ -86,81 +85,6 @@ qccRulesViolatingWER4 <- function(object)
 {
   # Return indices of points violating runs (WER #4)
   run.length <- 8
-  center <- object$center
-  statistics <- c(object$statistics, object$newstats)
-  cl <- object$limits
-  diffs <- statistics - center
-  diffs[diffs > 0] <- 1
-  diffs[diffs < 0] <- -1
-  runs <- rle(diffs)
-  vruns <- rep(runs$lengths >= run.length, runs$lengths)
-  vruns.above <- (vruns & (diffs > 0))
-  vruns.below <- (vruns & (diffs < 0))
-  rvruns.above <- rle(vruns.above)
-  rvruns.below <- rle(vruns.below)
-  vbeg.above <- cumsum(rvruns.above$lengths)[rvruns.above$values] -
-    (rvruns.above$lengths - run.length)[rvruns.above$values]
-  vend.above <- cumsum(rvruns.above$lengths)[rvruns.above$values]
-  vbeg.below <- cumsum(rvruns.below$lengths)[rvruns.below$values] -
-    (rvruns.below$lengths - run.length)[rvruns.below$values]
-  vend.below <- cumsum(rvruns.below$lengths)[rvruns.below$values]
-  violators <- numeric()
-  if (length(vbeg.above)) 
-  { for (i in 1:length(vbeg.above))
-    violators <- c(violators, vbeg.above[i]:vend.above[i]) }
-  if (length(vbeg.below)) 
-  { for (i in 1:length(vbeg.below))
-    violators <- c(violators, vbeg.below[i]:vend.below[i]) }
-  return(violators)
-}
-
-
-
-#
-# Functions used to signal points out of control in 'qcc' version <= 2.x
-#
-# TODO: to remove when new rules are ok
-
-shewhart.rules <- function(object, limits = object$limits, run.length = qcc.options("run.length"))
-{
-# Return a list of cases beyond limits and violating runs
-  bl <- beyond.limits(object, limits = limits)
-  vr <- violating.runs(object, run.length = run.length)
-  list(beyond.limits = bl, violating.runs = vr)
-}
-
-# shewhartRules <- function(object, 
-#                            limits = object$limits, 
-#                            run.length = qcc.options("run.length"))
-# {
-#   # Return a vector of indices for cases (statistics & new.statistics) 
-#   # violating the two basic Shewhart rules (NA if no rule is violated)
-#   stats <- c(object$statistics, object$newstats)
-#   out <- rep(NA, length(stats))
-#   bl <- beyond.limits(object, limits = limits)
-#   vr <- violating.runs(object, run.length = run.length)
-#   out[vr] <- 2
-#   out[bl] <- 1
-#   attr(out, "rules") <- "shr"
-#   return(out)
-# }
-
-beyond.limits <- function(object, limits = object$limits)
-{
-  # Return cases beyond limits
-  statistics <- c(object$statistics, object$newstats) 
-  lcl <- limits[,1]
-  ucl <- limits[,2]
-  index.above.ucl <- seq(along = statistics)[statistics > ucl]
-  index.below.lcl <- seq(along = statistics)[statistics < lcl]
-  return(c(index.above.ucl, index.below.lcl))
-}
-
-violating.runs <- function(object, run.length = qcc.options("run.length"))
-{
-  # Return indices of points violating runs
-  if(run.length == 0)
-    return(numeric())
   center <- object$center
   statistics <- c(object$statistics, object$newstats)
   cl <- object$limits

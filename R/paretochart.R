@@ -49,6 +49,7 @@ plot.paretoChart <- function(x, xlab = NULL,
                              ...)
 {
   call <- x$call
+	args <- list(...)
   freq <- x$tab[,1]
   cumfreq <- x$tab[,2]
   cumperc <- cumperc[cumperc >= 0 & cumperc <= 100]
@@ -61,34 +62,33 @@ plot.paretoChart <- function(x, xlab = NULL,
   
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
-  # plot.new()
 
   # set las and mar if not provided by user
-  # browser()
   w <- max(strwidth(rownames(x$tab), units = "inch"))
-  las <- if(is.null(call$las)) 3 else eval(call$las)
-  if(is.null(call$mar))
+  args$las <- if(is.null(args$las)) 3 else args$las
+  if(is.null(args$mar))
   { 
     c <- max(par("mar")/par("mai"))
     mar <- c(3.1,4.1,1,4.1)
-    if(las==2 | las==3) mar[1] <- c*w+1
+    if(args$las==2 | args$las==3) mar[1] <- c*w+1
   } else 
   { 
-    mar <- eval(call$mar)
+    mar <- eval(args$mar)
   }
   if(!is.null(xlab)) mar[1] <- mar[1] + 1.5
-  cex.labels <- par("cex")*qcc.options("cex")
+  
+  args$cex.names <- if(is.null(args$cex.names)) qcc.options("cex")*0.9 else args$cex.names
+  args$cex.axis  <- if(is.null(args$cex.axis))  qcc.options("cex")*0.9 else args$cex.axis
+  args$cex.lab   <- if(is.null(args$cex.lab))   qcc.options("cex")*0.9 else args$cex.lab
 
   par(bg  = qcc.options("bg.margin"),
-      oma = c(0, 0, 1.5*cex.labels, 0),
+      oma = c(0, 0, 1.5*args$cex.names, 0),
       mar = mar) 
-  #
+  
   pc <- barplot(freq, width = 1, space = 0.2, col = col,
                 ylim = ylim, ylab = ylab, xlab = xlab, yaxt = "n", 
-                cex.names = par("cex.axis")*0.9, 
-                cex.axis = par("cex.axis")*0.9, 
-                cex.lab = par("cex.axis")*0.9, 
-                las = las, ...)
+                cex.names = args$cex.names, cex.axis  = args$cex.axis,
+                cex.lab   = args$cex.lab, las = args$las)
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
   
@@ -104,9 +104,9 @@ plot.paretoChart <- function(x, xlab = NULL,
   rect(pc-0.5, rep(0,nlevels), pc+0.5, freq, col = col)
   lines(pc, cumfreq, type = "b", cex = 0.8*par("cex"), pch = 19)
   box()
-  axis(2, las = las, cex.axis = par("cex.axis")*0.9)
-  axis(4, at = q, las = las, labels = paste(cumperc, "%", sep = ""),
+  axis(2, las = args$las, cex.axis = par("cex.axis")*0.9)
+  axis(4, at = q, las = args$las, labels = paste(cumperc, "%", sep = ""),
        cex.axis = par("cex.axis")*0.9)
-  mtext(ylab2, side = 4, line = 2.5, las = las, 
+  mtext(ylab2, side = 4, line = 2.5, las = args$las, 
         cex = par("cex.axis")*0.9)
 }

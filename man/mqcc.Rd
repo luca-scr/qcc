@@ -13,7 +13,6 @@ mqcc(data, type = c("T2", "T2.single"), center, cov,
      limits = TRUE, pred.limits = FALSE,
      data.name, labels, newdata, newlabels, 
      confidence.level = (1 - 0.0027)^p,
-     rules = shewhart.rules,
      plot = TRUE, \dots)
 
 \method{print}{mqcc}(x, digits = getOption("digits"), \dots)
@@ -21,6 +20,7 @@ mqcc(data, type = c("T2", "T2.single"), center, cov,
 \method{plot}{mqcc}(x, 
      add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
+     fill = qcc.options("fill"),
      label.limits = c("LCL", "UCL"), 
      label.pred.limits = c("LPL", "UPL"),
      title, xlab, ylab, ylim, axes.las = 0, 
@@ -61,13 +61,14 @@ For individual observations, where each sample has a single observation, users c
 \item{confidence.level}{a numeric value between 0 and 1 specifying the confidence level of the computed probability limits. 
 By default is set at \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variables, and \eqn{0.0027} is the probability of Type I error for a single Shewhart chart at the usual 3-sigma control level.} 
 
-\item{rules}{a function of rules to apply to the chart. By default, the \code{shewhart.rules} function is used.}
-
 \item{plot}{logical. If \code{TRUE} a quality chart is plotted.}
 
 \item{add.stats}{a logical value indicating whether statistics and other information should be printed at the bottom of the chart.}
 
 \item{chart.all}{a logical value indicating whether both statistics for \code{data} and for \code{newdata} (if given) should be plotted.}
+
+\item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
+\code{qcc.options("zones")$fill}.}
 
 \item{label.limits}{a character vector specifying the labels for control limits (Phase I).}
 

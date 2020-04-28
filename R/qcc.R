@@ -91,10 +91,11 @@ qcc <- function(data,
   rules <- as.numeric(rules)
   
   # create object of class 'qcc'
-  object <- list(call = call, type = type, rules = rules,
+  object <- list(call = call, type = type,
                  data.name = data.name, data = data, 
                  statistics = statistics, sizes = sizes, 
-                 center = center, std.dev = std.dev)
+                 center = center, std.dev = std.dev,
+                 rules = rules)
   class(object) <- "qcc"
 
   # check for new data provided and update object
@@ -164,7 +165,7 @@ qcc <- function(data,
      }
   object$limits <- limits
   
-  # get violating runs
+  # identify violating rules observations
   object$violations <- qccRules(object)
 
   if(plot) plot(object, ...) 

@@ -1,7 +1,7 @@
 # qcc 3.0 (NOT ON CRAN)
 
-- Modification to rules for out-of-control points, with the implementation of Western Eletric Rules (WER) which can be actived by users.
-- Several modifications to plots appearance.
+- Modification of rules for out-of-control points. A subset of Western Eletric Rules (WER) have been implemented. See `qccRules()`.
+- Several modifications to plot and print appearances.
 - Added funtion `describe()` to statistically describe variables in a data.frame according to the type.
 - `qcc.groups()` now has optional argument `data` to extract variables from 
 a data.frame.

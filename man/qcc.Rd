@@ -133,7 +133,7 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \author{Luca Scrucca}
 %\note{ ~~further notes~~ }
 
-\seealso{\code{\link{shewhart.rules}}, \code{\link{cusum}}, \code{\link{ewma}}, \code{\link{ocCurves}}, \code{\link{processCapability}}, \code{\link{qccGroups}} }
+\seealso{\code{\link{qccRules}}, \code{\link{cusum}}, \code{\link{ewma}}, \code{\link{ocCurves}}, \code{\link{processCapability}}, \code{\link{qccGroups}} }
 
 \examples{
 ##

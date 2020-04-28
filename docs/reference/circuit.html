@@ -8,21 +8,29 @@
 
 <title>Circuit boards data — circuit • qcc</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,12 +40,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Circuit boards data — circuit" />
 
+<meta property="og:title" content="Circuit boards data — circuit" />
 <meta property="og:description" content="Number of nonconformities observed in 26 successive samples of 100 printed circuit boards.
 Sample 6 and 20 are outside the control limits. Sample 6 was examined by a new inspector and he did not recognize several type of nonconformities that could have been present. Furthermore, the unusually large number of nonconformities in sample 20 resulted from a temperature control problem in the wave soldering machine, which was subsequently repaired.
 The last 20 samples are further samples collected on inspection units (each formed by 100 boards)." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -51,9 +59,10 @@ The last 20 samples are further samples collected on inspection units (each form
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,7 +92,6 @@ The last 20 samples are further samples collected on inspection units (each form
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
@@ -98,6 +106,7 @@ The last 20 samples are further samples collected on inspection units (each form
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -109,58 +118,49 @@ The last 20 samples are further samples collected on inspection units (each form
     </div>
 
     <div class="ref-description">
-    
     <p>Number of nonconformities observed in 26 successive samples of 100 printed circuit boards.
 Sample 6 and 20 are outside the control limits. Sample 6 was examined by a new inspector and he did not recognize several type of nonconformities that could have been present. Furthermore, the unusually large number of nonconformities in sample 20 resulted from a temperature control problem in the wave soldering machine, which was subsequently repaired.
 The last 20 samples are further samples collected on inspection units (each formed by 100 boards).</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)</pre>
-        
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>circuit</span>)</pre>
+
+
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 46 observations on the following 4 variables.</p><dl class='dl-horizontal'>
+    <p>A data frame with 46 observations on the following 4 variables.</p><dl'>
     <dt>sample</dt><dd><p>sample number</p></dd>
     <dt>x</dt><dd><p>number of defectives in 100 printed circuit boards (inspection unit)</p></dd>
     <dt>size</dt><dd><p>sample size</p></dd>
     <dt>trial</dt><dd><p>trial sample indicator (TRUE/FALSE)</p></dd>
-  </dl>
-    
+  
+</dl>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Montgomery, D.C. (1991) <em>Introduction to Statistical Quality Control</em>, 2nd ed, New York, John Wiley &amp; Sons, pp. 173--175</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>circuit</span>)
-<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>circuit</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ───────────────────────────────────────────────────────────────────── 
-#&gt; 
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>circuit</span>)
+<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>circuit</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ─────────────────────────────────────────────────────────────── 
 #&gt;        Obs  Mean StdDev Min Median Max
 #&gt; sample  20  36.5  5.916  27   36.5  46
 #&gt; x       20  18.3  4.714   9   18.5  28
 #&gt; size    20 100.0  0.000 100  100.0 100
 #&gt; 
-#&gt; ── trial = TRUE ────────────────────────────────────────────────────────────────────── 
-#&gt; 
+#&gt; ── trial = TRUE ──────────────────────────────────────────────────────────────── 
 #&gt;        Obs   Mean StdDev Min Median Max
 #&gt; sample  26  13.50  7.649   1   13.5  26
 #&gt; x       26  19.85  7.165   5   19.0  39
-#&gt; size    26 100.00  0.000 100  100.0 100</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>)</div><div class='img'><img src='circuit-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"b"</span>)</div><div class='img'><img src='circuit-2.png' alt='' width='504' height='432' /></div></pre>
+#&gt; size    26 100.00  0.000 100  100.0 100</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>trial</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>)</div><div class='img'><img src='circuit-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>/<span class='no'>size</span> ~ <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>circuit</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"b"</span>)</div><div class='img'><img src='circuit-2.png' alt='' width='504' height='432' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#references">References</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -168,13 +168,16 @@ The last 20 samples are further samples collected on inspection units (each form
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
