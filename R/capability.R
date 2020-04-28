@@ -165,6 +165,7 @@ plot.processCapability <- function(x,
                                    breaks = "scott", 
                                    col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
                                    border = "white",
+                                   title, 
                                    digits = getOption("digits"),
                                    restore.par = TRUE, ...) 
 {
@@ -186,6 +187,10 @@ plot.processCapability <- function(x,
   Cp_k <- object$indices[4,1]
   Cpm  <- object$indices[5,1]
   
+  if(missing(title))
+    title <- "Process capability analysis"
+  if(isFALSE(title) | is.na(title)) title <- ""
+
   oldpar <- par(no.readonly = TRUE)
   if(restore.par) on.exit(par(oldpar))
   cex.labels <- par("cex")*qcc.options("cex")
@@ -203,7 +208,7 @@ plot.processCapability <- function(x,
   rect(usr[1], usr[3], usr[2], usr[4], col = qcc.options("bg.figure"))
   axis(1, cex.axis = par("cex.axis")*0.9)
   box()
-  mtext("Process capability analysis", 
+  mtext(title, 
         side = 3, outer = TRUE, 
         line = 0, adj = 0, at = par("plt")[1],
         font = par("font.main"), 

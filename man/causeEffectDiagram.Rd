@@ -14,7 +14,7 @@ causeEffectDiagram(cause, effect,
 \arguments{
 \item{cause}{a list of causes and branches providing descriptive labels (see the example below).}
 \item{effect}{a string label or the effect.}
-\item{title}{a string specifying the main title to appear on the plot.}
+\item{title}{a character string specifying the main title to appear on the plot. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
 \item{cex}{a vector of values for the graphical character expansion. The values refer, in order, to branches, causes and effect.}
 \item{font}{a vector of values for the font to use. The values refer, in order, to branches, causes and effect.}
 }

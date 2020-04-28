@@ -74,7 +74,7 @@ By default is set at \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variabl
 
 \item{label.pred.limits}{a character vector specifying the labels for prediction  control limits (Phase II).}
 
-\item{title}{a string giving the label for the main title.}
+\item{title}{a string giving the label for the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
 
 \item{xlab}{a string giving the label for the x-axis.}
  

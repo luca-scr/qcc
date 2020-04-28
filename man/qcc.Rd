@@ -94,7 +94,7 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{label.limits}{a character vector specifying the labels for control limits.}
 
-\item{title}{a string giving the label for the main title.}
+\item{title}{a string giving the label for the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
 
 \item{xlab}{a string giving the label for the x-axis.}
  

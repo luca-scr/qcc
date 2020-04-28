@@ -22,7 +22,8 @@ causeEffectDiagram <- function(cause, effect,
   ncup <- nc - round(nc/2)
   nclo <- nc - ncup
   ncc <- max(sapply(cause, length))
-
+  if(isFALSE(title) | is.na(title)) title <- ""
+  
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
   par(bg  = qcc.options("bg.margin"), 

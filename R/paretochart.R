@@ -76,7 +76,7 @@ plot.paretoChart <- function(x, xlab = NULL,
     mar <- eval(args$mar)
   }
   if(!is.null(xlab)) mar[1] <- mar[1] + 1.5
-  
+
   args$cex.names <- if(is.null(args$cex.names)) qcc.options("cex")*0.9 else args$cex.names
   args$cex.axis  <- if(is.null(args$cex.axis))  qcc.options("cex")*0.9 else args$cex.axis
   args$cex.lab   <- if(is.null(args$cex.lab))   qcc.options("cex")*0.9 else args$cex.lab
@@ -91,7 +91,6 @@ plot.paretoChart <- function(x, xlab = NULL,
                 cex.lab   = args$cex.lab, las = args$las)
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
-  
   # box()
   mtext(main, side = 3, outer = TRUE, 
         line = 0, adj = 0, at = par("plt")[1],

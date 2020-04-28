@@ -131,6 +131,7 @@
      <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='st'>"scott"</span>,
      <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/adjustcolor.html'>adjustcolor</a></span>(<span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"zones"</span>)$<span class='no'>fill</span>, <span class='kw'>alpha.f</span> <span class='kw'>=</span> <span class='fl'>0.5</span>),
      <span class='kw'>border</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+     <span class='no'>title</span>,
      <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>),
      <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
@@ -180,6 +181,10 @@
     <tr>
       <th>col, border</th>
       <td><p>values specifying the colour of the area and the border of the histogram.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>a character string specifying the plot title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
     </tr>
     <tr>
       <th>print</th>

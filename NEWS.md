@@ -6,6 +6,7 @@
 - `qcc.groups()` now has optional argument `data` to extract variables from 
 a data.frame.
 - removed usage of `attach/detach` from all examples and documentation.
+- add option to remove the title from all plots using `title = FALSE` or `title = NA`.
 
 # qcc 2.7 
 

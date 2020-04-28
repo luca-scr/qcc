@@ -65,7 +65,7 @@ value less than the \code{decision.interval} for a Fast Initial Response.}
 
 \item{label.bounds}{a character vector specifying the labels for the the decision interval boundaries.}
 
-\item{title}{a string giving the label for the main title.}
+\item{title}{a string giving the label for the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
 
 \item{xlab}{a string giving the label for the x-axis.}
  
