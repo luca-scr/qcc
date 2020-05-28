@@ -119,6 +119,8 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ##
 
 data(RyanMultivar)
+str(RyanMultivar)
+
 q <- mqcc(RyanMultivar, type = "T2")
 summary(q)
 ellipseChart(q)
@@ -160,6 +162,7 @@ summary(qq)
 ##
 
 data(boiler)
+str(boiler)
 
 q <- mqcc(boiler, type = "T2.single", confidence.level = 0.999)
 summary(q)

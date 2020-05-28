@@ -71,7 +71,8 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
 
   # check for new data provided and update object
   if(!missing(newdata))
-    { newdata.name <- deparse(substitute(newdata))
+    { 
+      newdata.name <- deparse(substitute(newdata))
       if(is.matrix(newdata))
          newdata <- as.data.frame(newdata)
       if(is.data.frame(newdata) | is.list(newdata))
@@ -87,13 +88,12 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
                                       cov = object$cov))
       if(missing(newlabels))
         { start <- length(statistics)
-          newlabels <- seq(start+1, start+length(newstats))
-          if(length(newlabels) != length(newstats))
-            stop("labels must match the length of samples provided") 
+          newlabels <- seq(start+1, start+length(newstats$statistics))
         }
+      if(length(newlabels) != length(newstats$statistics))
+        stop("labels must match the length of samples provided") 
       object$newdata  <- newdata
       object$newdata.name <- newdata.name
-      stopifnot(length(newlabels) == length(newstats))
       names(newstats$statistics) <- newlabels
       object$newstats <- newstats$statistics
       object$newmeans <- newstats$means
