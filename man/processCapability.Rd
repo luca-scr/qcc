@@ -19,7 +19,7 @@ processCapability(object, spec.limits, target, std.dev, nsigmas,
      breaks = "scott", 
      col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
      border = "white",
-     title, 
+     title, xlab,
      digits = getOption("digits"),
      restore.par = TRUE, \dots)
 }
@@ -36,6 +36,7 @@ processCapability(object, spec.limits, target, std.dev, nsigmas,
 \item{breaks}{a value or string used to draw the histogram. See the help for  \code{\link{hist}} for more details.}
 \item{col, border}{values specifying the colour of the area and the border of the histogram.}
 \item{title}{a character string specifying the plot title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
+\item{xlab}{a character string specifying the label for the x-axis.}
 \item{print}{a logical value indicating whether statistics and capability indices should be printed.}
 \item{digits}{the number of significant digits to use.}
 \item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a chart set this to \code{FALSE}.}
