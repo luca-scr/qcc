@@ -2,11 +2,12 @@
 
 - Modification of rules for out-of-control points. A subset of Western Eletric Rules (WER) have been implemented. See `qccRules()`.
 - Several modifications to plot and print appearances.
-- Added funtion `describe()` to statistically describe variables in a data.frame according to the type.
+- Added function `describe()` to statistically describe variables in a data.frame according to the type.
 - `qcc.groups()` now has optional argument `data` to extract variables from 
 a data.frame.
-- removed usage of `attach/detach` from all examples and documentation.
-- add option to remove the title from all plots using `title = FALSE` or `title = NA`.
+- Removed usage of `attach/detach` from all examples and documentation.
+- Add option to remove the title from all plots using `title = FALSE` or `title = NA`.
+- Plotting single data values does not issue an error.
 
 # qcc 2.7 
 

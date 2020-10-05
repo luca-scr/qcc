@@ -284,7 +284,7 @@ plot.cusum.qcc <- function(x,
 
   plot(indices, statistics, type="n",
        ylim = if(!missing(ylim)) ylim 
-              else range(cusum.pos, cusum.neg, ldb, udb),
+              else range(cusum.pos, cusum.neg, ldb, udb, na.rm = TRUE),
        ylab = "", xlab = if(missing(xlab)) "Group" else xlab, 
        axes = FALSE)
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 

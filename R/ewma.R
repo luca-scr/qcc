@@ -297,7 +297,7 @@ plot.ewma.qcc <- function(x,
 
   plot(indices, statistics, type="n",
        ylim = if(!missing(ylim)) ylim 
-              else range(statistics, limits),
+              else range(statistics, limits, na.rm = TRUE),
        ylab = ifelse(missing(ylab), "Group Summary Statistics", ylab),
        xlab = ifelse(missing(xlab), "Group", xlab),
        axes = FALSE)

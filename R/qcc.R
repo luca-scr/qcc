@@ -105,7 +105,7 @@ qcc <- function(data,
         newdata <- data.matrix(newdata)
         if (missing(newsizes))
            { if (any(type==c("p", "np", "u")))
-                stop(paste("sample sizes must be given for a", type, "Chart"))
+                stop(paste("sample 'newsizes' must be given for a", type, "Chart"))
              else
                 newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) }
         else
@@ -286,7 +286,7 @@ plot.qcc <- function(x,
   object <- x  # Argh.  Really want to use 'object' anyway
   if ((missing(object)) | (!inherits(object, "qcc")))
     stop("an object of class `qcc' is required")
-  
+
   # collect info from object
   type <- object$type
   std.dev <- object$std.dev
@@ -323,22 +323,24 @@ plot.qcc <- function(x,
   }
   if(isFALSE(title) | is.na(title)) title <- ""
   
-  cex.labels <- par("cex")*qcc.options("cex")
-  cex.stats <- par("cex")*qcc.options("cex.stats")
-  
   oldpar <- par(no.readonly = TRUE)
   if(restore.par) on.exit(par(oldpar))
+
+  cex.labels <- par("cex")*qcc.options("cex")
+  cex.stats <- par("cex")*qcc.options("cex.stats")
+  oma <- if(add.stats)        c(3.5*cex.stats, 0, 1.5*cex.labels, 0) 
+         else                 c(0, 0, 1.5*cex.labels, 0)
+
   par(bg  = qcc.options("bg.margin"), 
       cex = oldpar$cex * qcc.options("cex"),
       # mgp = c(2.1, 0.8, 0),
       mar = pmax(par("mar"), c(4.1,4.1,1.1,2.1), na.rm=TRUE),
-      oma = if(add.stats) c(3.5*cex.stats, 0, 1.5*cex.labels, 0) 
-            else          c(0, 0, 1.5*cex.labels, 0))
+      oma = oma)
   
   # plot Shewhart chart
   plot(indices, statistics, type="n",
        ylim = if(!missing(ylim)) ylim 
-              else range(statistics, limits, center),
+              else range(statistics, limits, center, na.rm = TRUE),
        ylab = if(missing(ylab)) "Group summary statistics" else ylab,
        xlab = if(missing(xlab)) "Group" else xlab, 
        axes = FALSE)
@@ -879,7 +881,7 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
                          stop(".qcc.options$exp.R.unscaled is null")
                       d <- 0
                       for(j in r:n)
-                          d <- d+abs(diff(range(data[c(j:(j-r+1))])))
+                          d <- d+abs(diff(range(data[c(j:(j-r+1))], na.rm=TRUE)))
                       sd <- (d/(n-r+1))/d2[r] },
              "SD" = { sd <- sd(data)/c4(n) },
              sd <- NULL)
