@@ -165,7 +165,7 @@ plot.processCapability <- function(x,
                                    breaks = "scott", 
                                    col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
                                    border = "white",
-                                   title, 
+                                   title, xlab,
                                    digits = getOption("digits"),
                                    restore.par = TRUE, ...) 
 {
@@ -203,7 +203,7 @@ plot.processCapability <- function(x,
             else          c(0, 0, 1.5*cex.labels, 0))
 
   plot(0, 0, type="n", xlim = xlim, ylim = ylim,
-       axes = FALSE, ylab="", xlab = object$data.name)
+       axes = FALSE, ylab="", xlab = if(missing(xlab)) object$data.name else xlab)
   usr <- par()$usr
   rect(usr[1], usr[3], usr[2], usr[4], col = qcc.options("bg.figure"))
   axis(1, cex.axis = par("cex.axis")*0.9)
