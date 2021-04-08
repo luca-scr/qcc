@@ -4,10 +4,8 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-causeEffectDiagram <- function(cause, effect, 
-                               title = "Cause-and-Effect diagram", 
-                               cex = c(1,0.9,1), 
-                               font = c(1,3,2))
+causeEffectDiagram <- function(cause, effect, title, 
+                               cex = c(1,0.9,1), font = c(1,3,2))
 {
 
   # running mean of successive pairs of obs
@@ -22,22 +20,23 @@ causeEffectDiagram <- function(cause, effect,
   ncup <- nc - round(nc/2)
   nclo <- nc - ncup
   ncc <- max(sapply(cause, length))
-  if(isFALSE(title) | is.na(title)) title <- ""
-  
+  if(missing(title))
+    title <- "Cause-and-Effect diagram"
+
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
   par(bg  = qcc.options("bg.margin"), 
       cex = oldpar$cex * qcc.options("cex"),
-      mar = c(2,2,3,2))
+      mar = c(1,1,ifelse(is.null(title),1,3),1))
 
   plot(0:100, 0:100, type = "n", xlab = "", ylab = "", axes = FALSE)
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
-  # box()
-  mtext(title, side = 3, line = par("mar")[3]/3,
-        font = par("font.main"), 
-        cex  = qcc.options("cex"), 
-        col  = par("col.main"))
+  if(!is.null(title))
+    mtext(title, side = 3, line = par("mar")[3]/3,
+          font = par("font.main"), 
+          cex  = qcc.options("cex"), 
+          col  = par("col.main"))
   
   usr <- par("usr")
   we <- strwidth(effect, units="user")*1.1

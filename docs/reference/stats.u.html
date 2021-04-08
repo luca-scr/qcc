@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,9 +119,9 @@
     <p>These functions are used to compute statistics required by the u chart.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stats.u</span>(<span class='no'>data</span>, <span class='no'>sizes</span>)
-<span class='fu'>sd.u</span>(<span class='no'>data</span>, <span class='no'>sizes</span>, <span class='no'>...</span>)
-<span class='fu'>limits.u</span>(<span class='no'>center</span>, <span class='no'>std.dev</span>, <span class='no'>sizes</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>conf</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>stats.u</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>sizes</span><span class='op'>)</span>
+<span class='fu'>sd.u</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>sizes</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>limits.u</span><span class='op'>(</span><span class='va'>center</span>, <span class='va'>std.dev</span>, <span class='va'>sizes</span>, nsigmas <span class='op'>=</span> <span class='cn'>NULL</span>, conf <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,8 +163,11 @@
 <p>The function <code>limits.u</code> returns a matrix with lower and upper control limits.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+    <p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='qcc.html'>qcc</a></code></p></div>
@@ -184,7 +187,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

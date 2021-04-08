@@ -5,8 +5,8 @@
 #-------------------------------------------------------------------#
 
 processCapability <- function(object, spec.limits, target, 
-                               std.dev, nsigmas, confidence.level = 0.95,
-                               plot = TRUE, ...)
+                              std.dev, nsigmas, 
+                              confidence.level = 0.95, ...)
 {
 # Computes process capability indices for a qcc object of type "xbar" 
 # and plot the histogram
@@ -110,8 +110,6 @@ processCapability <- function(object, spec.limits, target,
                       names(obs) <- c("Obs < LSL", "Obs > USL")
                       obs } )
   class(out) <- "processCapability"
-  if(plot) plot(out, ...) 
-
   return(out)
 }
 
@@ -162,157 +160,141 @@ summary.processCapability <- function(object, ...)
 
 plot.processCapability <- function(x, 
                                    add.stats = qcc.options("add.stats"),
-                                   breaks = "scott", 
-                                   col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
-                                   border = "white",
+                                   breaks = nclass.scott, 
+                                   fill = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
+                                   color = "white",
                                    title, xlab,
                                    digits = getOption("digits"),
-                                   restore.par = TRUE, ...) 
+                                   ...)
 {
+# Computes the operating-characteristic curves for the S-chart with nsigmas
+# limits. The values on the vertical axis give the probability of not detecting
+# a change from sigma to c*sigma on the first sample following the change.
+
   object <- x  # Argh.  Really want to use 'object' anyway
-  if ((missing(object)) | (!inherits(object, "processCapability")))
+   if ((missing(object)) | (!inherits(object, "processCapability")))
      stop("an object of class `processCapability' is required")
 
   xlim <- range(object$data, object$spec.limits, object$target, na.rm = TRUE)
   xlim <- extendrange(r = xlim, f = 0.1)
   x  <- seq(min(xlim), max(xlim), length=250)
   dx <- dnorm(x, object$center, object$std.dev)
-  h <- hist(object$data, breaks = breaks, plot=FALSE) # compute histogram
-  ylim <- range(h$density, dx)
-  ylim <- ylim+diff(ylim)*c(0,0.05)
   nobs <- length(object$data)
   Cp   <- object$indices[1,1]
   Cp_l <- object$indices[2,1]
   Cp_u <- object$indices[3,1]
   Cp_k <- object$indices[4,1]
   Cpm  <- object$indices[5,1]
+  if(is.function(breaks))
+    breaks <- breaks(object$data)
+  breaks <- as.integer(breaks)
+  h <- hist(object$data, breaks = breaks, plot=FALSE)
+  ylim <- extendrange(c(h$density, dx))
+  xlim <- extendrange(c(object$data,x))
   
   if(missing(title))
     title <- "Process capability analysis"
-  if(isFALSE(title) | is.na(title)) title <- ""
 
-  oldpar <- par(no.readonly = TRUE)
-  if(restore.par) on.exit(par(oldpar))
-  cex.labels <- par("cex")*qcc.options("cex")
-  cex.stats <- par("cex")*qcc.options("cex.stats")
-  par(bg  = qcc.options("bg.margin"), 
-      cex = oldpar$cex * qcc.options("cex"),
-      mgp = c(2.1, 0.8, 0),
-      mar = c(4.1,2.1,1.1,2.1),
-      oma = if(add.stats) c(5.5*cex.stats, 0, 1.5*cex.labels, 0) 
-            else          c(0, 0, 1.5*cex.labels, 0))
-
-  plot(0, 0, type="n", xlim = xlim, ylim = ylim,
-       axes = FALSE, ylab="", xlab = if(missing(xlab)) object$data.name else xlab)
-  usr <- par()$usr
-  rect(usr[1], usr[3], usr[2], usr[4], col = qcc.options("bg.figure"))
-  axis(1, cex.axis = par("cex.axis")*0.9)
-  box()
-  mtext(title, 
-        side = 3, outer = TRUE, 
-        line = 0, adj = 0, at = par("plt")[1],
-        font = par("font.main"), 
-        cex  = par("cex")*qcc.options("cex"),
-        col  = par("col.main"))
-  # draw histogram
-  plot(h, add = TRUE, freq = FALSE, 
-       col = col, border = border) 
-  # add graphical info
-  abline(v = object$spec.limits, lty = 3, lwd = 1)
-  text(object$spec.limits[1], usr[4], "LSL", 
-       col = gray(0.3), pos = 3, offset = 0.2, 
-       cex = par("cex")*qcc.options("cex.stats"), xpd = TRUE)
-  text(object$spec.limits[2], usr[4], "USL", 
-       col = gray(0.3), pos = 3, offset = 0.2, 
-       cex = par("cex")*qcc.options("cex.stats"), xpd = TRUE)
+  plot <- ggplot() +
+    geom_histogram(data = data.frame(data = object$data),
+                   aes_string(x = "data", y = "..density.."),
+                   bins = breaks,
+                   fill = fill, 
+                   color = color) +
+    geom_line(data = data.frame(x, dx), 
+              aes(x = x, y = dx)) +
+    labs(title = title, subtitle = "", y = "",
+         x = if(missing(xlab)) object$data.name else xlab) +
+    coord_cartesian(xlim = xlim, ylim = ylim,
+                    expand = FALSE, clip = "off") +
+    theme_light() + 
+    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                         color = qcc.options("bg.margin")),
+          panel.background = element_rect(fill = qcc.options("bg.figure")),
+          plot.title = element_text(face = "bold", size = 11),
+          plot.margin = margin(5, 5, 5, 5))
+  
+  plot <- plot +
+    geom_vline(xintercept = object$spec.limits, lty = 2) +
+    annotate("text", 
+             x = object$spec.limits[1], 
+             y = ylim[2],
+             label = "LSL", 
+             hjust = 0.5, vjust = -0.5, size = 10 * 5/14) +
+    annotate("text", 
+             x = object$spec.limits[2], 
+             y = ylim[2],
+             label = "USL", 
+             hjust = 0.5, vjust = -0.5, size = 10 * 5/14) 
+  
   if(object$has.target)
   { 
-    abline(v = object$target, lty = 2, lwd = 1)
-    text(object$target, usr[4], "Target", 
-         col = gray(0.3), pos = 3, offset = 0.2, 
-         cex = par("cex")*qcc.options("cex.stats"), xpd = TRUE)
+    plot <- plot + 
+      geom_vline(xintercept = object$target, lty = 3) +
+      annotate("text", 
+               x = object$target, 
+               y = ylim[2],
+               label = "Target", 
+               hjust = 0.5, vjust = -0.5, size = 10 * 5/14) 
   }
-  lines(x, dx, lty=1)
-
+  
+  
   if(add.stats) 
-    { 
-      at <- c(0.07, 0.35, 0.56, 0.75)
-      # write info at bottom
-      #--
-      mtext(paste("Number of obs = ", nobs, sep = ""), 
-            side = 1, outer = TRUE, line = 0, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Center = ", signif(object$center, digits), sep = ""), 
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("StdDev = ", signif(object$std.dev, digits), sep = ""), 
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      #--
-      mtext(ifelse(object$has.target, 
-                   paste("Target = ", signif(object$target, digits), sep = ""),
-                   paste("Target = ")),
-            side = 1, outer = TRUE, line = 0, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("LSL = ", ifelse(is.na(object$spec.limits[1]), "", 
-                                   signif(object$spec.limits[1], digits)), sep = ""), 
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("USL = ", ifelse(is.na(object$spec.limits[2]), "", 
-                                   signif(object$spec.limits[2], digits)), sep = ""), 
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      #--
-      mtext(paste("Cp     = ", ifelse(is.na(Cp), "", signif(Cp, 3)), sep = ""), 
-            side = 1, outer = TRUE, line = 0, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Cp_l  = ", ifelse(is.na(Cp_l), "", 
-                                     signif(Cp_l, 3)), sep = ""), 
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Cp_u = ", ifelse(is.na(Cp_u), "", 
-                                    signif(Cp_u, 3)), sep = ""), 
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Cp_k = ", ifelse(is.na(Cp_k), "", 
-                                    signif(Cp_k, 3)), sep = ""), 
-            side = 1, outer = TRUE, line = 3*cex.stats, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Cpm  = ", ifelse(is.na(Cpm), "", signif(Cpm, 3)), sep = ""), 
-            side = 1, outer = TRUE, line = 4*cex.stats, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      #--
-      mtext(paste("Exp<LSL ", ifelse(is.na(object$exp[1]), "", 
-                                     paste(signif(object$exp[1], 2), "%", sep="")), sep = ""), 
-            side = 1, outer = TRUE, line = 0, adj = 0, at = at[4],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Exp>USL ", ifelse(is.na(object$exp[2]), "", paste(signif(object$exp[2], 2), "%", sep="")), sep = ""),
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[4],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Obs<LSL ", ifelse(is.na(object$obs[1]), "", 
-                                     paste(signif(object$obs[1], 2), "%", sep="")), sep = ""), 
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[4],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Obs>USL ", ifelse(is.na(object$obs[2]), "", 
-                                     paste(signif(object$obs[2], 2), "%", sep="")), sep = ""), 
-            side = 1, outer = TRUE, line = 3*cex.stats, adj = 0, at = at[4],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
+  { 
+    # write info at bottom
+    tab_base <- ggplot() + 
+      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
+      theme_void() +
+      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                           color = qcc.options("bg.margin")))
+
+    text1 <- paste(paste0("Number of obs = ", nobs),
+                   paste0("Center = ", signif(object$center, digits)),
+                   paste0("StdDev = ", signif(object$std.dev, digits)), sep = "\n")
+    tab1 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text1, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 0, 0.5, 2, unit = "lines"))
+    
+    text2 <- paste(paste0("Target = ", if(object$has.target) signif(object$target, digits) else ""),
+                   paste0("LSL = ", signif(object$spec.limits[1], digits)),
+                   paste0("USL = ", signif(object$spec.limits[2], digits)), 
+                   sep = "\n")
+    tab2 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text2, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
+    
+    text3 <- paste(paste0("Cp     = ", ifelse(is.na(Cp), "", signif(Cp, 3))),
+                   paste0("Cp_l  = ", ifelse(is.na(Cp_l), "", signif(Cp_l, 3))),
+                   paste0("Cp_u = ", ifelse(is.na(Cp_u), "", signif(Cp_u, 3))),
+                   paste0("Cp_k = ", ifelse(is.na(Cp_k), "", signif(Cp_k, 3))),
+                   paste0("Cpm  = ", ifelse(is.na(Cpm), "", signif(Cpm, 3))),
+                   sep="\n")
+    tab3 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text3, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
+    
+    text4 <- paste(paste0("Exp<LSL ", ifelse(is.na(object$exp[1]), "", paste0(signif(object$exp[1], 2), "%"))),
+                   paste0("Exp>USL ", ifelse(is.na(object$exp[2]), "", paste0(signif(object$exp[2], 2), "%"))),
+                   paste0("Obs<LSL ", ifelse(is.na(object$obs[1]), "", paste0(signif(object$obs[1], 2), "%"))),
+                   paste0("Obs>USL ", ifelse(is.na(object$obs[2]), "", paste0(signif(object$obs[2], 2), "%"))),
+                   sep="\n")
+    tab4 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text4, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 1, 0.2, 0.5, unit = "lines"))
+
+    plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3, tab4,
+                                   # gridExtra::grid.arrange(plot, tab1, tab2, tab3, tab4,
+                                   layout_matrix = matrix(c(1,2,1,3,1,4,1,5), 
+                                                          nrow = 2, ncol = 4),
+                                   heights = c(0.78, 0.22), 
+                                   widths = c(0.35, 0.2, 0.2, 0.25))
   }
 
-  invisible()
+  class(plot) <- c("qccplot", class(plot))
+  return(plot)
 }
+  

@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,12 +119,12 @@
     <p>"The viscosity of an aircraft primer paint is an important quality characteristic. The product is produced in batches, and because each batch takes several hours to produce, the production rate is too slow to allow for rational subgroups of size greater than one." (Montgomery, 2005, p. 232)</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>viscosity</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 35 observations on the following 3 variables.</p><dl'>
+    <p>A data frame with 35 observations on the following 3 variables.</p><dl>
     <dt>batch</dt><dd><p>batch number</p></dd>
     <dt>viscosity</dt><dd><p>viscosity measure</p></dd>
     <dt>trial</dt><dd><p>preliminary sample indicator (TRUE/FALSE)</p></dd>
@@ -136,8 +136,9 @@
     <p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed, New York, John Wiley &amp; Sons, pp. 232-235</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>viscosity</span>)
-<span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>viscosity</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>trial</span>)</div><div class='output co'>#&gt; ── trial = FALSE ─────────────────────────────────────────────────────────────── 
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>)</span>
+<span class='fu'><a href='describe.html'>describe</a></span><span class='op'>(</span><span class='va'>viscosity</span>, by <span class='op'>=</span> <span class='va'>trial</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── trial = FALSE ─────────────────────────────────────────────────────────────── 
 #&gt;           Obs  Mean StdDev   Min Median  Max
 #&gt; batch      15 28.00 4.4721 21.00  28.00 35.0
 #&gt; viscosity  15 34.44 0.5736 33.27  34.55 35.4
@@ -145,8 +146,9 @@
 #&gt; ── trial = TRUE ──────────────────────────────────────────────────────────────── 
 #&gt;           Obs  Mean StdDev   Min Median   Max
 #&gt; batch      20 10.50 5.9161  1.00  10.50 20.00
-#&gt; viscosity  20 34.09 0.5694 33.27  34.03 35.96</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>viscosity</span> ~ <span class='no'>batch</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>viscosity</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"o"</span>,
-     <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>trial</span>, <span class='fl'>19</span>, <span class='fl'>1</span>))</div><div class='img'><img src='viscosity-1.png' alt='' width='504' height='432' /></div></pre>
+#&gt; viscosity  20 34.09 0.5694 33.27  34.03 35.96</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>viscosity</span> <span class='op'>~</span> <span class='va'>batch</span>, data <span class='op'>=</span> <span class='va'>viscosity</span>, type <span class='op'>=</span> <span class='st'>"o"</span>, 
+     pch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>trial</span>, <span class='fl'>19</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='viscosity-1.png' alt='' width='504' height='432' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -162,7 +164,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

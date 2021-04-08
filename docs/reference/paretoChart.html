@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,15 +119,12 @@
     <p>Computes a table of statistics and plot a Pareto chart.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>paretoChart</span>(<span class='no'>data</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>paretoChart</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for paretoChart</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Frequency"</span>,
-     <span class='kw'>ylab2</span> <span class='kw'>=</span> <span class='st'>"Cumulative Percentage"</span>,
-     <span class='kw'>cumperc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>100</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>25</span>),
-     <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-     <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'>blues.colors</span>(<span class='no'>nlevels</span>),
-     <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>title</span>, <span class='va'>xlab</span>, 
+     ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>, ylab2 <span class='op'>=</span> <span class='st'>"Cumulative percentage"</span>, 
+     <span class='va'>ylim</span>, col <span class='op'>=</span> <span class='fu'>blues.colors</span><span class='op'>(</span><span class='va'>nlevels</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,6 +142,10 @@
       <td><p>an object of class <code>'paretoChart'</code> returned by a call to <code>paretoChart()</code> function.</p></td>
     </tr>
     <tr>
+      <th>title</th>
+      <td><p>a character string specifying the main title. Set <code>title = NULL</code> to remove the title.</p></td>
+    </tr>
+    <tr>
       <th>xlab</th>
       <td><p>a string specifying the label for the x-axis.</p></td>
     </tr>
@@ -157,76 +158,55 @@
       <td><p>a string specifying the label for the second y-axis on the right side.</p></td>
     </tr>
     <tr>
-      <th>cumperc</th>
-      <td><p>a vector of percentage values to be used as tickmarks for the second y-axis on the right side.</p></td>
-    </tr>
-    <tr>
       <th>ylim</th>
       <td><p>a numeric vector specifying the limits for the y-axis.</p></td>
     </tr>
     <tr>
-      <th>main</th>
-      <td><p>a string specifying the main title to appear on the plot.</p></td>
-    </tr>
-    <tr>
       <th>col</th>
-      <td><p>a value for the color, a vector of colors, or a palette for the bars. See the help for <code>colors</code> and <code>palette</code>.</p></td>
+      <td><p>a value for the color, a vector of colors, or a palette for the bars. See the help for <code><a href='https://rdrr.io/r/grDevices/colors.html'>colors</a></code> and <code><a href='https://rdrr.io/r/grDevices/palette.html'>palette</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other graphical arguments to be passed to the corresponding <code>plot</code> method, and eventually to the <code>barplot</code> function.</p></td>
+      <td><p>catch other optional arguments.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class <code>'paretoChart'</code> containing the descriptive statistics used to draw the Pareto chart. This object has associated a <code>print</code> and <code>plot</code> mehod.</p>
+    <p>Returns an object of class <code>'paretoChart'</code> containing the descriptive statistics used to draw the Pareto chart. This object has associated a <code>print</code> and <code>plot</code> method.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A Pareto chart is a barplot where the categories are ordered in non increasing order, and a line is also added to show the cumulative sum.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
-<p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>defect</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>27</span>, <span class='fl'>66</span>, <span class='fl'>94</span>, <span class='fl'>33</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>defect</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"price code"</span>, <span class='st'>"schedule date"</span>, <span class='st'>"supplier code"</span>, <span class='st'>"contact num."</span>, <span class='st'>"part num."</span>)
-<span class='fu'>paretoChart</span>(<span class='no'>defect</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Error frequency"</span>)</div><div class='img'><img src='paretoChart-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Pareto Chart</span><span> ────────────────────────────────── 
+    <pre class="examples"><div class='input'><span class='va'>defect</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>27</span>, <span class='fl'>66</span>, <span class='fl'>94</span>, <span class='fl'>33</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>defect</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"price code"</span>, <span class='st'>"schedule date"</span>, <span class='st'>"supplier code"</span>, <span class='st'>"contact num."</span>, <span class='st'>"part num."</span><span class='op'>)</span>
+<span class='va'>pc</span> <span class='op'>=</span> <span class='fu'>paretoChart</span><span class='op'>(</span><span class='va'>defect</span>, ylab <span class='op'>=</span> <span class='st'>"Error frequency"</span><span class='op'>)</span>
+<span class='va'>pc</span>
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Pareto Chart</span><span> ────────────────────────────────── 
 #&gt;                
 #&gt; defect          Frequency Cum.Freq. Percentage Cum.Percent.
 #&gt;   contact num.         94        94      31.33        31.33
 #&gt;   price code           80       174      26.67        58.00
 #&gt;   supplier code        66       240      22.00        80.00
 #&gt;   part num.            33       273      11.00        91.00
-#&gt;   schedule date        27       300       9.00       100.00</div><div class='input'><span class='fu'>paretoChart</span>(<span class='no'>defect</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Error frequency"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Error causes"</span>, <span class='kw'>las</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>cex.names</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</div><div class='img'><img src='paretoChart-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Pareto Chart</span><span> ────────────────────────────────── 
-#&gt;                
-#&gt; defect          Frequency Cum.Freq. Percentage Cum.Percent.
-#&gt;   contact num.         94        94      31.33        31.33
-#&gt;   price code           80       174      26.67        58.00
-#&gt;   supplier code        66       240      22.00        80.00
-#&gt;   part num.            33       273      11.00        91.00
-#&gt;   schedule date        27       300       9.00       100.00</div><div class='input'><span class='fu'>paretoChart</span>(<span class='no'>defect</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Error frequency"</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>defect</span>)))</div><div class='img'><img src='paretoChart-3.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Pareto Chart</span><span> ────────────────────────────────── 
-#&gt;                
-#&gt; defect          Frequency Cum.Freq. Percentage Cum.Percent.
-#&gt;   contact num.         94        94      31.33        31.33
-#&gt;   price code           80       174      26.67        58.00
-#&gt;   supplier code        66       240      22.00        80.00
-#&gt;   part num.            33       273      11.00        91.00
-#&gt;   schedule date        27       300       9.00       100.00</div><div class='input'><span class='fu'>paretoChart</span>(<span class='no'>defect</span>, <span class='kw'>cumperc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>100</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>ylab2</span> <span class='kw'>=</span> <span class='st'>"A finer tickmarks grid"</span>)</div><div class='img'><img src='paretoChart-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Pareto Chart</span><span> ────────────────────────────────── 
-#&gt;                
-#&gt; defect          Frequency Cum.Freq. Percentage Cum.Percent.
-#&gt;   contact num.         94        94      31.33        31.33
-#&gt;   price code           80       174      26.67        58.00
-#&gt;   supplier code        66       240      22.00        80.00
-#&gt;   part num.            33       273      11.00        91.00
-#&gt;   schedule date        27       300       9.00       100.00</div></span></pre>
+#&gt;   schedule date        27       300       9.00       100.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>pc</span><span class='op'>)</span>
+</div><div class='img'><img src='paretoChart-1.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>paretoChart</span><span class='op'>(</span><span class='va'>defect</span>, ylab <span class='op'>=</span> <span class='st'>"Error frequency"</span><span class='op'>)</span>, col<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>defect</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='paretoChart-2.png' alt='' width='504' height='432' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -242,7 +222,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

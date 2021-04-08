@@ -12,22 +12,21 @@
 qcc(data, 
     type = c("xbar", "R", "S", "xbar.one", "p", "np", "c", "u", "g"), 
     sizes, center, std.dev, limits,
-    data.name, labels, 
-    newdata, newsizes, newdata.name, newlabels, 
-    nsigmas = 3, confidence.level,
-    rules = c(1,4), plot = TRUE, \dots)
+    newdata, newsizes, 
+    nsigmas = 3, confidence.level, 
+    rules = c(1,4), \dots)
 
 \method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{qcc}(x,
+     xtime = NULL,
      add.stats = qcc.options("add.stats"), 
      chart.all = qcc.options("chart.all"), 
      fill = qcc.options("fill"),
      label.center = "CL",
      label.limits = c("LCL ", "UCL"),
-     title, xlab, ylab, ylim, axes.las = 0, 
-     digits = getOption("digits"),
-     restore.par = TRUE, \dots)
+     title, xlab, ylab, xlim, ylim,
+     digits = getOption("digits"), \dots)
 }
 
 \arguments{
@@ -63,17 +62,9 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{limits}{a two-values vector specifying control limits.}
 
-\item{data.name}{a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as data.}
-
-\item{labels}{a character vector of labels for each group.}
-
 \item{newdata}{a data frame, matrix or vector, as for the \code{data} argument, providing further data to plot but not included in the computations.}
 
 \item{newsizes}{a vector as for the \code{sizes} argument providing further data sizes to plot but not included in the computations.}
-
-\item{newdata.name}{a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as newdata.}
-
-\item{newlabels}{a character vector of labels for each new group defined in the argument \code{newdata}.}
 
 \item{nsigmas}{a numeric value specifying the number of sigmas to use for computing control limits. It is ignored when the \code{confidence.level} argument is  provided.} 
 
@@ -81,32 +72,25 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{rules}{a value or a vector of values specifying the rules to apply to the chart. See \code{\link{qccRules}} for possible values and their meaning.}
 
-\item{plot}{logical. If \code{TRUE} a Shewhart chart is plotted.}
+\item{xtime}{a vector of date-time values as returned by \code{\link{Sys.time}} and \code{\link{Sys.Date}}. If provided it is used for x-axis so it must be of the same length as the statistic charted.}
 
 \item{add.stats}{a logical value indicating whether statistics and other information should be printed at the bottom of the chart.}
 
 \item{chart.all}{a logical value indicating whether both statistics for \code{data} and for \code{newdata} (if given) should be plotted.}
 
-\item{fill}{a logical value specifying if the in-control area should be filled with the color specified in 
-\code{qcc.options("zones")$fill}.}
+\item{fill}{a logical value specifying if the in-control area should be filled with the color specified in \code{qcc.options("zones")$fill}.}
 
 \item{label.center}{a character  specifying the label for center line.}
 
 \item{label.limits}{a character vector specifying the labels for control limits.}
 
-\item{title}{a string giving the label for the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
+\item{title}{a character string specifying the main title. Set \code{title = NULL} to remove the title.}
 
-\item{xlab}{a string giving the label for the x-axis.}
- 
-\item{ylab}{a string giving the label for the y-axis.}
+\item{xlab, ylab}{a string giving the label for the x-axis and the y-axis.}
 
-\item{ylim}{a numeric vector specifying the limits for the y-axis.}
-
-\item{axes.las}{numeric in \{0,1,2,3\} specifying the style of axis labels. See \code{\link{par}}.}
+\item{xlim, ylim}{a numeric vector specifying the limits for the x-axis and the y-axis.}
 
 \item{digits}{the number of significant digits to use.}
-
-\item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a control chart set this to \code{FALSE}.}
 
 \item{x}{an object of class \code{'qcc'}.}
 
@@ -116,12 +100,10 @@ Several methods are available for estimating the standard deviation in case of a
 
 \value{Returns an object of class \code{'qcc'}.}
 
-\note{For a nice blog post discussing the \code{qcc} package, in particular how to implement the \emph{Western Eletric Rules (WER)}, see \url{http://blog.yhat.com/posts/quality-control-in-r.html}.}
-
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
 
-Montgomery, D.C. (2009) \emph{Introduction to Statistical Quality Control}, 6th ed. New York: John Wiley & Sons.
+Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control}, 7th ed. New York: John Wiley & Sons.
 
 Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 
@@ -140,36 +122,42 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ##  Continuous data 
 ##
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(data = pistonrings, diameter, sample)
 
-qcc(diameter[1:25,], type="xbar")
-qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
-q <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], plot=FALSE)
+(q <- qcc(diameter[1:25,], type="xbar"))
+plot(q)
+
+(q <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+plot(q)
+
+q <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
 plot(q, chart.all=FALSE)
-qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], nsigmas=2)
-qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99)
 
-qcc(diameter[1:25,], type="R")
-qcc(diameter[1:25,], type="R", newdata=diameter[26:40,])
+plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], nsigmas=2))
 
-qcc(diameter[1:25,], type="S")
-qcc(diameter[1:25,], type="S", newdata=diameter[26:40,])
+plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99))
 
-# add warning limits at 2 std. deviations
-q <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], plot=FALSE)
-(warn.limits <- limits.xbar(q$center, q$std.dev, q$sizes, 2))
-plot(q, restore.par = FALSE)
-abline(h = warn.limits, lty = 3, col = "chocolate")
+q <- qcc(diameter[1:25,], type="R")
+q
+plot(q)
+
+plot(qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+
+plot(qcc(diameter[1:25,], type="S"))
+
+plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
+
+plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], rules = 1:4))
 
 # variable control limits
 out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
-diameter <- qccGroups(diameter, sample, data = pistonrings[-out,])
-qcc(diameter[1:25,], type="xbar")
-qcc(diameter[1:25,], type="R")
-qcc(diameter[1:25,], type="S")
-qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
-qcc(diameter[1:25,], type="R", newdata=diameter[26:40,])
-qcc(diameter[1:25,], type="S", newdata=diameter[26:40,])
+diameter <- qccGroups(data = pistonrings[-out,], diameter, sample)
+plot(qcc(diameter[1:25,], type="xbar"))
+plot(qcc(diameter[1:25,], type="R"))
+plot(qcc(diameter[1:25,], type="S"))
+plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+plot(qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
 
 ##
 ##  Attribute data 
@@ -177,70 +165,84 @@ qcc(diameter[1:25,], type="S", newdata=diameter[26:40,])
 
 data(orangejuice)
 
-with(orangejuice, 
-     qcc(D[trial], sizes=size[trial], type="p"))
+q <- with(orangejuice, 
+          qcc(D[trial], sizes=size[trial], type="p"))
+q
+plot(q)
 
 # remove out-of-control points (see help(orangejuice) for the reasons)
 outofctrl <- c(15,23)
 q1 <- with(orangejuice[-outofctrl,], 
            qcc(D[trial], sizes=size[trial], type="p"))
-with(orangejuice[-outofctrl,], 
-     qcc(D[trial], sizes=size[trial], type="p",
-         newdata=D[!trial], newsizes=size[!trial]))
+plot(q1)
+q1 <- with(orangejuice[-outofctrl,], 
+           qcc(D[trial], sizes=size[trial], type="p",
+               newdata=D[!trial], newsizes=size[!trial]))
+plot(q1)
 
 data(orangejuice2)
-with(orangejuice2, 
-     qcc(D[trial], sizes=size[trial], type="p", labels = sample[trial]))
 q2 <- with(orangejuice2, 
-           qcc(D[trial], sizes=size[trial], type="p", labels = sample[trial],
-               newdata=D[!trial], newsizes=size[!trial], newlabels = sample[!trial]))
+           qcc(D[trial], sizes=size[trial], type="p"))
+plot(q2)
+q2 <- with(orangejuice2, 
+           qcc(D[trial], sizes=size[trial], type="p", 
+               newdata=D[!trial], newsizes=size[!trial]))
+plot(q2)
 
 data(circuit)
-with(circuit, qcc(x[trial], sizes=size[trial], type="c"))
+plot(with(circuit, qcc(x[trial], sizes=size[trial], type="c")))
 
 # remove out-of-control points (see help(circuit) for the reasons)
 outofctrl <- c(15,23)
 q1 <- with(orangejuice[-outofctrl,], 
            qcc(D[trial], sizes=size[trial], type="p"))
-with(orangejuice[-outofctrl,], 
-     qcc(D[trial], sizes=size[trial], type="p",
-         newdata=D[!trial], newsizes=size[!trial]))
+plot(q1)
+q1 <- with(orangejuice[-outofctrl,], 
+           qcc(D[trial], sizes=size[trial], type="p",
+               newdata=D[!trial], newsizes=size[!trial]))
+plot(q1)
 
 outofctrl <- c(6,20)
-with(circuit[-outofctrl,], 
-     qcc(x[trial], sizes=size[trial], type="c", labels = sample[trial]))
-with(circuit[-outofctrl,], 
-     qcc(x[trial], sizes=size[trial], type="c", labels = sample[trial],
-         newdata = x[!trial], newsizes = size[!trial], newlabels = sample[!trial]))
-with(circuit[-outofctrl,], 
-     qcc(x[trial], sizes=size[trial], type="u", labels = sample[trial],
-         newdata = x[!trial], newsizes = size[!trial], newlabels = sample[!trial]))
+q1 <- with(circuit[-outofctrl,], 
+           qcc(x[trial], sizes=size[trial], type="c"))
+plot(q1)
+q1 <- with(circuit[-outofctrl,], 
+           qcc(x[trial], sizes=size[trial], type="c", 
+               newdata = x[!trial], newsizes = size[!trial]))
+plot(q1)
+q1 <- with(circuit[-outofctrl,], 
+           qcc(x[trial], sizes=size[trial], type="u", 
+           newdata = x[!trial], newsizes = size[!trial]))
+plot(q1)
 
 data(pcmanufact)
-with(pcmanufact, qcc(x, sizes=size, type="u"))
+q1 <- with(pcmanufact, qcc(x, sizes=size, type="u"))
+q1
+plot(q1)
 
 data(dyedcloth)
 # variable control limits
-with(dyedcloth, qcc(x, sizes=size, type="u"))
+plot(with(dyedcloth, qcc(x, sizes=size, type="u")))
 # standardized control chart
-q <- with(dyedcloth, qcc(x, sizes=size, type="u", plot=FALSE))
+q <- with(dyedcloth, qcc(x, sizes=size, type="u"))
 z <- (q$statistics - q$center)/sqrt(q$center/q$size)
-qcc(z, sizes = 1, type = "u", title = "Standardized u chart",
-    center = 0, std.dev = 1, limits = c(-3,3))
+plot(qcc(z, sizes = 1, type = "u", center = 0, std.dev = 1, limits = c(-3,3)),
+     title = "Standardized u chart")
     
 ##
 ##  Continuous one-at-time data 
 ##
 
 data(viscosity)
-with(viscosity, 
-     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial]))
+q <- with(viscosity, 
+          qcc(viscosity[trial], type = "xbar.one"))
+q
+plot(q)
 # batch 4 is out-of-control because of a process temperature controller
 # failure; remove it and recompute
 viscosity <- viscosity[-4,]
-with(viscosity, 
-     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
-         newdata = viscosity[!trial], newlabels = batch[!trial]))
+plot(with(viscosity, 
+          qcc(viscosity[trial], type = "xbar.one", newdata = viscosity[!trial])))
 }
 \keyword{htest}
 \keyword{hplot}

@@ -13,20 +13,19 @@ vignette: >
 ---
 
 
-```{R setup, include=FALSE}
+```{R setup, include = FALSE}
 library(knitr)
-opts_chunk$set(fig.align = "center", 
-               out.width = "90%",
-               fig.width = 6, fig.height = 5,
-               dev.args = list(pointsize=10),
+opts_chunk$set(dev = "png", fig.align = "center", 
+               fig.width = 6, fig.height = 5, out.width = "90%",
+               # dev.args = list(pointsize = 12),
                par = TRUE, # needed for setting hook 
                collapse = TRUE, # collapse input & ouput code in chunks
                warning = FALSE)
 
-knit_hooks$set(par = function(before, options, envir)
-{ if(before && options$fig.show != "none") 
-     par(mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
-})
+# knit_hooks$set(par = function(before, options, envir)
+# { if(before && options$fig.show ! = "none") 
+#      par(mar = c(4.1,4.1,1.1,1.1), mgp = c(3,1,0), tcl = -0.5)
+# })
 ```
        
 # Introduction
@@ -41,14 +40,13 @@ knit_hooks$set(par = function(before, options, envir)
 - Multivariate control charts.
 
 This document gives a quick tour of `qcc` (version `r packageVersion("qcc")`) functionalities. Further details are provided in Scrucca (2004).
-For a nice blog post discussing the `qcc` package, in particular how to implement the *Western Eletric Rules* (WER), see http://blog.yhat.com/posts/quality-control-in-r.html.
 
 This vignette is written in R Markdown using the [knitr](https://cran.r-project.org/package=knitr) package for production. 
 
-```{R, message = FALSE, echo=1}
+```{R, message = FALSE, echo = 1}
 library(qcc)
 # qcc.options(bg.margin = "#F8F8F8")
-cat(qcc:::qccStartupMessage(), sep="")
+cat(qcc:::qccStartupMessage(), sep = "")
 ```
 
 # Shewhart charts
@@ -57,60 +55,74 @@ cat(qcc:::qccStartupMessage(), sep="")
 
 ```{R}
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(data = pistonrings, diameter, sample)
 head(diameter)
 
-(q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+(q1 <- qcc(diameter[1:25,], type = "xbar", 
+           newdata = diameter[26:40,]))
 plot(q1, fill = FALSE)
-plot(q1, chart.all=FALSE)
-plot(q1, add.stats=FALSE)
-q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99)
+plot(q1, chart.all = FALSE)
+plot(q1, add.stats = FALSE)
+
+plot(qcc(diameter[1:25,], type = "xbar", 
+         newdata = diameter[26:40,], 
+         confidence.level = 0.99))
 ```
 
 Western Electric rules:
 ```{R}
-q1 <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], rules = 1:4)
+q1 <- qcc(diameter[1:25,], type = "xbar", 
+          newdata = diameter[26:40,], 
+          rules = 1:4)
+plot(q1)
 plot(q1, fill = FALSE)
 ```
 
-Group labels can be provided as calendar dates. For instance, 
+In a Shewhart control chart the x-axis represents the *rationale subgroups*. This means that in the data collection process "subgroups or samples should be selected so that if assignable causes are present, the chance for differences between subgroups will be maximized, while the chance for differences due to these assignable causes within a subgroup will be minimized" (Montgomery, 2013, Sec. 5.3.4).
+Typically, for control charts used in production processes the time order of production is a logical basis for rational subgroups. In this case a user may want to represent the date of production along the x-axis.
+
+For instance, 
 ```{R}
 (dates <- seq(Sys.Date() - nrow(diameter)+1, Sys.Date(), by = 1))
-qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], 
-    labels = format(dates[1:25], "%d %b"), newlabels = format(dates[26:40], "%d %b"),
-    axes.las = 3, xlab = "")
+q = qcc(diameter[1:25,], type = "xbar", newdata = diameter[26:40,])
+plot(q, xtime = dates)
 ```
-or by assigning dates to `data.frame` row names:
-```{R, eval = FALSE}
-rownames(diameter) <- format(dates, "%d %b")
-qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], 
-    axes.las = 3, xlab = "")
+
+Further fine-tuning is also available as shown in the example below:
+```{R}
+plot(q, xtime = dates, xlab = NULL, add.stats = FALSE) +
+  scale_x_date(date_breaks = "1 week", date_labels = "%d-%b")
 ```
+Note than we must remove the summary statistics at bottom (`add.stats = FALSE`) in order to change the x-axis settings.
 
 ## R chart
 ```{R}
-(q2 <- qcc(diameter[1:25,], type="R"))
-(q3 <- qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+(q2 <- qcc(diameter[1:25,], type = "R"))
+plot(q2)
+(q3 <- qcc(diameter[1:25,], type = "R", newdata = diameter[26:40,]))
+plot(q3)
 ```
 
 ## S chart
 ```{R}
-(q4 <- qcc(diameter[1:25,], type="S"))
-(q5 <- qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
+(q4 <- qcc(diameter[1:25,], type = "S"))
+plot(q4)
+(q5 <- qcc(diameter[1:25,], type = "S", newdata = diameter[26:40,]))
+plot(q5)
 ```
 
 ## Variable control limits in control charts
 
 ```{R}
 out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
-diameter2 <- qccGroups(diameter, sample, data = pistonrings[-out,])
-qcc(diameter2[1:25,], type="xbar")
-qcc(diameter2[1:25,], type="R")
+diameter2 <- qccGroups(data = pistonrings[-out,], diameter, sample)
+plot(qcc(diameter2[1:25,], type = "xbar"))
+plot(qcc(diameter2[1:25,], type = "R"))
 ```
 
 ```{R}
-q = qcc(diameter2[1:25,], type="xbar", rules = 1:4)
-qcc(diameter2[1:25,], type="xbar", newdata=diameter2[26:40,], rules = 1:4)
+q = qcc(diameter2[1:25,], type = "xbar", rules = 1:4)
+plot(qcc(diameter2[1:25,], type = "xbar", newdata = diameter2[26:40,], rules = 1:4))
 ```
 
 
@@ -118,63 +130,71 @@ qcc(diameter2[1:25,], type="xbar", newdata=diameter2[26:40,], rules = 1:4)
 
 ```{R}
 data(orangejuice)
-with(orangejuice, qcc(D[trial], sizes=size[trial], type="p"))
-with(orangejuice, qcc(D[trial], sizes=size[trial], type="np"))
+(q = with(orangejuice, qcc(D[trial], sizes = size[trial], type = "p")))
+plot(q)
+(q = with(orangejuice, qcc(D[trial], sizes = size[trial], type = "np")))
+plot(q)
 ```
 
 Remove out-of-control points (see `help(orangejuice)` for the reasons):
 ```{R}
 inc <- setdiff(which(orangejuice$trial), c(15,23))
-with(orangejuice, qcc(D[inc], sizes=size[inc], type="p",
-                      newdata=D[!trial], newsizes=size[!trial]))
+(q = with(orangejuice, qcc(D[inc], sizes = size[inc], type = "p",
+                          newdata = D[!trial], newsizes = size[!trial])))
+plot(q)
 ```
 
 ```{R}
 data(orangejuice2)
-with(orangejuice2, qcc(D[trial], sizes=size[trial], type="p", 
-                       newdata=D[!trial], newsizes=size[!trial]))
+(q = with(orangejuice2, qcc(D[trial], sizes = size[trial], type = "p", 
+                            newdata = D[!trial], newsizes = size[!trial])))
+plot(q)
 ```
 
 ## c and u charts
 
 ```{R}
 data(circuit)
-with(circuit, qcc(x[trial], sizes=size[trial], type="c"))
+(q = with(circuit, qcc(x[trial], sizes = size[trial], type = "c")))
+plot(q)
 ```
 
 Remove out-of-control points (see `help(circuit)` for the reasons)
 ```{R}
 inc <- setdiff(which(circuit$trial), c(6,20))
-with(circuit, qcc(x[inc], sizes=size[inc], type="c", labels=inc, 
-                  newdata=x[!trial], newsizes=size[!trial], 
-                  newlabels=which(!trial)))
+(q = with(circuit, qcc(x[inc], sizes = size[inc], type = "c", labels = inc, 
+                       newdata = x[!trial], newsizes = size[!trial], 
+                       newlabels = which(!trial))))
+plot(q)
 
-with(circuit, qcc(x[inc], sizes=size[inc], type="u", labels=inc, 
-                  newdata=x[!trial], newsizes=size[!trial], 
-                  newlabels=which(!trial)))
+(q = with(circuit, qcc(x[inc], sizes = size[inc], type = "u", labels = inc, 
+                       newdata = x[!trial], newsizes = size[!trial], 
+                       newlabels = which(!trial))))
+plot(q)
 ```
 
 ```{R}
 data(pcmanufact)
-with(pcmanufact, qcc(x, sizes=size, type="u"))
+(q = with(pcmanufact, qcc(x, sizes = size, type = "u")))
+plot(q)
 ```
 
 ##  Continuous one-at-time data 
 
 ```{R}
 data(viscosity)
-with(viscosity, 
-     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial]))
-with(viscosity, 
-     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
-         std.dev = "SD"))
+(q = with(viscosity, qcc(viscosity[trial], type = "xbar.one")))
+plot(q)
+(q = with(viscosity, qcc(viscosity[trial], type = "xbar.one", std.dev = "SD")))
+plot(q)
+
 # batch 4 is out-of-control because of a process temperature controller
 # failure; remove it and recompute
 viscosity <- viscosity[-4,]
-with(viscosity, 
-     qcc(viscosity[trial], type = "xbar.one", labels = batch[trial],
-         newdata = viscosity[!trial], newlabels = batch[!trial],
-         rules = 1:4))
+(q = with(viscosity, qcc(viscosity[trial], type = "xbar.one", 
+                         newdata = viscosity[!trial],
+                         rules = 1:4)))
+plot(q)
 ```
 
 ## Standardized p chart
@@ -220,16 +240,18 @@ limits.p.std <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 ```
 
 Example with simulated data:
-```{R, echo=-1}
+```{R, echo = -1}
 set.seed(20171102)
 # set unequal sample sizes
 n <- c(rep(50,5), rep(100,5), rep(25, 5))
 # generate randomly the number of successes
 x <- rbinom(length(n), n, 0.2)
 # plot the control chart with variable limits
-qcc(x, type="p", size=n)
+(q = qcc(x, type = "p", size = n))
+plot(q)
 # plot the standardized control chart
-qcc(x, type="p.std", size=n)
+(q = qcc(x, type = "p.std", size = n))
+plot(q)
 ```
 
 # Operating Characteristic Curves
@@ -239,20 +261,23 @@ The function `ocCurves()` is a generic function which calls the proper function 
 
 ```{R}
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
-q <- qcc(diameter, type="xbar", nsigmas=3, plot=FALSE)
-beta <- ocCurves(q)
-print(head(beta, n = 10), digits = 4)
+diameter <- qccGroups(data = pistonrings, diameter, sample)
+q <- qcc(diameter, type = "xbar", nsigmas = 3)
+(beta <- ocCurves(q))
+plot(beta)
+plot(beta, what = "ARL")
 
 data(orangejuice)
-q <- with(orangejuice, qcc(D[trial], sizes=size[trial], type="p", plot=FALSE))
-beta <- ocCurves(q)
-print(head(beta, n = 10), digits = 4)
+q <- with(orangejuice, qcc(D[trial], sizes = size[trial], type = "p"))
+(beta <- ocCurves(q))
+plot(beta)
+plot(beta, what = "ARL")
 
 data(circuit)
-q <- with(circuit, qcc(x[trial], sizes=size[trial], type="c", plot=FALSE))
-beta <- ocCurves(q)
-print(head(beta, n = 10), digits = 4)
+q <- with(circuit, qcc(x[trial], sizes = size[trial], type = "c"))
+(beta <- ocCurves(q))
+plot(beta)
+plot(beta, what = "ARL")
 ```
 
 # Cusum chart
@@ -261,45 +286,62 @@ print(head(beta, n = 10), digits = 4)
 data(pistonrings)
 diameter <- qccGroups(diameter, sample, data = pistonrings)
 
-cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+(q = cusum(diameter[1:25,], decision.interval = 4, se.shift = 1))
+plot(q)
 
 (q <- cusum(diameter[1:25,], newdata = diameter[26:40,]))
-plot(q, chart.all=FALSE)
+plot(q)
+plot(q, chart.all = FALSE)
+
+plot(q, xtime = seq(Sys.Date() - nrow(diameter)+1, Sys.Date(), by = 1),
+     add.stats = FALSE) +
+  scale_x_date(date_breaks = "4 days", date_labels = "%d-%b")
 ```
 
 # EWMA
 
 ```{R}
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(data = pistonrings, diameter, sample)
 
-ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
+(q = ewma(diameter[1:25,], lambda = 0.2, nsigmas = 3))
+plot(q)
 
-ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,])
+(q = ewma(diameter[1:25,], lambda = 0.2, nsigmas = 2.7, newdata = diameter[26:40,]))
+plot(q)
+
+plot(q, xtime = seq(Sys.Date() - nrow(diameter)+1, Sys.Date(), by = 1),
+     add.stats = FALSE) +
+  scale_x_date(date_breaks = "4 days", date_labels = "%d-%b")
 ```
 
 ```{R}
 data(viscosity)
-with(viscosity, 
-     ewma(viscosity[trial], lambda=0.2, nsigmas=2.7,
-          newdata = viscosity[!trial]))
+(q = with(viscosity, 
+          ewma(viscosity[trial], lambda = 0.2, nsigmas = 2.7,
+               newdata = viscosity[!trial])))
+plot(q)
 ```
 
 # Process capability analysis
 
 ```{R}
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
+diameter <- qccGroups(data = pistonrings, diameter, sample)
 
-q <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
+q <- qcc(diameter[1:25,], type = "xbar", nsigmas = 3)
 
-processCapability(q, spec.limits=c(73.95,74.05))
+(pc = processCapability(q, spec.limits = c(73.95,74.05)))
+plot(pc)
 
-processCapability(q, spec.limits=c(73.95,74.05), target=74.02)
+(pc = processCapability(q, spec.limits = c(73.95,74.05), target = 74.02))
+plot(pc)
 
-processCapability(q, spec.limits=c(73.99,74.01))
+(pc = processCapability(q, spec.limits = c(73.99,74.01)))
+plot(pc)
 
-processCapability(q, spec.limits = c(73.99, 74.1))
+(pc = processCapability(q, spec.limits = c(73.99, 74.1)))
+plot(pc)
 ```
 
 # Multivariate Quality Control Charts
@@ -378,7 +420,8 @@ mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
 ```{R}
 defect <- c(80, 27, 66, 94, 33)
 names(defect) <- c("price code", "schedule date", "supplier code", "contact num.", "part num.")
-paretoChart(defect, ylab = "Error frequency")
+(pc = paretoChart(defect, ylab = "Error frequency"))
+plot(pc)
 ```
 
 
@@ -424,10 +467,10 @@ $x_{ij} = \mu + \sigma_W \epsilon_{ij}$
 mu <- 100
 sigma_W <- 10
 epsilon <- rnorm(500)
-x <- matrix(mu + sigma_W*epsilon, ncol=10, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(mu + sigma_W*epsilon, ncol = 10, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 ## Between and within sample extra variation
@@ -441,10 +484,10 @@ sigma_B <- 5
 epsilon <- rnorm(500)
 u <- as.vector(sapply(rnorm(50), rep, 10))
 x <- mu + sigma_B*u + sigma_W*epsilon
-x <- matrix(x, ncol=10, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(x, ncol = 10, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 ## Autocorrelation
@@ -455,19 +498,19 @@ and $W_0 = 0$.
 
 ```{R}
 mu <- 100
-rho <- 0.8
+rho <- 0.9
 sigma_W <- 10
 sigma_B <- 5
 epsilon <- rnorm(500)
 u <- rnorm(500)
 W <- rep(0,100)
 for(i in 2:length(W))
-    W[i] <- rho*W[i-1] + sigma_B*u[i]
+  W[i] <- rho*W[i-1] + sigma_B*u[i]
 x <- mu + sigma_B*u + sigma_W*epsilon
-x <- matrix(x, ncol=10, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(x, ncol = 10, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 ## Recurring cycles
@@ -475,19 +518,19 @@ q <- qcc(x, type="S")
 Assume we have 3 working turns of 8 hours each for each working day, so $8 \times 3 = 24$ points in time, and at each point we sample 5 units.
 
 $x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}$  
-where $W_i$ ($i=1,\ldots,8$) is the cycle.
+where $W_i$ ($i = 1,\ldots,8$) is the cycle.
 
 ```{R}
 mu <- 100
 sigma_W <- 10
-epsilon <- rnorm(120, sd=0.3)
+epsilon <- rnorm(120, sd = 0.3)
 W <- c(-4, 0, 1, 2, 4, 2, 0, -2) # assumed workers cycle
 W <- rep(rep(W, rep(5,8)), 3)
 x <- mu + W + sigma_W*epsilon
-x <- matrix(x, ncol=5, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(x, ncol = 5, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 ## Trends
@@ -501,10 +544,10 @@ sigma_W <- 10
 epsilon <- rnorm(500)
 W <- rep(0.2*1:100, rep(5,100))
 x <- mu + W + sigma_W*epsilon
-x <- matrix(x, ncol=10, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(x, ncol = 10, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 ## Mixture
@@ -520,31 +563,31 @@ epsilon <- rnorm(500)
 p <- rbinom(50, 1, 0.5)
 mu <- mu1*p + mu2*(1-p)
 x <- rep(mu, rep(10, length(mu))) + sigma_W*epsilon
-x <- matrix(x, ncol=10, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(x, ncol = 10, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 ## Sudden jumps
 
 $x_{ij} = \mu_i + \sigma_W \epsilon_{ij}$  
-where $\mu_i$ is the mean of the process for state $i$ ($i=1,\ldots,k)$.
+where $\mu_i$ is the mean of the process for state $i$ ($i = 1,\ldots,k)$.
 
 ```{R}
 mu <- rep(c(95,110,100,90), c(20,35,25,20))
 sigma_W <- 10
 epsilon <- rnorm(500)
 x <- rep(mu, rep(5, length(mu))) + sigma_W*epsilon
-x <- matrix(x, ncol=10, byrow=TRUE)
-q <- qcc(x, type="xbar")
-q <- qcc(x, type="R")
-q <- qcc(x, type="S")
+x <- matrix(x, ncol = 10, byrow = TRUE)
+plot(qcc(x, type = "xbar", rules = 1:4))
+plot(qcc(x, type = "R", rules = 1:4))
+plot(qcc(x, type = "S", rules = 1:4))
 ```
 
 # References
 
-Montgomery, D.C. (2009) *Introduction to Statistical Quality Control*, 6th ed. New York: John Wiley & Sons.
+Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*, 7th ed. New York: John Wiley & Sons.
 
 Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd ed. New York: John Wiley & Sons.
 

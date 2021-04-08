@@ -1,12 +1,13 @@
 # qcc 3.0 (NOT ON CRAN)
 
 - Modification of rules for out-of-control points. A subset of Western Eletric Rules (WER) have been implemented. See `qccRules()`.
-- Several modifications to plot and print appearances.
+- All functions in `qcc` now return an object with associated `print`, `summary`, and `plot` methods.
+- Several modifications to plot and print appearances. In particular graphs are produced using `ggplot2` package and print/summary uses `cli` package.
 - Added function `describe()` to statistically describe variables in a data.frame according to the type.
-- `qcc.groups()` now has optional argument `data` to extract variables from 
-a data.frame.
+- `qccGroups()` now has first argument `data` to extract variables from 
+a data frame.
 - Removed usage of `attach/detach` from all examples and documentation.
-- Add option to remove the title from all plots using `title = FALSE` or `title = NA`.
+- Add option to remove the title from all plots using `title = NULL`.
 - Plotting single data values does not issue an error.
 
 # qcc 2.7 

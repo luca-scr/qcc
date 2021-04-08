@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,23 +119,23 @@
     <p>Create an object of class <code>'ewma.qcc'</code> to compute and draw an Exponential Weighted Moving Average (EWMA) chart for statistical quality control.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ewma</span>(<span class='no'>data</span>, <span class='no'>sizes</span>, <span class='no'>center</span>, <span class='no'>std.dev</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-     <span class='no'>data.name</span>, <span class='no'>labels</span>, <span class='no'>newdata</span>, <span class='no'>newsizes</span>, <span class='no'>newlabels</span>,
-     <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>ewma</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>sizes</span>, <span class='va'>center</span>, <span class='va'>std.dev</span>, 
+     lambda <span class='op'>=</span> <span class='fl'>0.2</span>, nsigmas <span class='op'>=</span> <span class='fl'>3</span>, 
+     <span class='va'>newdata</span>, <span class='va'>newsizes</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for ewma.qcc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for ewma.qcc</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-     <span class='kw'>add.stats</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"add.stats"</span>),
-     <span class='kw'>chart.all</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"chart.all"</span>),
-     <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"fill"</span>),
-     <span class='kw'>label.center</span> <span class='kw'>=</span> <span class='st'>"CL"</span>,
-     <span class='kw'>label.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"LCL"</span>, <span class='st'>"UCL"</span>),
-     <span class='no'>title</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>, <span class='no'>ylim</span>, <span class='kw'>axes.las</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-     <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>),
-     <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, 
+     <span class='va'>xtime</span>, 
+     add.stats <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"add.stats"</span><span class='op'>)</span>, 
+     chart.all <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"chart.all"</span><span class='op'>)</span>, 
+     fill <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"fill"</span><span class='op'>)</span>,
+     label.center <span class='op'>=</span> <span class='st'>"CL"</span>,
+     label.limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LCL"</span>, <span class='st'>"UCL"</span><span class='op'>)</span>, 
+     <span class='va'>title</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, 
+     digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,14 +166,6 @@ Several methods are available for estimating the standard deviation. See <code><
       <td><p>a numeric value specifying the number of sigmas to use for computing control limits.</p></td>
     </tr>
     <tr>
-      <th>data.name</th>
-      <td><p>a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as data.</p></td>
-    </tr>
-    <tr>
-      <th>labels</th>
-      <td><p>a character vector of labels for each group.</p></td>
-    </tr>
-    <tr>
       <th>newdata</th>
       <td><p>a data frame, matrix or vector, as for the <code>data</code> argument, providing further data to plot but not included in the computations.</p></td>
     </tr>
@@ -182,12 +174,8 @@ Several methods are available for estimating the standard deviation. See <code><
       <td><p>a vector as for the <code>sizes</code> argument providing further data sizes to plot but not included in the computations.</p></td>
     </tr>
     <tr>
-      <th>newlabels</th>
-      <td><p>a character vector of labels for each new group defined in the argument <code>newdata</code>.</p></td>
-    </tr>
-    <tr>
-      <th>plot</th>
-      <td><p>logical. If <code>TRUE</code> an EWMA chart is plotted.</p></td>
+      <th>xtime</th>
+      <td><p>a vector of date-time values as returned by <code><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></code> and <code><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></code>. If provided it is used for x-axis so it must be of the same length as the statistic charted.</p></td>
     </tr>
     <tr>
       <th>add.stats</th>
@@ -212,31 +200,19 @@ Several methods are available for estimating the standard deviation. See <code><
     </tr>
     <tr>
       <th>title</th>
-      <td><p>a string giving the label for the main title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
+      <td><p>a character string specifying the main title. Set <code>title = NULL</code> to remove the title.</p></td>
     </tr>
     <tr>
-      <th>xlab</th>
-      <td><p>a string giving the label for the x-axis.</p></td>
+      <th>xlab, ylab</th>
+      <td><p>a string giving the label for the x-axis and the y-axis.</p></td>
     </tr>
     <tr>
-      <th>ylab</th>
-      <td><p>a string giving the label for the y-axis.</p></td>
-    </tr>
-    <tr>
-      <th>ylim</th>
-      <td><p>a numeric vector specifying the limits for the y-axis.</p></td>
-    </tr>
-    <tr>
-      <th>axes.las</th>
-      <td><p>numeric in {0,1,2,3} specifying the style of axis labels. See <code><a href='https://rdrr.io/r/graphics/par.html'>help(par)</a></code>.</p></td>
+      <th>xlim, ylim</th>
+      <td><p>a numeric vector specifying the limits for the x-axis and the y-axis.</p></td>
     </tr>
     <tr>
       <th>digits</th>
       <td><p>the number of significant digits to use.</p></td>
-    </tr>
-    <tr>
-      <th>restore.par</th>
-      <td><p>a logical value indicating whether the previous <code>par</code> settings must be restored. If you need to add points, lines, etc. to a control chart set this to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -257,10 +233,13 @@ Several methods are available for estimating the standard deviation. See <code><
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
-<p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='qcc.html'>qcc</a></code>, <code><a href='ewmaSmooth.html'>ewmaSmooth</a></code>, <code><a href='cusum.html'>cusum</a></code></p></div>
@@ -269,10 +248,12 @@ Several methods are available for estimating the standard deviation. See <code><
     <pre class="examples"><div class='input'><span class='co'>##</span>
 <span class='co'>## Grouped-data</span>
 <span class='co'>##</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pistonrings</span><span class='op'>)</span>
+<span class='va'>diameter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pistonrings</span>, <span class='va'>diameter</span>, <span class='va'>sample</span><span class='op'>)</span>
 
-<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
+<span class='va'>q</span> <span class='op'>=</span> <span class='fu'>ewma</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, lambda<span class='op'>=</span><span class='fl'>0.2</span>, nsigmas<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
 #&gt; 
 #&gt; Data (phase I)             = diameter[1:25, ] 
 #&gt; Number of groups           = 25 
@@ -286,8 +267,10 @@ Several methods are available for estimating the standard deviation. See <code><
 #&gt; 1  73.99855 74.00380
 #&gt; 2  73.99781 74.00454
 #&gt; :                   
-#&gt; 25 73.99680 74.00555</div><div class='input'>
-<span class='fu'>ewma</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.2</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2.7</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
+#&gt; 25 73.99680 74.00555</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'>ewma</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, lambda<span class='op'>=</span><span class='fl'>0.2</span>, nsigmas<span class='op'>=</span><span class='fl'>2.7</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span> 
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
 #&gt; 
 #&gt; Data (phase I)             = diameter[1:25, ] 
 #&gt; Number of groups           = 25 
@@ -309,11 +292,11 @@ Several methods are available for estimating the standard deviation. See <code><
 <span class='co'>##</span>
 <span class='co'>## Individual observations</span>
 <span class='co'>##</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>viscosity</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>viscosity</span>,
-     <span class='fu'>ewma</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
-          <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='fl'>2.7</span>,
-          <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='ewma-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>viscosity</span>, 
+     <span class='fu'>ewma</span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, lambda <span class='op'>=</span> <span class='fl'>0.2</span>, nsigmas <span class='op'>=</span> <span class='fl'>2.7</span>,
+          newdata <span class='op'>=</span> <span class='va'>viscosity</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
 #&gt; 
 #&gt; Data (phase I)             = viscosity[trial] 
 #&gt; Number of groups           = 20 
@@ -347,7 +330,7 @@ Several methods are available for estimating the standard deviation. See <code><
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

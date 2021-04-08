@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,25 +119,25 @@
     <p>Create an object of class <code>'mqcc'</code> to perform multivariate statistical quality control.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mqcc</span>(<span class='no'>data</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"T2"</span>, <span class='st'>"T2.single"</span>), <span class='no'>center</span>, <span class='no'>cov</span>,
-     <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-     <span class='no'>data.name</span>, <span class='no'>labels</span>, <span class='no'>newdata</span>, <span class='no'>newlabels</span>,
-     <span class='kw'>confidence.level</span> <span class='kw'>=</span> (<span class='fl'>1</span> - <span class='fl'>0.0027</span>)^<span class='no'>p</span>,
-     <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>data</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"T2"</span>, <span class='st'>"T2.single"</span><span class='op'>)</span>, <span class='va'>center</span>, <span class='va'>cov</span>,
+     limits <span class='op'>=</span> <span class='cn'>TRUE</span>, pred.limits <span class='op'>=</span> <span class='cn'>FALSE</span>,
+     <span class='va'>data.name</span>, <span class='va'>labels</span>, <span class='va'>newdata</span>, <span class='va'>newlabels</span>, 
+     confidence.level <span class='op'>=</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='fl'>0.0027</span><span class='op'>)</span><span class='op'>^</span><span class='va'>p</span>,
+     plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mqcc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mqcc</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-     <span class='kw'>add.stats</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"add.stats"</span>),
-     <span class='kw'>chart.all</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"chart.all"</span>),
-     <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"fill"</span>),
-     <span class='kw'>label.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"LCL"</span>, <span class='st'>"UCL"</span>),
-     <span class='kw'>label.pred.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"LPL"</span>, <span class='st'>"UPL"</span>),
-     <span class='no'>title</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>, <span class='no'>ylim</span>, <span class='kw'>axes.las</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-     <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>),
-     <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, 
+     add.stats <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"add.stats"</span><span class='op'>)</span>, 
+     chart.all <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"chart.all"</span><span class='op'>)</span>, 
+     fill <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"fill"</span><span class='op'>)</span>,
+     label.limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LCL"</span>, <span class='st'>"UCL"</span><span class='op'>)</span>, 
+     label.pred.limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LPL"</span>, <span class='st'>"UPL"</span><span class='op'>)</span>,
+     <span class='va'>title</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>ylim</span>, axes.las <span class='op'>=</span> <span class='fl'>0</span>, 
+     digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, 
+     restore.par <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,7 +222,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
     </tr>
     <tr>
       <th>title</th>
-      <td><p>a string giving the label for the main title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
+      <td><p>a character string specifying the main title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
     </tr>
     <tr>
       <th>xlab</th>
@@ -264,10 +264,13 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
-<p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='stats.T2.html'>stats.T2</a></code>, <code><a href='stats.T2.single.html'>stats.T2.single</a></code>, <code><a href='stats.T2.html'>limits.T2</a></code>, <code><a href='stats.T2.single.html'>limits.T2.single</a></code>, <code><a href='ellipseChart.html'>ellipseChart</a></code>, <code><a href='qcc.html'>qcc</a></code></p></div>
@@ -277,8 +280,14 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 <span class='co'>##  Subgrouped data</span>
 <span class='co'>##</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>RyanMultivar</span>)
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>RyanMultivar</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>)</div><div class='img'><img src='mqcc-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>RyanMultivar</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>RyanMultivar</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
+#&gt;  $ X1: num [1:20, 1:4] 72 56 55 44 97 83 47 88 57 26 ...
+#&gt;  $ X2: num [1:20, 1:4] 23 14 13 9 36 30 12 31 14 7 ...</div><div class='input'>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>RyanMultivar</span>, type <span class='op'>=</span> <span class='st'>"T2"</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2 
 #&gt; Data (phase I)             = RyanMultivar 
@@ -295,11 +304,16 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt; 
 #&gt; Control limits:
 #&gt;  LCL      UCL
-#&gt;    0 11.03976</div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span>(<span class='no'>q</span>)</div><div class='img'><img src='mqcc-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span>(<span class='no'>q</span>, <span class='kw'>show.id</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>RyanMultivar</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-4.png' alt='' width='504' height='432' /></div><div class='input'>
+#&gt;    0 11.03976</div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='ellipseChart.html'>ellipseChart</a></span><span class='op'>(</span><span class='va'>q</span>, show.id <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>RyanMultivar</span>, type <span class='op'>=</span> <span class='st'>"T2"</span>, pred.limits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-4.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># Xbar-charts for single variables computed adjusting the </span>
 <span class='co'># confidence level of the T^2 chart:</span>
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>RyanMultivar</span>,
-           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>)))</div><div class='img'><img src='mqcc-5.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>q1</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>RyanMultivar</span>, 
+           <span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>X1</span>, type <span class='op'>=</span> <span class='st'>"xbar"</span>, confidence.level <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>confidence.level</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar 
 #&gt; Data (phase I)             = X1 
@@ -310,8 +324,10 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt; 
 #&gt; Control limits at nsigmas  = 2.999977 
 #&gt;       LCL      UCL
-#&gt;  37.97352 82.77648</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>RyanMultivar</span>,
-           <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>X2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>confidence.level</span>^(<span class='fl'>1</span>/<span class='fl'>2</span>)))</div><div class='img'><img src='mqcc-6.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>q2</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+#&gt;  37.97352 82.77648</div><div class='input'><span class='va'>q2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>RyanMultivar</span>,
+           <span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>X2</span>, type <span class='op'>=</span> <span class='st'>"xbar"</span>, confidence.level <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>confidence.level</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>q2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar 
 #&gt; Data (phase I)             = X2 
@@ -323,14 +339,17 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt; Control limits at nsigmas  = 2.999977 
 #&gt;     LCL     UCL
 #&gt;  7.7785 29.1965</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>MASS</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='input'><span class='co'># generate new "in control" data</span>
-<span class='no'>Xnew</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span>), <span class='kw'>X2</span> <span class='kw'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span>))
-<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>4</span>)
-   { <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span>(<span class='fl'>10</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>center</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>cov</span>)
-     <span class='no'>Xnew</span>$<span class='no'>X1</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>1</span>]
-     <span class='no'>Xnew</span>$<span class='no'>X2</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>2</span>]
-   }
-<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>RyanMultivar</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>Xnew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-7.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='input'><span class='co'># generate new "in control" data</span>
+<span class='va'>Xnew</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span><span class='op'>)</span>, X2 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+   <span class='op'>{</span> <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, mu <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>center</span>, Sigma <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>cov</span><span class='op'>)</span>
+     <span class='va'>Xnew</span><span class='op'>$</span><span class='va'>X1</span><span class='op'>[</span>,<span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+     <span class='va'>Xnew</span><span class='op'>$</span><span class='va'>X2</span><span class='op'>[</span>,<span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span> 
+   <span class='op'>}</span>
+<span class='va'>qq</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>RyanMultivar</span>, type <span class='op'>=</span> <span class='st'>"T2"</span>, newdata <span class='op'>=</span> <span class='va'>Xnew</span>, pred.limits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-5.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>qq</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2 
 #&gt; Data (phase I)             = RyanMultivar 
@@ -357,13 +376,15 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt;  LPL      UPL
 #&gt;    0 12.20184</div><div class='input'>
 <span class='co'># generate new "out of control" data</span>
-<span class='no'>Xnew</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span>), <span class='kw'>X2</span> <span class='kw'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span>))
-<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>4</span>)
-   { <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span>(<span class='fl'>10</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>1.2</span>*<span class='no'>q</span>$<span class='no'>center</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>cov</span>)
-     <span class='no'>Xnew</span>$<span class='no'>X1</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>1</span>]
-     <span class='no'>Xnew</span>$<span class='no'>X2</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>x</span>[,<span class='fl'>2</span>]
-   }
-<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>RyanMultivar</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2"</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>Xnew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-8.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='va'>Xnew</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span><span class='op'>)</span>, X2 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>10</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+   <span class='op'>{</span> <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, mu <span class='op'>=</span> <span class='fl'>1.2</span><span class='op'>*</span><span class='va'>q</span><span class='op'>$</span><span class='va'>center</span>, Sigma <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>cov</span><span class='op'>)</span>
+     <span class='va'>Xnew</span><span class='op'>$</span><span class='va'>X1</span><span class='op'>[</span>,<span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+     <span class='va'>Xnew</span><span class='op'>$</span><span class='va'>X2</span><span class='op'>[</span>,<span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span> 
+   <span class='op'>}</span>
+<span class='va'>qq</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>RyanMultivar</span>, type <span class='op'>=</span> <span class='st'>"T2"</span>, newdata <span class='op'>=</span> <span class='va'>Xnew</span>, pred.limits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-6.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>qq</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2 
 #&gt; Data (phase I)             = RyanMultivar 
@@ -393,9 +414,20 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 <span class='co'>## Individual observations data</span>
 <span class='co'>##</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>boiler</span>)
-
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>)</div><div class='img'><img src='mqcc-9.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>boiler</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>boiler</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	25 obs. of  8 variables:
+#&gt;  $ t1: int  507 512 520 520 530 528 522 527 533 530 ...
+#&gt;  $ t2: int  516 513 512 514 515 516 513 509 514 512 ...
+#&gt;  $ t3: int  527 533 537 538 542 541 537 537 528 538 ...
+#&gt;  $ t4: int  516 518 518 516 525 524 518 521 529 524 ...
+#&gt;  $ t5: int  499 502 503 504 504 505 503 504 508 507 ...
+#&gt;  $ t6: int  512 510 512 517 512 514 512 508 512 512 ...
+#&gt;  $ t7: int  472 476 480 480 481 482 479 478 482 482 ...
+#&gt;  $ t8: int  477 475 477 479 477 480 477 472 477 477 ...</div><div class='input'>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>boiler</span>, type <span class='op'>=</span> <span class='st'>"T2.single"</span>, confidence.level <span class='op'>=</span> <span class='fl'>0.999</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-7.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2.single 
 #&gt; Data (phase I)             = boiler 
@@ -429,9 +461,11 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt;  LCL      UCL
 #&gt;    0 17.41705</div><div class='input'>
 <span class='co'># generate new "in control" data</span>
-<span class='no'>boilerNew</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span>(<span class='fl'>10</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>center</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>cov</span>)
-<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>,
-           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>boilerNew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-10.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='va'>boilerNew</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, mu <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>center</span>, Sigma <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>cov</span><span class='op'>)</span>
+<span class='va'>qq</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>boiler</span>, type <span class='op'>=</span> <span class='st'>"T2.single"</span>, confidence.level <span class='op'>=</span> <span class='fl'>0.999</span>, 
+           newdata <span class='op'>=</span> <span class='va'>boilerNew</span>, pred.limits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-8.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>qq</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2.single 
 #&gt; Data (phase I)             = boiler 
@@ -473,9 +507,11 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt;  LPL      UPL
 #&gt;    0 70.02943</div><div class='input'>
 <span class='co'># generate new "out of control" data</span>
-<span class='no'>boilerNew</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span>(<span class='fl'>10</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>1.01</span>*<span class='no'>q</span>$<span class='no'>center</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>q</span>$<span class='no'>cov</span>)
-<span class='no'>qq</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.999</span>,
-           <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>boilerNew</span>, <span class='kw'>pred.limits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='mqcc-11.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>qq</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='va'>boilerNew</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, mu <span class='op'>=</span> <span class='fl'>1.01</span><span class='op'>*</span><span class='va'>q</span><span class='op'>$</span><span class='va'>center</span>, Sigma <span class='op'>=</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>cov</span><span class='op'>)</span>
+<span class='va'>qq</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>boiler</span>, type <span class='op'>=</span> <span class='st'>"T2.single"</span>, confidence.level <span class='op'>=</span> <span class='fl'>0.999</span>, 
+           newdata <span class='op'>=</span> <span class='va'>boilerNew</span>, pred.limits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-9.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>qq</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2.single 
 #&gt; Data (phase I)             = boiler 
@@ -517,8 +553,10 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 #&gt;  LPL      UPL
 #&gt;    0 70.02943</div><div class='input'>
 <span class='co'># provides "robust" estimates of means and covariance matrix</span>
-<span class='no'>rob</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/cov.rob.html'>cov.rob</a></span>(<span class='no'>boiler</span>)
-<span class='no'>qrob</span> <span class='kw'>&lt;-</span> <span class='fu'>mqcc</span>(<span class='no'>boiler</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"T2.single"</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='no'>rob</span>$<span class='no'>center</span>, <span class='kw'>cov</span> <span class='kw'>=</span> <span class='no'>rob</span>$<span class='no'>cov</span>)</div><div class='img'><img src='mqcc-12.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>qrob</span>)</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
+<span class='va'>rob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/cov.rob.html'>cov.rob</a></span><span class='op'>(</span><span class='va'>boiler</span><span class='op'>)</span>
+<span class='va'>qrob</span> <span class='op'>&lt;-</span> <span class='fu'>mqcc</span><span class='op'>(</span><span class='va'>boiler</span>, type <span class='op'>=</span> <span class='st'>"T2.single"</span>, center <span class='op'>=</span> <span class='va'>rob</span><span class='op'>$</span><span class='va'>center</span>, cov <span class='op'>=</span> <span class='va'>rob</span><span class='op'>$</span><span class='va'>cov</span><span class='op'>)</span>
+</div><div class='img'><img src='mqcc-10.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>qrob</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Multivariate Quality Control Chart</span><span> ──────────── 
 #&gt; 
 #&gt; Chart type                 = T2.single 
 #&gt; Data (phase I)             = boiler 
@@ -566,7 +604,7 @@ By default is set at \((1 - 0.0027)^p\) where \(p\) is the number of variables, 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

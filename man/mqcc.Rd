@@ -74,7 +74,7 @@ By default is set at \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variabl
 
 \item{label.pred.limits}{a character vector specifying the labels for prediction  control limits (Phase II).}
 
-\item{title}{a string giving the label for the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
+\item{title}{a character string specifying the main title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
 
 \item{xlab}{a string giving the label for the x-axis.}
  
@@ -99,7 +99,7 @@ By default is set at \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variabl
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
 
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons. 
+Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control}, 7th ed. New York: John Wiley & Sons.
 
 Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 

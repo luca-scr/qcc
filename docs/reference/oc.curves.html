@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,30 +119,33 @@
     <p>Draws the operating characteristic curves for a <code>'qcc'</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ocCurves</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>ocCurves</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ocCurves.xbar</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>101</span>), <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
-              <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
-              <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
-              <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'>ocCurves.xbar</span><span class='op'>(</span><span class='va'>object</span>, 
+              size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>10</span>, <span class='fl'>15</span>, <span class='fl'>20</span><span class='op'>)</span>, 
+              shift <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span>, by <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>,
+              nsigmas <span class='op'>=</span> <span class='va'>object</span><span class='op'>$</span><span class='va'>nsigmas</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ocCurves.R</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>6</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>101</span>), <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
-           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
-           <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
-           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'>ocCurves.R</span><span class='op'>(</span><span class='va'>object</span>, 
+           size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>5</span>, <span class='fl'>10</span>, <span class='fl'>15</span>, <span class='fl'>20</span><span class='op'>)</span>, 
+           multiplier <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>6</span>, by <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>,
+           nsigmas <span class='op'>=</span> <span class='va'>object</span><span class='op'>$</span><span class='va'>nsigmas</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ocCurves.S</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>6</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>101</span>), <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
-           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
-           <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>n</span>)),
-           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'>ocCurves.S</span><span class='op'>(</span><span class='va'>object</span>, 
+           size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>5</span>, <span class='fl'>10</span>, <span class='fl'>15</span>, <span class='fl'>20</span><span class='op'>)</span>, 
+           multiplier <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>6</span>, by <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>,
+           nsigmas <span class='op'>=</span> <span class='va'>object</span><span class='op'>$</span><span class='va'>nsigmas</span>, <span class='va'>...</span><span class='op'>)</span> 
 
-<span class='fu'>ocCurves.p</span>(<span class='no'>object</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
-           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fl'>1</span>),
-           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'>ocCurves.p</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ocCurves.c</span>(<span class='no'>object</span>, <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>nsigmas</span>,
-           <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='paretoChart.html'>blues.colors</a></span>(<span class='fl'>1</span>),
-           <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>restore.par</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</pre>
+<span class='fu'>ocCurves.c</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+           
+<span class='co'># S3 method for ocCurves</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for ocCurves</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, what <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"beta"</span>, <span class='st'>"ARL"</span><span class='op'>)</span>, 
+     <span class='va'>title</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>lty</span>, <span class='va'>lwd</span>, <span class='va'>col</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,35 +155,44 @@
       <td><p>an object of class <code>'qcc'</code>.</p></td>
     </tr>
     <tr>
-      <th>identify</th>
-      <td><p>logical specifying whether to interactively identify points on the plot (see help for <code><a href='https://rdrr.io/r/graphics/identify.html'>identify</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
+      <th>size</th>
       <td><p>a vector of values specifying the sample sizes for which to draw the OC curves.</p></td>
     </tr>
     <tr>
-      <th>c</th>
-      <td><p>a vector of values specifying the multipliers for sigma in case of continuous variable.</p></td>
+      <th>shift, multiplier</th>
+      <td><p>a vector of values specifying the shift or multiplier values (in units of sigma).</p></td>
     </tr>
     <tr>
       <th>nsigmas</th>
-      <td><p>a numeric value specifying the number of sigmas to use for
-computing control limits; if <code>nsigmas</code> is <code>NULL</code>,
-<code>object$conf</code> is used to set up probability limits; <code>nsigmas</code>
-is ignored for types "p" and "c".</p></td>
+      <td><p>a numeric value specifying the number of sigmas to use for computing control limits; if <code>nsigmas</code> is <code>NULL</code>, <code>object$conf</code> is used to set up probability limits.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>an object of class <code>'ocCurves'</code>.</p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>the number of significant digits to use.</p></td>
+    </tr>
+    <tr>
+      <th>what</th>
+      <td><p>a string specifying the quantity to plot on the y-axis. Possible values are <code>"beta"</code> for the probability of not detecting a shift, and <code>"ARL"</code> for the average run length.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>a character string specifying the main title. Set <code>title = NULL</code> to remove the title.</p></td>
+    </tr>
+    <tr>
+      <th>xlab, ylab</th>
+      <td><p>a string giving the label for the x-axis and the y-axis.</p></td>
     </tr>
     <tr>
       <th>lty, lwd, col</th>
       <td><p>values or vector of values controlling the line type, line width and colour of curves.</p></td>
     </tr>
     <tr>
-      <th>restore.par</th>
-      <td><p>a logical value indicating whether the previous <code>par</code> settings must be restored. If you need to add points, lines, etc. to a chart set this to <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>additional arguments to be passed to the generic function.</p></td>
+      <td><p>catches further ignored arguments.</p></td>
     </tr>
     </table>
 
@@ -190,163 +202,98 @@ is ignored for types "p" and "c".</p></td>
 <p>The probabilities are based on the conventional assumptions about process distributions: the normal distribution for <code>"xbar"</code>, <code>"R"</code>, and <code>"S"</code>, the binomial distribution for <code>"p"</code> and <code>"np"</code>, and the Poisson distribution for <code>"c"</code> and <code>"u"</code>. They are all sensitive to departures from those assumptions, but to varying degrees. The performance of the <code>"S"</code> chart, and especially the <code>"R"</code> chart, are likely to be seriously affected by longer tails.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function invisibly returns a matrix or a vector of beta values, the probability of type II error.</p>
+    <p>The function returns an object of class <code>'ocCurves'</code> which contains a matrix or a vector of beta values (the probability of type II error) and ARL (average run length).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
-<p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='qcc.html'>qcc</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))</div><div class='img'><img src='oc.curves-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;                sample size
-#&gt; shift (std.dev)    n=1    n=5   n=10   n=15   n=20
-#&gt;            0    0.9973 0.9973 0.9973 0.9973 0.9973
-#&gt;            0.05 0.9973 0.9971 0.9970 0.9968 0.9966
-#&gt;            0.1  0.9972 0.9966 0.9959 0.9952 0.9944
-#&gt;            0.15 0.9970 0.9957 0.9940 0.9920 0.9900
-#&gt;            0.2  0.9968 0.9944 0.9909 0.9869 0.9823
-#&gt;            0.25 0.9964 0.9925 0.9864 0.9789 0.9701
-#&gt;            0.3  0.9960 0.9900 0.9798 0.9670 0.9514
-#&gt;            0.35 0.9956 0.9866 0.9708 0.9500 0.9243
-#&gt;            0.4  0.9950 0.9823 0.9586 0.9266 0.8871
-#&gt;            0.45 0.9943 0.9769 0.9426 0.8957 0.8383
-#&gt;            0.5  0.9936 0.9701 0.9220 0.8562 0.7775
-#&gt;            0.55 0.9927 0.9616 0.8963 0.8078 0.7055
-#&gt;            0.6  0.9916 0.9514 0.8649 0.7505 0.6243
-#&gt;            0.65 0.9905 0.9390 0.8275 0.6853 0.5371
-#&gt;            0.7  0.9892 0.9243 0.7842 0.6137 0.4481
-#&gt;            0.75 0.9877 0.9071 0.7351 0.5379 0.3616
-#&gt;            0.8  0.9860 0.8871 0.6809 0.4608 0.2817
-#&gt;            0.85 0.9842 0.8642 0.6225 0.3851 0.2115
-#&gt;            0.9  0.9821 0.8383 0.5612 0.3136 0.1527
-#&gt;            0.95 0.9798 0.8094 0.4983 0.2485 0.1059
-#&gt;            1    0.9772 0.7775 0.4355 0.1913 0.0705
-#&gt;            1.05 0.9744 0.7428 0.3743 0.1431 0.0450
-#&gt;            1.1  0.9713 0.7055 0.3161 0.1038 0.0275
-#&gt;            1.15 0.9678 0.6659 0.2622 0.0730 0.0161
-#&gt;            1.2  0.9641 0.6243 0.2134 0.0497 0.0090
-#&gt;            1.25 0.9599 0.5812 0.1703 0.0328 0.0048
-#&gt;            1.3  0.9554 0.5371 0.1333 0.0209 0.0024
-#&gt;            1.35 0.9505 0.4925 0.1022 0.0129 0.0012
-#&gt;            1.4  0.9452 0.4481 0.0768 0.0077 0.0006
-#&gt;            1.45 0.9394 0.4043 0.0564 0.0045 0.0002
-#&gt;            1.5  0.9332 0.3616 0.0406 0.0025 0.0001
-#&gt;            1.55 0.9265 0.3206 0.0286 0.0013 0.0000
-#&gt;            1.6  0.9192 0.2817 0.0197 0.0007 0.0000
-#&gt;            1.65 0.9115 0.2453 0.0133 0.0003 0.0000
-#&gt;            1.7  0.9032 0.2115 0.0088 0.0002 0.0000
-#&gt;            1.75 0.8943 0.1806 0.0056 0.0001 0.0000
-#&gt;            1.8  0.8849 0.1527 0.0036 0.0000 0.0000
-#&gt;            1.85 0.8749 0.1278 0.0022 0.0000 0.0000
-#&gt;            1.9  0.8643 0.1059 0.0013 0.0000 0.0000
-#&gt;            1.95 0.8531 0.0869 0.0008 0.0000 0.0000
-#&gt;            2    0.8413 0.0705 0.0004 0.0000 0.0000
-#&gt;            2.05 0.8289 0.0566 0.0002 0.0000 0.0000
-#&gt;            2.1  0.8159 0.0450 0.0001 0.0000 0.0000
-#&gt;            2.15 0.8023 0.0353 0.0001 0.0000 0.0000
-#&gt;            2.2  0.7881 0.0275 0.0000 0.0000 0.0000
-#&gt;            2.25 0.7734 0.0211 0.0000 0.0000 0.0000
-#&gt;            2.3  0.7580 0.0161 0.0000 0.0000 0.0000
-#&gt;            2.35 0.7422 0.0121 0.0000 0.0000 0.0000
-#&gt;            2.4  0.7257 0.0090 0.0000 0.0000 0.0000
-#&gt;            2.45 0.7088 0.0066 0.0000 0.0000 0.0000
-#&gt;            2.5  0.6915 0.0048 0.0000 0.0000 0.0000
-#&gt;            2.55 0.6736 0.0034 0.0000 0.0000 0.0000
-#&gt;            2.6  0.6554 0.0024 0.0000 0.0000 0.0000
-#&gt;            2.65 0.6368 0.0017 0.0000 0.0000 0.0000
-#&gt;            2.7  0.6179 0.0012 0.0000 0.0000 0.0000
-#&gt;            2.75 0.5987 0.0008 0.0000 0.0000 0.0000
-#&gt;            2.8  0.5793 0.0006 0.0000 0.0000 0.0000
-#&gt;            2.85 0.5596 0.0004 0.0000 0.0000 0.0000
-#&gt;            2.9  0.5398 0.0002 0.0000 0.0000 0.0000
-#&gt;            2.95 0.5199 0.0002 0.0000 0.0000 0.0000
-#&gt;            3    0.5000 0.0001 0.0000 0.0000 0.0000
-#&gt;            3.05 0.4801 0.0001 0.0000 0.0000 0.0000
-#&gt;            3.1  0.4602 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.15 0.4404 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.2  0.4207 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.25 0.4013 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.3  0.3821 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.35 0.3632 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.4  0.3446 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.45 0.3264 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.5  0.3085 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.55 0.2912 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.6  0.2743 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.65 0.2578 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.7  0.2420 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.75 0.2266 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.8  0.2119 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.85 0.1977 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.9  0.1841 0.0000 0.0000 0.0000 0.0000
-#&gt;            3.95 0.1711 0.0000 0.0000 0.0000 0.0000
-#&gt;            4    0.1587 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.05 0.1469 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.1  0.1357 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.15 0.1251 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.2  0.1151 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.25 0.1056 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.3  0.0968 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.35 0.0885 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.4  0.0808 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.45 0.0735 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.5  0.0668 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.55 0.0606 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.6  0.0548 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.65 0.0495 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.7  0.0446 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.75 0.0401 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.8  0.0359 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.85 0.0322 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.9  0.0287 0.0000 0.0000 0.0000 0.0000
-#&gt;            4.95 0.0256 0.0000 0.0000 0.0000 0.0000
-#&gt;            5    0.0228 0.0000 0.0000 0.0000 0.0000</div><div class='input'><span class='co'># or to identify points on the plot use</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>ocCurves.xbar</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>), <span class='kw'>identify</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>orangejuice</span>)
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>,
-             <span class='fu'>ocCurves</span>(<span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0   0.01   0.02   0.03   0.04   0.05   0.06   0.07   0.08   0.09    0.1 
-#&gt; 0.0000 0.0894 0.2642 0.4447 0.5995 0.7206 0.8100 0.8735 0.9173 0.9468 0.9662 
-#&gt;   0.11   0.12   0.13   0.14   0.15   0.16   0.17   0.18   0.19    0.2   0.21 
-#&gt; 0.9788 0.9869 0.9920 0.9951 0.9971 0.9983 0.9990 0.9993 0.9995 0.9995 0.9993 
-#&gt;   0.22   0.23   0.24   0.25   0.26   0.27   0.28   0.29    0.3   0.31   0.32 
-#&gt; 0.9987 0.9978 0.9962 0.9937 0.9900 0.9845 0.9768 0.9662 0.9522 0.9343 0.9118 
-#&gt;   0.33   0.34   0.35   0.36   0.37   0.38   0.39    0.4   0.41   0.42   0.43 
-#&gt; 0.8844 0.8518 0.8139 0.7711 0.7236 0.6722 0.6176 0.5610 0.5035 0.4461 0.3901 
-#&gt;   0.44   0.45   0.46   0.47   0.48   0.49    0.5   0.51   0.52   0.53   0.54 
-#&gt; 0.3365 0.2862 0.2398 0.1980 0.1609 0.1287 0.1013 0.0784 0.0596 0.0446 0.0327 
-#&gt;   0.55   0.56   0.57   0.58   0.59    0.6   0.61   0.62   0.63   0.64   0.65 
-#&gt; 0.0235 0.0166 0.0115 0.0078 0.0052 0.0034 0.0021 0.0013 0.0008 0.0005 0.0003 
-#&gt;   0.66   0.67   0.68   0.69    0.7   0.71   0.72   0.73   0.74   0.75   0.76 
-#&gt; 0.0002 0.0001 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 
-#&gt;   0.77   0.78   0.79    0.8   0.81   0.82   0.83   0.84   0.85   0.86   0.87 
-#&gt; 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 
-#&gt;   0.88   0.89    0.9   0.91   0.92   0.93   0.94   0.95   0.96   0.97   0.98 
-#&gt; 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 
-#&gt;   0.99      1 
-#&gt; 0.0000 0.0000 </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>circuit</span>)
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>,
-          <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fu'>ocCurves</span>(<span class='no'>q</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>beta</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>4</span>))</div><div class='output co'>#&gt;      0      1      2      3      4      5      6      7      8      9     10 
-#&gt; 0.0000 0.0006 0.0166 0.0839 0.2149 0.3840 0.5543 0.6993 0.8088 0.8843 0.9329 
-#&gt;     11     12     13     14     15     16     17     18     19     20     21 
-#&gt; 0.9625 0.9797 0.9893 0.9945 0.9972 0.9986 0.9991 0.9992 0.9986 0.9972 0.9945 
-#&gt;     22     23     24     25     26     27     28     29     30     31     32 
-#&gt; 0.9895 0.9813 0.9686 0.9502 0.9249 0.8918 0.8505 0.8011 0.7444 0.6818 0.6150 
-#&gt;     33     34     35     36     37     38     39     40     41     42     43 
-#&gt; 0.5461 0.4772 0.4102 0.3470 0.2888 0.2365 0.1907 0.1514 0.1184 0.0912 0.0693 
-#&gt;     44     45     46     47     48     49     50     51     52     53     54 
-#&gt; 0.0519 0.0383 0.0280 0.0201 0.0143 0.0101 0.0070 0.0048 0.0033 0.0022 0.0015 
-#&gt;     55     56     57     58     59     60     61     62     63     64     65 
-#&gt; 0.0010 0.0006 0.0004 0.0003 0.0002 0.0001 0.0001 0.0000 0.0000 0.0000 0.0000 </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pistonrings</span><span class='op'>)</span>
+<span class='va'>diameter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span><span class='op'>(</span><span class='va'>diameter</span>, <span class='va'>sample</span>, data <span class='op'>=</span> <span class='va'>pistonrings</span><span class='op'>)</span>
+<span class='va'>oc</span> <span class='op'>&lt;-</span> <span class='fu'>ocCurves.xbar</span><span class='op'>(</span><span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>diameter</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, nsigmas<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>oc</span>
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Operating Characteristic Curves</span><span> ─────────────── 
+#&gt; 
+#&gt; Chart type                 = xbar 
+#&gt; Prob. type II error (beta) =
+#&gt;               sample size
+#&gt; shift (StdDev)      1      5     10     15     20
+#&gt;            0.0 0.9973 0.9973 0.9973 0.9973 0.9973
+#&gt;            0.1 0.9972 0.9966 0.9959 0.9952 0.9944
+#&gt;            0.2 0.9968 0.9944 0.9909 0.9869 0.9823
+#&gt;            :                                     
+#&gt;            4.9 0.0287 0.0000 0.0000 0.0000 0.0000
+#&gt;            5.0 0.0228 0.0000 0.0000 0.0000 0.0000
+#&gt; Average run length (ARL)   =
+#&gt;               sample size
+#&gt; shift (StdDev)   1   5  10  15  20
+#&gt;            0.0 370 370 370 370 370
+#&gt;            0.1 353 296 244 206 178
+#&gt;            0.2 308 178 110  76  57
+#&gt;            :                      
+#&gt;            4.9   1   1   1   1   1
+#&gt;            5.0   1   1   1   1   1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>oc</span><span class='op'>)</span>
+</div><div class='img'><img src='oc.curves-1.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>orangejuice</span><span class='op'>)</span>
+<span class='va'>oc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span>,
+           <span class='fu'>ocCurves</span><span class='op'>(</span><span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='input'><span class='va'>oc</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Operating Characteristic Curves</span><span> ─────────────── 
+#&gt; 
+#&gt; Chart type                 = p 
+#&gt; Prob. type II error (beta) =
+#&gt;                       
+#&gt; fraction nonconforming   [,1]
+#&gt;                   0.00 0.0000
+#&gt;                   0.01 0.0894
+#&gt;                   0.02 0.2642
+#&gt;                   :          
+#&gt;                   0.99 0.0000
+#&gt;                   1.00 0.0000
+#&gt; Average run length (ARL)   =
+#&gt;                       
+#&gt; fraction nonconforming [,1]
+#&gt;                   0.00    1
+#&gt;                   0.01    1
+#&gt;                   0.02    1
+#&gt;                   :        
+#&gt;                   0.99    1
+#&gt;                   1.00    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>oc</span><span class='op'>)</span>
+</div><div class='img'><img src='oc.curves-2.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>circuit</span><span class='op'>)</span>
+<span class='va'>oc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>circuit</span>,
+           <span class='fu'>ocCurves</span><span class='op'>(</span><span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='input'><span class='va'>oc</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Operating Characteristic Curves</span><span> ─────────────── 
+#&gt; 
+#&gt; Chart type                 = c 
+#&gt; Prob. type II error (beta) =
+#&gt;         [,1]
+#&gt; 0.00  0.0000
+#&gt; 1.00  0.0006
+#&gt; 2.00  0.0166
+#&gt; :           
+#&gt; 64.00 0.0000
+#&gt; 65.00 0.0000
+#&gt; Average run length (ARL)   =
+#&gt;       [,1]
+#&gt; 0.00     1
+#&gt; 1.00     1
+#&gt; 2.00     1
+#&gt; :         
+#&gt; 64.00    1
+#&gt; 65.00    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>oc</span><span class='op'>)</span>
+</div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -362,7 +309,7 @@ is ignored for types "p" and "c".</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

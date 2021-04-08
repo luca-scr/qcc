@@ -9,19 +9,18 @@
 \description{Computes process capability indices for a \code{'qcc'} object of type \code{"xbar"} and plot the histogram.}
 
 \usage{
-processCapability(object, spec.limits, target, std.dev, nsigmas, 
-                  confidence.level = 0.95, plot = TRUE, \dots)
+processCapability(object, spec.limits, target, 
+                  std.dev, nsigmas, 
+                  confidence.level = 0.95,  \dots)
                    
 \method{print}{processCapability}(x, digits = getOption("digits"), \dots)
 
 \method{plot}{processCapability}(x, 
      add.stats = qcc.options("add.stats"), 
-     breaks = "scott", 
-     col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
-     border = "white",
-     title, xlab,
-     digits = getOption("digits"),
-     restore.par = TRUE, \dots)
+     breaks = nclass.scott, 
+     fill = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5),
+     color = "white", title, xlab, 
+     digits = getOption("digits"), \dots)
 }
 \arguments{
 \item{object}{a \code{'qcc'} object of type \code{"xbar"}}
@@ -30,16 +29,13 @@ processCapability(object, spec.limits, target, std.dev, nsigmas,
 \item{std.dev}{a value specifying the within-group standard deviation. If not provided is taken from the \code{'qcc'} object.}
 \item{nsigmas}{a numeric value specifying the number of sigmas to use. If not provided is taken from the \code{'qcc'} object.}
 \item{confidence.level}{a numeric value between 0 and 1 specifying the level to use for computing confidence intervals.}
-\item{plot}{a logical value; if \code{TRUE} the corresponding plot method is called.}
 \item{x}{an object of class {'processCapability'}.}
 \item{add.stats}{a logical value indicating whether statistics and capability indices should be added at the bottom of the chart.}
-\item{breaks}{a value or string used to draw the histogram. See the help for  \code{\link{hist}} for more details.}
-\item{col, border}{values specifying the colour of the area and the border of the histogram.}
-\item{title}{a character string specifying the plot title. Set \code{title = FALSE} or \code{title = NA} to remove the title.}
+\item{breaks}{a value or a function used to select the number of bins in a histogram. See the help for \code{\link{nclass.scott}} for more details.}
+\item{fill, color}{values specifying the colour of the filled area and the border used for drawing the histogram.}
+\item{title}{a character string specifying the plot title. Set \code{title = NULL} to remove the title.}
 \item{xlab}{a character string specifying the label for the x-axis.}
-\item{print}{a logical value indicating whether statistics and capability indices should be printed.}
 \item{digits}{the number of significant digits to use.}
-\item{restore.par}{a logical value indicating whether the previous \code{par} settings must be restored. If you need to add points, lines, etc. to a chart set this to \code{FALSE}.}
 \item{\dots}{catches further ignored arguments.}
 }
 \details{
@@ -64,7 +60,7 @@ Boyles, R.A. (1991) \emph{The Taguchi capability index}, Journal of Quality Tech
 
 Chou, Y., Owen D.B. and Borrego S.A. (1990) \emph{Lower Confidence Limits on Process Capability Indices}, Journal of Quality Technology, 22, 223-229.
 
-Montgomery, D.C. (2005) \emph{Introduction to Statistical Quality Control}, 5th ed. New York: John Wiley & Sons.
+Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control}, 7th ed. New York: John Wiley & Sons.
 
 Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New York: Chapman & Hall.
 }
@@ -72,12 +68,14 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
-q <- qcc(diameter[1:25,], type="xbar", nsigmas=3, plot=FALSE)
-processCapability(q, spec.limits=c(73.95,74.05))
-processCapability(q, spec.limits=c(73.95,74.05), target=74.02)
-processCapability(q, spec.limits=c(73.99,74.01))
-processCapability(q, spec.limits = c(73.99, 74.1))
+diameter <- qccGroups(data = pistonrings, diameter, sample)
+q <- qcc(diameter[1:25,], type="xbar", nsigmas=3)
+pc <- processCapability(q, spec.limits=c(73.95,74.05))
+pc
+plot(pc)
+plot(processCapability(q, spec.limits=c(73.95,74.05), target=74.02))
+plot(processCapability(q, spec.limits=c(73.99,74.01)))
+plot(processCapability(q, spec.limits = c(73.99, 74.1)))
 }
 \keyword{htest}
 \keyword{hplot}

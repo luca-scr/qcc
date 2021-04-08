@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,10 +119,10 @@
     <p>Plot an ellipse chart for a bivariate quality control data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ellipseChart</span>(<span class='no'>object</span>, <span class='kw'>chart.all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.id</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ngrid</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-             <span class='no'>confidence.level</span>, <span class='kw'>correct.multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-             <span class='no'>title</span>, <span class='no'>xlim</span>, <span class='no'>ylim</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>,
-             <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ellipseChart</span><span class='op'>(</span><span class='va'>object</span>, chart.all <span class='op'>=</span> <span class='cn'>TRUE</span>, show.id <span class='op'>=</span> <span class='cn'>FALSE</span>, ngrid <span class='op'>=</span> <span class='fl'>50</span>,
+             <span class='va'>confidence.level</span>, correct.multiple <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+             <span class='va'>title</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>,
+             restore.par <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,7 +153,7 @@
     </tr>
     <tr>
       <th>title</th>
-      <td><p>a string giving the label for the main title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
+      <td><p>a character string specifying the main title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
     </tr>
     <tr>
       <th>xlim</th>
@@ -184,14 +184,17 @@
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
-<p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mqcc.html'>mqcc</a></code>, <code><a href='stats.T2.html'>stats.T2</a></code>, <code><a href='stats.T2.single.html'>stats.T2.single</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># See examples in help(mqcc)
+    <pre class="examples"><div class='input'><span class='co'># See examples in help(mqcc)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -208,7 +211,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

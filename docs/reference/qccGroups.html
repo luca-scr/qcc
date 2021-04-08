@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,36 +119,40 @@
     <p>This function allows to easily group data to use as input to the <code><a href='qcc.html'>qcc()</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>qccGroups</span>(<span class='no'>x</span>, <span class='no'>sample</span>, <span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>qccGroups</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, <span class='va'>sample</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>data</th>
+      <td><p>a data frame (or a similar structure which can be coerced to be a <code>data.frame</code>) providing the observed data. If not provided, the input to the following arguments must be objects defined in the calling environment.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
-      <td><p>a vector of observed data values</p></td>
+      <td><p>a name from <code>data</code> or a vector of observed data values.</p></td>
     </tr>
     <tr>
       <th>sample</th>
-      <td><p>a vector of sample indicators for the data values</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>a data frame providing the observed data values <code>x</code> and the indicators <code>sample</code>. If not provided, the previous arguments must be objects defined in the calling environment.</p></td>
+      <td><p>a name from <code>data</code> or a vector of sample indicators defining the rationale subgroups of data values.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function returns a matrix of suitable dimensions. If one or more group have fewer observations than others, <code>NA</code> values are appended.</p>
+    <p>The function returns a matrix of suitable dimensions. If one or more group have fewer observations than others, <code>NA</code> values are used to fill empty values.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='qcc.html'>qcc</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pistonrings</span><span class='op'>)</span>
 <span class='co'># create a matrix of 40 samples made of 5 observations each</span>
-<span class='fu'>qccGroups</span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)</div><div class='output co'>#&gt;      [,1]   [,2]   [,3]   [,4]   [,5]
+<span class='fu'>qccGroups</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pistonrings</span>, <span class='va'>diameter</span>, <span class='va'>sample</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]   [,2]   [,3]   [,4]   [,5]
 #&gt; 1  74.030 74.002 74.019 73.992 74.008
 #&gt; 2  73.995 73.992 74.001 74.011 74.004
 #&gt; 3  73.988 74.024 74.021 74.005 74.002
@@ -188,9 +192,9 @@
 #&gt; 37 74.015 74.020 74.024 74.005 74.019
 #&gt; 38 74.035 74.010 74.012 74.015 74.026
 #&gt; 39 74.017 74.013 74.036 74.025 74.026
-#&gt; 40 74.010 74.005 74.029 74.000 74.020</div><div class='input'><span class='co'># if some observations are removed, the result is still a 40x5 matrix but </span>
-<span class='co'># with NAs added</span>
-<span class='fu'>qccGroups</span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>[-<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>50</span>,<span class='fl'>52</span>,<span class='fl'>199</span>),])</div><div class='output co'>#&gt;      [,1]   [,2]   [,3]   [,4]   [,5]
+#&gt; 40 74.010 74.005 74.029 74.000 74.020</div><div class='input'><span class='co'># remove some observations to get still a 40x5 matrix but filled with NAs </span>
+<span class='fu'>qccGroups</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pistonrings</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>50</span>,<span class='fl'>52</span>,<span class='fl'>199</span><span class='op'>)</span>,<span class='op'>]</span>, <span class='va'>diameter</span>, <span class='va'>sample</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]   [,2]   [,3]   [,4]   [,5]
 #&gt; 1  74.019 73.992 74.008     NA     NA
 #&gt; 2  73.995 73.992 74.001 74.011 74.004
 #&gt; 3  73.988 74.024 74.021 74.005 74.002
@@ -246,7 +250,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

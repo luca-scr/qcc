@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,27 +119,26 @@
     <p>Create an object of class <code>'qcc'</code> to perform statistical quality control. This object may then be used to plot Shewhart charts, drawing OC curves, computes capability indices, and more.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>qcc</span>(<span class='no'>data</span>,
-    <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"xbar"</span>, <span class='st'>"R"</span>, <span class='st'>"S"</span>, <span class='st'>"xbar.one"</span>, <span class='st'>"p"</span>, <span class='st'>"np"</span>, <span class='st'>"c"</span>, <span class='st'>"u"</span>, <span class='st'>"g"</span>),
-    <span class='no'>sizes</span>, <span class='no'>center</span>, <span class='no'>std.dev</span>, <span class='no'>limits</span>,
-    <span class='no'>data.name</span>, <span class='no'>labels</span>,
-    <span class='no'>newdata</span>, <span class='no'>newsizes</span>, <span class='no'>newdata.name</span>, <span class='no'>newlabels</span>,
-    <span class='kw'>nsigmas</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>confidence.level</span>,
-    <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>data</span>, 
+    type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"xbar"</span>, <span class='st'>"R"</span>, <span class='st'>"S"</span>, <span class='st'>"xbar.one"</span>, <span class='st'>"p"</span>, <span class='st'>"np"</span>, <span class='st'>"c"</span>, <span class='st'>"u"</span>, <span class='st'>"g"</span><span class='op'>)</span>, 
+    <span class='va'>sizes</span>, <span class='va'>center</span>, <span class='va'>std.dev</span>, <span class='va'>limits</span>,
+    <span class='va'>newdata</span>, <span class='va'>newsizes</span>, 
+    nsigmas <span class='op'>=</span> <span class='fl'>3</span>, <span class='va'>confidence.level</span>, 
+    rules <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for qcc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for qcc</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-     <span class='kw'>add.stats</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"add.stats"</span>),
-     <span class='kw'>chart.all</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"chart.all"</span>),
-     <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"fill"</span>),
-     <span class='kw'>label.center</span> <span class='kw'>=</span> <span class='st'>"CL"</span>,
-     <span class='kw'>label.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"LCL "</span>, <span class='st'>"UCL"</span>),
-     <span class='no'>title</span>, <span class='no'>xlab</span>, <span class='no'>ylab</span>, <span class='no'>ylim</span>, <span class='kw'>axes.las</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-     <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>),
-     <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>,
+     xtime <span class='op'>=</span> <span class='cn'>NULL</span>,
+     add.stats <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"add.stats"</span><span class='op'>)</span>, 
+     chart.all <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"chart.all"</span><span class='op'>)</span>, 
+     fill <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"fill"</span><span class='op'>)</span>,
+     label.center <span class='op'>=</span> <span class='st'>"CL"</span>,
+     label.limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"LCL "</span>, <span class='st'>"UCL"</span><span class='op'>)</span>,
+     <span class='va'>title</span>, <span class='va'>xlab</span>, <span class='va'>ylab</span>, <span class='va'>xlim</span>, <span class='va'>ylim</span>,
+     digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,28 +184,12 @@ Several methods are available for estimating the standard deviation in case of a
       <td><p>a two-values vector specifying control limits.</p></td>
     </tr>
     <tr>
-      <th>data.name</th>
-      <td><p>a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as data.</p></td>
-    </tr>
-    <tr>
-      <th>labels</th>
-      <td><p>a character vector of labels for each group.</p></td>
-    </tr>
-    <tr>
       <th>newdata</th>
       <td><p>a data frame, matrix or vector, as for the <code>data</code> argument, providing further data to plot but not included in the computations.</p></td>
     </tr>
     <tr>
       <th>newsizes</th>
       <td><p>a vector as for the <code>sizes</code> argument providing further data sizes to plot but not included in the computations.</p></td>
-    </tr>
-    <tr>
-      <th>newdata.name</th>
-      <td><p>a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as newdata.</p></td>
-    </tr>
-    <tr>
-      <th>newlabels</th>
-      <td><p>a character vector of labels for each new group defined in the argument <code>newdata</code>.</p></td>
     </tr>
     <tr>
       <th>nsigmas</th>
@@ -221,8 +204,8 @@ Several methods are available for estimating the standard deviation in case of a
       <td><p>a value or a vector of values specifying the rules to apply to the chart. See <code><a href='rules.html'>qccRules</a></code> for possible values and their meaning.</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>logical. If <code>TRUE</code> a Shewhart chart is plotted.</p></td>
+      <th>xtime</th>
+      <td><p>a vector of date-time values as returned by <code><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></code> and <code><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></code>. If provided it is used for x-axis so it must be of the same length as the statistic charted.</p></td>
     </tr>
     <tr>
       <th>add.stats</th>
@@ -234,8 +217,7 @@ Several methods are available for estimating the standard deviation in case of a
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>a logical value specifying if the in-control area should be filled with the color specified in 
-<code>qcc.options("zones")$fill</code>.</p></td>
+      <td><p>a logical value specifying if the in-control area should be filled with the color specified in <code>qcc.options("zones")$fill</code>.</p></td>
     </tr>
     <tr>
       <th>label.center</th>
@@ -247,31 +229,19 @@ Several methods are available for estimating the standard deviation in case of a
     </tr>
     <tr>
       <th>title</th>
-      <td><p>a string giving the label for the main title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
+      <td><p>a character string specifying the main title. Set <code>title = NULL</code> to remove the title.</p></td>
     </tr>
     <tr>
-      <th>xlab</th>
-      <td><p>a string giving the label for the x-axis.</p></td>
+      <th>xlab, ylab</th>
+      <td><p>a string giving the label for the x-axis and the y-axis.</p></td>
     </tr>
     <tr>
-      <th>ylab</th>
-      <td><p>a string giving the label for the y-axis.</p></td>
-    </tr>
-    <tr>
-      <th>ylim</th>
-      <td><p>a numeric vector specifying the limits for the y-axis.</p></td>
-    </tr>
-    <tr>
-      <th>axes.las</th>
-      <td><p>numeric in {0,1,2,3} specifying the style of axis labels. See <code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code>.</p></td>
+      <th>xlim, ylim</th>
+      <td><p>a numeric vector specifying the limits for the x-axis and the y-axis.</p></td>
     </tr>
     <tr>
       <th>digits</th>
       <td><p>the number of significant digits to use.</p></td>
-    </tr>
-    <tr>
-      <th>restore.par</th>
-      <td><p>a logical value indicating whether the previous <code>par</code> settings must be restored. If you need to add points, lines, etc. to a control chart set this to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -286,28 +256,29 @@ Several methods are available for estimating the standard deviation in case of a
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns an object of class <code>'qcc'</code>.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>For a nice blog post discussing the <code>qcc</code> package, in particular how to implement the <em>Western Eletric Rules (WER)</em>, see <a href='http://blog.yhat.com/posts/quality-control-in-r.html'>http://blog.yhat.com/posts/quality-control-in-r.html</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mason, R.L. and Young, J.C. (2002) <em>Multivariate Statistical Process Control with Industrial Applications</em>, SIAM.</p>
-<p>Montgomery, D.C. (2009) <em>Introduction to Statistical Quality Control</em>, 6th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons, Inc.</p>
 <p>Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. <em>R News</em> 4/1, 11-17.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='rules.html'>qccRules</a></code>, <code><a href='cusum.html'>cusum</a></code>, <code><a href='ewma.html'>ewma</a></code>, <code><a href='oc.curves.html'>ocCurves</a></code>, <code><a href='processCapability.html'>processCapability</a></code>, <code><a href='qccGroups.html'>qccGroups</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rules.html'>qccRules</a></code>, <code><a href='cusum.html'>cusum</a></code>, <code><a href='ewma.html'>ewma</a></code>, <code><a href='ocCurves.html'>ocCurves</a></code>, <code><a href='processCapability.html'>processCapability</a></code>, <code><a href='qccGroups.html'>qccGroups</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>##</span>
 <span class='co'>##  Continuous data </span>
 <span class='co'>##</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pistonrings</span><span class='op'>)</span>
+<span class='va'>diameter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pistonrings</span>, <span class='va'>diameter</span>, <span class='va'>sample</span><span class='op'>)</span>
 
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='op'>(</span><span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar 
 #&gt; Data (phase I)             = diameter[1:25, ] 
@@ -318,7 +289,10 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
-#&gt;  73.98805 74.0143</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+#&gt;  73.98805 74.0143</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-1.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='op'>(</span><span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar 
 #&gt; Data (phase I)             = diameter[1:25, ] 
@@ -333,39 +307,18 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL     UCL
-#&gt;  73.98805 74.0143</div><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>chart.all</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='qcc-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='qcc-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = xbar 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample size          = 5 
-#&gt; Center of group statistics = 74.00118 
-#&gt; Standard deviation         = 0.009785039 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 2 
-#&gt;       LCL      UCL
-#&gt;  73.99242 74.00993</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>confidence.level</span><span class='kw'>=</span><span class='fl'>0.99</span>)</div><div class='img'><img src='qcc-5.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = xbar 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample size          = 5 
-#&gt; Center of group statistics = 74.00118 
-#&gt; Standard deviation         = 0.009785039 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 2.575829 
-#&gt;      LCL      UCL
-#&gt;  73.9899 74.01245</div><div class='input'>
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>)</div><div class='img'><img src='qcc-6.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+#&gt;  73.98805 74.0143</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-2.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span>, chart.all<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-3.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span>, nsigmas<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-4.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span>, confidence.level<span class='op'>=</span><span class='fl'>0.99</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-5.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"R"</span><span class='op'>)</span>
+<span class='va'>q</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = R 
 #&gt; Data (phase I)             = diameter[1:25, ] 
@@ -376,173 +329,36 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;  LCL        UCL
-#&gt;    0 0.04812533</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-7.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = R 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample size          = 5 
-#&gt; Center of group statistics = 0.02276 
-#&gt; Standard deviation         = 0.009785039 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;  LCL        UCL
-#&gt;    0 0.04812533</div><div class='input'>
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>)</div><div class='img'><img src='qcc-8.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = S 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample size          = 5 
-#&gt; Center of group statistics = 0.009240037 
-#&gt; Standard deviation         = 0.009829977 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;  LCL        UCL
-#&gt;    0 0.01930242</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-9.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = S 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample size          = 5 
-#&gt; Center of group statistics = 0.009240037 
-#&gt; Standard deviation         = 0.009829977 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;  LCL        UCL
-#&gt;    0 0.01930242</div><div class='input'>
-<span class='co'># add warning limits at 2 std. deviations</span>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,], <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-(<span class='no'>warn.limits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='stats.xbar.html'>limits.xbar</a></span>(<span class='no'>q</span>$<span class='no'>center</span>, <span class='no'>q</span>$<span class='no'>std.dev</span>, <span class='no'>q</span>$<span class='no'>sizes</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;       LCL      UCL
-#&gt;  73.99242 74.00993</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>q</span>, <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span> <span class='kw'>=</span> <span class='no'>warn.limits</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"chocolate"</span>)</div><div class='img'><img src='qcc-10.png' alt='' width='504' height='432' /></div><div class='input'>
+#&gt;    0 0.04812533</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-6.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"R"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-7.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"S"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-8.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"S"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-9.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span>, rules <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-10.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># variable control limits</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>45</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>85</span>, <span class='fl'>99</span>, <span class='fl'>100</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>[-<span class='no'>out</span>,])
-<span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>)</div><div class='img'><img src='qcc-11.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = xbar 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample sizes         =               
-#&gt;   sizes  3 4  5
-#&gt;   counts 4 4 17
-#&gt; Center of group statistics = 74.00075 
-#&gt; Standard deviation         = 0.009856701 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;        LCL      UCL
-#&gt;   73.98753 74.01398
-#&gt;   73.98368 74.01782
-#&gt; :                  
-#&gt;   73.98753 74.01398</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>)</div><div class='img'><img src='qcc-12.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = R 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample sizes         =               
-#&gt;   sizes  3 4  5
-#&gt;   counts 4 4 17
-#&gt; Center of group statistics = 0.02230088 
-#&gt; Standard deviation         = 0.009856701 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;   LCL        UCL
-#&gt;     0 0.04785198
-#&gt;     0 0.04857007
-#&gt; :               
-#&gt;     0 0.04785198</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>)</div><div class='img'><img src='qcc-13.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = S 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample sizes         =               
-#&gt;   sizes  3 4  5
-#&gt;   counts 4 4 17
-#&gt; Center of group statistics = 0.00938731 
-#&gt; Standard deviation         = 0.009930923 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;   LCL        UCL
-#&gt;     0 0.01955302
-#&gt;     0 0.02318885
-#&gt; :               
-#&gt;     0 0.01955302</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-14.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = xbar 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample sizes         =               
-#&gt;   sizes  3 4  5
-#&gt;   counts 4 4 17
-#&gt; Center of group statistics = 74.00075 
-#&gt; Standard deviation         = 0.009856701 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;        LCL      UCL
-#&gt;   73.98753 74.01398
-#&gt;   73.98368 74.01782
-#&gt; :                  
-#&gt;   73.98753 74.01398</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"R"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-15.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = R 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample sizes         =               
-#&gt;   sizes  3 4  5
-#&gt;   counts 4 4 17
-#&gt; Center of group statistics = 0.02230088 
-#&gt; Standard deviation         = 0.009856701 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;   LCL        UCL
-#&gt;     0 0.04785198
-#&gt;     0 0.04857007
-#&gt; :               
-#&gt;     0 0.04785198</div><div class='input'><span class='fu'>qcc</span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"S"</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>diameter</span>[<span class='fl'>26</span>:<span class='fl'>40</span>,])</div><div class='img'><img src='qcc-16.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = S 
-#&gt; Data (phase I)             = diameter[1:25, ] 
-#&gt; Number of groups           = 25 
-#&gt; Group sample sizes         =               
-#&gt;   sizes  3 4  5
-#&gt;   counts 4 4 17
-#&gt; Center of group statistics = 0.00938731 
-#&gt; Standard deviation         = 0.009930923 
-#&gt; 
-#&gt; New data (phase II)        = diameter[26:40, ] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 5 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;   LCL        UCL
-#&gt;     0 0.01955302
-#&gt;     0 0.02318885
-#&gt; :               
-#&gt;     0 0.01955302</div><div class='input'>
+<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>45</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>85</span>, <span class='fl'>99</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>diameter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pistonrings</span><span class='op'>[</span><span class='op'>-</span><span class='va'>out</span>,<span class='op'>]</span>, <span class='va'>diameter</span>, <span class='va'>sample</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-11.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"R"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-12.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"S"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-13.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-14.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"R"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-15.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"S"</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-16.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'>##</span>
 <span class='co'>##  Attribute data </span>
 <span class='co'>##</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>orangejuice</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>orangejuice</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>,
-     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-17.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span>, 
+          <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>q</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = p 
 #&gt; Data (phase I)             = D[trial] 
@@ -556,137 +372,57 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt;   0.05242755 0.4102391
 #&gt;   0.05242755 0.4102391
 #&gt; :                     
-#&gt;   0.05242755 0.4102391</div><div class='input'>
+#&gt;   0.05242755 0.4102391</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-17.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># remove out-of-control points (see help(orangejuice) for the reasons)</span>
-<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
-           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-18.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
-     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>,
-         <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-19.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = p 
-#&gt; Data (phase I)             = D[trial] 
-#&gt; Number of groups           = 28 
-#&gt; Group sample size          = 50 
-#&gt; Center of group statistics = 0.215 
-#&gt; Standard deviation         = 0.4108223 
-#&gt; 
-#&gt; New data (phase II)        = D[!trial] 
-#&gt; Number of groups           = 24 
-#&gt; Group sample size          = 50 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;          LCL       UCL
-#&gt;   0.04070284 0.3892972
-#&gt;   0.04070284 0.3892972
-#&gt; :                     
-#&gt;   0.04070284 0.3892972</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>orangejuice2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice2</span>,
-     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-20.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = p 
-#&gt; Data (phase I)             = D[trial] 
-#&gt; Number of groups           = 24 
-#&gt; Group sample size          = 50 
-#&gt; Center of group statistics = 0.1108333 
-#&gt; Standard deviation         = 0.3139256 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;   LCL       UCL
-#&gt;     0 0.2440207
-#&gt;     0 0.2440207
-#&gt; :              
-#&gt;     0 0.2440207</div><div class='input'><span class='no'>q2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice2</span>,
-           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
-               <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-21.png' alt='' width='504' height='432' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>circuit</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>))</div><div class='img'><img src='qcc-22.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = c 
-#&gt; Data (phase I)             = x[trial] 
-#&gt; Number of groups           = 26 
-#&gt; Group sample size          = 100 
-#&gt; Center of group statistics = 19.84615 
-#&gt; Standard deviation         = 4.454902 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;       LCL      UCL
-#&gt;  6.481447 33.21086</div><div class='input'>
+<span class='va'>outofctrl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>,<span class='fl'>23</span><span class='op'>)</span>
+<span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-18.png' alt='' width='504' height='432' /></div><div class='input'><span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span>,
+               newdata<span class='op'>=</span><span class='va'>D</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span>, newsizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-19.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>orangejuice2</span><span class='op'>)</span>
+<span class='va'>q2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice2</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q2</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-20.png' alt='' width='504' height='432' /></div><div class='input'><span class='va'>q2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice2</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span>, 
+               newdata<span class='op'>=</span><span class='va'>D</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span>, newsizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q2</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-21.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>circuit</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>circuit</span>, <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-22.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='co'># remove out-of-control points (see help(circuit) for the reasons)</span>
-<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>,<span class='fl'>23</span>)
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
-           <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>))</div><div class='img'><img src='qcc-23.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>orangejuice</span>[-<span class='no'>outofctrl</span>,],
-     <span class='fu'>qcc</span>(<span class='no'>D</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"p"</span>,
-         <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>D</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span><span class='kw'>=</span><span class='no'>size</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-24.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = p 
-#&gt; Data (phase I)             = D[trial] 
-#&gt; Number of groups           = 28 
-#&gt; Group sample size          = 50 
-#&gt; Center of group statistics = 0.215 
-#&gt; Standard deviation         = 0.4108223 
-#&gt; 
-#&gt; New data (phase II)        = D[!trial] 
-#&gt; Number of groups           = 24 
-#&gt; Group sample size          = 50 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;          LCL       UCL
-#&gt;   0.04070284 0.3892972
-#&gt;   0.04070284 0.3892972
-#&gt; :                     
-#&gt;   0.04070284 0.3892972</div><div class='input'>
-<span class='no'>outofctrl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>6</span>,<span class='fl'>20</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
-     <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-25.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = c 
-#&gt; Data (phase I)             = x[trial] 
-#&gt; Number of groups           = 24 
-#&gt; Group sample size          = 100 
-#&gt; Center of group statistics = 19.66667 
-#&gt; Standard deviation         = 4.434712 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;       LCL     UCL
-#&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
-     <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"c"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
-         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-26.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = c 
-#&gt; Data (phase I)             = x[trial] 
-#&gt; Number of groups           = 24 
-#&gt; Group sample size          = 100 
-#&gt; Center of group statistics = 19.66667 
-#&gt; Standard deviation         = 4.434712 
-#&gt; 
-#&gt; New data (phase II)        = x[!trial] 
-#&gt; Number of groups           = 20 
-#&gt; Group sample size          = 100 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;       LCL     UCL
-#&gt;  6.362532 32.9708</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>circuit</span>[-<span class='no'>outofctrl</span>,],
-     <span class='fu'>qcc</span>(<span class='no'>x</span>[<span class='no'>trial</span>], <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>[<span class='no'>trial</span>], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>sample</span>[<span class='no'>trial</span>],
-         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>x</span>[!<span class='no'>trial</span>], <span class='kw'>newsizes</span> <span class='kw'>=</span> <span class='no'>size</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>sample</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-27.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = u 
-#&gt; Data (phase I)             = x[trial] 
-#&gt; Number of groups           = 24 
-#&gt; Group sample size          = 100 
-#&gt; Center of group statistics = 0.1966667 
-#&gt; Standard deviation         = 0.4434712 
-#&gt; 
-#&gt; New data (phase II)        = x[!trial] 
-#&gt; Number of groups           = 20 
-#&gt; Group sample size          = 100 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;         LCL      UCL
-#&gt;  0.06362532 0.329708</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pcmanufact</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>pcmanufact</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-28.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='va'>outofctrl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>,<span class='fl'>23</span><span class='op'>)</span>
+<span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-23.png' alt='' width='504' height='432' /></div><div class='input'><span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span>,
+               newdata<span class='op'>=</span><span class='va'>D</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span>, newsizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-24.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='va'>outofctrl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>,<span class='fl'>20</span><span class='op'>)</span>
+<span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>circuit</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-25.png' alt='' width='504' height='432' /></div><div class='input'><span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>circuit</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"c"</span>, 
+               newdata <span class='op'>=</span> <span class='va'>x</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span>, newsizes <span class='op'>=</span> <span class='va'>size</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-26.png' alt='' width='504' height='432' /></div><div class='input'><span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>circuit</span><span class='op'>[</span><span class='op'>-</span><span class='va'>outofctrl</span>,<span class='op'>]</span>, 
+           <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"u"</span>, 
+           newdata <span class='op'>=</span> <span class='va'>x</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span>, newsizes <span class='op'>=</span> <span class='va'>size</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-27.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pcmanufact</span><span class='op'>)</span>
+<span class='va'>q1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>pcmanufact</span>, <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span>, sizes<span class='op'>=</span><span class='va'>size</span>, type<span class='op'>=</span><span class='st'>"u"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>q1</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = u 
 #&gt; Data (phase I)             = x 
@@ -697,48 +433,26 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;         LCL      UCL
-#&gt;  0.06613305 3.793867</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dyedcloth</span>)
+#&gt;  0.06613305 3.793867</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q1</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-28.png' alt='' width='504' height='432' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dyedcloth</span><span class='op'>)</span>
 <span class='co'># variable control limits</span>
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>))</div><div class='img'><img src='qcc-29.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = u 
-#&gt; Data (phase I)             = x 
-#&gt; Number of groups           = 10 
-#&gt; Group sample sizes         =                                 
-#&gt;   sizes  8 9.5 10 10.5 12 12.5 13
-#&gt;   counts 1 1.0  3  1.0  2  1.0  1
-#&gt; Center of group statistics = 1.423256 
-#&gt; Standard deviation         = 1.193003 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;         LCL      UCL
-#&gt;   0.2914739 2.555038
-#&gt;   0.1578852 2.688626
-#&gt; :                   
-#&gt;   0.4109593 2.435552</div><div class='input'><span class='co'># standardized control chart</span>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>dyedcloth</span>, <span class='fu'>qcc</span>(<span class='no'>x</span>, <span class='kw'>sizes</span><span class='kw'>=</span><span class='no'>size</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"u"</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>))
-<span class='no'>z</span> <span class='kw'>&lt;-</span> (<span class='no'>q</span>$<span class='no'>statistics</span> - <span class='no'>q</span>$<span class='no'>center</span>)/<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>q</span>$<span class='no'>center</span>/<span class='no'>q</span>$<span class='no'>size</span>)
-<span class='fu'>qcc</span>(<span class='no'>z</span>, <span class='kw'>sizes</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"u"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Standardized u chart"</span>,
-    <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>std.dev</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'std.dev' is not used when limits is given</span></div><div class='img'><img src='qcc-30.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = u 
-#&gt; Data (phase I)             = z 
-#&gt; Number of groups           = 10 
-#&gt; Group sample size          = 1 
-#&gt; Center of group statistics = 0 
-#&gt; Standard deviation         = 1 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;  LCL  UCL
-#&gt;    -3   3</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>dyedcloth</span>, <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span>, sizes<span class='op'>=</span><span class='va'>size</span>, type<span class='op'>=</span><span class='st'>"u"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-29.png' alt='' width='504' height='432' /></div><div class='input'><span class='co'># standardized control chart</span>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>dyedcloth</span>, <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>x</span>, sizes<span class='op'>=</span><span class='va'>size</span>, type<span class='op'>=</span><span class='st'>"u"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>z</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='va'>q</span><span class='op'>$</span><span class='va'>statistics</span> <span class='op'>-</span> <span class='va'>q</span><span class='op'>$</span><span class='va'>center</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>$</span><span class='va'>center</span><span class='op'>/</span><span class='va'>q</span><span class='op'>$</span><span class='va'>size</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>qcc</span><span class='op'>(</span><span class='va'>z</span>, sizes <span class='op'>=</span> <span class='fl'>1</span>, type <span class='op'>=</span> <span class='st'>"u"</span>, center <span class='op'>=</span> <span class='fl'>0</span>, std.dev <span class='op'>=</span> <span class='fl'>1</span>, limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,
+     title <span class='op'>=</span> <span class='st'>"Standardized u chart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'std.dev' is not used when limits is given</span></div><div class='img'><img src='qcc-30.png' alt='' width='504' height='432' /></div><div class='input'>    
 <span class='co'>##</span>
 <span class='co'>##  Continuous one-at-time data </span>
 <span class='co'>##</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>viscosity</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>viscosity</span>,
-     <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>)</span>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>viscosity</span>, 
+          <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"xbar.one"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>q</span>
+</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar.one 
 #&gt; Data (phase I)             = viscosity[trial] 
@@ -749,27 +463,13 @@ Several methods are available for estimating the standard deviation in case of a
 #&gt; 
 #&gt; Control limits at nsigmas  = 3 
 #&gt;       LCL      UCL
-#&gt;  32.56504 35.61096</div><div class='input'><span class='co'># batch 4 is out-of-control because of a process temperature controller</span>
+#&gt;  32.56504 35.61096</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-31.png' alt='' width='504' height='432' /></div><div class='input'><span class='co'># batch 4 is out-of-control because of a process temperature controller</span>
 <span class='co'># failure; remove it and recompute</span>
-<span class='no'>viscosity</span> <span class='kw'>&lt;-</span> <span class='no'>viscosity</span>[-<span class='fl'>4</span>,]
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>viscosity</span>,
-     <span class='fu'>qcc</span>(<span class='no'>viscosity</span>[<span class='no'>trial</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"xbar.one"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>batch</span>[<span class='no'>trial</span>],
-         <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>viscosity</span>[!<span class='no'>trial</span>], <span class='kw'>newlabels</span> <span class='kw'>=</span> <span class='no'>batch</span>[!<span class='no'>trial</span>]))</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Quality Control Chart</span><span> ───────────────────────── 
-#&gt; 
-#&gt; Chart type                 = xbar.one 
-#&gt; Data (phase I)             = viscosity[trial] 
-#&gt; Number of groups           = 19 
-#&gt; Group sample size          = 1 
-#&gt; Center of group statistics = 33.98947 
-#&gt; Standard deviation         = 0.4117415 
-#&gt; 
-#&gt; New data (phase II)        = viscosity[!trial] 
-#&gt; Number of groups           = 15 
-#&gt; Group sample size          = 1 
-#&gt; 
-#&gt; Control limits at nsigmas  = 3 
-#&gt;       LCL     UCL
-#&gt;  32.75425 35.2247</div></span></pre>
+<span class='va'>viscosity</span> <span class='op'>&lt;-</span> <span class='va'>viscosity</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>4</span>,<span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>viscosity</span>, 
+          <span class='fu'>qcc</span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"xbar.one"</span>, newdata <span class='op'>=</span> <span class='va'>viscosity</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qcc-32.png' alt='' width='504' height='432' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -785,7 +485,7 @@ Several methods are available for estimating the standard deviation in case of a
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

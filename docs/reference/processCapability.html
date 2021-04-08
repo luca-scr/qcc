@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,21 +119,20 @@
     <p>Computes process capability indices for a <code>'qcc'</code> object of type <code>"xbar"</code> and plot the histogram.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>processCapability</span>(<span class='no'>object</span>, <span class='no'>spec.limits</span>, <span class='no'>target</span>, <span class='no'>std.dev</span>, <span class='no'>nsigmas</span>,
-                  <span class='kw'>confidence.level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>processCapability</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>spec.limits</span>, <span class='va'>target</span>, 
+                  <span class='va'>std.dev</span>, <span class='va'>nsigmas</span>, 
+                  confidence.level <span class='op'>=</span> <span class='fl'>0.95</span>,  <span class='va'>...</span><span class='op'>)</span>
+                   
+<span class='co'># S3 method for processCapability</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for processCapability</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>), <span class='no'>...</span>)
-
-<span class='co'># S3 method for processCapability</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-     <span class='kw'>add.stats</span> <span class='kw'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"add.stats"</span>),
-     <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='st'>"scott"</span>,
-     <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/adjustcolor.html'>adjustcolor</a></span>(<span class='fu'><a href='qcc.options.html'>qcc.options</a></span>(<span class='st'>"zones"</span>)$<span class='no'>fill</span>, <span class='kw'>alpha.f</span> <span class='kw'>=</span> <span class='fl'>0.5</span>),
-     <span class='kw'>border</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-     <span class='no'>title</span>,
-     <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"digits"</span>),
-     <span class='kw'>restore.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, 
+     add.stats <span class='op'>=</span> <span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"add.stats"</span><span class='op'>)</span>, 
+     breaks <span class='op'>=</span> <span class='va'>nclass.scott</span>, 
+     fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/adjustcolor.html'>adjustcolor</a></span><span class='op'>(</span><span class='fu'><a href='qcc.options.html'>qcc.options</a></span><span class='op'>(</span><span class='st'>"zones"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>fill</span>, alpha.f <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,
+     color <span class='op'>=</span> <span class='st'>"white"</span>, <span class='va'>title</span>, <span class='va'>xlab</span>, 
+     digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,10 +162,6 @@
       <td><p>a numeric value between 0 and 1 specifying the level to use for computing confidence intervals.</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>a logical value; if <code>TRUE</code> the corresponding plot method is called.</p></td>
-    </tr>
-    <tr>
       <th>x</th>
       <td><p>an object of class 'processCapability'.</p></td>
     </tr>
@@ -176,27 +171,23 @@
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>a value or string used to draw the histogram. See the help for  <code><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></code> for more details.</p></td>
+      <td><p>a value or a function used to select the number of bins in a histogram. See the help for <code><a href='https://rdrr.io/r/grDevices/nclass.html'>nclass.scott</a></code> for more details.</p></td>
     </tr>
     <tr>
-      <th>col, border</th>
-      <td><p>values specifying the colour of the area and the border of the histogram.</p></td>
+      <th>fill, color</th>
+      <td><p>values specifying the colour of the filled area and the border used for drawing the histogram.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>a character string specifying the plot title. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
+      <td><p>a character string specifying the plot title. Set <code>title = NULL</code> to remove the title.</p></td>
     </tr>
     <tr>
-      <th>print</th>
-      <td><p>a logical value indicating whether statistics and capability indices should be printed.</p></td>
+      <th>xlab</th>
+      <td><p>a character string specifying the label for the x-axis.</p></td>
     </tr>
     <tr>
       <th>digits</th>
       <td><p>the number of significant digits to use.</p></td>
-    </tr>
-    <tr>
-      <th>restore.par</th>
-      <td><p>a logical value indicating whether the previous <code>par</code> settings must be restored. If you need to add points, lines, etc. to a chart set this to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -226,17 +217,22 @@ Confidence limits for \(C_{pm}\) are based on the method of Boyles (1991); this 
     <p>Bissell, A.F. (1990) <em>How reliable is your capability index?</em>, Applied Statistics, 39, 331-340.</p>
 <p>Boyles, R.A. (1991) <em>The Taguchi capability index</em>, Journal of Quality Technology, 23, 107-126.</p>
 <p>Chou, Y., Owen D.B. and Borrego S.A. (1990) <em>Lower Confidence Limits on Process Capability Indices</em>, Journal of Quality Technology, 22, 223-229.</p>
-<p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='qcc.html'>qcc</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pistonrings</span>)
-<span class='no'>diameter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span>(<span class='no'>diameter</span>, <span class='no'>sample</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pistonrings</span>)
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='qcc.html'>qcc</a></span>(<span class='no'>diameter</span>[<span class='fl'>1</span>:<span class='fl'>25</span>,], <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"xbar"</span>, <span class='kw'>nsigmas</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'>processCapability</span>(<span class='no'>q</span>, <span class='kw'>spec.limits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>73.95</span>,<span class='fl'>74.05</span>))</div><div class='img'><img src='processCapability-1.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Process Capability Analysis</span><span> ─────────────────── 
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pistonrings</span><span class='op'>)</span>
+<span class='va'>diameter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pistonrings</span>, <span class='va'>diameter</span>, <span class='va'>sample</span><span class='op'>)</span>
+<span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, nsigmas<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>pc</span> <span class='op'>&lt;-</span> <span class='fu'>processCapability</span><span class='op'>(</span><span class='va'>q</span>, spec.limits<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>73.95</span>,<span class='fl'>74.05</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pc</span>
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Process Capability Analysis</span><span> ─────────────────── 
 #&gt; 
 #&gt; Number of obs = 125          Target = 74      
 #&gt; Center        = 74.00118     LSL    = 73.95   
@@ -250,49 +246,11 @@ Confidence limits for \(C_{pm}\) are based on the method of Boyles (1991); this 
 #&gt;               Cpm    1.69  1.48   1.90
 #&gt; 
 #&gt; Exp&lt;LSL 0%	 Obs&lt;LSL 0%
-#&gt; Exp&gt;USL 0%	 Obs&gt;USL 0%</div><div class='input'><span class='fu'>processCapability</span>(<span class='no'>q</span>, <span class='kw'>spec.limits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>73.95</span>,<span class='fl'>74.05</span>), <span class='kw'>target</span><span class='kw'>=</span><span class='fl'>74.02</span>)</div><div class='img'><img src='processCapability-2.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Process Capability Analysis</span><span> ─────────────────── 
-#&gt; 
-#&gt; Number of obs = 125          Target = 74.02   
-#&gt; Center        = 74.00118     LSL    = 73.95   
-#&gt; StdDev        = 0.009785039  USL    = 74.05   
-#&gt;                   
-#&gt; Capability indices  Value   2.5%  97.5%
-#&gt;               Cp    1.703  1.491  1.915
-#&gt;               Cp_l  1.743  1.555  1.932
-#&gt;               Cp_u  1.663  1.483  1.844
-#&gt;               Cp_k  1.663  1.448  1.878
-#&gt;               Cpm   0.786  0.656  0.915
-#&gt; 
-#&gt; Exp&lt;LSL 0%	 Obs&lt;LSL 0%
-#&gt; Exp&gt;USL 0%	 Obs&gt;USL 0%</div><div class='input'><span class='fu'>processCapability</span>(<span class='no'>q</span>, <span class='kw'>spec.limits</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>73.99</span>,<span class='fl'>74.01</span>))</div><div class='img'><img src='processCapability-3.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Process Capability Analysis</span><span> ─────────────────── 
-#&gt; 
-#&gt; Number of obs = 125          Target = 74      
-#&gt; Center        = 74.00118     LSL    = 73.99   
-#&gt; StdDev        = 0.009785039  USL    = 74.01   
-#&gt;                   
-#&gt; Capability indices  Value   2.5%  97.5%
-#&gt;               Cp    0.341  0.298  0.383
-#&gt;               Cp_l  0.381  0.318  0.444
-#&gt;               Cp_u  0.301  0.242  0.359
-#&gt;               Cp_k  0.301  0.231  0.370
-#&gt;               Cpm   0.338  0.296  0.380
-#&gt; 
-#&gt; Exp&lt;LSL 0.13%	 Obs&lt;LSL 0.12%
-#&gt; Exp&gt;USL 0.18%	 Obs&gt;USL 0.16%</div><div class='input'><span class='fu'>processCapability</span>(<span class='no'>q</span>, <span class='kw'>spec.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>73.99</span>, <span class='fl'>74.1</span>))</div><div class='img'><img src='processCapability-4.png' alt='' width='504' height='432' /></div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Process Capability Analysis</span><span> ─────────────────── 
-#&gt; 
-#&gt; Number of obs = 125          Target = 74.045  
-#&gt; Center        = 74.00118     LSL    = 73.99   
-#&gt; StdDev        = 0.009785039  USL    = 74.1    
-#&gt;                   
-#&gt; Capability indices  Value   2.5%  97.5%
-#&gt;               Cp    1.874  1.641  2.106
-#&gt;               Cp_l  0.381  0.318  0.444
-#&gt;               Cp_u  3.367  3.011  3.722
-#&gt;               Cp_k  0.381  0.305  0.456
-#&gt;               Cpm   0.408  0.338  0.479
-#&gt; 
-#&gt; Exp&lt;LSL 0.13%	 Obs&lt;LSL 0.12%
-#&gt; Exp&gt;USL 0%	 Obs&gt;USL 0%</div></span></pre>
+#&gt; Exp&gt;USL 0%	 Obs&gt;USL 0%</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>pc</span><span class='op'>)</span>
+</div><div class='img'><img src='processCapability-1.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>processCapability</span><span class='op'>(</span><span class='va'>q</span>, spec.limits<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>73.95</span>,<span class='fl'>74.05</span><span class='op'>)</span>, target<span class='op'>=</span><span class='fl'>74.02</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='processCapability-2.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>processCapability</span><span class='op'>(</span><span class='va'>q</span>, spec.limits<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>73.99</span>,<span class='fl'>74.01</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='processCapability-3.png' alt='' width='504' height='432' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>processCapability</span><span class='op'>(</span><span class='va'>q</span>, spec.limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>73.99</span>, <span class='fl'>74.1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='processCapability-4.png' alt='' width='504' height='432' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,7 +266,7 @@ Confidence limits for \(C_{pm}\) are based on the method of Boyles (1991); this 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

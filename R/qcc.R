@@ -18,11 +18,10 @@
 qcc <- function(data, 
                 type = c("xbar", "R", "S", "xbar.one", 
                          "p", "np", "c", "u", "g"),
-                sizes, center, std.dev, limits, data.name, labels, 
-                newdata, newsizes, newdata.name, newlabels, 
+                sizes, center, std.dev, limits, 
+                newdata, newsizes, 
                 nsigmas = 3, confidence.level, 
-                rules = c(1,4), 
-                plot = TRUE, ...)
+                rules = c(1,4), ...)
 {
   call <- match.call()
   
@@ -38,8 +37,7 @@ qcc <- function(data,
      !exists(paste("limits.", type, sep = ""), mode="function"))
     stop(paste("invalid", type, "control chart. See help(qcc) "))
 
-  if (missing(data.name)) 
-     data.name <- deparse(substitute(data))
+  data.name <- deparse(substitute(data))
   data <- data.matrix(data)
   if (missing(sizes)) 
      { if (any(type==c("p", "np", "u")))
@@ -52,9 +50,7 @@ qcc <- function(data,
        else if (length(sizes) != nrow(data))
                 stop("sizes length doesn't match with data") }
 
-  if (missing(labels))
-     { if (is.null(rownames(data))) labels <- 1:nrow(data)
-       else                         labels <- rownames(data) }
+  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
 
   stats <- paste("stats.", type, sep = "")
   if (!exists(stats, mode="function"))
@@ -100,40 +96,45 @@ qcc <- function(data,
 
   # check for new data provided and update object
   if(!missing(newdata))
-    { if (missing(newdata.name))
-			{ newdata.name <- deparse(substitute(newdata))}
-        newdata <- data.matrix(newdata)
-        if (missing(newsizes))
-           { if (any(type==c("p", "np", "u")))
-                stop(paste("sample 'newsizes' must be given for a", type, "Chart"))
-             else
-                newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) }
-        else
-           { if (length(newsizes)==1)
-                newsizes <- rep(newsizes, nrow(newdata))
-             else if (length(newsizes) != nrow(newdata))
-                      stop("newsizes length doesn't match with newdata") }
-        stats <- paste("stats.", type, sep = "")
-        if (!exists(stats, mode="function"))
-           stop(paste("function", stats, "is not defined"))
-        newstats <- do.call(stats, list(newdata, newsizes))$statistics
-        if (missing(newlabels))
-           { if (is.null(rownames(newdata)))
-                { start <- length(statistics)
-                  newlabels <- seq(start+1, start+length(newstats)) }
-             else
-                { newlabels <- rownames(newdata) }
-        }
-        stopifnot(length(newlabels) == length(newstats))
-        names(newstats) <- newlabels
-        object$newstats <- newstats
-        object$newdata  <- newdata
-        object$newsizes <- newsizes
-        object$newdata.name <- newdata.name
-        statistics <- c(statistics, newstats)
-        sizes <- c(sizes, newsizes)
+  { 
+    newdata.name <- deparse(substitute(newdata))
+    newdata <- data.matrix(newdata)
+    if(missing(newsizes))
+    { 
+      if(any(type==c("p", "np", "u")))
+        stop(paste("sample 'newsizes' must be given for a", type, "Chart"))
+      else
+        newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+    } else
+    { 
+      if(length(newsizes)==1)
+        newsizes <- rep(newsizes, nrow(newdata))
+      else 
+        if(length(newsizes) != nrow(newdata))
+         stop("newsizes length doesn't match with newdata") 
+    }
+    stats <- paste("stats.", type, sep = "")
+    if(!exists(stats, mode="function"))
+      stop(paste("function", stats, "is not defined"))
+    newstats <- do.call(stats, list(newdata, newsizes))$statistics
+    if(is.null(rownames(newdata)))
+    { 
+      start <- length(statistics)
+      newlabels <- seq(start+1, start+length(newstats)) 
+    } else
+    { 
+      newlabels <- rownames(newdata)
+    }
+    stopifnot(length(newlabels) == length(newstats))
+    names(newstats) <- newlabels
+    object$newstats <- newstats
+    object$newdata  <- newdata
+    object$newsizes <- newsizes
+    object$newdata.name <- newdata.name
+    statistics <- c(statistics, newstats)
+    sizes <- c(sizes, newsizes)
   }
-
+  
   conf <- nsigmas
   if (!missing(confidence.level))
      conf <- confidence.level
@@ -168,7 +169,6 @@ qcc <- function(data,
   # identify violating rules observations
   object$violations <- qccRules(object)
 
-  if(plot) plot(object, ...) 
   return(object)
 }
 
@@ -273,15 +273,15 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
 summary.qcc <- function(object, ...) print.qcc(object, ...)
 
 
-plot.qcc <- function(x, 
+plot.qcc <- function(x, xtime = NULL,
                      add.stats = qcc.options("add.stats"), 
                      chart.all = qcc.options("chart.all"), 
                      fill = qcc.options("fill"),
                      label.center = "CL",
                      label.limits = c("LCL ", "UCL"), 
-                     title, xlab, ylab, ylim, axes.las = 0,
+                     title, xlab, ylab, xlim, ylim,
                      digits = getOption("digits"),
-                     restore.par = TRUE, ...) 
+                     ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
   if ((missing(object)) | (!inherits(object, "qcc")))
@@ -299,18 +299,9 @@ plot.qcc <- function(x,
   newstats <- object$newstats
   newdata.name <- object$newdata.name
   violations <- object$violations
-  if(chart.all) 
-    { statistics <- c(stats, newstats)
-      indices <- 1:length(statistics) 
-    } else 
-    { if(is.null(newstats))
-        { statistics <- stats
-          indices <- 1:length(statistics) 
-        } else 
-        { statistics <- newstats 
-          indices <- seq(length(stats)+1, length(stats)+length(newstats)) 
-        }
-    }
+  statistics <- c(stats, newstats)
+  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  stopifnot(length(groups) == length(statistics))
   
   if(missing(title))
   { 
@@ -321,106 +312,94 @@ plot.qcc <- function(x,
          else 
            title <- paste(type, "chart for", newdata.name) 
   }
-  if(isFALSE(title) | is.na(title)) title <- ""
   
-  oldpar <- par(no.readonly = TRUE)
-  if(restore.par) on.exit(par(oldpar))
-
-  cex.labels <- par("cex")*qcc.options("cex")
-  cex.stats <- par("cex")*qcc.options("cex.stats")
-  oma <- if(add.stats)        c(3.5*cex.stats, 0, 1.5*cex.labels, 0) 
-         else                 c(0, 0, 1.5*cex.labels, 0)
-
-  par(bg  = qcc.options("bg.margin"), 
-      cex = oldpar$cex * qcc.options("cex"),
-      # mgp = c(2.1, 0.8, 0),
-      mar = pmax(par("mar"), c(4.1,4.1,1.1,2.1), na.rm=TRUE),
-      oma = oma)
+  df <- data.frame(group = groups, 
+                   stat = statistics, 
+                   lcl = lcl, ucl = ucl,
+                   violations = factor(ifelse(is.na(violations), 
+                                              0, violations),
+                                       levels = 0:4))
+  if(!chart.all & (!is.null(newstats)))
+    df <- df[df$group > length(object$statistics),]
   
-  # plot Shewhart chart
-  plot(indices, statistics, type="n",
-       ylim = if(!missing(ylim)) ylim 
-              else range(statistics, limits, center, na.rm = TRUE),
-       ylab = if(missing(ylab)) "Group summary statistics" else ylab,
-       xlab = if(missing(xlab)) "Group" else xlab, 
-       axes = FALSE)
-  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
-       col = qcc.options("bg.figure"))
-  axis(1, at = indices, las = axes.las,
-       labels = if(is.null(names(statistics))) 
-                as.character(indices) else names(statistics),
-       cex.axis = par("cex.axis")*0.9)
-  axis(2, las = axes.las, cex.axis = par("cex.axis")*0.9)
-  box()
-  mtext(title, side = 3, outer = TRUE, 
-        line = 0, adj = 0, at = par("plt")[1],
-        font = par("font.main"), 
-        cex  = par("cex")*qcc.options("cex"), 
-        col  = par("col.main"))
+  if(missing(ylim))
+    ylim <- range(df$stat, df$lcl, df$ucl, na.rm = TRUE)
+  if(missing(xlim))
+    xlim <- range(df$group, na.rm = TRUE)
 
+  plot <- 
+    ggplot(data = df, aes_string(x = "group", y = "stat")) +
+    geom_line() +
+    geom_point(aes_string(colour = "violations", 
+                          shape = "violations"), 
+               size = 2) +
+    scale_colour_manual(values = c("black", qcc.options("rules")$col)) +
+    scale_shape_manual(values = c(20, qcc.options("rules")$pch)) +
+    labs(title = title, subtitle = "",
+         x = if(missing(xlab)) "Group" else xlab,
+         y = if(missing(ylab)) "Group summary statistics" else ylab) +
+    coord_cartesian(xlim = xlim+c(-0.5,0.5), 
+                    ylim = extendrange(ylim),
+                    expand = FALSE, clip = "off") +
+    theme_light() + 
+    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                         color = qcc.options("bg.margin")),
+          panel.background = element_rect(fill = qcc.options("bg.figure")),
+          plot.title = element_text(face = "bold", size = 11),
+          legend.position = "none",
+          plot.margin = margin(5, 30, 5, 5))
+
+  plot <- plot + 
+  {
+    if(is.numeric(groups))
+      scale_x_continuous(breaks = pretty(xlim, n = 7))
+    else
+      scale_x_date(breaks = pretty(xlim, n = 7))
+  }
+        
   # draw control limits
   if(any(object$rules == 1))
-  { if(fill)
+  { 
+    x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    y1 <- if(length(lcl) == 1) rep(lcl, length(x1)) else
+            c(lcl[df$group], lcl[df$group[length(df$group)]])
+    y2 <- if(length(ucl) == 1) rep(ucl, length(x2)) else
+            c(ucl[df$group], ucl[df$group[length(df$group)]])
+    xp1 <- rep(x1, each=2)[-1]
+    xp2 <- rep(x2, each=2)[-1]
+    yp1 <- rep(y1, each=2)[-2*length(y1)]
+    yp2 <- rep(y2, each=2)[-2*length(y2)]
+    if(fill)
     { # fill the in-control area
-      if(length(lcl) == 1) 
-      { 
-        polygon(par("usr")[c(1,2,2,1)], c(lcl, lcl, ucl, ucl), border = FALSE, 
-                col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
-      } else
-      {
-        x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-        y1 <- c(lcl[indices], lcl[indices[length(indices)]])
-        y2 <- c(ucl[indices], ucl[indices[length(indices)]])
-        xp1 <- rep(x1, each=2)[-1]
-        xp2 <- rep(x2, each=2)[-1]
-        yp1 <- rep(y1, each=2)[-2*length(y1)]
-        yp2 <- rep(y2, each=2)[-2*length(y2)]
-        # plot(indices, statistics, ylim = range(statistics, limits, center))
-        # lines(x1, y1, type = "s", lty = 2)
-        # lines(x2, y2, type = "s", lty = 2)
-        polygon(c(xp1,rev(xp2)), c(yp1,rev(yp2)), border = FALSE, 
-                col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
-        # x <- c(1:5, 1:5)
-        # y <- c(2,1,1,3,2,5,6,6,4,5)
-        # x1 = c(x[1:5],x[5]+1)-0.5
-        # y1 = c(y[1:5],y[5])
-        # x2 = c(x[6:10],x[10]+1)-0.5
-        # y2 = c(y[6:10],y[10])
-        # xp1 <- rep(x1, each=2)[-1]
-        # xp2 <- rep(x2, each=2)[-1]
-        # yp1 <- rep(y1, each=2)[-2*length(y1)]
-        # yp2 <- rep(y2, each=2)[-2*length(y2)]
-        # plot(x, y, type = "p", ylim = range(y), xlim = range(x), pch = 20)
-        # lines(x1, y1, type = "s", lty = 2)
-        # lines(x2, y2, type = "s", lty = 2)
-        # polygon(c(xp1,rev(xp2)), c(yp1,rev(yp2)), border = FALSE, col = qcc.options("fill"))
-      }
-  } else
+      plot <- plot + 
+        geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
+                                       y = c(yp1,rev(yp2))),
+                     aes_string(x = "x", y = "y"), 
+                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     col = NA)
+    } else
     {
-      if(length(lcl) == 1) 
-      { 
-        abline(h = c(lcl,ucl),
-               lty = qcc.options("zones")$lty[1], 
-               col = qcc.options("zones")$col[1])
-      } else 
-      { 
-        x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-        y1 <- c(lcl[indices], lcl[indices[length(indices)]])
-        y2 <- c(ucl[indices], ucl[indices[length(indices)]])
-        lines(x1, y1, type="s", 
-              lty = qcc.options("zones")$lty[1],
-              col = qcc.options("zones")$col[1])
-        lines(x2, y2, type="s", 
-              lty = qcc.options("zones")$lty[1],
-              col = qcc.options("zones")$col[1]) 
-      }
-  }
-  mtext(label.limits, side = 4, at = c(rev(lcl)[1], rev(ucl)[1]), 
-        las = 1, line = 0.1, col = gray(0.3), 
-        cex = par("cex")*qcc.options("cex.stats"))
-  mtext(label.center, side = 4, at = rev(center)[1], 
-        las = 1, line = 0.1, col = gray(0.3), 
-        cex = par("cex")*qcc.options("cex.stats"))
+      plot <- plot + 
+        geom_step(data = data.frame(x = x1, y = y1),
+                  aes_string(x = "x", y = "y"), 
+                  lty = qcc.options("zones")$lty[1],
+                  col = qcc.options("zones")$col[1])
+      plot <- plot + 
+        geom_step(data = data.frame(x = x2, y = y2),
+                  aes_string(x = "x", y = "y"), 
+                  lty = qcc.options("zones")$lty[1],
+                  col = qcc.options("zones")$col[1])
+    }
+
+  plot <- plot + 
+    geom_text(data = data.frame(y = c(rev(center)[1],
+                                      rev(lcl)[1],
+                                      rev(ucl)[1]),
+                                x = rep(max(df$group)+0.5, 3)),
+              aes_string(x = "x", y = "y"),
+              label = c(label.center, label.limits),
+              hjust = 0, nudge_x = 0.2,
+              size = 10 * 5/14, col = gray(0.3))
   }
   
   # draw 2-sigma warning limits
@@ -431,242 +410,165 @@ plot.qcc <- function(x,
                                   std.dev = object$std.dev,
                                   sizes = c(object$sizes, object$newsizes), 
                                   nsigmas = object$nsigmas*2/3))
-    if(fill)
-    { 
-      if(nrow(limits.2sigma) == 1) 
-      { 
-        polygon(par("usr")[c(1,2,2,1)], limits.2sigma[1,c(1,1,2,2)],
-                border = FALSE, 
-                col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
-      } else
-      {
-        x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-        y1 <- c(limits.2sigma[indices,1], 
-                limits.2sigma[indices[length(indices)],1])
-        y2 <- c(limits.2sigma[indices,2], 
-                limits.2sigma[indices[length(indices)],2])
-        xp1 <- rep(x1, each=2)[-1]
-        xp2 <- rep(x2, each=2)[-1]
-        yp1 <- rep(y1, each=2)[-2*length(y1)]
-        yp2 <- rep(y2, each=2)[-2*length(y2)]
-        polygon(c(xp1,rev(xp2)), c(yp1,rev(yp2)), 
-                border = FALSE, 
-                col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
-      }
+    x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    if(nrow(limits.2sigma)==1)
+    {
+      y1 <- rep(limits.2sigma[1,1], length(df$group)+1)
+      y2 <- rep(limits.2sigma[1,2], length(df$group)+1)
     } else
     {
-      if(nrow(limits.2sigma) == 1) 
-      { 
-        abline(h = limits.2sigma, 
-               lty = qcc.options("zones")$lty[2], 
-               col = qcc.options("zones")$col[2])
-      } else
-      { 
-        x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-        y1 <- c(limits.2sigma[indices,1], 
-                limits.2sigma[indices[length(indices)],1])
-        y2 <- c(limits.2sigma[indices,2], 
-                limits.2sigma[indices[length(indices)],2])
-        lines(x1, y1, type="s", 
-              lty = qcc.options("zones")$lty[2],
-              col = qcc.options("zones")$col[2])
-        lines(x2, y2, type="s", 
-              lty = qcc.options("zones")$lty[2],
-              col = qcc.options("zones")$col[2])  
-      }
+      y1 <- c(limits.2sigma[df$group,1], 
+              limits.2sigma[df$group[length(df$group)],1])
+      y2 <- c(limits.2sigma[df$group,2], 
+              limits.2sigma[df$group[length(df$group)],2])
+    }
+    xp1 <- rep(x1, each=2)[-1]
+    xp2 <- rep(x2, each=2)[-1]
+    yp1 <- rep(y1, each=2)[-2*length(y1)]
+    yp2 <- rep(y2, each=2)[-2*length(y2)]
+    if(fill)
+    { # fill the in-control area
+      plot <- plot + 
+        geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
+                                       y = c(yp1,rev(yp2))),
+                     aes_string(x = "x", y = "y"), 
+                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     col = NA)
+    } else
+    {
+      plot <- plot + 
+        geom_step(data = data.frame(x = x1, y = y1),
+                           aes_string(x = "x", y = "y"), 
+                           lty = qcc.options("zones")$lty[2],
+                           col = qcc.options("zones")$col[2])
+      plot <- plot + 
+        geom_step(data = data.frame(x = x2, y = y2),
+                           aes_string(x = "x", y = "y"), 
+                           lty = qcc.options("zones")$lty[2],
+                           col = qcc.options("zones")$col[2])
     }
   }
   
   # draw 1-sigma warning limits
   if(any(object$rules == 3))
   { 
-    limits.1sigma <- do.call(paste("limits.", object$type, sep = ""), 
+    limits.2sigma <- do.call(paste("limits.", object$type, sep = ""), 
                              list(center = object$center, 
                                   std.dev = object$std.dev,
                                   sizes = c(object$sizes, object$newsizes), 
                                   nsigmas = object$nsigmas*1/3))
-    if(fill)
-    { 
-      if(nrow(limits.1sigma) == 1) 
-      { 
-        polygon(par("usr")[c(1,2,2,1)], limits.1sigma[1,c(1,1,2,2)],
-                border = FALSE, 
-                col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
-      } else
-      {
-        x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-        y1 <- c(limits.1sigma[indices,1], 
-                limits.1sigma[indices[length(indices)],1])
-        y2 <- c(limits.1sigma[indices,2], 
-                limits.1sigma[indices[length(indices)],2])
-        xp1 <- rep(x1, each=2)[-1]
-        xp2 <- rep(x2, each=2)[-1]
-        yp1 <- rep(y1, each=2)[-2*length(y1)]
-        yp2 <- rep(y2, each=2)[-2*length(y2)]
-        polygon(c(xp1,rev(xp2)), c(yp1,rev(yp2)), 
-                border = FALSE, 
-                col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1))
-      }
+    x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    if(nrow(limits.2sigma)==1)
+    {
+      y1 <- rep(limits.2sigma[1,1], length(df$group)+1)
+      y2 <- rep(limits.2sigma[1,2], length(df$group)+1)
     } else
     {
-      if(nrow(limits.1sigma) == 1) 
-      { 
-        abline(h = limits.1sigma, 
-               lty = qcc.options("zones")$lty[3], 
-               col = qcc.options("zones")$col[3])
-      } else
-      { 
-        x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-        y1 <- c(limits.1sigma[indices,1], 
-                limits.1sigma[indices[length(indices)],1])
-        y2 <- c(limits.1sigma[indices,2], 
-                limits.1sigma[indices[length(indices)],2])
-        lines(x1, y1, type="s", 
-              lty = qcc.options("zones")$lty[3],
-              col = qcc.options("zones")$col[3])
-        lines(x2, y2, type="s", 
-              lty = qcc.options("zones")$lty[3],
-              col = qcc.options("zones")$col[3])  
-      }
+      y1 <- c(limits.2sigma[df$group,1], 
+              limits.2sigma[df$group[length(df$group)],1])
+      y2 <- c(limits.2sigma[df$group,2], 
+              limits.2sigma[df$group[length(df$group)],2])
+    }
+    xp1 <- rep(x1, each=2)[-1]
+    xp2 <- rep(x2, each=2)[-1]
+    yp1 <- rep(y1, each=2)[-2*length(y1)]
+    yp2 <- rep(y2, each=2)[-2*length(y2)]
+    if(fill)
+    { # fill the in-control area
+      plot <- plot + 
+        geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
+                                       y = c(yp1,rev(yp2))),
+                     aes_string(x = "x", y = "y"), 
+                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     col = NA)
+    } else
+    {
+      plot <- plot + 
+        geom_step(data = data.frame(x = x1, y = y1),
+                  aes_string(x = "x", y = "y"), 
+                  lty = qcc.options("zones")$lty[3],
+                  col = qcc.options("zones")$col[3])
+      plot <- plot + 
+        geom_step(data = data.frame(x = x2, y = y2),
+                  aes_string(x = "x", y = "y"), 
+                  lty = qcc.options("zones")$lty[3],
+                  col = qcc.options("zones")$col[3])
     }
   }
   
-  # if(any(object$rules == 3) & !fill)
-  # {
-  #   limits.1sigma <- do.call(paste("limits.", object$type, sep = ""), 
-  #                            list(center = object$center, 
-  #                                 std.dev = object$std.dev,
-  #                                 sizes = c(object$sizes, object$newsizes), 
-  #                                 nsigmas = object$nsigmas*1/3))
-  #   if(nrow(limits.1sigma) == 1) 
-  #   { 
-  #     abline(h = limits.1sigma, 
-  #            lty = qcc.options("zones")$lty[3], 
-  #            col = qcc.options("zones")$col[3])
-  #   } else
-  #   { 
-  #     x1 <- x2 <- c(indices, indices[length(indices)]+1)-0.5
-  #     y1 <- c(limits.1sigma[indices,1], limits.1sigma[indices[length(indices)],1])
-  #     y2 <- c(limits.1sigma[indices,2], limits.1sigma[indices[length(indices)],2])
-  #     lines(x1, y1, type="s", 
-  #           lty = qcc.options("zones")$lty[3],
-  #           col = qcc.options("zones")$col[3])
-  #     lines(x2, y2, type="s", 
-  #           lty = qcc.options("zones")$lty[3],
-  #           col = qcc.options("zones")$col[3])  
-  #   }
-  # }
-  # 
   # draw center line
-  if(length(center) == 1)
-    abline(h = center, col = qcc.options("zones")$col[1])
-  else 
-    lines(indices, center[indices], type="s", 
-          col = qcc.options("zones")$col[1])
-  
-  # draw lines & points
-  lines(indices, statistics, type = "b", pch=NA)
-  col <- rep(palette()[1], length(indices))
-  pch <- rep(20, length(indices))
-  
-  if(!is.null(violations))
-  { 
-    for(j in 1:4)
-       {
-         i <- (indices %in% which(violations==j))
-         col[i] <- qcc.options("rules")$col[j]
-         pch[i] <- qcc.options("rules")$pch[j]
-       }
+  plot <- plot + if(length(center) == 1) 
+  {
+    geom_hline(yintercept = center, 
+               col = qcc.options("zones")$col[1]) 
+  } else
+  {
+    geom_step(data = df, aes_string(x = "group", y = "center"),
+              col = qcc.options("zones")$col[1])
   }
-  points(indices, statistics, col = col, pch = pch)
-  
+
   if(chart.all & (!is.null(newstats)))
-  { 
-    len.obj.stats <- length(object$statistics)
-    len.new.stats <- length(statistics) - len.obj.stats
-    abline(v = len.obj.stats + 0.5, lty = 3)
-    mtext("Calibration data", cex = par("cex")*0.8,
-          at = len.obj.stats/2, line = 0, adj = 0.5)
-    mtext("New data", cex = par("cex")*0.8, 
-          at = len.obj.stats + len.new.stats/2, line = 0, adj = 0.5)
+  {
+    len.obj.stats <- length(stats)
+    len.new.stats <- length(newstats)
+    plot <- plot +
+      geom_vline(xintercept = min(xlim) + len.obj.stats + 0.5, lty = 3) +
+      annotate("text", x = min(xlim) + len.obj.stats/2, 
+               y = max(extendrange(ylim)),
+               label = "Calibration data", 
+               hjust = 0.5, vjust = -0.5, size = 10 * 5/14) +
+      annotate("text", x = min(xlim) + len.obj.stats + len.new.stats/2,
+               y = max(extendrange(ylim)),
+               label = "New data", 
+               hjust = 0.5, vjust = -0.5, size = 10 * 5/14)
   }
   
   if(add.stats) 
   { 
-    at <- c(0.10,0.40,0.65) 
-    # seq(par("plt")[1], par("plt")[2], length.out = 4)[-4]
     # write info at bottom
-    mtext(paste("Number of groups = ", length(statistics), sep = ""), 
-          side = 1, outer = TRUE, line = 0, adj = 0, at = at[1],
-          font = qcc.options("font.stats"),
-          cex = par("cex")*qcc.options("cex.stats"))
-    center <- object$center
-    if(length(center) == 1)
-    { mtext(paste("Center = ", signif(center[1], digits), sep = ""),
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    } else 
-    { mtext("Center is variable",
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
+    tab_base <- ggplot() + 
+      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
+      theme_void() +
+      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                           color = qcc.options("bg.margin")))
+
+    text1 <- paste(paste0("Number of groups = ", length(statistics)),
+                   paste0("Center = ", if(length(center) == 1) 
+                     signif(center[1], digits) else "variable"),
+                   paste0("StdDev = ", if(length(std.dev) == 1) 
+                     signif(std.dev[1], digits) else "variable"), sep = "\n")
+    text2 <- paste("",
+                   paste0("LCL = ", if(length(unique(lcl)) == 1) 
+                     signif(lcl[1], digits) else "variable"),
+                   paste0("UCL = " ,if(length(unique(ucl)) == 1) 
+                     signif(ucl[1], digits) else "variable"), sep = "\n")
+    text3 <- paste("",
+                   paste0("Number beyond limits = ", sum(violations==1, na.rm=TRUE)),
+                   paste0("Number violating runs = ", sum(violations > 1, na.rm=TRUE)), sep = "\n")
     
-    if(length(std.dev) == 1)
-    { mtext(paste("StdDev = ", signif(std.dev, digits), sep = ""),
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    } else
-    { mtext("StdDev is variable",
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
-    
-    if(length(unique(lcl)) == 1)
-    { mtext(paste("LCL = ", signif(lcl[1], digits), sep = ""), 
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
-    else 
-    { mtext("LCL is variable", 
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
-    
-    if(length(unique(ucl)) == 1)
-    { mtext(paste("UCL = ", signif(ucl[1], digits), sep = ""),
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats")) 
-    }
-    else 
-    { mtext("UCL is variable", 
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[2],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
-    
-    if(!is.null(violations))
-    { mtext(paste("Number beyond limits =",
-                  sum(violations==1, na.rm=TRUE)),
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-      mtext(paste("Number violating runs =",
-                  sum(violations > 1, na.rm=TRUE)),
-            side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[3],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
+    tab1 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text1, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 0, 0.5, 3, unit = "lines"))
+    tab2 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text2, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 0.5, 0.5, 2, unit = "lines"))
+    tab3 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text3, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 1, 0.5, 1, unit = "lines"))
+    plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3,
+                                   layout_matrix = matrix(c(1,2,1,3,1,4), 
+                                                          nrow = 2, ncol = 3),
+                                   heights = c(0.85, 0.15), 
+                                   widths = c(0.35, 0.3, 0.35))
   }
   
-  invisible()
+  class(plot) <- c("qccplot", class(plot))
+  return(plot)
 }
+
 
 #
 #  Functions used to compute Shewhart charts statistics
@@ -694,7 +596,6 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
     sizes <- apply(data, 1, function(x) sum(!is.na(x)))
   if(any(sizes == 1))
     stop("group sizes must be larger than one")
-  c4 <- qcc.c4
   if(!is.numeric(std.dev))
     std.dev <- match.arg(std.dev, choices = eval(formals(sd.xbar)$std.dev))
   if(is.numeric(std.dev))
@@ -707,7 +608,7 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
                             sd <- sum(R/d2)/length(sizes) 
                          }, 
              "UWAVE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            sd <- sum(S/c4(sizes))/length(sizes) 
+                            sd <- sum(S/qcc.c4(sizes))/length(sizes) 
                           },
              "MVLUE-R"  = { R <- apply(data, 1, function(x) 
                             diff(range(x, na.rm = TRUE)))
@@ -717,12 +618,12 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
                             sd <- sum(R/d2*w)/sum(w) 
                           }, 
              "MVLUE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            w  <- c4(sizes)^2/(1-c4(sizes)^2)
-                            sd <- sum(S/c4(sizes)*w)/sum(w) 
+                            w  <- qcc.c4(sizes)^2/(1-qcc.c4(sizes)^2)
+                            sd <- sum(S/qcc.c4(sizes)*w)/sum(w) 
                           },
              "RMSDF" =    { S <- apply(data, 1, sd, na.rm = TRUE)
                             w  <- sizes-1
-                            sd <- sqrt(sum(S^2*w)/sum(w))/c4(sum(w)+1) 
+                            sd <- sqrt(sum(S^2*w)/sum(w))/qcc.c4(sum(w)+1) 
                           }
       )
     }
@@ -783,8 +684,7 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if(length(unique(sizes))==1) sizes <- sizes[1]
-  c4 <- qcc.c4
-  se.stats <- std.dev * sqrt(1 - c4(sizes)^2)
+  se.stats <- std.dev * sqrt(1 - qcc.c4(sizes)^2)
   if (is.null(conf)) 
      { lcl <- pmax(0, center - nsigmas * se.stats)
        ucl <- center + nsigmas * se.stats
@@ -871,7 +771,6 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
   n <- length(data)
   if(!is.numeric(std.dev)) 
      std.dev <- match.arg(std.dev)
-  c4 <- qcc.c4
   if(is.numeric(std.dev)) 
     { sd <- std.dev }
   else
@@ -883,7 +782,7 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
                       for(j in r:n)
                           d <- d+abs(diff(range(data[c(j:(j-r+1))], na.rm=TRUE)))
                       sd <- (d/(n-r+1))/d2[r] },
-             "SD" = { sd <- sd(data)/c4(n) },
+             "SD" = { sd <- sd(data)/qcc.c4(n) },
              sd <- NULL)
     }
   return(sd)

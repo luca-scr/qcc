@@ -92,7 +92,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,12 +119,14 @@
 </h1>
 <ul>
 <li>Modification of rules for out-of-control points. A subset of Western Eletric Rules (WER) have been implemented. See <code><a href="../reference/rules.html">qccRules()</a></code>.</li>
-<li>Several modifications to plot and print appearances.</li>
-<li>Added funtion <code><a href="../reference/describe.html">describe()</a></code> to statistically describe variables in a data.frame according to the type.</li>
+<li>All functions in <code>qcc</code> now return an object with associated <code>print</code>, <code>summary</code>, and <code>plot</code> methods.</li>
+<li>Several modifications to plot and print appearances. In particular graphs are produced using <code>ggplot2</code> package and print/summary uses <code>cli</code> package.</li>
+<li>Added function <code><a href="../reference/describe.html">describe()</a></code> to statistically describe variables in a data.frame according to the type.</li>
 <li>
-<code><a href="../reference/qcc-deprecated.html">qcc.groups()</a></code> now has optional argument <code>data</code> to extract variables from a data.frame.</li>
-<li>removed usage of <code>attach/detach</code> from all examples and documentation.</li>
-<li>add option to remove the title from all plots using <code>title = FALSE</code> or <code>title = NA</code>.</li>
+<code><a href="../reference/qccGroups.html">qccGroups()</a></code> now has first argument <code>data</code> to extract variables from a data frame.</li>
+<li>Removed usage of <code>attach/detach</code> from all examples and documentation.</li>
+<li>Add option to remove the title from all plots using <code>title = NULL</code>.</li>
+<li>Plotting single data values does not issue an error.</li>
 </ul>
 </div>
     <div id="qcc-27" class="section level1">
@@ -286,7 +288,7 @@ Contributed by Greg Snow (<a href="mailto:greg.snow@ihc.com" class="email">greg.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

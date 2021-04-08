@@ -1,5 +1,6 @@
 \name{qcc-internal}
 \alias{.printShortMatrix}
+\alias{print.qccplot}
 \alias{.qcc.options}
 \alias{qcc.c4}
 \alias{qccStartupMessage}

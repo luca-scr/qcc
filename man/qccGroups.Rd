@@ -4,16 +4,17 @@
 \title{Grouping data based on a sample indicator}
 \description{This function allows to easily group data to use as input to the \code{qcc()} function.}
 \usage{
-qccGroups(x, sample, data)
+qccGroups(data, x, sample)
 }
 \arguments{
-  \item{x}{a vector of observed data values}
-  \item{sample}{a vector of sample indicators for the data values}
-  \item{data}{a data frame providing the observed data values \code{x} and the indicators \code{sample}. If not provided, the previous arguments must be objects defined in the calling environment.}
+  \item{data}{a data frame (or a similar structure which can be coerced to be a \code{data.frame}) providing the observed data. If not provided, the input to the following arguments must be objects defined in the calling environment.}
+  \item{x}{a name from \code{data} or a vector of observed data values.}
+  \item{sample}{a name from \code{data} or a vector of sample indicators defining the rationale subgroups of data values.}
 }
+
 %\details{}
 \value{
-The function returns a matrix of suitable dimensions. If one or more group have fewer observations than others, \code{NA} values are appended.
+The function returns a matrix of suitable dimensions. If one or more group have fewer observations than others, \code{NA} values are used to fill empty values. 
 }
 %\references{}
 \author{Luca Scrucca}
@@ -22,9 +23,8 @@ The function returns a matrix of suitable dimensions. If one or more group have 
 \examples{
 data(pistonrings)
 # create a matrix of 40 samples made of 5 observations each
-qccGroups(diameter, sample, data = pistonrings)
-# if some observations are removed, the result is still a 40x5 matrix but 
-# with NAs added
-qccGroups(diameter, sample, data = pistonrings[-c(1,2,50,52,199),])
+qccGroups(data = pistonrings, diameter, sample)
+# remove some observations to get still a 40x5 matrix but filled with NAs 
+qccGroups(data = pistonrings[-c(1,2,50,52,199),], diameter, sample)
 }
 

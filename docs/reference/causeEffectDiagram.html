@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -119,10 +119,9 @@
     <p>Draw a basic cause and effect diagram.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>causeEffectDiagram</span>(<span class='no'>cause</span>, <span class='no'>effect</span>,
-                   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Cause-and-Effect diagram"</span>,
-                   <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.9</span>, <span class='fl'>1</span>),
-                   <span class='kw'>font</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>2</span>))</pre>
+    <pre class="usage"><span class='fu'>causeEffectDiagram</span><span class='op'>(</span><span class='va'>cause</span>, <span class='va'>effect</span>, <span class='va'>title</span>,
+                   cex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.9</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+                   font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,7 +136,7 @@
     </tr>
     <tr>
       <th>title</th>
-      <td><p>a character string specifying the main title to appear on the plot. Set <code>title = FALSE</code> or <code>title = NA</code> to remove the title.</p></td>
+      <td><p>a character string specifying the main title. Set <code>title = NULL</code> to remove the title.</p></td>
     </tr>
     <tr>
       <th>cex</th>
@@ -151,30 +150,34 @@
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Montgomery, D.C. (2005) <em>Introduction to Statistical Quality Control</em>, 5th ed. New York: John Wiley &amp; Sons.</p>
+    <p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
 <p>Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>. New York: Chapman &amp; Hall.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Luca Scrucca</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>causeEffectDiagram</span>(<span class='kw'>cause</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Measurements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Micrometers"</span>,
-                                                 <span class='st'>"Microscopes"</span>,
-                                                 <span class='st'>"Inspectors"</span>),
-                                <span class='kw'>Materials</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Alloys"</span>,
-                                              <span class='st'>"Lubricants"</span>,
-                                              <span class='st'>"Suppliers"</span>),
-                                <span class='kw'>Personnel</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Shifts"</span>,
-                                              <span class='st'>"Supervisors"</span>,
-                                              <span class='st'>"Training"</span>,
-                                              <span class='st'>"Operators"</span>),
-                                <span class='kw'>Environment</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Condensation"</span>,
-                                                <span class='st'>"Moisture"</span>),
-                                <span class='kw'>Methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Brake"</span>,
-                                            <span class='st'>"Engager"</span>,
-                                            <span class='st'>"Angle"</span>),
-                                <span class='kw'>Machines</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Speed"</span>,
-                                             <span class='st'>"Lathes"</span>,
-                                             <span class='st'>"Bits"</span>,
-                                             <span class='st'>"Sockets"</span>)),
-                   <span class='kw'>effect</span> <span class='kw'>=</span> <span class='st'>"Surface Flaws"</span>)</div><div class='img'><img src='causeEffectDiagram-1.png' alt='' width='504' height='432' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>causeEffectDiagram</span><span class='op'>(</span>cause <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>Measurements <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Micrometers"</span>, 
+                                                 <span class='st'>"Microscopes"</span>, 
+                                                 <span class='st'>"Inspectors"</span><span class='op'>)</span>,
+                                Materials <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Alloys"</span>, 
+                                              <span class='st'>"Lubricants"</span>, 
+                                              <span class='st'>"Suppliers"</span><span class='op'>)</span>,
+                                Personnel <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Shifts"</span>, 
+                                              <span class='st'>"Supervisors"</span>, 
+                                              <span class='st'>"Training"</span>, 
+                                              <span class='st'>"Operators"</span><span class='op'>)</span>,
+                                Environment <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Condensation"</span>, 
+                                                <span class='st'>"Moisture"</span><span class='op'>)</span>,
+                                Methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Brake"</span>,
+                                            <span class='st'>"Engager"</span>, 
+                                            <span class='st'>"Angle"</span><span class='op'>)</span>,
+                                Machines <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Speed"</span>, 
+                                             <span class='st'>"Lathes"</span>, 
+                                             <span class='st'>"Bits"</span>, 
+                                             <span class='st'>"Sockets"</span><span class='op'>)</span><span class='op'>)</span>,
+                   effect <span class='op'>=</span> <span class='st'>"Surface Flaws"</span><span class='op'>)</span>
+</div><div class='img'><img src='causeEffectDiagram-1.png' alt='' width='504' height='432' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -190,7 +193,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -4,17 +4,17 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-cusum <- function(data, sizes, center, std.dev, head.start = 0, 
+cusum <- function(data, 
+                  sizes, center, std.dev, 
                   decision.interval = 5, se.shift = 1,
-                  data.name, labels, newdata, newsizes, newlabels, 
-                  plot = TRUE, ...)
+                  head.start = 0, 
+                  newdata, newsizes, ...)
 {
   call <- match.call()
   if (missing(data))
      stop("'data' argument is not specified")
 
-  if(missing(data.name)) 
-     data.name <- deparse(substitute(data))
+  data.name <- deparse(substitute(data))
   data <- data.matrix(data)
 
   if(missing(sizes)) 
@@ -36,9 +36,7 @@ cusum <- function(data, sizes, center, std.dev, head.start = 0,
   if(ncol(data) == 1 & any(sizes > 1) & missing(std.dev))
      stop("sizes larger than 1 but data appears to be single samples. In this case you must provide also the std.dev")
   
-  if(missing(labels))
-    { if(is.null(rownames(data))) labels <- 1:nrow(data)
-      else                        labels <- rownames(data) }
+  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
 
   stats <- paste("stats.", type, sep = "")
   if(!exists(stats, mode="function"))
@@ -74,35 +72,41 @@ cusum <- function(data, sizes, center, std.dev, head.start = 0,
                  center = center, std.dev = std.dev)
   # check for new data provided and update object
   if(!missing(newdata))
-    { newdata.name <- deparse(substitute(newdata))
-      newdata <- data.matrix(newdata)
-      if(missing(newsizes))
-        { newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) }
-      else
-        { if(length(newsizes)==1)
-            newsizes <- rep(newsizes, nrow(newdata))
-          else if(length(newsizes) != nrow(newdata))
-                  stop("newsizes length doesn't match with newdata") }
-      stats <- paste("stats.", type, sep = "")
-      if(!exists(stats, mode="function"))
-         stop(paste("function", stats, "is not defined"))
-      newstats <- do.call(stats, list(newdata, newsizes))$statistics
-      if(missing(newlabels))
-        { if(is.null(rownames(newdata)))
-            { start <- length(statistics)
-              newlabels <- seq(start+1, start+length(newstats)) }
-          else
-            { newlabels <- rownames(newdata) }
-      }
-      stopifnot(length(newlabels) == length(newstats))
-      names(newstats) <- newlabels
-      object$newstats <- newstats
-      object$newdata  <- newdata
-      object$newsizes <- newsizes
-      object$newdata.name <- newdata.name
-      statistics <- c(statistics, newstats)
-      sizes <- c(sizes, newsizes)
+  { 
+    newdata.name <- deparse(substitute(newdata))
+    newdata <- data.matrix(newdata)
+    if(missing(newsizes))
+    { 
+      newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+    } else
+    { 
+      if(length(newsizes)==1)
+        newsizes <- rep(newsizes, nrow(newdata))
+      else 
+        if(length(newsizes) != nrow(newdata))
+          stop("newsizes length doesn't match with newdata") 
     }
+    stats <- paste("stats.", type, sep = "")
+    if(!exists(stats, mode="function"))
+      stop(paste("function", stats, "is not defined"))
+    newstats <- do.call(stats, list(newdata, newsizes))$statistics
+    if(is.null(rownames(newdata)))
+    { 
+      start <- length(statistics)
+      newlabels <- seq(start+1, start+length(newstats)) 
+    } else
+    { 
+      newlabels <- rownames(newdata) 
+    }
+    stopifnot(length(newlabels) == length(newstats))
+    names(newstats) <- newlabels
+    object$newstats <- newstats
+    object$newdata  <- newdata
+    object$newsizes <- newsizes
+    object$newdata.name <- newdata.name
+    statistics <- c(statistics, newstats)
+    sizes <- c(sizes, newsizes)
+  }
 
   n <- length(statistics)
   z <- (statistics - center)/(std.dev/sqrt(sizes))
@@ -121,8 +125,8 @@ cusum <- function(data, sizes, center, std.dev, head.start = 0,
   for (i in 2:n)
       cusum.neg[i] <- max(0, cusum.neg[i-1]-z.f[i])
   cusum.neg <- -cusum.neg
-  violations <- list(lower = which(cusum.neg < ldb),
-                     upper = which(cusum.pos > udb))
+  violations <- list(lower = ifelse(cusum.neg < ldb, 1, NA),
+                     upper = ifelse(cusum.pos > udb, 1, NA))
   
   object$type <- "cusum"
   object$pos <- cusum.pos 
@@ -133,7 +137,6 @@ cusum <- function(data, sizes, center, std.dev, head.start = 0,
   object$violations <- violations
 
   class(object) <- "cusum.qcc"
-  if(plot) plot(object, ...) 
   return(object)
 }
 
@@ -207,12 +210,12 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
   cat("\n")
   if(object$head.start > 0)
   {
-    cat("Head start (std.err.)      =",
+    cat("Head start (StdErr)        =",
         signif(object$head.start, digits = digits), "\n")
   }
-  cat("Decision interval (std.err.) =", 
+  cat("Decision interval (StdErr) =", 
       signif(object$decision.interval, digits = digits), "\n")
-  cat("Shift detection   (std.err.) =", 
+  cat("Shift detection   (StdErr) =", 
       signif(object$se.shift, digits = digits), "\n")
 
   invisible()
@@ -220,14 +223,14 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
 
 summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 
-plot.cusum.qcc <- function(x, 
+plot.cusum.qcc <- function(x, xtime = NULL,
                            add.stats = qcc.options("add.stats"), 
                            chart.all = qcc.options("chart.all"), 
                            fill = qcc.options("fill"),
                            label.bounds = c("LDB", "UDB"), 
-                           title, xlab, ylab, ylim, axes.las = 0,
-                           digits = getOption("digits"),
-                           restore.par = TRUE, ...) 
+                           title, xlab, ylab, xlim, ylim,
+                           digits = getOption("digits"), 
+                           ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
   if ((missing(object)) | (!inherits(object, "cusum.qcc")))
@@ -246,19 +249,10 @@ plot.cusum.qcc <- function(x,
   violations <- object$violations
   cusum.pos <- object$pos
   cusum.neg <- object$neg
-
-  if(chart.all) 
-    { statistics <- c(stats, newstats) 
-      indices <- 1:length(statistics) }
-  else
-    { if(is.null(newstats))
-        { statistics <- stats
-          indices <- 1:length(statistics) }
-      else
-        { statistics <- newstats 
-          indices <- seq(length(stats)+1, length(stats)+length(newstats)) }
-    }
-
+  statistics <- c(stats, newstats)
+  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  stopifnot(length(groups) == length(statistics))
+  
   if(missing(title))
   { 
     if(is.null(newstats))
@@ -268,139 +262,161 @@ plot.cusum.qcc <- function(x,
          else 
            title <- paste(type, "Chart for", newdata.name) 
   }
-  if(isFALSE(title) | is.na(title)) title <- ""
   
-  cex.labels <- par("cex")*qcc.options("cex")
-  cex.stats <- par("cex")*qcc.options("cex.stats")
+  df <- data.frame(group = groups, 
+                   cusum_pos = cusum.pos,
+                   cusum_neg = cusum.neg,
+                   ldb = ldb, udb = udb,
+                   violations_lower = factor(ifelse(is.na(violations$lower), 
+                                                    0, violations$lower),
+                                             levels = 0:1),
+                   violations_upper = factor(ifelse(is.na(violations$upper), 
+                                                    0, violations$upper),
+                                             levels = 0:1))
+  if(!chart.all & (!is.null(newstats)))
+    df <- df[df$group > length(object$statistics),]
 
-  oldpar <- par(no.readonly = TRUE)
-  if(restore.par) on.exit(par(oldpar))
-  par(bg  = qcc.options("bg.margin"), 
-      cex = oldpar$cex * qcc.options("cex"),
-      # mgp = c(2.1, 0.8, 0),
-      mar = c(4.1,4.1,1.1,2.1),
-      oma = if(add.stats) c(3.5*cex.stats, 0, 1.5*cex.labels, 0) 
-            else          c(0, 0, 1.5*cex.labels, 0))
-
-  plot(indices, statistics, type="n",
-       ylim = if(!missing(ylim)) ylim 
-              else range(cusum.pos, cusum.neg, ldb, udb, na.rm = TRUE),
-       ylab = "", xlab = if(missing(xlab)) "Group" else xlab, 
-       axes = FALSE)
-  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
-       col = qcc.options("bg.figure"))
-  axis(1, at = indices, las = axes.las,
-       labels = if(is.null(names(statistics))) 
-                   as.character(indices) else names(statistics),
-       cex.axis = par("cex.axis")*0.9)
-  axis(2, las = axes.las, cex.axis = par("cex.axis")*0.9)
-  box()
-  mtext(title, side = 3, outer = TRUE,
-        line = 0, adj = 0, at = par("plt")[1],
-        font = par("font.main"), 
-        cex  = par("cex")*qcc.options("cex"), 
-        col  = par("col.main"))
-
-  mtext(if(missing(ylab)) "Cumulative Sum" else ylab, line=3, side=2)
+  if(missing(ylim))
+    ylim <- range(df[,c("cusum_pos", "cusum_neg", "ldb", "udb")], na.rm = TRUE)
+  if(missing(xlim))
+    xlim <- range(df$group, na.rm = TRUE)
+  
+  plot <- 
+    ggplot(data = df, aes_string(x = "group")) +
+    geom_line(aes_string(y = "cusum_pos")) +
+    geom_point(aes_string(y = "cusum_pos", 
+                          colour = "violations_upper", 
+                          shape = "violations_upper"), 
+               size = 2) +
+    geom_line(aes_string(y = "cusum_neg")) +
+    geom_point(aes_string(y = "cusum_neg", 
+                          colour = "violations_lower", 
+                          shape = "violations_lower"), 
+               size = 2) +
+    scale_colour_manual(values = c("black", qcc.options("rules")$col)) +
+    scale_shape_manual(values = c(20, qcc.options("rules")$pch)) +
+    labs(title = title, subtitle = "",
+         x = if(missing(xlab)) "Group" else xlab,
+         y = if(missing(ylab)) "Cumulative Sum" else ylab) +
+    coord_cartesian(xlim = xlim+c(-0.5,0.5), 
+                    ylim = extendrange(ylim),
+                    expand = FALSE, clip = "off") +
+    theme_light() + 
+    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                         color = qcc.options("bg.margin")),
+          panel.background = element_rect(fill = qcc.options("bg.figure")),
+          plot.title = element_text(face = "bold", size = 11),
+          axis.title.y = element_text(margin = margin(t = 0, r = 30, b = 0, l = 0)),
+          legend.position = "none",
+          plot.margin = margin(5, 30, 5, 5))
+  
+  plot <- plot + 
+  {
+    if(is.numeric(groups))
+      scale_x_continuous(breaks = pretty(df$group, n = 7))
+    else
+      scale_x_date(breaks = pretty(df$group, n = 7))
+  }
+    
   lab <- "Above target"
   if (add.stats && object$head.start > 0)
       lab <- paste(lab, " (start = ", object$head.start, ")", sep = "")
-  mtext(lab, srt=90, line=2, side=2, at=0+par("usr")[4]/2,
-        cex = par("cex")*0.8)
+  plot <- plot + 
+    annotate("text", x = min(xlim)-0.1*diff(range(xlim)),
+             y = max(extendrange(ylim))/2,
+             label = lab, angle = 90,
+             hjust = 0.5, vjust = 0.5, size = 10 * 5/14)
   lab <- "Below target"
   if (add.stats && object$head.start > 0)
-      lab <- paste(lab, " (start = ", - object$head.start, ")", sep = "")
-  mtext(lab, srt=90, line=2, side=2, at=0+par("usr")[3]/2,
-        cex = par("cex")*0.8)
-  mtext(label.bounds, side = 4, at = c(ldb, udb), las = 1, line = 0.1, 
-        col = gray(0.3), cex = par("cex")*qcc.options("cex.stats"))
-
-  # draw decision area/lines
-  if(fill)
+    lab <- paste(lab, " (start = ", - object$head.start, ")", sep = "")
+  plot <- plot + 
+    annotate("text", x = min(xlim)-0.1*diff(range(xlim)),
+             y = min(extendrange(ylim))/2,
+             label = lab, angle = 90,
+             hjust = 0.5, vjust = 0.5, size = 10 * 5/14)
+    
+  # draw decision boundaries
+  if(all(is.finite(ldb)) & is.finite(udb))
   { 
-    polygon(par("usr")[c(1,2,2,1)], c(ldb, ldb, udb, udb), 
-            border = FALSE, 
-            col = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.1)) 
-  } else
-  {
-    abline(h = c(ldb, udb), 
-           lty = qcc.options("zones")$lty[1], 
-           col = qcc.options("zones")$col[1])
+    if(fill)
+    { 
+      xp <- c(min(df$group)-0.5, max(df$group)+0.5)
+      xp <- c(xp, rev(xp))
+      yp <- c(ldb, ldb, udb, udb)
+      
+      plot <- plot + 
+        geom_polygon(data = data.frame(xp, yp),
+                     aes_string(x = "xp", y = "yp"), 
+                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     col = NA)
+    } else
+    {
+      plot <- plot + 
+        geom_hline(yintercept = ldb,
+                  lty = qcc.options("zones")$lty[1],
+                  col = qcc.options("zones")$col[1])
+      plot <- plot + 
+        geom_hline(yintercept = udb, 
+                  lty = qcc.options("zones")$lty[1],
+                  col = qcc.options("zones")$col[1])
+    }
   }
   
-  # draw lines & points
-  abline(h = 0, col = qcc.options("zones")$col[1])
-  lines(indices, cusum.pos[indices], type = "b", pch=NA)
-  lines(indices, cusum.neg[indices], type = "b", pch=NA)
-  #
-  col <- rep(palette()[1], length(cusum.pos))
-  pch <- rep(20, length(cusum.pos))
-  if(!is.null(violations$upper))
-  { 
-    col[violations$upper] <- qcc.options("rules")$col[1] 
-    pch[violations$upper] <- qcc.options("rules")$pch[1]  
-  }
-  points(indices, cusum.pos[indices], col = col[indices], pch = pch[indices])
-  #
-  col <- rep(palette()[1], length(cusum.neg))
-  pch <- rep(20, length(cusum.neg))
-  if(!is.null(violations$lower))
-  { 
-    col[violations$lower] <- qcc.options("rules")$col[1] 
-    pch[violations$lower] <- qcc.options("rules")$pch[1]  
-  }
-  points(indices, cusum.neg[indices], col = col[indices], pch = pch[indices])
+  # draw center line
+  plot <- plot +
+    geom_hline(yintercept = 0, col = qcc.options("zones")$col[1])
 
-  if(chart.all & !is.null(newstats))
-  { 
+  if(chart.all & (!is.null(newstats)))
+  {
     len.obj.stats <- length(stats)
     len.new.stats <- length(newstats)
-    abline(v = len.obj.stats + 0.5, lty = 3)
-    mtext("Calibration data", cex = par("cex")*0.8, 
-          at = len.obj.stats/2, line = 0, adj = 0.5)
-    mtext("New data", cex = par("cex")*0.8, 
-          at = len.obj.stats + len.new.stats/2, line = 0, adj = 0.5)
+    plot <- plot +
+      geom_vline(xintercept = min(xlim) + len.obj.stats + 0.5, lty = 3) +
+      annotate("text", x = min(xlim) + len.obj.stats/2, 
+               y = max(extendrange(ylim)),
+               label = "Calibration data", 
+               hjust = 0.5, vjust = -0.5, size = 10 * 5/14) +
+      annotate("text", x = min(xlim) + len.obj.stats + len.new.stats/2,
+               y = max(extendrange(ylim)),
+               label = "New data", 
+               hjust = 0.5, vjust = -0.5, size = 10 * 5/14)
   }
-
+  
   if(add.stats) 
   { 
-    at <- c(0.15,0.55) 
     # write info at bottom
-    mtext(paste("Number of groups = ", length(statistics), sep = ""),
-          side = 1, outer = TRUE, line = 0, adj = 0, at = at[1],
-          font = qcc.options("font.stats"),
-          cex = par("cex")*qcc.options("cex.stats"))
-    if(length(center) == 1)
-    { mtext(paste("Center = ", signif(center[1], digits), sep = ""),
-            side = 1, outer= TRUE, line = 1*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    } else 
-    { mtext("Center is variable", 
-            side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[1],
-            font = qcc.options("font.stats"),
-            cex = par("cex")*qcc.options("cex.stats"))
-    }
-    mtext(paste("StdDev = ", signif(std.dev, digits), sep = ""),
-          side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[1],
-          font = qcc.options("font.stats"),
-          cex = par("cex")*qcc.options("cex.stats"))
-    mtext(paste("Decision interval (std. err.) =", 
-                signif(object$decision.interval, digits = digits)),
-          side = 1, outer = TRUE, line = 0, adj = 0, at = at[2],
-          font = qcc.options("font.stats"),
-          cex = par("cex")*qcc.options("cex.stats"))
-    mtext(paste("Shift detection (std. err.) =", 
-                signif(object$se.shift, digits = digits)), 
-          side = 1, outer = TRUE, line = 1*cex.stats, adj = 0, at = at[2], 
-          font = qcc.options("font.stats"),
-          cex = par("cex")*qcc.options("cex.stats"))
-    mtext(paste("No. of points beyond boundaries =", 
-                sum(sapply(violations, length))),
-          side = 1, outer = TRUE, line = 2*cex.stats, adj = 0, at = at[2],
-          font = qcc.options("font.stats"),
-          cex = par("cex")*qcc.options("cex.stats"))
-  }
+    tab_base <- ggplot() + 
+      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
+      theme_void() +
+      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                           color = qcc.options("bg.margin")))
 
-  invisible()
+    text1 <- paste(paste0("Number of groups = ", length(statistics)),
+                   paste0("Center = ", if(length(center) == 1) 
+                     signif(center[1], digits) else "variable"),
+                   paste0("StdDev = ", if(length(std.dev) == 1) 
+                     signif(std.dev[1], digits) else "variable"), sep = "\n")
+    
+    text2 <- paste(paste0("Decision interval (StdErr) = ", 
+                          signif(object$decision.interval, digits = digits)),
+                   paste0("Shift detection (StdErr) = ", 
+                          signif(object$se.shift, digits = digits)),
+                   paste0("Number beyond boundaries = ", 
+                          sum(sapply(violations, sum, na.rm = TRUE))), sep = "\n")
+    tab1 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text1, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 0, 0.5, 5, unit = "lines"))
+    tab2 <- tab_base + 
+      geom_text(aes(x = -Inf, y = Inf), label = text2, 
+                hjust = 0, vjust = 1, size = 10 * 5/14) +
+      theme(plot.margin = margin(0.5, 1, 0.5, 3, unit = "lines"))
+    plot <- arrangeGrob(plot, tab1, tab2,
+                        layout_matrix = matrix(c(1,2,1,3), nrow = 2, ncol = 2),
+                        heights = c(0.85, 0.15), 
+                        widths = c(0.5, 0.5))
+  }
+  
+  class(plot) <- c("qccplot", class(plot))
+  return(plot)
 }
