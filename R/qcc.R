@@ -828,7 +828,9 @@ sd.p <- function(data, sizes, ...)
   data <- as.vector(data)
   sizes <- as.vector(sizes)
   pbar <- sum(data)/sum(sizes)
-  std.dev <- sqrt(pbar * (1 - pbar))
+  
+  std.dev <- sqrt(pbar * (1 - pbar) / sizes[1])
+  
   return(std.dev)
 }
 
