@@ -321,11 +321,14 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
       col <- blues.colors(length(object$size))
     if(missing(lty))
       lty <- rep(1,length(object$size))
+    if(missing(lwd))
+      lwd <- rep(1,length(object$size))
     df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
                      size = factor(rep(object$size, 
                                        each = length(object$multiplier))),
                      multiplier = rep(object$multiplier, 
                                       times = length(object$size)))
+    
     plot <- ggplot(df, aes_string(x = "multiplier", 
                                   y = "y",
                                   linetype = "size", 
@@ -350,6 +353,8 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
       col <- blues.colors(length(object$size))
     if(missing(lty))
       lty <- rep(1,length(object$size))
+    if(missing(lwd))
+      lwd <- rep(1,length(object$size))
     df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
                      size = factor(rep(object$size, 
                                        each = length(object$multiplier))),
