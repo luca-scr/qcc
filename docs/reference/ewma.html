@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -253,7 +253,7 @@ Several methods are available for estimating the standard deviation. See <code><
 
 <span class='va'>q</span> <span class='op'>=</span> <span class='fu'>ewma</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, lambda<span class='op'>=</span><span class='fl'>0.2</span>, nsigmas<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span> ──────────────────────────────────── 
 #&gt; 
 #&gt; Data (phase I)             = diameter[1:25, ] 
 #&gt; Number of groups           = 25 
@@ -270,7 +270,7 @@ Several methods are available for estimating the standard deviation. See <code><
 #&gt; 25 73.99680 74.00555</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
 </div><div class='img'><img src='ewma-1.png' alt='' width='504' height='432' /></div><div class='input'>
 <span class='fu'>ewma</span><span class='op'>(</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span>,<span class='op'>]</span>, lambda<span class='op'>=</span><span class='fl'>0.2</span>, nsigmas<span class='op'>=</span><span class='fl'>2.7</span>, newdata<span class='op'>=</span><span class='va'>diameter</span><span class='op'>[</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>40</span>,<span class='op'>]</span><span class='op'>)</span> 
-</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span> ──────────────────────────────────── 
 #&gt; 
 #&gt; Data (phase I)             = diameter[1:25, ] 
 #&gt; Number of groups           = 25 
@@ -296,7 +296,7 @@ Several methods are available for estimating the standard deviation. See <code><
 <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>viscosity</span>, 
      <span class='fu'>ewma</span><span class='op'>(</span><span class='va'>viscosity</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, lambda <span class='op'>=</span> <span class='fl'>0.2</span>, nsigmas <span class='op'>=</span> <span class='fl'>2.7</span>,
           newdata <span class='op'>=</span> <span class='va'>viscosity</span><span class='op'>[</span><span class='op'>!</span><span class='va'>trial</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>EWMA Chart</span><span> ──────────────────────────────────── 
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>EWMA Chart</span> ──────────────────────────────────── 
 #&gt; 
 #&gt; Data (phase I)             = viscosity[trial] 
 #&gt; Number of groups           = 20 
@@ -314,7 +314,7 @@ Several methods are available for estimating the standard deviation. See <code><
 #&gt; [1,]  33.81387 34.36213
 #&gt; [2,]  33.73694 34.43906
 #&gt; :                      
-#&gt; [35,] 33.63111 34.54489</div></span></pre>
+#&gt; [35,] 33.63111 34.54489</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -222,7 +222,7 @@
 <span class='va'>diameter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qccGroups.html'>qccGroups</a></span><span class='op'>(</span><span class='va'>diameter</span>, <span class='va'>sample</span>, data <span class='op'>=</span> <span class='va'>pistonrings</span><span class='op'>)</span>
 <span class='va'>oc</span> <span class='op'>&lt;-</span> <span class='fu'>ocCurves.xbar</span><span class='op'>(</span><span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>diameter</span>, type<span class='op'>=</span><span class='st'>"xbar"</span>, nsigmas<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>oc</span>
-</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Operating Characteristic Curves</span><span> ─────────────── 
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Operating Characteristic Curves</span> ─────────────── 
 #&gt; 
 #&gt; Chart type                 = xbar 
 #&gt; Prob. type II error (beta) =
@@ -248,7 +248,7 @@
 <span class='va'>oc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>orangejuice</span>,
            <span class='fu'>ocCurves</span><span class='op'>(</span><span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>D</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"p"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.</span></div><div class='input'><span class='va'>oc</span>
-</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Operating Characteristic Curves</span><span> ─────────────── 
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Operating Characteristic Curves</span> ─────────────── 
 #&gt; 
 #&gt; Chart type                 = p 
 #&gt; Prob. type II error (beta) =
@@ -274,7 +274,7 @@
 <span class='va'>oc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>circuit</span>,
            <span class='fu'>ocCurves</span><span class='op'>(</span><span class='fu'><a href='qcc.html'>qcc</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, sizes<span class='op'>=</span><span class='va'>size</span><span class='op'>[</span><span class='va'>trial</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.</span></div><div class='input'><span class='va'>oc</span>
-</div><div class='output co'>#&gt; ── </span><span style='font-weight: bold;'>Operating Characteristic Curves</span><span> ─────────────── 
+</div><div class='output co'>#&gt; ── <span style='font-weight: bold;'>Operating Characteristic Curves</span> ─────────────── 
 #&gt; 
 #&gt; Chart type                 = c 
 #&gt; Prob. type II error (beta) =
@@ -293,7 +293,7 @@
 #&gt; :         
 #&gt; 64.00    1
 #&gt; 65.00    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>oc</span><span class='op'>)</span>
-</div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div></span></pre>
+</div><div class='img'><img src='oc.curves-3.png' alt='' width='504' height='432' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

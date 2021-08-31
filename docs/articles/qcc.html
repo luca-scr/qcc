@@ -51,7 +51,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/luca-scr/qcc">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -65,13 +65,13 @@
 
       
 
-      </header><script src="qcc_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="qcc_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>A quick tour of qcc</h1>
                         <h4 class="author">Luca Scrucca</h4>
             
-            <h4 class="date">08 Apr 2021</h4>
+            <h4 class="date">31 Aug 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/luca-scr/qcc/blob/master/vignettes/qcc.Rmd"><code>vignettes/qcc.Rmd</code></a></small>
       <div class="hidden name"><code>qcc.Rmd</code></div>
@@ -167,14 +167,14 @@
 <p>For instance,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##  [1] "2021-02-28" "2021-03-01" "2021-03-02" "2021-03-03" "2021-03-04"</span>
-<span class="co">##  [6] "2021-03-05" "2021-03-06" "2021-03-07" "2021-03-08" "2021-03-09"</span>
-<span class="co">## [11] "2021-03-10" "2021-03-11" "2021-03-12" "2021-03-13" "2021-03-14"</span>
-<span class="co">## [16] "2021-03-15" "2021-03-16" "2021-03-17" "2021-03-18" "2021-03-19"</span>
-<span class="co">## [21] "2021-03-20" "2021-03-21" "2021-03-22" "2021-03-23" "2021-03-24"</span>
-<span class="co">## [26] "2021-03-25" "2021-03-26" "2021-03-27" "2021-03-28" "2021-03-29"</span>
-<span class="co">## [31] "2021-03-30" "2021-03-31" "2021-04-01" "2021-04-02" "2021-04-03"</span>
-<span class="co">## [36] "2021-04-04" "2021-04-05" "2021-04-06" "2021-04-07" "2021-04-08"</span>
+<span class="co">##  [1] "2021-07-23" "2021-07-24" "2021-07-25" "2021-07-26" "2021-07-27"</span>
+<span class="co">##  [6] "2021-07-28" "2021-07-29" "2021-07-30" "2021-07-31" "2021-08-01"</span>
+<span class="co">## [11] "2021-08-02" "2021-08-03" "2021-08-04" "2021-08-05" "2021-08-06"</span>
+<span class="co">## [16] "2021-08-07" "2021-08-08" "2021-08-09" "2021-08-10" "2021-08-11"</span>
+<span class="co">## [21] "2021-08-12" "2021-08-13" "2021-08-14" "2021-08-15" "2021-08-16"</span>
+<span class="co">## [26] "2021-08-17" "2021-08-18" "2021-08-19" "2021-08-20" "2021-08-21"</span>
+<span class="co">## [31] "2021-08-22" "2021-08-23" "2021-08-24" "2021-08-25" "2021-08-26"</span>
+<span class="co">## [36] "2021-08-27" "2021-08-28" "2021-08-29" "2021-08-30" "2021-08-31"</span>
 <span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">q</span>, xtime <span class="op">=</span> <span class="va">dates</span><span class="op">)</span></code></pre></div>
 <p><img src="qcc_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;"></p>
@@ -295,7 +295,7 @@
 <span class="co">## Number of groups           = 30 </span>
 <span class="co">## Group sample size          = 50 </span>
 <span class="co">## Center of group statistics = 0.2313333 </span>
-<span class="co">## Standard deviation         = 0.421685 </span>
+<span class="co">## Standard deviation         = 0.05963526 </span>
 <span class="co">## </span>
 <span class="co">## Control limits at nsigmas  = 3 </span>
 <span class="co">##          LCL       UCL</span>
@@ -333,7 +333,7 @@
 <span class="co">## Number of groups           = 28 </span>
 <span class="co">## Group sample size          = 50 </span>
 <span class="co">## Center of group statistics = 0.215 </span>
-<span class="co">## Standard deviation         = 0.4108223 </span>
+<span class="co">## Standard deviation         = 0.05809905 </span>
 <span class="co">## </span>
 <span class="co">## New data (phase II)        = D[!trial] </span>
 <span class="co">## Number of groups           = 24 </span>
@@ -358,7 +358,7 @@
 <span class="co">## Number of groups           = 24 </span>
 <span class="co">## Group sample size          = 50 </span>
 <span class="co">## Center of group statistics = 0.1108333 </span>
-<span class="co">## Standard deviation         = 0.3139256 </span>
+<span class="co">## Standard deviation         = 0.04439579 </span>
 <span class="co">## </span>
 <span class="co">## New data (phase II)        = D[!trial] </span>
 <span class="co">## Number of groups           = 40 </span>
@@ -574,7 +574,7 @@
 <span class="co">##   sizes  25 50 100</span>
 <span class="co">##   counts  5  5   5</span>
 <span class="co">## Center of group statistics = 0.2148571 </span>
-<span class="co">## Standard deviation         = 0.4107232 </span>
+<span class="co">## Standard deviation         = 0.05808503 0.05808503 0.05808503 ...</span>
 <span class="co">## </span>
 <span class="co">## Control limits at nsigmas  = 3 </span>
 <span class="co">##          LCL       UCL</span>
@@ -1450,13 +1450,13 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
 <hr>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## R version 4.0.3 (2020-10-10)</span>
+<span class="co">## R version 4.1.0 (2021-05-18)</span>
 <span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span>
 <span class="co">## Running under: macOS Big Sur 10.16</span>
 <span class="co">## </span>
 <span class="co">## Matrix products: default</span>
-<span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib</span>
-<span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib</span>
+<span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib</span>
+<span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib</span>
 <span class="co">## </span>
 <span class="co">## locale:</span>
 <span class="co">## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8</span>
@@ -1465,23 +1465,23 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
 <span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] qcc_3.0       ggplot2_3.3.3 knitr_1.31   </span>
+<span class="co">## [1] qcc_3.0       ggplot2_3.3.5 knitr_1.33   </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] highr_0.8         bslib_0.2.4       compiler_4.0.3    pillar_1.5.1     </span>
-<span class="co">##  [5] jquerylib_0.1.3   tools_4.0.3       digest_0.6.27     jsonlite_1.7.2   </span>
-<span class="co">##  [9] evaluate_0.14     memoise_2.0.0     lifecycle_1.0.0   tibble_3.1.0     </span>
-<span class="co">## [13] gtable_0.3.0      debugme_1.1.0     pkgconfig_2.0.3   rlang_0.4.10     </span>
-<span class="co">## [17] rstudioapi_0.13   cli_2.4.0         DBI_1.1.1         yaml_2.2.1       </span>
-<span class="co">## [21] pkgdown_1.6.1     xfun_0.22         fastmap_1.1.0     gridExtra_2.3    </span>
-<span class="co">## [25] withr_2.4.1       stringr_1.4.0     dplyr_1.0.5       generics_0.1.0   </span>
-<span class="co">## [29] desc_1.3.0        fs_1.5.0          sass_0.3.1        vctrs_0.3.7      </span>
-<span class="co">## [33] tidyselect_1.1.0  rprojroot_2.0.2   grid_4.0.3        glue_1.4.2       </span>
-<span class="co">## [37] R6_2.5.0          fansi_0.4.2       rmarkdown_2.7     farver_2.1.0     </span>
-<span class="co">## [41] purrr_0.3.4       magrittr_2.0.1    MASS_7.3-53.1     scales_1.1.1     </span>
-<span class="co">## [45] htmltools_0.5.1.1 ellipsis_0.3.1    assertthat_0.2.1  colorspace_2.0-0 </span>
-<span class="co">## [49] labeling_0.4.2    utf8_1.2.1        stringi_1.5.3     munsell_0.5.0    </span>
-<span class="co">## [53] cachem_1.0.4      crayon_1.4.1</span></code></pre></div>
+<span class="co">##  [1] highr_0.9         bslib_0.2.5.1     compiler_4.1.0    pillar_1.6.2     </span>
+<span class="co">##  [5] jquerylib_0.1.4   tools_4.1.0       digest_0.6.27     jsonlite_1.7.2   </span>
+<span class="co">##  [9] evaluate_0.14     memoise_2.0.0     lifecycle_1.0.0   tibble_3.1.3     </span>
+<span class="co">## [13] gtable_0.3.0      pkgconfig_2.0.3   rlang_0.4.11      rstudioapi_0.13  </span>
+<span class="co">## [17] cli_3.0.1         DBI_1.1.1         yaml_2.2.1        pkgdown_1.6.1    </span>
+<span class="co">## [21] xfun_0.25         fastmap_1.1.0     gridExtra_2.3     withr_2.4.2      </span>
+<span class="co">## [25] stringr_1.4.0     dplyr_1.0.7       desc_1.3.0        generics_0.1.0   </span>
+<span class="co">## [29] fs_1.5.0          sass_0.4.0        vctrs_0.3.8       tidyselect_1.1.1 </span>
+<span class="co">## [33] rprojroot_2.0.2   grid_4.1.0        glue_1.4.2        R6_2.5.0         </span>
+<span class="co">## [37] fansi_0.5.0       rmarkdown_2.10    farver_2.1.0      purrr_0.3.4      </span>
+<span class="co">## [41] magrittr_2.0.1    MASS_7.3-54       scales_1.1.1      htmltools_0.5.1.1</span>
+<span class="co">## [45] ellipsis_0.3.2    assertthat_0.2.1  colorspace_2.0-2  labeling_0.4.2   </span>
+<span class="co">## [49] utf8_1.2.2        stringi_1.7.3     munsell_0.5.0     cachem_1.0.5     </span>
+<span class="co">## [53] crayon_1.4.1</span></code></pre></div>
 </div>
   </div>
 

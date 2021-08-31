@@ -215,7 +215,7 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
     out <- paste(signif(center, digits = digits))
     out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]      
     out <- paste0(paste(out, collapse = " "), " ...")
-    cat("Center of group statistics =", out, "\n", sep = "")
+    cat("Center of group statistics = ", out, "\n", sep = "")
   }
   
   sd <- object$std.dev
@@ -227,7 +227,7 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
     out <- paste(signif(sd, digits = digits))
     out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]
     out <- paste0(paste(out, collapse = " "), " ...")
-    cat("Standard deviation         =", out, "\n", sep = "")
+    cat("Standard deviation         = ", out, "\n", sep = "")
   }
 
   newdata.name <- object$newdata.name
@@ -828,7 +828,9 @@ sd.p <- function(data, sizes, ...)
   data <- as.vector(data)
   sizes <- as.vector(sizes)
   pbar <- sum(data)/sum(sizes)
-  std.dev <- sqrt(pbar * (1 - pbar))
+  std.dev <- sqrt(pbar * (1 - pbar) / sizes)
+  if (length(unique(std.dev)) == 1)
+     std.dev <- std.dev[1]
   return(std.dev)
 }
 
