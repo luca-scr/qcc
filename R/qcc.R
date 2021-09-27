@@ -287,6 +287,9 @@ plot.qcc <- function(x, xtime = NULL,
   if ((missing(object)) | (!inherits(object, "qcc")))
     stop("an object of class `qcc' is required")
 
+  if(! is.null(xtime) & ! inherits(xtime, c("Date", "POSIXct", "POSIXt")))
+    stop("xtime needs to be of class Date, POSIXct or POSIXt")
+
   # collect info from object
   type <- object$type
   std.dev <- object$std.dev
@@ -320,7 +323,7 @@ plot.qcc <- function(x, xtime = NULL,
                                               0, violations),
                                        levels = 0:4))
   if(!chart.all & (!is.null(newstats)))
-    df <- df[df$group > length(object$statistics),]
+    df <- df[seq_len(length(df$group)) > length(object$statistics),]
   
   if(missing(ylim))
     ylim <- range(df$stat, df$lcl, df$ucl, na.rm = TRUE)
@@ -353,8 +356,10 @@ plot.qcc <- function(x, xtime = NULL,
   {
     if(is.numeric(groups))
       scale_x_continuous(breaks = pretty(xlim, n = 7))
-    else
+    else if(inherits(groups, "Date"))
       scale_x_date(breaks = pretty(xlim, n = 7))
+    else
+      scale_x_datetime(breaks = pretty(xlim, n = 7))
   }
         
   # draw control limits
@@ -362,9 +367,9 @@ plot.qcc <- function(x, xtime = NULL,
   { 
     x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
     y1 <- if(length(lcl) == 1) rep(lcl, length(x1)) else
-            c(lcl[df$group], lcl[df$group[length(df$group)]])
+            c(lcl[seq_len(length(df$group))], lcl[length(df$group)])
     y2 <- if(length(ucl) == 1) rep(ucl, length(x2)) else
-            c(ucl[df$group], ucl[df$group[length(df$group)]])
+            c(ucl[seq_len(length(df$group))], ucl[length(df$group)])
     xp1 <- rep(x1, each=2)[-1]
     xp2 <- rep(x2, each=2)[-1]
     yp1 <- rep(y1, each=2)[-2*length(y1)]
@@ -417,10 +422,10 @@ plot.qcc <- function(x, xtime = NULL,
       y2 <- rep(limits.2sigma[1,2], length(df$group)+1)
     } else
     {
-      y1 <- c(limits.2sigma[df$group,1], 
-              limits.2sigma[df$group[length(df$group)],1])
-      y2 <- c(limits.2sigma[df$group,2], 
-              limits.2sigma[df$group[length(df$group)],2])
+      y1 <- c(limits.2sigma[seq_len(length(df$group)),1],
+              limits.2sigma[length(df$group),1])
+      y2 <- c(limits.2sigma[seq_len(length(df$group)),2],
+              limits.2sigma[length(df$group),2])
     }
     xp1 <- rep(x1, each=2)[-1]
     xp2 <- rep(x2, each=2)[-1]
@@ -464,10 +469,10 @@ plot.qcc <- function(x, xtime = NULL,
       y2 <- rep(limits.2sigma[1,2], length(df$group)+1)
     } else
     {
-      y1 <- c(limits.2sigma[df$group,1], 
-              limits.2sigma[df$group[length(df$group)],1])
-      y2 <- c(limits.2sigma[df$group,2], 
-              limits.2sigma[df$group[length(df$group)],2])
+      y1 <- c(limits.2sigma[seq_len(length(df$group)),1],
+              limits.2sigma[length(df$group),1])
+      y2 <- c(limits.2sigma[seq_len(length(df$group)),2],
+              limits.2sigma[length(df$group),2])
     }
     xp1 <- rep(x1, each=2)[-1]
     xp2 <- rep(x2, each=2)[-1]
