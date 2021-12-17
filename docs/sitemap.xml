@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://github.com/luca-scr/qcc/404.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/articles/qcc.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/authors.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/luca-scr/qcc/index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/news/index.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/RyanMultivar.html</loc>
@@ -11,6 +26,9 @@
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/boiler.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/reference/cause.and.effect.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/causeEffectDiagram.html</loc>
@@ -37,6 +55,9 @@
     <loc>https://github.com/luca-scr/qcc/reference/ewmaSmooth.html</loc>
   </url>
   <url>
+    <loc>https://github.com/luca-scr/qcc/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/luca-scr/qcc/reference/mqcc.html</loc>
   </url>
   <url>
@@ -49,6 +70,9 @@
     <loc>https://github.com/luca-scr/qcc/reference/orangejuice2.html</loc>
   </url>
   <url>
+    <loc>https://github.com/luca-scr/qcc/reference/pareto.chart.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/luca-scr/qcc/reference/paretoChart.html</loc>
   </url>
   <url>
@@ -56,6 +80,9 @@
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/pistonrings.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/reference/process.capability.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/processCapability.html</loc>
@@ -70,10 +97,16 @@
     <loc>https://github.com/luca-scr/qcc/reference/qcc-package.html</loc>
   </url>
   <url>
+    <loc>https://github.com/luca-scr/qcc/reference/qcc.groups.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/luca-scr/qcc/reference/qcc.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/qcc.options.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/luca-scr/qcc/reference/qcc.overdispersion.test.html</loc>
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/qccGroups.html</loc>
@@ -119,8 +152,5 @@
   </url>
   <url>
     <loc>https://github.com/luca-scr/qcc/reference/viscosity.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/luca-scr/qcc/articles/qcc.html</loc>
   </url>
 </urlset>

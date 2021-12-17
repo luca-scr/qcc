@@ -1,9 +1,9 @@
-pandoc: 2.14.2
-pkgdown: 1.6.1
+pandoc: 2.16.2
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   qcc: qcc.html
-last_built: 2021-08-31T10:43Z
+last_built: 2021-12-17T16:12Z
 urls:
   reference: https://github.com/luca-scr/qcc/reference
   article: https://github.com/luca-scr/qcc/articles
