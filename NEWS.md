@@ -6,8 +6,9 @@
 - Added function `describe()` to statistically describe variables in a data.frame according to the type.
 - `qccGroups()` now has first argument `data` to extract variables from 
 a data frame.
-- `sd.p` calculation now takes into sizes.
+- `sd.p()` calculation now takes into sizes.
 - Removed usage of `attach/detach` from all examples and documentation.
+- `plot.qcc()` allows to use as.Date() objects along x-axis
 - Add option to remove the title from all plots using `title = NULL`.
 - Plotting single data values does not issue an error.
 

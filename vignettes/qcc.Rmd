@@ -16,8 +16,8 @@ vignette: >
 ```{R setup, include = FALSE}
 library(knitr)
 opts_chunk$set(dev = "png", fig.align = "center", 
-               fig.width = 6, fig.height = 5, out.width = "90%",
-               # dev.args = list(pointsize = 12),
+               fig.width = 6, fig.height = 5, out.width = "80%",
+               dev.args = list(pointsize = 12),
                par = TRUE, # needed for setting hook 
                collapse = TRUE, # collapse input & ouput code in chunks
                warning = FALSE)
@@ -78,10 +78,13 @@ plot(q1)
 plot(q1, fill = FALSE)
 ```
 
+
+### Specifying dates for rationale subgroups
+
 In a Shewhart control chart the x-axis represents the *rationale subgroups*. This means that in the data collection process "subgroups or samples should be selected so that if assignable causes are present, the chance for differences between subgroups will be maximized, while the chance for differences due to these assignable causes within a subgroup will be minimized" (Montgomery, 2013, Sec. 5.3.4).
+
 Typically, for control charts used in production processes the time order of production is a logical basis for rational subgroups. In this case a user may want to represent the date of production along the x-axis.
 
-For instance, 
 ```{R}
 (dates <- seq(Sys.Date() - nrow(diameter)+1, Sys.Date(), by = 1))
 q = qcc(diameter[1:25,], type = "xbar", newdata = diameter[26:40,])

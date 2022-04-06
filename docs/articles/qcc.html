@@ -71,9 +71,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>A quick tour of qcc</h1>
-                        <h4 data-toc-skip class="author">Luca Scrucca</h4>
+                        <h4 data-toc-skip class="author">Luca
+Scrucca</h4>
             
-            <h4 data-toc-skip class="date">17 Dec 2021</h4>
+            <h4 data-toc-skip class="date">06 Apr 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/luca-scr/qcc/blob/HEAD/vignettes/qcc.Rmd"><code>vignettes/qcc.Rmd</code></a></small>
       <div class="hidden name"><code>qcc.Rmd</code></div>
@@ -82,20 +83,24 @@
 
     
     
-<div class="section level1">
-<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h1>
-<p><code>qcc</code> is a contributed R package for <strong>statistical quality control charts</strong> which provides:</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p><code>qcc</code> is a contributed R package for <strong>statistical
+quality control charts</strong> which provides:</p>
 <ul>
-<li>Shewhart quality control charts for continuous, attribute and count data</li>
+<li>Shewhart quality control charts for continuous, attribute and count
+data</li>
 <li>Cusum and EWMA charts</li>
 <li>Operating characteristic curves</li>
 <li>Process capability analysis</li>
 <li>Pareto chart and cause-and-effect chart</li>
 <li>Multivariate control charts.</li>
 </ul>
-<p>This document gives a quick tour of <code>qcc</code> (version 3.0) functionalities. Further details are provided in Scrucca (2004).</p>
-<p>This vignette is written in R Markdown using the <a href="https://cran.r-project.org/package=knitr" class="external-link">knitr</a> package for production.</p>
+<p>This document gives a quick tour of <code>qcc</code> (version 3.0)
+functionalities. Further details are provided in Scrucca (2004).</p>
+<p>This vignette is written in R Markdown using the <a href="https://cran.r-project.org/package=knitr" class="external-link">knitr</a> package for
+production.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://luca-scr.github.io/qcc/" class="external-link">qcc</a></span><span class="op">)</span>
 <span class="co">##   __ _  ___ ___ </span>
@@ -105,12 +110,12 @@
 <span class="co">##     |_|           version 3.0</span>
 <span class="co">## Type 'citation("qcc")' for citing this R package in publications.</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="shewhart-charts">Shewhart charts<a class="anchor" aria-label="anchor" href="#shewhart-charts"></a>
-</h1>
 <div class="section level2">
-<h2 id="x-bar-chart">x-bar chart<a class="anchor" aria-label="anchor" href="#x-bar-chart"></a>
+<h2 id="shewhart-charts">Shewhart charts<a class="anchor" aria-label="anchor" href="#shewhart-charts"></a>
 </h2>
+<div class="section level3">
+<h3 id="x-bar-chart">x-bar chart<a class="anchor" aria-label="anchor" href="#x-bar-chart"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pistonrings</span><span class="op">)</span>
 <span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qccGroups.html">qccGroups</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pistonrings</span>, <span class="va">diameter</span>, <span class="va">sample</span><span class="op">)</span>
@@ -142,55 +147,72 @@
 <span class="co">##       LCL     UCL</span>
 <span class="co">##  73.98805 74.0143</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span>, fill <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span>, chart.all <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-2-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-2-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span>, add.stats <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-2-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-2-3.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, 
          newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span>, 
          confidence.level <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-2-4.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-2-4.png" width="80%" style="display: block; margin: auto;"></p>
 <p>Western Electric rules:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, 
           newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span>, 
           rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span>, fill <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-3-2.png" width="90%" style="display: block; margin: auto;"></p>
-<p>In a Shewhart control chart the x-axis represents the <em>rationale subgroups</em>. This means that in the data collection process “subgroups or samples should be selected so that if assignable causes are present, the chance for differences between subgroups will be maximized, while the chance for differences due to these assignable causes within a subgroup will be minimized” (Montgomery, 2013, Sec. 5.3.4). Typically, for control charts used in production processes the time order of production is a logical basis for rational subgroups. In this case a user may want to represent the date of production along the x-axis.</p>
-<p>For instance,</p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-3-2.png" width="80%" style="display: block; margin: auto;"></p>
+<div class="section level4">
+<h4 id="specifying-dates-for-rationale-subgroups">Specifying dates for rationale subgroups<a class="anchor" aria-label="anchor" href="#specifying-dates-for-rationale-subgroups"></a>
+</h4>
+<p>In a Shewhart control chart the x-axis represents the <em>rationale
+subgroups</em>. This means that in the data collection process
+“subgroups or samples should be selected so that if assignable causes
+are present, the chance for differences between subgroups will be
+maximized, while the chance for differences due to these assignable
+causes within a subgroup will be minimized” (Montgomery, 2013, Sec.
+5.3.4).</p>
+<p>Typically, for control charts used in production processes the time
+order of production is a logical basis for rational subgroups. In this
+case a user may want to represent the date of production along the
+x-axis.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##  [1] "2021-11-08" "2021-11-09" "2021-11-10" "2021-11-11" "2021-11-12"</span>
-<span class="co">##  [6] "2021-11-13" "2021-11-14" "2021-11-15" "2021-11-16" "2021-11-17"</span>
-<span class="co">## [11] "2021-11-18" "2021-11-19" "2021-11-20" "2021-11-21" "2021-11-22"</span>
-<span class="co">## [16] "2021-11-23" "2021-11-24" "2021-11-25" "2021-11-26" "2021-11-27"</span>
-<span class="co">## [21] "2021-11-28" "2021-11-29" "2021-11-30" "2021-12-01" "2021-12-02"</span>
-<span class="co">## [26] "2021-12-03" "2021-12-04" "2021-12-05" "2021-12-06" "2021-12-07"</span>
-<span class="co">## [31] "2021-12-08" "2021-12-09" "2021-12-10" "2021-12-11" "2021-12-12"</span>
-<span class="co">## [36] "2021-12-13" "2021-12-14" "2021-12-15" "2021-12-16" "2021-12-17"</span>
+<span class="co">##  [1] "2022-02-26" "2022-02-27" "2022-02-28" "2022-03-01" "2022-03-02"</span>
+<span class="co">##  [6] "2022-03-03" "2022-03-04" "2022-03-05" "2022-03-06" "2022-03-07"</span>
+<span class="co">## [11] "2022-03-08" "2022-03-09" "2022-03-10" "2022-03-11" "2022-03-12"</span>
+<span class="co">## [16] "2022-03-13" "2022-03-14" "2022-03-15" "2022-03-16" "2022-03-17"</span>
+<span class="co">## [21] "2022-03-18" "2022-03-19" "2022-03-20" "2022-03-21" "2022-03-22"</span>
+<span class="co">## [26] "2022-03-23" "2022-03-24" "2022-03-25" "2022-03-26" "2022-03-27"</span>
+<span class="co">## [31] "2022-03-28" "2022-03-29" "2022-03-30" "2022-03-31" "2022-04-01"</span>
+<span class="co">## [36] "2022-04-02" "2022-04-03" "2022-04-04" "2022-04-05" "2022-04-06"</span>
 <span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span>, xtime <span class="op">=</span> <span class="va">dates</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Further fine-tuning is also available as shown in the example below:</p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Further fine-tuning is also available as shown in the example
+below:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span>, xtime <span class="op">=</span> <span class="va">dates</span>, xlab <span class="op">=</span> <span class="cn">NULL</span>, add.stats <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"1 week"</span>, date_labels <span class="op">=</span> <span class="st">"%d-%b"</span><span class="op">)</span>
 <span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">## replace the existing scale.</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;"> Note than we must remove the summary statistics at bottom (<code>add.stats = FALSE</code>) in order to change the x-axis settings.</p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;">
+Note than we must remove the summary statistics at bottom
+(<code>add.stats = FALSE</code>) in order to change the x-axis
+settings.</p>
 </div>
-<div class="section level2">
-<h2 id="r-chart">R chart<a class="anchor" aria-label="anchor" href="#r-chart"></a>
-</h2>
+</div>
+<div class="section level3">
+<h3 id="r-chart">R chart<a class="anchor" aria-label="anchor" href="#r-chart"></a>
+</h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## ── <span style="font-weight: bold;">Quality Control Chart</span> ───────────────────────── </span>
@@ -206,7 +228,7 @@
 <span class="co">##  LCL        UCL</span>
 <span class="co">##    0 0.04812533</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q2</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"R"</span>, newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## ── <span style="font-weight: bold;">Quality Control Chart</span> ───────────────────────── </span>
@@ -226,11 +248,11 @@
 <span class="co">##  LCL        UCL</span>
 <span class="co">##    0 0.04812533</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q3</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-6-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-6-2.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="s-chart">S chart<a class="anchor" aria-label="anchor" href="#s-chart"></a>
-</h2>
+<div class="section level3">
+<h3 id="s-chart">S chart<a class="anchor" aria-label="anchor" href="#s-chart"></a>
+</h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">q4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## ── <span style="font-weight: bold;">Quality Control Chart</span> ───────────────────────── </span>
@@ -246,7 +268,7 @@
 <span class="co">##  LCL        UCL</span>
 <span class="co">##    0 0.01930242</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q4</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-7-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">q5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"S"</span>, newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## ── <span style="font-weight: bold;">Quality Control Chart</span> ───────────────────────── </span>
@@ -266,27 +288,27 @@
 <span class="co">##  LCL        UCL</span>
 <span class="co">##    0 0.01930242</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q5</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-7-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-7-2.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="variable-control-limits-in-control-charts">Variable control limits in control charts<a class="anchor" aria-label="anchor" href="#variable-control-limits-in-control-charts"></a>
-</h2>
+<div class="section level3">
+<h3 id="variable-control-limits-in-control-charts">Variable control limits in control charts<a class="anchor" aria-label="anchor" href="#variable-control-limits-in-control-charts"></a>
+</h3>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">10</span>, <span class="fl">30</span>, <span class="fl">35</span>, <span class="fl">45</span>, <span class="fl">64</span>, <span class="fl">65</span>, <span class="fl">74</span>, <span class="fl">75</span>, <span class="fl">85</span>, <span class="fl">99</span>, <span class="fl">100</span><span class="op">)</span>
 <span class="va">diameter2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qccGroups.html">qccGroups</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pistonrings</span><span class="op">[</span><span class="op">-</span><span class="va">out</span>,<span class="op">]</span>, <span class="va">diameter</span>, <span class="va">sample</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-8-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-8-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">diameter2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, newdata <span class="op">=</span> <span class="va">diameter2</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-9-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="p-and-np-charts">p and np charts<a class="anchor" aria-label="anchor" href="#p-and-np-charts"></a>
-</h2>
+<div class="section level3">
+<h3 id="p-and-np-charts">p and np charts<a class="anchor" aria-label="anchor" href="#p-and-np-charts"></a>
+</h3>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -306,7 +328,7 @@
 <span class="co">## :                     </span>
 <span class="co">##   0.05242755 0.4102391</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-10-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"np"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## ── <span style="font-weight: bold;">Quality Control Chart</span> ───────────────────────── </span>
@@ -322,8 +344,9 @@
 <span class="co">##       LCL      UCL</span>
 <span class="co">##  2.621377 20.51196</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-10-2.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Remove out-of-control points (see <code><a href="../reference/orangejuice.html">help(orangejuice)</a></code> for the reasons):</p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-10-2.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Remove out-of-control points (see <code><a href="../reference/orangejuice.html">help(orangejuice)</a></code> for
+the reasons):</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">23</span><span class="op">)</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">inc</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">inc</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"p"</span>,
@@ -348,7 +371,7 @@
 <span class="co">## :                     </span>
 <span class="co">##   0.04070284 0.3892972</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">orangejuice2</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice2</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"p"</span>, 
@@ -373,11 +396,11 @@
 <span class="co">## :              </span>
 <span class="co">##     0 0.2440207</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-12-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="c-and-u-charts">c and u charts<a class="anchor" aria-label="anchor" href="#c-and-u-charts"></a>
-</h2>
+<div class="section level3">
+<h3 id="c-and-u-charts">c and u charts<a class="anchor" aria-label="anchor" href="#c-and-u-charts"></a>
+</h3>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -394,8 +417,9 @@
 <span class="co">##       LCL      UCL</span>
 <span class="co">##  6.481447 33.21086</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-13-1.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Remove out-of-control points (see <code><a href="../reference/circuit.html">help(circuit)</a></code> for the reasons)</p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Remove out-of-control points (see <code><a href="../reference/circuit.html">help(circuit)</a></code> for the
+reasons)</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">inc</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">inc</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"c"</span>, labels <span class="op">=</span> <span class="va">inc</span>, 
@@ -418,7 +442,7 @@
 <span class="co">##       LCL     UCL</span>
 <span class="co">##  6.362532 32.9708</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">inc</span><span class="op">]</span>, sizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="va">inc</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"u"</span>, labels <span class="op">=</span> <span class="va">inc</span>, 
@@ -441,7 +465,7 @@
 <span class="co">##         LCL      UCL</span>
 <span class="co">##  0.06362532 0.329708</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-14-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-14-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pcmanufact</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">pcmanufact</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, sizes <span class="op">=</span> <span class="va">size</span>, type <span class="op">=</span> <span class="st">"u"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -458,11 +482,11 @@
 <span class="co">##         LCL      UCL</span>
 <span class="co">##  0.06613305 3.793867</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-15-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="continuous-one-at-time-data">Continuous one-at-time data<a class="anchor" aria-label="anchor" href="#continuous-one-at-time-data"></a>
-</h2>
+<div class="section level3">
+<h3 id="continuous-one-at-time-data">Continuous one-at-time data<a class="anchor" aria-label="anchor" href="#continuous-one-at-time-data"></a>
+</h3>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">viscosity</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">viscosity</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">viscosity</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar.one"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -479,7 +503,7 @@
 <span class="co">##       LCL      UCL</span>
 <span class="co">##  32.56504 35.61096</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">viscosity</span>, <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">viscosity</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar.one"</span>, std.dev <span class="op">=</span> <span class="st">"SD"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## ── <span style="font-weight: bold;">Quality Control Chart</span> ───────────────────────── </span>
@@ -495,7 +519,7 @@
 <span class="co">##       LCL      UCL</span>
 <span class="co">##  32.35704 35.81896</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-16-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-16-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># batch 4 is out-of-control because of a process temperature controller</span>
@@ -521,12 +545,14 @@
 <span class="co">##       LCL     UCL</span>
 <span class="co">##  32.75425 35.2247</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-16-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-16-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="standardized-p-chart">Standardized p chart<a class="anchor" aria-label="anchor" href="#standardized-p-chart"></a>
-</h2>
-<p>In this example we show how to extend the package by defining a new control chart, i.e. a standardized p chart (<code>type = "p.std"</code>).</p>
+<div class="section level3">
+<h3 id="standardized-p-chart">Standardized p chart<a class="anchor" aria-label="anchor" href="#standardized-p-chart"></a>
+</h3>
+<p>In this example we show how to extend the package by defining a new
+control chart, i.e. a standardized p chart
+(<code>type = "p.std"</code>).</p>
 <p>Function to compute group statistics and center:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stats.p.std</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">sizes</span><span class="op">)</span>
@@ -585,7 +611,7 @@
 <span class="co">## :                     </span>
 <span class="co">##   0.00000000 0.4612911</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-20-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot the standardized control chart</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"p.std"</span>, size <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span>
@@ -604,13 +630,17 @@
 <span class="co">##  LCL UCL</span>
 <span class="co">##   -3   3</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-20-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-20-2.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="operating-characteristic-curves">Operating Characteristic Curves<a class="anchor" aria-label="anchor" href="#operating-characteristic-curves"></a>
-</h1>
-<p>An operating characteristic curve graphically provides information about the probability of not detecting a shift in the process. The function <code><a href="../reference/oc.curves.html">ocCurves()</a></code> is a generic function which calls the proper function depending on the type of input <code>'qcc'</code> object.</p>
+<div class="section level2">
+<h2 id="operating-characteristic-curves">Operating Characteristic Curves<a class="anchor" aria-label="anchor" href="#operating-characteristic-curves"></a>
+</h2>
+<p>An operating characteristic curve graphically provides information
+about the probability of not detecting a shift in the process. The
+function <code><a href="../reference/oc.curves.html">ocCurves()</a></code> is a generic function which calls the
+proper function depending on the type of input <code>'qcc'</code>
+object.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pistonrings</span><span class="op">)</span>
 <span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qccGroups.html">qccGroups</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pistonrings</span>, <span class="va">diameter</span>, <span class="va">sample</span><span class="op">)</span>
@@ -638,10 +668,10 @@
 <span class="co">##            4.9   1   1   1   1   1</span>
 <span class="co">##            5.0   1   1   1   1   1</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">beta</span>, what <span class="op">=</span> <span class="st">"ARL"</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-21-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">)</span>
@@ -669,10 +699,10 @@
 <span class="co">##                   0.99    1</span>
 <span class="co">##                   1.00    1</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-21-3.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">beta</span>, what <span class="op">=</span> <span class="st">"ARL"</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-4.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-21-4.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">)</span>
@@ -698,14 +728,14 @@
 <span class="co">## 64.00    1</span>
 <span class="co">## 65.00    1</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-5.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-21-5.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">beta</span>, what <span class="op">=</span> <span class="st">"ARL"</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-21-6.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-21-6.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="cusum-chart">Cusum chart<a class="anchor" aria-label="anchor" href="#cusum-chart"></a>
-</h1>
+<div class="section level2">
+<h2 id="cusum-chart">Cusum chart<a class="anchor" aria-label="anchor" href="#cusum-chart"></a>
+</h2>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pistonrings</span><span class="op">)</span>
 <span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qccGroups.html">qccGroups</a></span><span class="op">(</span><span class="va">diameter</span>, <span class="va">sample</span>, data <span class="op">=</span> <span class="va">pistonrings</span><span class="op">)</span>
@@ -722,7 +752,7 @@
 <span class="co">## Decision interval (StdErr) = 4 </span>
 <span class="co">## Shift detection   (StdErr) = 1</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cusum.html">cusum</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>
@@ -741,10 +771,10 @@
 <span class="co">## Decision interval (StdErr) = 5 </span>
 <span class="co">## Shift detection   (StdErr) = 1</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-22-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span>, chart.all <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-22-3.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span>, xtime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
@@ -752,11 +782,11 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"4 days"</span>, date_labels <span class="op">=</span> <span class="st">"%d-%b"</span><span class="op">)</span>
 <span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">## replace the existing scale.</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-22-4.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-22-4.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="ewma">EWMA<a class="anchor" aria-label="anchor" href="#ewma"></a>
-</h1>
+<div class="section level2">
+<h2 id="ewma">EWMA<a class="anchor" aria-label="anchor" href="#ewma"></a>
+</h2>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pistonrings</span><span class="op">)</span>
 <span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qccGroups.html">qccGroups</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pistonrings</span>, <span class="va">diameter</span>, <span class="va">sample</span><span class="op">)</span>
@@ -778,7 +808,7 @@
 <span class="co">## :                   </span>
 <span class="co">## 25 73.99680 74.00555</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="../reference/ewma.html">ewma</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, lambda <span class="op">=</span> <span class="fl">0.2</span>, nsigmas <span class="op">=</span> <span class="fl">2.7</span>, newdata <span class="op">=</span> <span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>
@@ -802,7 +832,7 @@
 <span class="co">## :                   </span>
 <span class="co">## 40 73.99724 74.00511</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span>, xtime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">diameter</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
@@ -810,7 +840,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"4 days"</span>, date_labels <span class="op">=</span> <span class="st">"%d-%b"</span><span class="op">)</span>
 <span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">## replace the existing scale.</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-23-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-23-3.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">viscosity</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">viscosity</span>, 
@@ -836,11 +866,11 @@
 <span class="co">## :                      </span>
 <span class="co">## [35,] 33.63111 34.54489</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="process-capability-analysis">Process capability analysis<a class="anchor" aria-label="anchor" href="#process-capability-analysis"></a>
-</h1>
+<div class="section level2">
+<h2 id="process-capability-analysis">Process capability analysis<a class="anchor" aria-label="anchor" href="#process-capability-analysis"></a>
+</h2>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pistonrings</span><span class="op">)</span>
 <span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qccGroups.html">qccGroups</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pistonrings</span>, <span class="va">diameter</span>, <span class="va">sample</span><span class="op">)</span>
@@ -864,7 +894,7 @@
 <span class="co">## Exp&lt;LSL 0%    Obs&lt;LSL 0%</span>
 <span class="co">## Exp&gt;USL 0%    Obs&gt;USL 0%</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-25-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="op">(</span><span class="va">pc</span> <span class="op">=</span> <span class="fu"><a href="../reference/processCapability.html">processCapability</a></span><span class="op">(</span><span class="va">q</span>, spec.limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">73.95</span>,<span class="fl">74.05</span><span class="op">)</span>, target <span class="op">=</span> <span class="fl">74.02</span><span class="op">)</span><span class="op">)</span>
@@ -884,7 +914,7 @@
 <span class="co">## Exp&lt;LSL 0%    Obs&lt;LSL 0%</span>
 <span class="co">## Exp&gt;USL 0%    Obs&gt;USL 0%</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-25-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-25-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="op">(</span><span class="va">pc</span> <span class="op">=</span> <span class="fu"><a href="../reference/processCapability.html">processCapability</a></span><span class="op">(</span><span class="va">q</span>, spec.limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">73.99</span>,<span class="fl">74.01</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -904,7 +934,7 @@
 <span class="co">## Exp&lt;LSL 0.13%     Obs&lt;LSL 0.12%</span>
 <span class="co">## Exp&gt;USL 0.18%     Obs&gt;USL 0.16%</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-25-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-25-3.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="op">(</span><span class="va">pc</span> <span class="op">=</span> <span class="fu"><a href="../reference/processCapability.html">processCapability</a></span><span class="op">(</span><span class="va">q</span>, spec.limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">73.99</span>, <span class="fl">74.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -924,16 +954,16 @@
 <span class="co">## Exp&lt;LSL 0.13%     Obs&lt;LSL 0.12%</span>
 <span class="co">## Exp&gt;USL 0%    Obs&gt;USL 0%</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-25-4.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-25-4.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="multivariate-quality-control-charts">Multivariate Quality Control Charts<a class="anchor" aria-label="anchor" href="#multivariate-quality-control-charts"></a>
-</h1>
+<div class="section level2">
+<h2 id="multivariate-quality-control-charts">Multivariate Quality Control Charts<a class="anchor" aria-label="anchor" href="#multivariate-quality-control-charts"></a>
+</h2>
 <p>Multivariate subgrouped data from Ryan (2011, Table 9.2) with <span class="math inline">\(p = 2\)</span> variables, <span class="math inline">\(m = 20\)</span> samples, and <span class="math inline">\(n = 4\)</span> sample size for each sample:</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">RyanMultivar</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">RyanMultivar</span>, type <span class="op">=</span> <span class="st">"T2"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-26-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2 </span>
@@ -954,16 +984,17 @@
 <span class="co">##    0 11.03976</span>
 
 <span class="fu"><a href="../reference/ellipseChart.html">ellipseChart</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></code></pre>
-<p><img src="qcc_files/figure-html/unnamed-chunk-26-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-26-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/ellipseChart.html">ellipseChart</a></span><span class="op">(</span><span class="va">q</span>, show.id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-26-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-26-3.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">RyanMultivar</span>, type <span class="op">=</span> <span class="st">"T2"</span>, pred.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-26-4.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Ryan (2011) discussed Xbar-charts for single variables computed adjusting the confidence level of the <span class="math inline">\(T^2\)</span> chart:</p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-26-4.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Ryan (2011) discussed Xbar-charts for single variables computed
+adjusting the confidence level of the <span class="math inline">\(T^2\)</span> chart:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">RyanMultivar</span>, 
      <span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">X1</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, confidence.level <span class="op">=</span> <span class="va">q</span><span class="op">$</span><span class="va">confidence.level</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -1003,7 +1034,7 @@
      <span class="va">Xnew</span><span class="op">$</span><span class="va">X2</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span> 
    <span class="op">}</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">RyanMultivar</span>, type <span class="op">=</span> <span class="st">"T2"</span>, newdata <span class="op">=</span> <span class="va">Xnew</span>, pred.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-28-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2 </span>
@@ -1031,7 +1062,7 @@
 <span class="co">##  LPL      UPL</span>
 <span class="co">##    0 12.20184</span>
 <span class="fu"><a href="../reference/ellipseChart.html">ellipseChart</a></span><span class="op">(</span><span class="va">q</span>, show.id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre>
-<p><img src="qcc_files/figure-html/unnamed-chunk-28-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-28-2.png" width="80%" style="display: block; margin: auto;"></p>
 <p>Generate new “out of control” data:</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Xnew</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">10</span>, <span class="fl">4</span><span class="op">)</span>, X2 <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">10</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
@@ -1041,7 +1072,7 @@
      <span class="va">Xnew</span><span class="op">$</span><span class="va">X2</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span> 
    <span class="op">}</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">RyanMultivar</span>, type <span class="op">=</span> <span class="st">"T2"</span>, newdata <span class="op">=</span> <span class="va">Xnew</span>, pred.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2 </span>
@@ -1069,12 +1100,12 @@
 <span class="co">##  LPL      UPL</span>
 <span class="co">##    0 12.20184</span>
 <span class="fu"><a href="../reference/ellipseChart.html">ellipseChart</a></span><span class="op">(</span><span class="va">q</span>, show.id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre>
-<p><img src="qcc_files/figure-html/unnamed-chunk-29-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-29-2.png" width="80%" style="display: block; margin: auto;"></p>
 <p>Individual observations data:</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">boiler</span><span class="op">)</span>
 <span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">boiler</span>, type <span class="op">=</span> <span class="st">"T2.single"</span>, confidence.level <span class="op">=</span> <span class="fl">0.999</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-30-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-30-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2.single </span>
@@ -1113,7 +1144,7 @@
 <code class="sourceCode R"><span class="va">boilerNew</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">mvrnorm</a></span><span class="op">(</span><span class="fl">10</span>, mu <span class="op">=</span> <span class="va">q</span><span class="op">$</span><span class="va">center</span>, Sigma <span class="op">=</span> <span class="va">q</span><span class="op">$</span><span class="va">cov</span><span class="op">)</span>
 <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">boiler</span>, type <span class="op">=</span> <span class="st">"T2.single"</span>, confidence.level <span class="op">=</span> <span class="fl">0.999</span>, 
      newdata <span class="op">=</span> <span class="va">boilerNew</span>, pred.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-31-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-31-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2.single </span>
@@ -1160,7 +1191,7 @@
 <code class="sourceCode R"><span class="va">boilerNew</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">mvrnorm</a></span><span class="op">(</span><span class="fl">10</span>, mu <span class="op">=</span> <span class="fl">1.01</span><span class="op">*</span><span class="va">q</span><span class="op">$</span><span class="va">center</span>, Sigma <span class="op">=</span> <span class="va">q</span><span class="op">$</span><span class="va">cov</span><span class="op">)</span>
 <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">boiler</span>, type <span class="op">=</span> <span class="st">"T2.single"</span>, confidence.level <span class="op">=</span> <span class="fl">0.999</span>, 
      newdata <span class="op">=</span> <span class="va">boilerNew</span>, pred.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-32-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-32-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2.single </span>
@@ -1202,11 +1233,12 @@
 <span class="co">## Prediction limits:</span>
 <span class="co">##  LPL      UPL</span>
 <span class="co">##    0 70.02943</span></code></pre>
-<p>Recompute by providing “robust” estimates for the means and the covariance matrix:</p>
+<p>Recompute by providing “robust” estimates for the means and the
+covariance matrix:</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rob</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/cov.rob.html" class="external-link">cov.rob</a></span><span class="op">(</span><span class="va">boiler</span><span class="op">)</span>
 <span class="fu"><a href="../reference/mqcc.html">mqcc</a></span><span class="op">(</span><span class="va">boiler</span>, type <span class="op">=</span> <span class="st">"T2.single"</span>, center <span class="op">=</span> <span class="va">rob</span><span class="op">$</span><span class="va">center</span>, cov <span class="op">=</span> <span class="va">rob</span><span class="op">$</span><span class="va">cov</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-33-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-33-1.png" width="80%" style="display: block; margin: auto;"></p>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Multivariate Quality Control Chart</span> ──────────── </span>
 <span class="co">## </span>
 <span class="co">## Chart type                 = T2.single </span>
@@ -1241,9 +1273,9 @@
 <span class="co">##  LCL      UCL</span>
 <span class="co">##    0 14.26225</span></code></pre>
 </div>
-<div class="section level1">
-<h1 id="pareto-chart">Pareto chart<a class="anchor" aria-label="anchor" href="#pareto-chart"></a>
-</h1>
+<div class="section level2">
+<h2 id="pareto-chart">Pareto chart<a class="anchor" aria-label="anchor" href="#pareto-chart"></a>
+</h2>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">defect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">27</span>, <span class="fl">66</span>, <span class="fl">94</span>, <span class="fl">33</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">defect</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"price code"</span>, <span class="st">"schedule date"</span>, <span class="st">"supplier code"</span>, <span class="st">"contact num."</span>, <span class="st">"part num."</span><span class="op">)</span>
@@ -1257,11 +1289,11 @@
 <span class="co">##   part num.            33       273      11.00        91.00</span>
 <span class="co">##   schedule date        27       300       9.00       100.00</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-34-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-34-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="cause-and-effect-diagram">Cause and effect diagram<a class="anchor" aria-label="anchor" href="#cause-and-effect-diagram"></a>
-</h1>
+<div class="section level2">
+<h2 id="cause-and-effect-diagram">Cause and effect diagram<a class="anchor" aria-label="anchor" href="#cause-and-effect-diagram"></a>
+</h2>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/causeEffectDiagram.html">causeEffectDiagram</a></span><span class="op">(</span>cause <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Measurements <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Micrometers"</span>, 
                                                  <span class="st">"Microscopes"</span>, 
@@ -1283,34 +1315,39 @@
                                              <span class="st">"Bits"</span>, 
                                              <span class="st">"Sockets"</span><span class="op">)</span><span class="op">)</span>,
                    effect <span class="op">=</span> <span class="st">"Surface Flaws"</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-35-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="process-variation-examples">Process variation examples<a class="anchor" aria-label="anchor" href="#process-variation-examples"></a>
-</h1>
-<p>In the following simulated data are used to describe some models for process variation. For further details see Wetherill, G.B. and Brown, D.W. (1991) <em>Statistical Process Control</em>, New York, Chapman and Hall, Chapter 3.</p>
 <div class="section level2">
-<h2 id="simple-random-variation">Simple random variation<a class="anchor" aria-label="anchor" href="#simple-random-variation"></a>
+<h2 id="process-variation-examples">Process variation examples<a class="anchor" aria-label="anchor" href="#process-variation-examples"></a>
 </h2>
-<p><span class="math inline">\(x_{ij} = \mu + \sigma_W \epsilon_{ij}\)</span></p>
+<p>In the following simulated data are used to describe some models for
+process variation. For further details see Wetherill, G.B. and Brown,
+D.W. (1991) <em>Statistical Process Control</em>, New York, Chapman and
+Hall, Chapter 3.</p>
+<div class="section level3">
+<h3 id="simple-random-variation">Simple random variation<a class="anchor" aria-label="anchor" href="#simple-random-variation"></a>
+</h3>
+<p><span class="math inline">\(x_{ij} = \mu + \sigma_W
+\epsilon_{ij}\)</span></p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">100</span>
 <span class="va">sigma_W</span> <span class="op">&lt;-</span> <span class="fl">10</span>
 <span class="va">epsilon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>, ncol <span class="op">=</span> <span class="fl">10</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-37-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-37-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-37-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-37-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-37-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-37-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="between-and-within-sample-extra-variation">Between and within sample extra variation<a class="anchor" aria-label="anchor" href="#between-and-within-sample-extra-variation"></a>
-</h2>
-<p><span class="math inline">\(x_{ij} = \mu + \sigma_B u_i + \sigma_W \epsilon_{ij}\)</span></p>
+<div class="section level3">
+<h3 id="between-and-within-sample-extra-variation">Between and within sample extra variation<a class="anchor" aria-label="anchor" href="#between-and-within-sample-extra-variation"></a>
+</h3>
+<p><span class="math inline">\(x_{ij} = \mu + \sigma_B u_i + \sigma_W
+\epsilon_{ij}\)</span></p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">100</span>
 <span class="va">sigma_W</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -1320,19 +1357,22 @@
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">sigma_B</span><span class="op">*</span><span class="va">u</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fl">10</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-38-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-38-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-38-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-38-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-38-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-38-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="autocorrelation">Autocorrelation<a class="anchor" aria-label="anchor" href="#autocorrelation"></a>
-</h2>
-<p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}\)</span><br>
-where <span class="math inline">\(W_i = \rho W_{i-1} + \sigma_B u_i = \sigma_B u_i + \rho \sigma_B u_{i-1} + \rho^2 \sigma_B u_{i-2} + \ldots\)</span>,<br>
+<div class="section level3">
+<h3 id="autocorrelation">Autocorrelation<a class="anchor" aria-label="anchor" href="#autocorrelation"></a>
+</h3>
+<p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W
+\epsilon_{ij}\)</span><br>
+where <span class="math inline">\(W_i = \rho W_{i-1} + \sigma_B u_i =
+\sigma_B u_i + \rho \sigma_B u_{i-1} + \rho^2 \sigma_B u_{i-2} +
+\ldots\)</span>,<br>
 and <span class="math inline">\(W_0 = 0\)</span>.</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">100</span>
@@ -1347,19 +1387,22 @@ and <span class="math inline">\(W_0 = 0\)</span>.</p>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">sigma_B</span><span class="op">*</span><span class="va">u</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fl">10</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-39-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-39-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-39-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-39-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="recurring-cycles">Recurring cycles<a class="anchor" aria-label="anchor" href="#recurring-cycles"></a>
-</h2>
-<p>Assume we have 3 working turns of 8 hours each for each working day, so <span class="math inline">\(8 \times 3 = 24\)</span> points in time, and at each point we sample 5 units.</p>
-<p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}\)</span><br>
+<div class="section level3">
+<h3 id="recurring-cycles">Recurring cycles<a class="anchor" aria-label="anchor" href="#recurring-cycles"></a>
+</h3>
+<p>Assume we have 3 working turns of 8 hours each for each working day,
+so <span class="math inline">\(8 \times 3 = 24\)</span> points in time,
+and at each point we sample 5 units.</p>
+<p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W
+\epsilon_{ij}\)</span><br>
 where <span class="math inline">\(W_i\)</span> (<span class="math inline">\(i = 1,\ldots,8\)</span>) is the cycle.</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">100</span>
@@ -1370,18 +1413,19 @@ where <span class="math inline">\(W_i\)</span> (<span class="math inline">\(i = 
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">W</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-40-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-40-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-40-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-40-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-40-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="trends">Trends<a class="anchor" aria-label="anchor" href="#trends"></a>
-</h2>
-<p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W \epsilon_{ij}\)</span><br>
+<div class="section level3">
+<h3 id="trends">Trends<a class="anchor" aria-label="anchor" href="#trends"></a>
+</h3>
+<p><span class="math inline">\(x_{ij} = \mu + W_i + \sigma_W
+\epsilon_{ij}\)</span><br>
 where <span class="math inline">\(W_i = 0.2 i\)</span></p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">100</span>
@@ -1391,19 +1435,21 @@ where <span class="math inline">\(W_i = 0.2 i\)</span></p>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">mu</span> <span class="op">+</span> <span class="va">W</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fl">10</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-41-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-41-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-41-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-41-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-41-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-41-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="mixture">Mixture<a class="anchor" aria-label="anchor" href="#mixture"></a>
-</h2>
-<p><span class="math inline">\(x_{ij} = \mu_1 p + \mu_2 (1-p) + \sigma_W \epsilon_{ij}\)</span><br>
-where <span class="math inline">\(p = \Pr(\text{Process #1})\)</span>.</p>
+<div class="section level3">
+<h3 id="mixture">Mixture<a class="anchor" aria-label="anchor" href="#mixture"></a>
+</h3>
+<p><span class="math inline">\(x_{ij} = \mu_1 p + \mu_2 (1-p) + \sigma_W
+\epsilon_{ij}\)</span><br>
+where <span class="math inline">\(p = \Pr(\text{Process
+#1})\)</span>.</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu1</span> <span class="op">&lt;-</span> <span class="fl">90</span>
 <span class="va">mu2</span> <span class="op">&lt;-</span> <span class="fl">110</span>
@@ -1414,19 +1460,21 @@ where <span class="math inline">\(p = \Pr(\text{Process #1})\)</span>.</p>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">mu</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fl">10</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-42-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-42-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-42-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-42-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-42-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-42-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="sudden-jumps">Sudden jumps<a class="anchor" aria-label="anchor" href="#sudden-jumps"></a>
-</h2>
-<p><span class="math inline">\(x_{ij} = \mu_i + \sigma_W \epsilon_{ij}\)</span><br>
-where <span class="math inline">\(\mu_i\)</span> is the mean of the process for state <span class="math inline">\(i\)</span> (<span class="math inline">\(i = 1,\ldots,k)\)</span>.</p>
+<div class="section level3">
+<h3 id="sudden-jumps">Sudden jumps<a class="anchor" aria-label="anchor" href="#sudden-jumps"></a>
+</h3>
+<p><span class="math inline">\(x_{ij} = \mu_i + \sigma_W
+\epsilon_{ij}\)</span><br>
+where <span class="math inline">\(\mu_i\)</span> is the mean of the
+process for state <span class="math inline">\(i\)</span> (<span class="math inline">\(i = 1,\ldots,k)\)</span>.</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">95</span>,<span class="fl">110</span>,<span class="fl">100</span>,<span class="fl">90</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">35</span>,<span class="fl">25</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sigma_W</span> <span class="op">&lt;-</span> <span class="fl">10</span>
@@ -1434,30 +1482,34 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">mu</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">sigma_W</span><span class="op">*</span><span class="va">epsilon</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fl">10</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"xbar"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-43-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"R"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-43-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-43-2.png" width="80%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/qcc.html">qcc</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"S"</span>, rules <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qcc_files/figure-html/unnamed-chunk-43-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="qcc_files/figure-html/unnamed-chunk-43-3.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h1>
-<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
-<p>Ryan, T. P. (2011), <em>Statistical Methods for Quality Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons.</p>
-<p>Scrucca, L. (2004) <a href="http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf" class="external-link">qcc: an R package for quality control charting and statistical process control</a>. <em>R News</em> 4/1, 11-17.</p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Montgomery, D.C. (2013) <em>Introduction to Statistical Quality
+Control</em>, 7th ed. New York: John Wiley &amp; Sons.</p>
+<p>Ryan, T. P. (2011), <em>Statistical Methods for Quality
+Improvement</em>, 3rd ed. New York: John Wiley &amp; Sons.</p>
+<p>Scrucca, L. (2004) <a href="http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf" class="external-link">qcc:
+an R package for quality control charting and statistical process
+control</a>. <em>R News</em> 4/1, 11-17.</p>
 <hr>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## R version 4.1.0 (2021-05-18)</span>
+<span class="co">## R version 4.1.2 (2021-11-01)</span>
 <span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span>
 <span class="co">## Running under: macOS Big Sur 10.16</span>
 <span class="co">## </span>
 <span class="co">## Matrix products: default</span>
-<span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib</span>
+<span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib</span>
 <span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib</span>
 <span class="co">## </span>
 <span class="co">## locale:</span>
@@ -1467,23 +1519,27 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
 <span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] qcc_3.0       ggplot2_3.3.5 knitr_1.36   </span>
+<span class="co">## [1] qcc_3.0       ggplot2_3.3.5 knitr_1.37   </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] highr_0.9        bslib_0.3.1      compiler_4.1.0   pillar_1.6.4    </span>
-<span class="co">##  [5] jquerylib_0.1.4  tools_4.1.0      digest_0.6.28    jsonlite_1.7.2  </span>
-<span class="co">##  [9] evaluate_0.14    memoise_2.0.0    lifecycle_1.0.1  tibble_3.1.6    </span>
-<span class="co">## [13] gtable_0.3.0     pkgconfig_2.0.3  rlang_0.4.12     rstudioapi_0.13 </span>
-<span class="co">## [17] cli_3.1.0        DBI_1.1.1        yaml_2.2.1       pkgdown_2.0.1   </span>
-<span class="co">## [21] xfun_0.28        fastmap_1.1.0    gridExtra_2.3    withr_2.4.2     </span>
-<span class="co">## [25] stringr_1.4.0    dplyr_1.0.7      generics_0.1.1   desc_1.4.0      </span>
-<span class="co">## [29] fs_1.5.0         sass_0.4.0       vctrs_0.3.8      tidyselect_1.1.1</span>
-<span class="co">## [33] rprojroot_2.0.2  grid_4.1.0       glue_1.5.0       R6_2.5.1        </span>
-<span class="co">## [37] fansi_0.5.0      rmarkdown_2.11   farver_2.1.0     purrr_0.3.4     </span>
-<span class="co">## [41] magrittr_2.0.1   MASS_7.3-54      scales_1.1.1     htmltools_0.5.2 </span>
-<span class="co">## [45] ellipsis_0.3.2   assertthat_0.2.1 colorspace_2.0-2 labeling_0.4.2  </span>
-<span class="co">## [49] utf8_1.2.2       stringi_1.7.5    munsell_0.5.0    cachem_1.0.6    </span>
-<span class="co">## [53] crayon_1.4.2</span></code></pre></div>
+<span class="co">##  [1] highr_0.9              bslib_0.3.1            compiler_4.1.2        </span>
+<span class="co">##  [4] pillar_1.7.0           jquerylib_0.1.4        tools_4.1.2           </span>
+<span class="co">##  [7] digest_0.6.29          jsonlite_1.8.0         evaluate_0.15         </span>
+<span class="co">## [10] memoise_2.0.1          lifecycle_1.0.1        tibble_3.1.6          </span>
+<span class="co">## [13] gtable_0.3.0           pkgconfig_2.0.3        rlang_1.0.2           </span>
+<span class="co">## [16] DBI_1.1.2              cli_3.2.0              rstudioapi_0.13.0-9000</span>
+<span class="co">## [19] yaml_2.3.5             pkgdown_2.0.2          xfun_0.30             </span>
+<span class="co">## [22] fastmap_1.1.0          gridExtra_2.3          withr_2.5.0           </span>
+<span class="co">## [25] dplyr_1.0.8            stringr_1.4.0          generics_0.1.2        </span>
+<span class="co">## [28] vctrs_0.3.8            desc_1.4.1             fs_1.5.2              </span>
+<span class="co">## [31] sass_0.4.0             tidyselect_1.1.2       rprojroot_2.0.2       </span>
+<span class="co">## [34] grid_4.1.2             glue_1.6.2             R6_2.5.1              </span>
+<span class="co">## [37] fansi_1.0.2            rmarkdown_2.13         farver_2.1.0          </span>
+<span class="co">## [40] purrr_0.3.4            magrittr_2.0.2         MASS_7.3-54           </span>
+<span class="co">## [43] scales_1.1.1           htmltools_0.5.2        ellipsis_0.3.2        </span>
+<span class="co">## [46] assertthat_0.2.1       colorspace_2.0-3       labeling_0.4.2        </span>
+<span class="co">## [49] utf8_1.2.2             stringi_1.7.6          munsell_0.5.0         </span>
+<span class="co">## [52] cachem_1.0.6           crayon_1.5.0</span></code></pre></div>
 </div>
   </div>
 
@@ -1499,12 +1555,14 @@ where <span class="math inline">\(\mu_i\)</span> is the mean of the process for 
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="http://www.stat.unipg.it/luca" class="external-link">Luca Scrucca</a>.</p>
+<p>Developed by <a href="http://www.stat.unipg.it/luca" class="external-link">Luca
+Scrucca</a>.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

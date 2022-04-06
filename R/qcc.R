@@ -287,8 +287,9 @@ plot.qcc <- function(x, xtime = NULL,
   if ((missing(object)) | (!inherits(object, "qcc")))
     stop("an object of class `qcc' is required")
 
-  if(! is.null(xtime) & ! inherits(xtime, c("Date", "POSIXct", "POSIXt")))
-    stop("xtime needs to be of class Date, POSIXct or POSIXt")
+  if(!is.null(xtime) & 
+     !inherits(xtime, c("numeric", "integer", "Date", "POSIXct", "POSIXt")))
+    stop("xtime must be of class 'numeric', 'integer', 'Date', 'POSIXct' or 'POSIXt'")
 
   # collect info from object
   type <- object$type
@@ -326,9 +327,9 @@ plot.qcc <- function(x, xtime = NULL,
     df <- df[seq_len(length(df$group)) > length(object$statistics),]
   
   if(missing(ylim))
-    ylim <- range(df$stat, df$lcl, df$ucl, na.rm = TRUE)
+    ylim <- extendrange(c(df$stat, df$lcl, df$ucl))
   if(missing(xlim))
-    xlim <- range(df$group, na.rm = TRUE)
+    xlim <- extendrange(df$group)
 
   plot <- 
     ggplot(data = df, aes_string(x = "group", y = "stat")) +
@@ -341,8 +342,7 @@ plot.qcc <- function(x, xtime = NULL,
     labs(title = title, subtitle = "",
          x = if(missing(xlab)) "Group" else xlab,
          y = if(missing(ylab)) "Group summary statistics" else ylab) +
-    coord_cartesian(xlim = xlim+c(-0.5,0.5), 
-                    ylim = extendrange(ylim),
+    coord_cartesian(xlim = xlim, ylim = ylim,
                     expand = FALSE, clip = "off") +
     theme_light() + 
     theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
@@ -354,7 +354,7 @@ plot.qcc <- function(x, xtime = NULL,
 
   plot <- plot + 
   {
-    if(is.numeric(groups))
+    if(is.numeric(groups) | is.integer(groups))
       scale_x_continuous(breaks = pretty(xlim, n = 7))
     else if(inherits(groups, "Date"))
       scale_x_date(breaks = pretty(xlim, n = 7))
@@ -365,7 +365,9 @@ plot.qcc <- function(x, xtime = NULL,
   # draw control limits
   if(any(object$rules == 1))
   { 
-    x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    # x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    dx <- min(diff(df$group))/2
+    x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
     y1 <- if(length(lcl) == 1) rep(lcl, length(x1)) else
             c(lcl[seq_len(length(df$group))], lcl[length(df$group)])
     y2 <- if(length(ucl) == 1) rep(ucl, length(x2)) else
@@ -400,10 +402,10 @@ plot.qcc <- function(x, xtime = NULL,
     geom_text(data = data.frame(y = c(rev(center)[1],
                                       rev(lcl)[1],
                                       rev(ucl)[1]),
-                                x = rep(max(df$group)+0.5, 3)),
+                                x = rep(xlim[2], 3)),
               aes_string(x = "x", y = "y"),
               label = c(label.center, label.limits),
-              hjust = 0, nudge_x = 0.2,
+              hjust = -0.2, # nudge_x = 0.2,
               size = 10 * 5/14, col = gray(0.3))
   }
   
@@ -415,7 +417,9 @@ plot.qcc <- function(x, xtime = NULL,
                                   std.dev = object$std.dev,
                                   sizes = c(object$sizes, object$newsizes), 
                                   nsigmas = object$nsigmas*2/3))
-    x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    # x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    dx <- min(diff(df$group))/2
+    x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
     if(nrow(limits.2sigma)==1)
     {
       y1 <- rep(limits.2sigma[1,1], length(df$group)+1)
@@ -462,7 +466,9 @@ plot.qcc <- function(x, xtime = NULL,
                                   std.dev = object$std.dev,
                                   sizes = c(object$sizes, object$newsizes), 
                                   nsigmas = object$nsigmas*1/3))
-    x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    # x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
+    dx <- min(diff(df$group))/2
+    x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
     if(nrow(limits.2sigma)==1)
     {
       y1 <- rep(limits.2sigma[1,1], length(df$group)+1)
@@ -517,13 +523,18 @@ plot.qcc <- function(x, xtime = NULL,
     len.obj.stats <- length(stats)
     len.new.stats <- length(newstats)
     plot <- plot +
-      geom_vline(xintercept = min(xlim) + len.obj.stats + 0.5, lty = 3) +
-      annotate("text", x = min(xlim) + len.obj.stats/2, 
-               y = max(extendrange(ylim)),
+      geom_vline(xintercept = mean(groups[len.obj.stats+c(0,1)]), lty = 3) +
+      annotate("text", 
+               # x = min(xlim) + len.obj.stats/2,
+               x = mean(c(groups[1], mean(groups[len.obj.stats+c(0,1)]))),
+               # y = max(extendrange(ylim)),
+               y = max(ylim),
                label = "Calibration data", 
                hjust = 0.5, vjust = -0.5, size = 10 * 5/14) +
-      annotate("text", x = min(xlim) + len.obj.stats + len.new.stats/2,
-               y = max(extendrange(ylim)),
+      annotate("text",
+               x = mean(c(mean(groups[len.obj.stats+c(0,1)]), groups[len.obj.stats+len.new.stats])),
+               # y = max(extendrange(ylim)),
+               y = max(ylim),
                label = "New data", 
                hjust = 0.5, vjust = -0.5, size = 10 * 5/14)
   }
