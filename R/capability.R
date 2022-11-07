@@ -175,10 +175,6 @@ plot.processCapability <- function(x,
    if ((missing(object)) | (!inherits(object, "processCapability")))
      stop("an object of class `processCapability' is required")
 
-  xlim <- range(object$data, object$spec.limits, object$target, na.rm = TRUE)
-  xlim <- extendrange(r = xlim, f = 0.1)
-  x  <- seq(min(xlim), max(xlim), length=250)
-  dx <- dnorm(x, object$center, object$std.dev)
   nobs <- length(object$data)
   Cp   <- object$indices[1,1]
   Cp_l <- object$indices[2,1]
@@ -189,8 +185,12 @@ plot.processCapability <- function(x,
     breaks <- breaks(object$data)
   breaks <- as.integer(breaks)
   h <- hist(object$data, breaks = breaks, plot=FALSE)
+  xlim <- range(c(h$breaks, object$spec.limits, object$target), na.rm = TRUE)
+  xlim <- extendrange(r = xlim, f = 0.1)
+  x  <- seq(min(xlim), max(xlim), length=250)
+  dx <- dnorm(x, object$center, object$std.dev)
   ylim <- extendrange(c(h$density, dx))
-  xlim <- extendrange(c(object$data,x))
+  xlim <- range(c(h$breaks, x))
   
   if(missing(title))
     title <- "Process capability analysis"
@@ -198,9 +198,8 @@ plot.processCapability <- function(x,
   plot <- ggplot() +
     geom_histogram(data = data.frame(data = object$data),
                    aes_string(x = "data", y = "..density.."),
-                   bins = breaks,
-                   fill = fill, 
-                   color = color) +
+                   stat = "bin", breaks = h$breaks,
+                   fill = fill, color = color) +
     geom_line(data = data.frame(x, dx), 
               aes(x = x, y = dx)) +
     labs(title = title, subtitle = "", y = "",
