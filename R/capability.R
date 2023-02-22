@@ -197,7 +197,7 @@ plot.processCapability <- function(x,
 
   plot <- ggplot() +
     geom_histogram(data = data.frame(data = object$data),
-                   aes_string(x = "data", y = "..density.."),
+                   aes(x = data, y = after_stat(density)),
                    stat = "bin", breaks = h$breaks,
                    fill = fill, color = color) +
     geom_line(data = data.frame(x, dx), 
