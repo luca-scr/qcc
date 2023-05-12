@@ -108,7 +108,8 @@ processCapability <- function(object, spec.limits, target,
                       exp }, 
               obs = { obs <- c(obs.LSL, obs.USL)/100
                       names(obs) <- c("Obs < LSL", "Obs > USL")
-                      obs } )
+                      obs },
+              nobs = length(object$data) )
   class(out) <- "processCapability"
   return(out)
 }
