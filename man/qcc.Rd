@@ -122,22 +122,22 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ##  Continuous data 
 ##
 data(pistonrings)
-diameter <- qccGroups(data = pistonrings, diameter, sample)
+diameter  = qccGroups(data = pistonrings, diameter, sample)
 
-(q <- qcc(diameter[1:25,], type="xbar"))
+(q  = qcc(diameter[1:25,], type="xbar"))
 plot(q)
 
-(q <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+(q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
 plot(q)
 
-q <- qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
+q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
 plot(q, chart.all=FALSE)
 
 plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], nsigmas=2))
 
 plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99))
 
-q <- qcc(diameter[1:25,], type="R")
+q  = qcc(diameter[1:25,], type="R")
 q
 plot(q)
 
@@ -150,8 +150,8 @@ plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
 plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], rules = 1:4))
 
 # variable control limits
-out <- c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
-diameter <- qccGroups(data = pistonrings[-out,], diameter, sample)
+out  = c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
+diameter  = qccGroups(data = pistonrings[-out,], diameter, sample)
 plot(qcc(diameter[1:25,], type="xbar"))
 plot(qcc(diameter[1:25,], type="R"))
 plot(qcc(diameter[1:25,], type="S"))
@@ -165,26 +165,26 @@ plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
 
 data(orangejuice)
 
-q <- with(orangejuice, 
+q  = with(orangejuice, 
           qcc(D[trial], sizes=size[trial], type="p"))
 q
 plot(q)
 
 # remove out-of-control points (see help(orangejuice) for the reasons)
-outofctrl <- c(15,23)
-q1 <- with(orangejuice[-outofctrl,], 
+outofctrl  = c(15,23)
+q1  = with(orangejuice[-outofctrl,], 
            qcc(D[trial], sizes=size[trial], type="p"))
 plot(q1)
-q1 <- with(orangejuice[-outofctrl,], 
+q1  = with(orangejuice[-outofctrl,], 
            qcc(D[trial], sizes=size[trial], type="p",
                newdata=D[!trial], newsizes=size[!trial]))
 plot(q1)
 
 data(orangejuice2)
-q2 <- with(orangejuice2, 
+q2  = with(orangejuice2, 
            qcc(D[trial], sizes=size[trial], type="p"))
 plot(q2)
-q2 <- with(orangejuice2, 
+q2  = with(orangejuice2, 
            qcc(D[trial], sizes=size[trial], type="p", 
                newdata=D[!trial], newsizes=size[!trial]))
 plot(q2)
@@ -193,30 +193,30 @@ data(circuit)
 plot(with(circuit, qcc(x[trial], sizes=size[trial], type="c")))
 
 # remove out-of-control points (see help(circuit) for the reasons)
-outofctrl <- c(15,23)
-q1 <- with(orangejuice[-outofctrl,], 
+outofctrl  = c(15,23)
+q1  = with(orangejuice[-outofctrl,], 
            qcc(D[trial], sizes=size[trial], type="p"))
 plot(q1)
-q1 <- with(orangejuice[-outofctrl,], 
+q1  = with(orangejuice[-outofctrl,], 
            qcc(D[trial], sizes=size[trial], type="p",
                newdata=D[!trial], newsizes=size[!trial]))
 plot(q1)
 
-outofctrl <- c(6,20)
-q1 <- with(circuit[-outofctrl,], 
+outofctrl  = c(6,20)
+q1  = with(circuit[-outofctrl,], 
            qcc(x[trial], sizes=size[trial], type="c"))
 plot(q1)
-q1 <- with(circuit[-outofctrl,], 
+q1  = with(circuit[-outofctrl,], 
            qcc(x[trial], sizes=size[trial], type="c", 
                newdata = x[!trial], newsizes = size[!trial]))
 plot(q1)
-q1 <- with(circuit[-outofctrl,], 
+q1  = with(circuit[-outofctrl,], 
            qcc(x[trial], sizes=size[trial], type="u", 
            newdata = x[!trial], newsizes = size[!trial]))
 plot(q1)
 
 data(pcmanufact)
-q1 <- with(pcmanufact, qcc(x, sizes=size, type="u"))
+q1  = with(pcmanufact, qcc(x, sizes=size, type="u"))
 q1
 plot(q1)
 
@@ -224,8 +224,8 @@ data(dyedcloth)
 # variable control limits
 plot(with(dyedcloth, qcc(x, sizes=size, type="u")))
 # standardized control chart
-q <- with(dyedcloth, qcc(x, sizes=size, type="u"))
-z <- (q$statistics - q$center)/sqrt(q$center/q$size)
+q  = with(dyedcloth, qcc(x, sizes=size, type="u"))
+z  = (q$statistics - q$center)/sqrt(q$center/q$size)
 plot(qcc(z, sizes = 1, type = "u", center = 0, std.dev = 1, limits = c(-3,3)),
      title = "Standardized u chart")
     
@@ -234,13 +234,13 @@ plot(qcc(z, sizes = 1, type = "u", center = 0, std.dev = 1, limits = c(-3,3)),
 ##
 
 data(viscosity)
-q <- with(viscosity, 
+q  = with(viscosity, 
           qcc(viscosity[trial], type = "xbar.one"))
 q
 plot(q)
 # batch 4 is out-of-control because of a process temperature controller
 # failure; remove it and recompute
-viscosity <- viscosity[-4,]
+viscosity  = viscosity[-4,]
 plot(with(viscosity, 
           qcc(viscosity[trial], type = "xbar.one", newdata = viscosity[!trial])))
 }

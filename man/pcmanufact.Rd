@@ -23,7 +23,7 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 \examples{
 data(pcmanufact)
 describe(pcmanufact)
-pcmanufact <- transform(pcmanufact, sample = seq(nrow(pcmanufact)))
+pcmanufact  = transform(pcmanufact, sample = seq(nrow(pcmanufact)))
 plot(x/size ~ sample, data = pcmanufact, type="b")
 }
 \keyword{datasets}

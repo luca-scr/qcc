@@ -308,7 +308,10 @@ plot.cusum.qcc <- function(x, xtime = NULL,
           plot.title = element_text(face = "bold", size = 11),
           axis.title.y = element_text(margin = margin(t = 0, r = 30, b = 0, l = 0)),
           legend.position = "none",
-          plot.margin = margin(5, 30, 5, 5))
+          plot.margin = margin(5, 30, 5, 5),
+          axis.text.y = element_text(angle = 90, 
+                                     margin = margin(l = 5, r = 5),
+                                     hjust = 0.5, vjust = 0.5))
   
   plot <- plot + 
   {
@@ -389,7 +392,8 @@ plot.cusum.qcc <- function(x, xtime = NULL,
       ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
       theme_void() +
       theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")))
+                                           color = qcc.options("bg.margin")),
+            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
 
     text1 <- paste(paste0("Number of groups = ", length(statistics)),
                    paste0("Center = ", if(length(center) == 1) 
@@ -401,22 +405,32 @@ plot.cusum.qcc <- function(x, xtime = NULL,
                           signif(object$decision.interval, digits = digits)),
                    paste0("Shift detection (StdErr) = ", 
                           signif(object$se.shift, digits = digits)),
-                   paste0("Number beyond boundaries = ", 
+                   paste0("No. beyond boundaries = ", 
                           sum(sapply(violations, sum, na.rm = TRUE))), sep = "\n")
     tab1 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 0, 0.5, 5, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+    # TODO: remove
+    # theme(plot.margin = margin(0.5, 0, 0.5, 5, unit = "lines"))
     tab2 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 1, 0.5, 3, unit = "lines"))
-    plot <- arrangeGrob(plot, tab1, tab2,
-                        layout_matrix = matrix(c(1,2,1,3), nrow = 2, ncol = 2),
-                        heights = c(0.85, 0.15), 
-                        widths = c(0.5, 0.5))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+    # TODO: remove
+    # theme(plot.margin = margin(0.5, 1, 0.5, 3, unit = "lines"))
+    # TODO: remove
+    # plot <- gridExtra::arrangeGrob(plot, tab1, tab2,
+    #                                layout_matrix = matrix(c(1,2,1,3), 
+    #                                                       nrow = 2, ncol = 2),
+    #                                heights = c(0.85, 0.15), 
+    #                                widths = c(0.5, 0.5))
+    plot <- patchwork::wrap_plots(plot, tab1, tab2,
+                                  design = c("AA\nBC"),
+                                  heights = c(0.85, 0.15), 
+                                  widths = c(0.6, 0.4))
+    
   }
   
-  class(plot) <- c("qccplot", class(plot))
+  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
+

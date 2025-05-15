@@ -22,18 +22,19 @@ qccGroups <- function(data, x, sample)
   return(x)
 }
 
-print.qccplot <- function(x, ...)
-{
-# print a graph produced by qcc package
-  if(inherits(x, "grob")) 
-  {
-    grid::grid.newpage()
-    grid::grid.draw(x)
-  } else 
-  { class(x) <- "ggplot"
-    print(x)
-  }
-}
+# print.qccplot <- function(x, ...)
+# {
+# # print a graph produced by qcc package
+#   if(inherits(x, "grob"))
+#   {
+#     grid::grid.newpage()
+#     grid::grid.draw(x)
+#   } else
+#   { 
+#     class(x) <- "ggplot"
+#     print(x)
+#   }
+# }
 
 # ggplot_get_limits <- function(plot) 
 # {

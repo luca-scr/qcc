@@ -201,9 +201,11 @@ ocCurves.p <- function(object, ...)
     LCL <- max(floor(limits[,1]), 0) 
   }
   beta <- matrix(pbinom(UCL, size, p) - pbinom(LCL-1, size, p), ncol = 1)
+  colnames(beta) <- "beta"
   rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", p))), "f"), p)
-  names(dimnames(beta)) <-  c("fraction nonconforming", "\b")
+  names(dimnames(beta)) <-  c("fraction nonconforming", "")
   ARL <- 1/(1-beta)
+  colnames(ARL) = "ARL"
   
   warning("Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.")
   
@@ -239,9 +241,12 @@ ocCurves.c <- function(object, ...)
     LCL <- floor(size*limits[1,1])
   }
   lambda <- seq(0, max.lambda)
-  beta <- ppois(UCL, lambda) - ppois(LCL-1, lambda)
-  names(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", lambda))), "f"), lambda)
+  beta <- matrix(ppois(UCL, lambda) - ppois(LCL-1, lambda), ncol = 1)
+  colnames(beta) <- "beta"
+  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", lambda))), "f"), lambda)
+  names(dimnames(beta)) <-  c("average nonconforming", "")
   ARL <- 1/(1-beta)
+  colnames(ARL) = "ARL"
 
   warning("Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.")
 
@@ -256,10 +261,10 @@ print.ocCurves <- function(x, digits =  getOption("digits"), ...)
   object <- x   # Argh.  Really want to use 'object' anyway
   cat(cli::rule(left = crayon::bold("Operating Characteristic Curves"), 
                 width = min(getOption("width"),50)), "\n\n")
-  cat("Chart type                 =", object$type, "\n")
-  cat("Prob. type II error (beta) =\n")
+  cat("Chart type: ", object$type, "\n")
+  cat("\nProb. type II error (beta):\n")
   .printShortMatrix(zapsmall(object$beta,digits = 4), head = 3, tail = 2)
-  cat("Average run length (ARL)   =\n")
+  cat("\nAverage run length (ARL):\n")
   .printShortMatrix(zapsmall(object$ARL,digits = 2), head = 3, tail = 2)
   
   invisible()
@@ -416,7 +421,10 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
           panel.background = element_rect(fill = qcc.options("bg.figure")),
           plot.title = element_text(face = "bold", size = 11),
           legend.position = c(0.9,0.8),
-          legend.text.align = 0)
+          legend.text.align = 0,
+          axis.text.y = element_text(angle = 90, 
+                                     margin = margin(l = 5, r = 5),
+                                     hjust = 0.5, vjust = 0.5))
   
   return(plot)
 }

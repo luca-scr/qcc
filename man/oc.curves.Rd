@@ -76,19 +76,19 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)
-diameter <- qccGroups(diameter, sample, data = pistonrings)
-oc <- ocCurves.xbar(qcc(diameter, type="xbar", nsigmas=3))
+diameter  = qccGroups(diameter, sample, data = pistonrings)
+oc  = ocCurves.xbar(qcc(diameter, type="xbar", nsigmas=3))
 oc
 plot(oc)
 
 data(orangejuice)
-oc <- with(orangejuice,
+oc  = with(orangejuice,
            ocCurves(qcc(D[trial], sizes=size[trial], type="p")))
 oc
 plot(oc)
 
 data(circuit)
-oc <- with(circuit,
+oc  = with(circuit,
            ocCurves(qcc(x[trial], sizes=size[trial], type="c")))
 oc
 plot(oc)

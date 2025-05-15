@@ -53,7 +53,7 @@ In this case the list \code{.qcc.options} is modified and any modification will 
 %\note{}
 \seealso{\code{\link{qcc}} }
 \examples{
-old <- qcc.options()			# save defaults
+old  = qcc.options()			# save defaults
 qcc.options("cex.stats")		# get a single parameter
 qcc.options("cex.stats"=1.2)	# change parameters
 qcc.options(bg.margin="azure2")

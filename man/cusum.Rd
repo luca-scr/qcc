@@ -93,13 +93,13 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ## Grouped-data
 ##
 data(pistonrings)
-diameter <- qccGroups(data = pistonrings, diameter, sample)
+diameter  = qccGroups(data = pistonrings, diameter, sample)
 
-q <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+q  = cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
 summary(q)
 plot(q)
 
-q <- cusum(diameter[1:25,], newdata=diameter[26:40,])
+q  = cusum(diameter[1:25,], newdata=diameter[26:40,])
 summary(q)
 plot(q, chart.all=FALSE)
 
@@ -107,8 +107,11 @@ plot(q, chart.all=FALSE)
 ## Individual observations
 ##
 data(viscosity)
-q <- with(viscosity, cusum(viscosity[trial], newdata = viscosity[!trial]))
+q  = with(viscosity, cusum(viscosity[trial], newdata = viscosity[!trial]))
+summary(q)
 plot(q)
 }
 \keyword{htest}
 \keyword{hplot}
+
+

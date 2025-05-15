@@ -56,5 +56,5 @@ or through the GitHub web page of the package at <https://luca-scr.github.io/qcc
 Montgomery, D.C. (2009) *Introduction to Statistical Quality Control*, 6th ed. New York: John Wiley & Sons.
 
 Scrucca, L. (2004) [qcc: an R package for quality control charting and
-statistical process control](http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf). *R News* 4/1, 11-17. 
+statistical process control](https://luca-scr.github.io//R/Rnews_2004-1-pag11-17.pdf). *R News* 4/1, 11-17. 
 

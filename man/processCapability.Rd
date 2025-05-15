@@ -29,7 +29,7 @@ processCapability(object, spec.limits, target,
 \item{std.dev}{a value specifying the within-group standard deviation. If not provided is taken from the \code{'qcc'} object.}
 \item{nsigmas}{a numeric value specifying the number of sigmas to use. If not provided is taken from the \code{'qcc'} object.}
 \item{confidence.level}{a numeric value between 0 and 1 specifying the level to use for computing confidence intervals.}
-\item{x}{an object of class {'processCapability'}.}
+\item{x}{an object of class \code{'processCapability'}.}
 \item{add.stats}{a logical value indicating whether statistics and capability indices should be added at the bottom of the chart.}
 \item{breaks}{a value or a function used to select the number of bins in a histogram. See the help for \code{\link{nclass.scott}} for more details.}
 \item{fill, color}{values specifying the colour of the filled area and the border used for drawing the histogram.}
@@ -68,9 +68,9 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \seealso{\code{\link{qcc}}}
 \examples{
 data(pistonrings)
-diameter <- qccGroups(data = pistonrings, diameter, sample)
-q <- qcc(diameter[1:25,], type="xbar", nsigmas=3)
-pc <- processCapability(q, spec.limits=c(73.95,74.05))
+diameter  = qccGroups(data = pistonrings, diameter, sample)
+q  = qcc(diameter[1:25,], type="xbar", nsigmas=3)
+pc  = processCapability(q, spec.limits=c(73.95,74.05))
 pc
 plot(pc)
 plot(processCapability(q, spec.limits=c(73.95,74.05), target=74.02))

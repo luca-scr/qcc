@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quality Control Charts • qcc</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -20,7 +20,7 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -54,7 +54,7 @@
 <li>
   <a href="https://github.com/luca-scr/qcc">
     <span class="fa fa-github"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -65,30 +65,26 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
 <div class="page-header"><h1 id="qcc">qcc<a class="anchor" aria-label="anchor" href="#qcc"></a>
 </h1></div>
-
-<!-- 
+<p><a href="https://cran.r-project.org/package=qcc" class="external-link"><img src="http://www.r-pkg.org/badges/version/qcc" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=qcc" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/qcc" alt="CRAN_MonthlyDownloads"></a></p>
+<!--
 # TODO: logo
 <img src="man/figures/logo.png" align="right" width="100px " alt=""/>
 -->
-<p>An <a href="https://www.r-project.org/" class="external-link">R</a> package for
-<strong>quality control charting and statistical process
-control</strong>.</p>
+<p>An <a href="https://www.r-project.org/" class="external-link">R</a> package for <strong>quality control charting and statistical process control</strong>.</p>
 <center>
 <img src="reference/figures/qcc_ani.gif" alt="qcc animation" style="width: 70%">
 </center>
 <p><br></p>
-<p>The <strong>qcc</strong> package provides quality control tools for
-statistical process control:</p>
+<p>The <strong>qcc</strong> package provides quality control tools for statistical process control:</p>
 <ul>
-<li>Shewhart quality control charts for continuous, attribute and count
-data.</li>
+<li>Shewhart quality control charts for continuous, attribute and count data.</li>
 <li>Cusum and EWMA charts.</li>
 <li>Operating characteristic curves.</li>
 <li>Process capability analysis.</li>
@@ -98,33 +94,27 @@ data.</li>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the released version of <strong>qcc</strong> from
-CRAN:</p>
+<p>You can install the released version of <strong>qcc</strong> from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"qcc"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"qcc"</span><span class="op">)</span></span></code></pre></div>
 <p>or the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"luca-scr/qcc"</span>, build <span class="op">=</span> <span class="cn">TRUE</span>, build_opts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"--no-resave-data"</span>, <span class="st">"--no-manual"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"luca-scr/qcc"</span>, build <span class="op">=</span> <span class="cn">TRUE</span>, build_opts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"--no-resave-data"</span>, <span class="st">"--no-manual"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>Usage of the main functions and some examples are included in Scrucca
-(2004). The vignette <em>A quick tour of qcc</em> is also available with
-the command:</p>
+<p>Usage of the main functions and some examples are included in Scrucca (2004). The vignette <em>A quick tour of qcc</em> is also available with the command:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"qcc"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"qcc"</span><span class="op">)</span></span></code></pre></div>
 <p>or through the GitHub web page of the package at <a href="https://luca-scr.github.io/qcc/" class="external-link uri">https://luca-scr.github.io/qcc/</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Montgomery, D.C. (2009) <em>Introduction to Statistical Quality
-Control</em>, 6th ed. New York: John Wiley &amp; Sons.</p>
-<p>Scrucca, L. (2004) <a href="http://www.stat.unipg.it/luca/misc/Rnews_2004-1-pag11-17.pdf" class="external-link">qcc:
-an R package for quality control charting and statistical process
-control</a>. <em>R News</em> 4/1, 11-17.</p>
+<p>Montgomery, D.C. (2009) <em>Introduction to Statistical Quality Control</em>, 6th ed. New York: John Wiley &amp; Sons.</p>
+<p>Scrucca, L. (2004) <a href="https://luca-scr.github.io//R/Rnews_2004-1-pag11-17.pdf" class="external-link">qcc: an R package for quality control charting and statistical process control</a>. <em>R News</em> 4/1, 11-17.</p>
 </div>
 </div>
   </div>
@@ -158,18 +148,12 @@ control</a>. <em>R News</em> 4/1, 11-17.</p>
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://www.stat.unipg.it/luca" class="external-link">Luca Scrucca</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3826-0484" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://luca-scr.github.io" class="external-link">Luca Scrucca</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0003-3826-0484" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=qcc" class="external-link"><img src="http://www.r-pkg.org/badges/version/qcc" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=qcc" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/qcc" alt="CRAN_MonthlyDownloads"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -177,23 +161,21 @@ control</a>. <em>R News</em> 4/1, 11-17.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="http://www.stat.unipg.it/luca" class="external-link">Luca
-Scrucca</a>.</p>
+<p>Developed by <a href="https://luca-scr.github.io" class="external-link">Luca Scrucca</a>.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

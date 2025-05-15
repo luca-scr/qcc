@@ -121,40 +121,40 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 data(RyanMultivar)
 str(RyanMultivar)
 
-q <- mqcc(RyanMultivar, type = "T2")
+q  = mqcc(RyanMultivar, type = "T2")
 summary(q)
 ellipseChart(q)
 ellipseChart(q, show.id = TRUE)
-q <- mqcc(RyanMultivar, type = "T2", pred.limits = TRUE)
+q  = mqcc(RyanMultivar, type = "T2", pred.limits = TRUE)
 
 # Xbar-charts for single variables computed adjusting the 
 # confidence level of the T^2 chart:
-q1 <- with(RyanMultivar, 
+q1  = with(RyanMultivar, 
            qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2)))
 summary(q1)
-q2 <- with(RyanMultivar,
+q2  = with(RyanMultivar,
            qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))
 summary(q2)
 
 require(MASS)
 # generate new "in control" data
-Xnew <- list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
+Xnew  = list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
 for(i in 1:4)
-   { x <- mvrnorm(10, mu = q$center, Sigma = q$cov)
-     Xnew$X1[,i] <- x[,1]
-     Xnew$X2[,i] <- x[,2] 
+   { x  = mvrnorm(10, mu = q$center, Sigma = q$cov)
+     Xnew$X1[,i]  = x[,1]
+     Xnew$X2[,i]  = x[,2] 
    }
-qq <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
+qq  = mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
 summary(qq)
 
 # generate new "out of control" data
-Xnew <- list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
+Xnew  = list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
 for(i in 1:4)
-   { x <- mvrnorm(10, mu = 1.2*q$center, Sigma = q$cov)
-     Xnew$X1[,i] <- x[,1]
-     Xnew$X2[,i] <- x[,2] 
+   { x  = mvrnorm(10, mu = 1.2*q$center, Sigma = q$cov)
+     Xnew$X1[,i]  = x[,1]
+     Xnew$X2[,i]  = x[,2] 
    }
-qq <- mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
+qq  = mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
 summary(qq)
 
 ##
@@ -164,24 +164,24 @@ summary(qq)
 data(boiler)
 str(boiler)
 
-q <- mqcc(boiler, type = "T2.single", confidence.level = 0.999)
+q  = mqcc(boiler, type = "T2.single", confidence.level = 0.999)
 summary(q)
 
 # generate new "in control" data
-boilerNew <- mvrnorm(10, mu = q$center, Sigma = q$cov)
-qq <- mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+boilerNew  = mvrnorm(10, mu = q$center, Sigma = q$cov)
+qq  = mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
            newdata = boilerNew, pred.limits = TRUE)
 summary(qq)
 
 # generate new "out of control" data
-boilerNew <- mvrnorm(10, mu = 1.01*q$center, Sigma = q$cov)
-qq <- mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+boilerNew  = mvrnorm(10, mu = 1.01*q$center, Sigma = q$cov)
+qq  = mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
            newdata = boilerNew, pred.limits = TRUE)
 summary(qq)
 
 # provides "robust" estimates of means and covariance matrix
-rob <- cov.rob(boiler)
-qrob <- mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
+rob  = cov.rob(boiler)
+qrob  = mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
 summary(qrob)
 }
 

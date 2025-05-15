@@ -22,7 +22,7 @@ Montgomery, D.C. (1991) \emph{Introduction to Statistical Quality Control}, 2nd 
 \examples{
 data(dyedcloth)
 describe(dyedcloth)
-dyedcloth <- transform(dyedcloth, sample = seq(nrow(dyedcloth)))
+dyedcloth  = transform(dyedcloth, sample = seq(nrow(dyedcloth)))
 plot(x/size ~ sample, data = dyedcloth, type="b")
 }
 \keyword{datasets}

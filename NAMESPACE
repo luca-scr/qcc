@@ -1,9 +1,6 @@
 # Import all packages listed as Imports or Depends
-import("stats", "utils", "graphics", "grDevices", "ggplot2")
+import("stats", "utils", "ggplot2", "patchwork")
 importFrom("MASS", "mvrnorm")
-importFrom("gridExtra", "arrangeGrob")
-importFrom("grid", "grid.newpage")
-importFrom("grid", "grid.draw")
 importFrom("scales", "label_percent")
 importFrom("cli", "rule")
 importFrom("crayon", "bold")
@@ -28,8 +25,8 @@ S3method("print", "mqcc")
 S3method("summary", "mqcc")
 S3method("plot", "mqcc")
 
-export(print.qccplot)
-S3method("print", "qccplot")
+# export(print.qccplot)
+# S3method("print", "qccplot")
 
 export(stats.c, stats.g, stats.np, stats.p, stats.R, 
        stats.S, stats.T2, stats.T2.single, stats.u,

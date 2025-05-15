@@ -45,8 +45,8 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 \author{Luca Scrucca}
 \seealso{\code{\link{barplot}}}
 \examples{
-defect <- c(80, 27, 66, 94, 33)
-names(defect) <- c("price code", "schedule date", "supplier code", "contact num.", "part num.")
+defect  = c(80, 27, 66, 94, 33)
+names(defect)  = c("price code", "schedule date", "supplier code", "contact num.", "part num.")
 pc = paretoChart(defect, ylab = "Error frequency")
 pc
 plot(pc)

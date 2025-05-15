@@ -34,8 +34,8 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 %\note{ ~~further notes~~ }
 \seealso{\code{\link{qcc}}, \code{\link{cusum}}}
 \examples{
-x <- 1:50
-y <- rnorm(50, sin(x/5), 0.5)
+x  = 1:50
+y  = rnorm(50, sin(x/5), 0.5)
 plot(x,y)
 lines(ewmaSmooth(x,y,lambda=0.1), col="red")
 }

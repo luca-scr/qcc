@@ -350,7 +350,10 @@ plot.qcc <- function(x, xtime = NULL,
           panel.background = element_rect(fill = qcc.options("bg.figure")),
           plot.title = element_text(face = "bold", size = 11),
           legend.position = "none",
-          plot.margin = margin(5, 30, 5, 5))
+          plot.margin = margin(5, 30, 5, 5),
+          axis.text.y = element_text(angle = 90, 
+                                     margin = margin(l = 5, r = 5),
+                                     hjust = 0.5, vjust = 0.5))
 
   plot <- plot + 
   {
@@ -546,42 +549,55 @@ plot.qcc <- function(x, xtime = NULL,
       ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
       theme_void() +
       theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")))
-
+                                           color = qcc.options("bg.margin")),
+            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
+    
     text1 <- paste(paste0("Number of groups = ", length(statistics)),
                    paste0("Center = ", if(length(center) == 1) 
                      signif(center[1], digits) else "variable"),
                    paste0("StdDev = ", if(length(std.dev) == 1) 
-                     signif(std.dev[1], digits) else "variable"), sep = "\n")
+                     signif(std.dev[1], digits) else "variable"), 
+                   sep = "\n")
     text2 <- paste("",
                    paste0("LCL = ", if(length(unique(lcl)) == 1) 
                      signif(lcl[1], digits) else "variable"),
                    paste0("UCL = " ,if(length(unique(ucl)) == 1) 
-                     signif(ucl[1], digits) else "variable"), sep = "\n")
+                     signif(ucl[1], digits) else "variable"), 
+                   sep = "\n")
     text3 <- paste("",
-                   paste0("Number beyond limits = ", sum(violations==1, na.rm=TRUE)),
-                   paste0("Number violating runs = ", sum(violations > 1, na.rm=TRUE)), sep = "\n")
+                   paste0("No. beyond limits = ", sum(violations == 1, na.rm=TRUE)),
+                   paste0("No. violating runs = ", sum(violations > 1, na.rm=TRUE)),
+                   sep = "\n")
     
     tab1 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 0, 0.5, 3, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+      # TODO: remove
+      # theme(plot.margin = margin(0.5, 0, 0.5, 3, unit = "lines"))
     tab2 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 0.5, 0.5, 2, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+      # TODO: remove
+      # theme(plot.margin = margin(0.5, 0.5, 0.5, 2, unit = "lines"))
     tab3 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text3, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 1, 0.5, 1, unit = "lines"))
-    plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3,
-                                   layout_matrix = matrix(c(1,2,1,3,1,4), 
-                                                          nrow = 2, ncol = 3),
-                                   heights = c(0.85, 0.15), 
-                                   widths = c(0.35, 0.3, 0.35))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+      # TODO: remove
+      # theme(plot.margin = margin(0.5, 1, 0.5, 1, unit = "lines"))
+
+    # TODO: remove    
+    # plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3,
+    #                                layout_matrix = matrix(c(1,2,1,3,1,4), 
+    #                                                       nrow = 2, ncol = 3),
+    #                                heights = c(0.85, 0.15), 
+    #                                widths = c(0.35, 0.3, 0.35))
+    plot <- patchwork::wrap_plots(plot, tab1, tab2, tab3, 
+                                  design = c("AAA\nBCD"),
+                                  heights = c(0.85, 0.15), 
+                                  widths = c(0.4, 0.3, 0.3))
   }
   
-  class(plot) <- c("qccplot", class(plot))
+  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
 

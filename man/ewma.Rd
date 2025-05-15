@@ -66,14 +66,14 @@ Several methods are available for estimating the standard deviation. See \code{\
 
 \item{digits}{the number of significant digits to use.}
 
-\item{x}{an object of class {'ewma.qcc'}.}
+\item{x}{an object of class \code{'ewma.qcc'}.}
 
 \item{\dots}{additional arguments to be passed to the generic function.} 
 }
 
 \details{EWMA chart smooths a series of data based on a moving average with weights which decay exponentially. Useful to detect small and permanent variation on the mean of the process.
 }
-\value{Returns an object of class {'ewma.qcc'}.}
+\value{Returns an object of class \code{'ewma.qcc'}.}
 
 \references{
 Mason, R.L. and Young, J.C. (2002) \emph{Multivariate Statistical Process Control with Industrial Applications}, SIAM.
@@ -94,7 +94,7 @@ Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}. New Y
 ## Grouped-data
 ##
 data(pistonrings)
-diameter <- qccGroups(data = pistonrings, diameter, sample)
+diameter = qccGroups(data = pistonrings, diameter, sample)
 
 q = ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 summary(q)
@@ -106,9 +106,13 @@ ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,])
 ## Individual observations
 ##
 data(viscosity)
-with(viscosity, 
-     ewma(viscosity[trial], lambda = 0.2, nsigmas = 2.7,
-          newdata = viscosity[!trial]))
+q = with(viscosity, ewma(viscosity[trial], lambda = 0.2, nsigmas = 2.7,
+                         newdata = viscosity[!trial]))
+summary(q)
+plot(q)
 }
 \keyword{htest}
 \keyword{hplot}
+
+
+

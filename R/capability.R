@@ -211,7 +211,10 @@ plot.processCapability <- function(x,
                                          color = qcc.options("bg.margin")),
           panel.background = element_rect(fill = qcc.options("bg.figure")),
           plot.title = element_text(face = "bold", size = 11),
-          plot.margin = margin(5, 5, 5, 5))
+          plot.margin = margin(5, 5, 5, 5),
+          axis.text.y = element_text(angle = 90, 
+                                     margin = margin(l = 5, r = 5),
+                                     hjust = 0.5, vjust = 0.5))
   
   plot <- plot +
     geom_vline(xintercept = object$spec.limits, lty = 2) +
@@ -245,15 +248,17 @@ plot.processCapability <- function(x,
       ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
       theme_void() +
       theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")))
+                                           color = qcc.options("bg.margin")),
+            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
 
     text1 <- paste(paste0("Number of obs = ", nobs),
                    paste0("Center = ", signif(object$center, digits)),
                    paste0("StdDev = ", signif(object$std.dev, digits)), sep = "\n")
     tab1 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 0, 0.5, 2, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+    # TODO: remove
+    # theme(plot.margin = margin(0.5, 0, 0.5, 2, unit = "lines"))
     
     text2 <- paste(paste0("Target = ", if(object$has.target) signif(object$target, digits) else ""),
                    paste0("LSL = ", signif(object$spec.limits[1], digits)),
@@ -261,8 +266,9 @@ plot.processCapability <- function(x,
                    sep = "\n")
     tab2 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+    # TODO: remove
+    # theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
     
     text3 <- paste(paste0("Cp     = ", ifelse(is.na(Cp), "", signif(Cp, 3))),
                    paste0("Cp_l  = ", ifelse(is.na(Cp_l), "", signif(Cp_l, 3))),
@@ -272,8 +278,9 @@ plot.processCapability <- function(x,
                    sep="\n")
     tab3 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text3, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+    # TODO: remove
+    # theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
     
     text4 <- paste(paste0("Exp<LSL ", ifelse(is.na(object$exp[1]), "", paste0(signif(object$exp[1], 2), "%"))),
                    paste0("Exp>USL ", ifelse(is.na(object$exp[2]), "", paste0(signif(object$exp[2], 2), "%"))),
@@ -282,18 +289,25 @@ plot.processCapability <- function(x,
                    sep="\n")
     tab4 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text4, 
-                hjust = 0, vjust = 1, size = 10 * 5/14) +
-      theme(plot.margin = margin(0.5, 1, 0.2, 0.5, unit = "lines"))
+                hjust = 0, vjust = 1, size = 10 * 5/14)
+    # TODO: remove
+    # theme(plot.margin = margin(0.5, 1, 0.2, 0.5, unit = "lines"))
 
-    plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3, tab4,
-                                   # gridExtra::grid.arrange(plot, tab1, tab2, tab3, tab4,
-                                   layout_matrix = matrix(c(1,2,1,3,1,4,1,5), 
-                                                          nrow = 2, ncol = 4),
-                                   heights = c(0.78, 0.22), 
-                                   widths = c(0.35, 0.2, 0.2, 0.25))
+    # TODO: remove
+    # plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3, tab4,
+    #                                # gridExtra::grid.arrange(plot, tab1, tab2, tab3, tab4,
+    #                                layout_matrix = matrix(c(1,2,1,3,1,4,1,5), 
+    #                                                       nrow = 2, ncol = 4),
+    #                                heights = c(0.78, 0.22), 
+    #                                widths = c(0.35, 0.2, 0.2, 0.25))
+    
+    plot <- patchwork::wrap_plots(plot, tab1, tab2, tab3, tab4,
+                                  design = c("AAAA\nBCDE"),
+                                  heights = c(0.75, 0.25), 
+                                  widths = c(0.3, 0.2, 0.25, 0.25))
   }
 
-  class(plot) <- c("qccplot", class(plot))
+  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
   
