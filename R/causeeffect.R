@@ -4,90 +4,111 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
-causeEffectDiagram <- function(cause, effect, title, 
-                               cex = c(1,0.9,1), font = c(1,3,2))
+causeEffectDiagram <- function(cause, effect, 
+                               title = "Cause-and-Effect diagram",
+                               cex = c(0.9,1,1.2), 
+                               font = c(3,1,2),
+                               ...)
 {
-
+  
   # running mean of successive pairs of obs
   mean2 <- function(x)
-  { m <- rep(NA, length(x)-1)
+  { 
+    m <- rep(NA, length(x)-1)
     for (i in 1:(length(x)-1))
-         m[i] <- mean(x[c(i,i+1)])
+      m[i] <- mean(x[c(i,i+1)])
     return(m)
   }
-
+  
   nc <- length(cause)
   ncup <- nc - round(nc/2)
   nclo <- nc - ncup
   ncc <- max(sapply(cause, length))
-  if(missing(title))
-    title <- "Cause-and-Effect diagram"
 
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-  par(bg  = qcc.options("bg.margin"), 
-      cex = oldpar$cex * qcc.options("cex"),
-      mar = c(1,1,ifelse(is.null(title),1,3),1))
-
-  plot(0:100, 0:100, type = "n", xlab = "", ylab = "", axes = FALSE)
-  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
-       col = qcc.options("bg.figure"))
-  if(!is.null(title))
-    mtext(title, side = 3, line = par("mar")[3]/3,
-          font = par("font.main"), 
-          cex  = qcc.options("cex"), 
-          col  = par("col.main"))
+  plot <- ggplot() +
+    xlim(0, 100) + ylim(0, 100) +
+    labs(title = title) +
+    theme_void() +
+    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
+                                         color = qcc.options("bg.margin")),
+          panel.background = element_rect(fill = qcc.options("bg.figure")),
+          plot.title = element_text(face = "bold", margin = margin(b = 10)),
+          plot.margin = margin(10, 10, 10, 10))
   
-  usr <- par("usr")
-  we <- strwidth(effect, units="user")*1.1
-  wc <- max(unlist(sapply(cause, strwidth, units="user")))
-  hc <- max(strheight(effect, units="user"),
-            unlist(sapply(cause, strheight, units="user")))
+  size <- cex*12/ggplot2::.pt
+  inches_per_unit <- 6 / 100  # ~ 6 inches across 100 units
+  we <- strwidth(effect, units = "inches") /inches_per_unit * 1.1
+  wc <- max(unlist(sapply(cause, strwidth, units = "inches"))) /inches_per_unit
+  hc <- max(strheight(effect, units="inches"),
+            unlist(sapply(cause, strheight, units="inches"))) /inches_per_unit
 
-  # draw effect
-  arrows(0, 50, usr[2]-we-1, 50, code=2, length=0.1, angle=20)
-  text(usr[2]-we,50, effect, adj=c(0,0.5), cex=cex[3], font=font[3])
+  plot <- plot +  
+    # add main spine
+    geom_segment(aes(x = 0, y = 50, xend = 100-we-2, yend = 50),
+                 arrow = arrow(length = unit(0.02, "npc")), 
+                 linewidth = 1) +
+    # add effect label
+    annotate("text", x = 100-we, y = 50,  
+             label = effect, hjust = 0, 
+             fontface = font[3], size = size[3])
 
   # draw branches and cause labels
-  a <- (usr[2]-we)/(max(ncup,nclo)+1)
-  ac <-  a*(0:(max(ncup,nclo)))
-  for (i in 1:(length(ac)-1))
-      { segments(mean2(ac)[i], 95, ac[i+1], 50) 
-        text(mean2(ac)[i], 96, names(cause)[i], 
-             pos=3, offset=0.5, cex=cex[1], font=font[1]) 
-        if (i <= nclo)
-           { segments(mean2(ac)[i], 5, ac[i+1], 50)
-             text(mean2(ac)[i], 4, names(cause)[[ncup+i]], 
-                  pos=1, offset=0.5, cex=cex[1], font=font[1]) }
-      }
-
+  a <- (100-we)/(max(ncup,nclo)+1)
+  ac <- a*(0:(max(ncup,nclo)))
+  for(i in 1:(length(ac)-1))
+  { 
+    plot <- plot +
+      annotate("segment", x = mean2(ac)[i], y = 95, xend = ac[i+1], yend = 50) +
+      annotate("text", x = mean2(ac)[i], y = 97, label = names(cause)[i], 
+               vjust = 0, fontface = font[2], size = size[2])
+    if(i <= nclo)
+    { 
+      plot <- plot + 
+        annotate("segment", x = mean2(ac)[i], y = 5, xend = ac[i+1], yend = 50) +
+        annotate("text", x = mean2(ac)[i], y = 3, label = names(cause)[ncup+i], 
+                 vjust = 1, fontface = font[2], size = size[2])
+    }
+  }
   # draw labels for upper branches
   for (j in 1:ncup)
-      { b <- (50-95)/(ac[j+1]-mean2(ac)[j])
-        a <- 95-b*mean2(ac)[j]
-        y <- rev(50+cumsum((95-50)/(ncc+1))*(1:(ncc)))
-        x <- (y-a)/b
-        for (i in 1:length(y))
-            { label <- cause[[j]][i]
-              if (!is.na(label))
-                 text(x[i], y[i], label, pos=4, 
-                      offset=0.2, cex=cex[2], font=font[2]) 
-             }
-      }       
+  { 
+    b <- (50-95)/(ac[j+1]-mean2(ac)[j])
+    a <- 95-b*mean2(ac)[j]
+    y <- rev(50+cumsum((95-50)/(ncc+1))*(1:(ncc)))
+    x <- (y-a)/b
+    for (i in 1:length(y))
+    { 
+      label <- cause[[j]][i]
+      if (!is.na(label))
+      {
+        plot <- plot + 
+          annotate("text", x = x[i], y = y[i], label = label, 
+                   hjust = -0.1, fontface = font[1], size = size[1])
+      }
+    }
+  }
   # draw labels for lower branches
   for (j in 1:ncup)
-      { b <- (50-5)/(ac[j+1]-mean2(ac)[j])
-        a <- 5-b*mean2(ac)[j]
-        y <- cumsum((95-50)/(ncc+1))*(1:(ncc))
-        x <- (y-a)/b
-        if (j <= nclo)
-           for (i in 1:length(y))
-               { label <- cause[[ncup+j]][i]
-                 if (!is.na(label))
-                    text(x[i], y[i], label, pos=4, 
-                         offset=0.2, cex=cex[2], font=font[2])
-               }
+  { 
+    b <- (50-5)/(ac[j+1]-mean2(ac)[j])
+    a <- 5-b*mean2(ac)[j]
+    y <- cumsum((95-50)/(ncc+1))*(1:(ncc))
+    x <- (y-a)/b
+    if (j <= nclo)
+    {
+      for (i in 1:length(y))
+      { 
+        label <- cause[[ncup+j]][i]
+        if (!is.na(label))
+        {
+          plot <- plot + 
+            annotate("text", x = x[i], y = y[i], label = label, 
+                     hjust = -0.1, fontface = font[1], size = size[1])
+        }  
       }
-
-  invisible()
+    }
+  }
+  
+  return(plot)
 }
+

@@ -5,9 +5,11 @@
 \description{Draw a basic cause and effect diagram.}
 
 \usage{
-causeEffectDiagram(cause, effect, title,
-                   cex = c(1, 0.9, 1), 
-                   font = c(1, 3, 2))
+causeEffectDiagram(cause, effect, 
+                   title = "Cause-and-Effect diagram",
+                   cex = c(0.9,1,1.2), 
+                   font = c(3,1,2),
+                   \dots)
 }
 
 \arguments{
@@ -16,6 +18,7 @@ causeEffectDiagram(cause, effect, title,
 \item{title}{a character string specifying the main title. Set \code{title = NULL} to remove the title.}
 \item{cex}{a vector of values for the graphical character expansion. The values refer, in order, to branches, causes and effect.}
 \item{font}{a vector of values for the font to use. The values refer, in order, to branches, causes and effect.}
+\item{\dots}{catches further ignored arguments.}
 }
 
 \references{

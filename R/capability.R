@@ -160,7 +160,7 @@ summary.processCapability <- function(object, ...)
 
 plot.processCapability <- function(x, 
                                    add.stats = qcc.options("add.stats"),
-                                   breaks = nclass.scott, 
+                                   breaks = nclass.hist, 
                                    fill = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
                                    color = "white",
                                    title, xlab,

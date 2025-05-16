@@ -44,6 +44,11 @@ qccGroups <- function(data, x, sample)
 #        y = gb$layout$panel_params[[1]]$y.range)
 # }
 
+nclass.hist <- function(x, ...)
+{
+  max(nclass.FD(x), nclass.Sturges(x))
+}
+
 qccOverdispersionTest <- function(x, size, 
                                   type = ifelse(missing(size), "poisson", "binomial"))
 {

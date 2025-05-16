@@ -12,24 +12,35 @@ title: qcc
 url: https://github.com/luca-scr/qcc
 
 template:
-  params:
-    bootswatch: sandstone
+  bootstrap: 5
+  bootswatch: sandstone
+  bslib:
+    primary: "#121212"   # dark grey
+    base_font: {google: "Open Sans"}
+    code_font: {google: "JetBrains Mono"}
+  theme: monochrome
 
 navbar:
-  left:
-    - text: "Vignette"
+  structure:
+    left:  [vignette, reference, news]
+    right: [home]
+  components:
+    vignette:
+      text: "Vignette"
       href: articles/qcc.html
-    - text: "Reference"
+    reference:
+      text: "Reference"
       href: reference/index.html
-    - text: "News"
+    news:
+      text: "News"
       href: news/index.html
-  right:
-    - icon: fa-github
+    home:
+      icon: fa-github
       href: https://github.com/luca-scr/qcc
-     
+
 figures:
   dev: grDevices::png
-  dpi: 72
+  dpi: 96
   dev.args: []
   fig.ext: png
   fig.width: 7

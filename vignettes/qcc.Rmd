@@ -430,7 +430,7 @@ plot(pc)
 
 # Cause and effect diagram
 
-```{R}
+```{r, fig.width=8, fig.height=5}
 causeEffectDiagram(cause = list(Measurements = c("Micrometers", 
                                                  "Microscopes", 
                                                  "Inspectors"),

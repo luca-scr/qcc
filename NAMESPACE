@@ -1,5 +1,9 @@
 # Import all packages listed as Imports or Depends
 import("stats", "utils", "ggplot2", "patchwork")
+
+importFrom("graphics", "strheight", "strwidth", "hist")
+importFrom("grDevices", "gray", "adjustcolor", "extendrange", 
+           "nclass.FD", "nclass.Sturges")
 importFrom("MASS", "mvrnorm")
 importFrom("scales", "label_percent")
 importFrom("cli", "rule")
@@ -68,7 +72,8 @@ S3method("print", "describe")
 
 # deprecated
 export(pareto.chart, process.capability, oc.curves, 
-       qcc.groups, cause.and.effect, qcc.overdispersion.test)
+       qcc.groups, nclass.hist, cause.and.effect, 
+       qcc.overdispersion.test)
 
 # exportPattern("^[^\\.]")
 # to check exported objects use getNamespaceExports("qcc")

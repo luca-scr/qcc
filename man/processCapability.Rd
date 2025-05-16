@@ -17,7 +17,7 @@ processCapability(object, spec.limits, target,
 
 \method{plot}{processCapability}(x, 
      add.stats = qcc.options("add.stats"), 
-     breaks = nclass.scott, 
+     breaks = nclass.hist, 
      fill = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5),
      color = "white", title, xlab, 
      digits = getOption("digits"), \dots)
