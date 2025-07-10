@@ -103,10 +103,10 @@ processCapability <- function(object, spec.limits, target,
                               names(sl) <- c("LSL", "USL")
                               sl },
               indices = tab, 
-              exp = { exp <- c(exp.LSL, exp.USL)/100
+              exp = { exp <- c(exp.LSL, exp.USL)
                       names(exp) <- c("Exp < LSL", "Exp > USL")
                       exp }, 
-              obs = { obs <- c(obs.LSL, obs.USL)/100
+              obs = { obs <- c(obs.LSL, obs.USL)
                       names(obs) <- c("Obs < LSL", "Obs > USL")
                       obs } )
   class(out) <- "processCapability"
