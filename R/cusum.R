@@ -374,13 +374,20 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     len.obj.stats <- length(stats)
     len.new.stats <- length(newstats)
     plot <- plot +
-      geom_vline(xintercept = min(xlim) + len.obj.stats + 0.5, lty = 3) +
-      annotate("text", x = min(xlim) + len.obj.stats/2, 
-               y = max(extendrange(ylim)),
+      geom_vline(xintercept = mean(groups[len.obj.stats+c(0,1)]), lty = 3) +
+      # geom_vline(xintercept = min(xlim) + len.obj.stats + 0.5, lty = 3) +
+      annotate("text", 
+               # x = min(xlim) + len.obj.stats/2, 
+               x = mean(c(groups[1], mean(groups[len.obj.stats+c(0,1)]))),
+               # y = max(extendrange(ylim)),
+               y = max(ylim),
                label = "Calibration data", 
                hjust = 0.5, vjust = -0.5, size = 10 * 5/14) +
-      annotate("text", x = min(xlim) + len.obj.stats + len.new.stats/2,
-               y = max(extendrange(ylim)),
+      annotate("text", 
+               # x = min(xlim) + len.obj.stats + len.new.stats/2,
+               x = mean(c(mean(groups[len.obj.stats+c(0,1)]), groups[len.obj.stats+len.new.stats])),
+               # y = max(extendrange(ylim)),
+               y = max(ylim),
                label = "New data", 
                hjust = 0.5, vjust = -0.5, size = 10 * 5/14)
   }
