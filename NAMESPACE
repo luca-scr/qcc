@@ -1,8 +1,11 @@
 # Import all packages listed as Imports or Depends
 import("stats", "utils", "ggplot2", "patchwork")
 
-importFrom("graphics", "strheight", "strwidth", "hist")
-importFrom("grDevices", "gray", "adjustcolor", "extendrange", 
+importFrom("graphics", 
+           "strheight", "strwidth", "hist", "abline", "axis", "box", "contour",
+           "lines", "mtext", "par", "points", "polygon", "rect", "text")
+importFrom("grDevices", 
+           "gray", "adjustcolor", "palette", "extendrange", 
            "nclass.FD", "nclass.Sturges")
 importFrom("MASS", "mvrnorm")
 importFrom("scales", "label_percent")

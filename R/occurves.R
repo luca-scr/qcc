@@ -303,10 +303,11 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
                                        each = length(object$shift))),
                      shift = rep(object$shift, 
                                  times = length(object$size)))
-    plot <- ggplot(df, aes_string(x = "shift", y = "y",
-                                  linetype = "size", 
-                                  size = "size",
-                                  colour = "size")) +
+    plot <- ggplot(df, aes(x = .data[["shift"]], 
+                           y = .data[["y"]],
+                           linetype = .data[["size"]], 
+                           size = .data[["size"]],
+                           colour = .data[["size"]])) +
       geom_line() +
       scale_linetype_manual(values = lty) +
       scale_size_manual(values = lwd) +
@@ -334,11 +335,11 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
                      multiplier = rep(object$multiplier, 
                                       times = length(object$size)))
     
-    plot <- ggplot(df, aes_string(x = "multiplier", 
-                                  y = "y",
-                                  linetype = "size", 
-                                  size = "size",
-                                  colour = "size")) +
+    plot <- ggplot(df, aes(x = .data[["multiplier"]], 
+                           y = .data[["y"]],
+                           linetype = .data[["size"]], 
+                           size = .data[["size"]],
+                           colour = .data[["size"]])) +
       geom_line() +
       scale_linetype_manual(values = lty) +
       scale_size_manual(values = lwd) +
@@ -365,11 +366,11 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
                                        each = length(object$multiplier))),
                      multiplier = rep(object$multiplier, 
                                       times = length(object$size)))
-    plot <- ggplot(df, aes_string(x = "multiplier", 
-                                  y = "y", 
-                                  linetype = "size", 
-                                  size = "size",
-                                  colour = "size")) +
+    plot <- ggplot(df, aes(x = .data[["multiplier"]], 
+                           y = .data[["y"]], 
+                           linetype = .data[["size"]], 
+                           size = .data[["size"]],
+                           colour = .data[["size"]])) +
       geom_line() +
       scale_linetype_manual(values = lty) +
       scale_size_manual(values = lwd) +
@@ -389,7 +390,8 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
     if(missing(col))  col <- blues.colors(1)
     df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
                      p = object$p)
-    plot <- ggplot(df, aes_string(x = "p", y = "y")) +
+    plot <- ggplot(df, aes(x = .data[["p"]], 
+                           y = .data[["y"]])) +
       geom_line(size = lwd[1], col = col[1], lty = lty[1]) +
       labs(title = title, x = xlab, y = ylab) +
       scale_x_continuous(breaks = seq(0,1,by=0.2)) 
@@ -402,7 +404,8 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
     if(missing(col))  col <- blues.colors(1)
     df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
                      p = object$lambda)
-    plot <- ggplot(df, aes_string(x = "p", y = "y")) +
+    plot <- ggplot(df, aes(x = .data[["p"]], 
+                           y = .data[["y"]])) +
       geom_line(size = lwd[1], col = col[1], lty = lty[1]) +
       labs(title = title, x = xlab, y = ylab) +
       scale_x_continuous(n.breaks = 7)

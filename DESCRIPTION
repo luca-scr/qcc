@@ -1,7 +1,7 @@
 Package: qcc
-Title: Quality Control Charts
 Version: 3.0
-Date: 2025-11-17
+Date: 2025-11-27
+Title: Quality Control Charts
 Description: Shewhart quality control charts for continuous, attribute and count data. Cusum and EWMA charts. Operating characteristic curves. Process capability analysis. Pareto chart and cause-and-effect chart. Multivariate control charts.
 Authors@R: c(person("Luca", "Scrucca", role = c("aut", "cre", "cph"),
                     email = "luca.scrucca@unibo.it", 
@@ -12,18 +12,19 @@ Authors@R: c(person("Luca", "Scrucca", role = c("aut", "cre", "cph"),
                     email = "Peter_Bloomfield@ncsu.edu"))
 Depends: 
   R (>= 4.0), 
-  ggplot2 (>= 3.4),
+  ggplot2 (>= 4.0),
   patchwork (>= 1.3)
 Imports: 
   graphics,
   grDevices,
+  grid,
   MASS, 
   scales, 
   cli, 
   crayon
 Suggests: 
-  knitr (>= 1.12), 
-  rmarkdown (>= 0.9)
+  knitr (>= 1.5), 
+  rmarkdown (>= 2.3)
 VignetteBuilder: 
   knitr
 License: GPL (>= 2)

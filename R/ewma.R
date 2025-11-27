@@ -293,14 +293,15 @@ plot.ewma.qcc <- function(x, xtime = NULL,
     xlim <- range(df$group, na.rm = TRUE)
   
   plot <- 
-    ggplot(data = df, aes_string(x = "group", y = "ewma")) +
+    ggplot(data = df, aes(x = .data[["group"]], 
+                          y = .data[["ewma"]])) +
     geom_line() +
-    geom_point(aes_string(colour = "violations", 
-                          shape = "violations"), 
+    geom_point(aes(colour = .data[["violations"]], 
+                   shape = .data[["violations"]]), 
                size = 2) +
     scale_colour_manual(values = c("black", qcc.options("rules")$col)) +
     scale_shape_manual(values = c(20, qcc.options("rules")$pch)) +
-    geom_point(aes_string(y = "stat"), pch = 3) +
+    geom_point(aes(y = .data[["stat"]]), pch = 3) +
     labs(title = title, subtitle = "",
          x = if(missing(xlab)) "Group" else xlab,
          y = if(missing(ylab)) "Group Summary Statistics" else ylab) +
@@ -341,32 +342,31 @@ plot.ewma.qcc <- function(x, xtime = NULL,
       plot <- plot + 
         geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
                                        y = c(yp1,rev(yp2))),
-                     aes_string(x = "x", y = "y"), 
+                     aes(x = .data[["x"]], 
+                         y = .data[["y"]]), 
                      fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
       plot <- plot + 
         geom_step(data = data.frame(x = x1, y = y1),
-                  aes_string(x = "x", y = "y"), 
+                  aes(x = .data[["x"]], 
+                      y = .data[["y"]]), 
                   lty = qcc.options("zones")$lty[1],
                   col = qcc.options("zones")$col[1])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
-                  aes_string(x = "x", y = "y"), 
+                  aes(x = .data[["x"]], y = .data[["y"]]), 
                   lty = qcc.options("zones")$lty[1],
                   col = qcc.options("zones")$col[1])
     }
 
     plot <- plot + 
-      geom_text(data = data.frame(y = c(rev(center)[1],
-                                        rev(df$limits.LCL)[1],
-                                        rev(df$limits.UCL)[1]),
-                                  x = rep(max(df$group)+0.5, 3)),
-                aes_string(x = "x", y = "y"),
-                label = c(label.center, label.limits),
-                hjust = 0, nudge_x = 0.2,
-                size = 10 * 5/14, col = gray(0.3))
+      annotate("text", x = Inf, 
+               y = c(rev(center)[1],rev(df$limits.LCL)[1], rev(df$limits.UCL)[1]),
+               label = c(label.center, label.limits),
+               col = gray(0.3), size = 10 * 5/14,
+               hjust = -0.2, vjust = 0.5)
   }
   
   # draw center line

@@ -59,10 +59,14 @@ plot.paretoChart <- function(x,
   df$idx <- seq(nlevels)
   
   plot <- ggplot(data = df) +
-    geom_bar(aes_string(x = "x", y = "f"),
+    geom_bar(aes(x = .data[["x"]], 
+                 y = .data[["f"]]),
              stat = "identity", fill = col) +
-    geom_point(aes_string(x = "idx", y = "p"), size = 2) +
-    geom_line(aes_string(x = "idx", y = "p")) +
+    geom_point(aes(x = .data[["idx"]], 
+                   y = .data[["p"]]), 
+               size = 2) +
+    geom_line(aes(x = .data[["idx"]], 
+                  y = .data[["p"]])) +
     labs(title = title, y = ylab, x = xlab) +
     scale_y_continuous(limits = ylim,
                        sec.axis = sec_axis(~./(max(.)*.95),

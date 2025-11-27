@@ -281,6 +281,15 @@ Several methods are available for estimating the standard deviation in case of a
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">qcc</span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>,<span class="op">]</span>, type<span class="op">=</span><span class="st">"S"</span>, newdata<span class="op">=</span><span class="va">diameter</span><span class="op">[</span><span class="fl">26</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qcc-16.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># to customize a Shewhart chart use</span></span></span>
+<span class="r-in"><span><span class="va">q</span> <span class="op">=</span> <span class="fu">qcc</span><span class="op">(</span><span class="va">diameter</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span>, <span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">plot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">73.9</span>, <span class="fl">74.1</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="co"># returned object is of class "patchwork", then add geom_* layer to the first element</span></span></span>
+<span class="r-in"><span><span class="va">plot</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">plot</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> </span></span>
+<span class="r-in"><span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">73.95</span>, <span class="fl">74.05</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">plot</span></span></span>
+<span class="r-plt img"><img src="qcc-17.png" alt="" width="672" height="576"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">##</span></span></span>
 <span class="r-in"><span><span class="co">##  Attribute data </span></span></span>
 <span class="r-in"><span><span class="co">##</span></span></span>
@@ -306,62 +315,62 @@ Several methods are available for estimating the standard deviation in case of a
 <span class="r-out co"><span class="r-pr">#&gt;</span> :                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0.05242755 0.4102391</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-17.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-18.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># remove out-of-control points (see help(orangejuice) for the reasons)</span></span></span>
 <span class="r-in"><span><span class="va">outofctrl</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">23</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-18.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-19.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>,</span></span>
 <span class="r-in"><span>               newdata<span class="op">=</span><span class="va">D</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span>, newsizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-19.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-20.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">orangejuice2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q2</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice2</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q2</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-20.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-21.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="va">q2</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice2</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, </span></span>
 <span class="r-in"><span>               newdata<span class="op">=</span><span class="va">D</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span>, newsizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q2</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-21.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-22.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span>, <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"c"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-22.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-23.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># remove out-of-control points (see help(circuit) for the reasons)</span></span></span>
 <span class="r-in"><span><span class="va">outofctrl</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">23</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-23.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-24.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">orangejuice</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">D</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>,</span></span>
 <span class="r-in"><span>               newdata<span class="op">=</span><span class="va">D</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span>, newsizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-24.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-25.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">outofctrl</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-25.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-26.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"c"</span>, </span></span>
 <span class="r-in"><span>               newdata <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span>, newsizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-26.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-27.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">circuit</span><span class="op">[</span><span class="op">-</span><span class="va">outofctrl</span>,<span class="op">]</span>, </span></span>
 <span class="r-in"><span>           <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, sizes<span class="op">=</span><span class="va">size</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"u"</span>, </span></span>
 <span class="r-in"><span>           newdata <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span>, newsizes <span class="op">=</span> <span class="va">size</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-27.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-28.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pcmanufact</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q1</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">pcmanufact</span>, <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span>, sizes<span class="op">=</span><span class="va">size</span>, type<span class="op">=</span><span class="st">"u"</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -379,19 +388,19 @@ Several methods are available for estimating the standard deviation in case of a
 <span class="r-out co"><span class="r-pr">#&gt;</span>         LCL      UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.06613305 3.793867</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-28.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-29.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dyedcloth</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># variable control limits</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dyedcloth</span>, <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span>, sizes<span class="op">=</span><span class="va">size</span>, type<span class="op">=</span><span class="st">"u"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-29.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-30.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="co"># standardized control chart</span></span></span>
 <span class="r-in"><span><span class="va">q</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dyedcloth</span>, <span class="fu">qcc</span><span class="op">(</span><span class="va">x</span>, sizes<span class="op">=</span><span class="va">size</span>, type<span class="op">=</span><span class="st">"u"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">z</span>  <span class="op">=</span> <span class="op">(</span><span class="va">q</span><span class="op">$</span><span class="va">statistics</span> <span class="op">-</span> <span class="va">q</span><span class="op">$</span><span class="va">center</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">q</span><span class="op">$</span><span class="va">center</span><span class="op">/</span><span class="va">q</span><span class="op">$</span><span class="va">size</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">qcc</span><span class="op">(</span><span class="va">z</span>, sizes <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"u"</span>, center <span class="op">=</span> <span class="fl">0</span>, std.dev <span class="op">=</span> <span class="fl">1</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>     title <span class="op">=</span> <span class="st">"Standardized u chart"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'std.dev' is not used when limits is given</span>
-<span class="r-plt img"><img src="qcc-30.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-31.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span>    </span></span>
 <span class="r-in"><span><span class="co">##</span></span></span>
 <span class="r-in"><span><span class="co">##  Continuous one-at-time data </span></span></span>
@@ -414,13 +423,13 @@ Several methods are available for estimating the standard deviation in case of a
 <span class="r-out co"><span class="r-pr">#&gt;</span>       LCL      UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  32.56504 35.61096</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-31.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-32.png" alt="" width="672" height="576"></span>
 <span class="r-in"><span><span class="co"># batch 4 is out-of-control because of a process temperature controller</span></span></span>
 <span class="r-in"><span><span class="co"># failure; remove it and recompute</span></span></span>
 <span class="r-in"><span><span class="va">viscosity</span>  <span class="op">=</span> <span class="va">viscosity</span><span class="op">[</span><span class="op">-</span><span class="fl">4</span>,<span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">viscosity</span>, </span></span>
 <span class="r-in"><span>          <span class="fu">qcc</span><span class="op">(</span><span class="va">viscosity</span><span class="op">[</span><span class="va">trial</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"xbar.one"</span>, newdata <span class="op">=</span> <span class="va">viscosity</span><span class="op">[</span><span class="op">!</span><span class="va">trial</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="qcc-32.png" alt="" width="672" height="576"></span>
+<span class="r-plt img"><img src="qcc-33.png" alt="" width="672" height="576"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -432,7 +441,7 @@ Several methods are available for estimating the standard deviation in case of a
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

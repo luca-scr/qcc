@@ -282,16 +282,16 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     xlim <- range(df$group, na.rm = TRUE)
   
   plot <- 
-    ggplot(data = df, aes_string(x = "group")) +
-    geom_line(aes_string(y = "cusum_pos")) +
-    geom_point(aes_string(y = "cusum_pos", 
-                          colour = "violations_upper", 
-                          shape = "violations_upper"), 
+    ggplot(data = df, aes(x = .data[["group"]])) +
+    geom_line(aes(y = .data[["cusum_pos"]])) +
+    geom_point(aes(y = .data[["cusum_pos"]], 
+                   colour = .data[["violations_upper"]], 
+                   shape = .data[["violations_upper"]]), 
                size = 2) +
-    geom_line(aes_string(y = "cusum_neg")) +
-    geom_point(aes_string(y = "cusum_neg", 
-                          colour = "violations_lower", 
-                          shape = "violations_lower"), 
+    geom_line(aes(y = .data[["cusum_neg"]])) +
+    geom_point(aes(y = .data[["cusum_neg"]], 
+                   colour = .data[["violations_lower"]], 
+                   shape = .data[["violations_lower"]]), 
                size = 2) +
     scale_colour_manual(values = c("black", qcc.options("rules")$col)) +
     scale_shape_manual(values = c(20, qcc.options("rules")$pch)) +
@@ -328,7 +328,8 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     annotate("text", x = min(xlim)-0.1*diff(range(xlim)),
              y = max(extendrange(ylim))/2,
              label = lab, angle = 90,
-             hjust = 0.5, vjust = 0.5, size = 10 * 5/14)
+             col = gray(0.3), size = 10 * 5/14,
+             hjust = 0.5, vjust = 0.5)
   lab <- "Below target"
   if (add.stats && object$head.start > 0)
     lab <- paste(lab, " (start = ", - object$head.start, ")", sep = "")
@@ -336,7 +337,8 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     annotate("text", x = min(xlim)-0.1*diff(range(xlim)),
              y = min(extendrange(ylim))/2,
              label = lab, angle = 90,
-             hjust = 0.5, vjust = 0.5, size = 10 * 5/14)
+             col = gray(0.3), size = 10 * 5/14,
+             hjust = 0.5, vjust = 0.5)
     
   # draw decision boundaries
   if(all(is.finite(ldb)) & is.finite(udb))
@@ -349,7 +351,8 @@ plot.cusum.qcc <- function(x, xtime = NULL,
       
       plot <- plot + 
         geom_polygon(data = data.frame(xp, yp),
-                     aes_string(x = "xp", y = "yp"), 
+                     aes(x = .data[["xp"]], 
+                         y = .data[["yp"]]), 
                      fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
                      col = NA)
     } else

@@ -332,10 +332,11 @@ plot.qcc <- function(x, xtime = NULL,
     xlim <- extendrange(df$group)
 
   plot <- 
-    ggplot(data = df, aes_string(x = "group", y = "stat")) +
+    ggplot(data = df, aes(x = .data[["group"]], 
+                          y = .data[["stat"]])) +
     geom_line() +
-    geom_point(aes_string(colour = "violations", 
-                          shape = "violations"), 
+    geom_point(aes(colour = .data[["violations"]], 
+                   shape = .data[["violations"]]), 
                size = 2) +
     scale_colour_manual(values = c("black", qcc.options("rules")$col)) +
     scale_shape_manual(values = c(20, qcc.options("rules")$pch)) +
@@ -368,7 +369,6 @@ plot.qcc <- function(x, xtime = NULL,
   # draw control limits
   if(any(object$rules == 1))
   { 
-    # x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
     dx <- min(diff(df$group))/2
     x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
     y1 <- if(length(lcl) == 1) rep(lcl, length(x1)) else
@@ -380,36 +380,39 @@ plot.qcc <- function(x, xtime = NULL,
     yp1 <- rep(y1, each=2)[-2*length(y1)]
     yp2 <- rep(y2, each=2)[-2*length(y2)]
     if(fill)
-    { # fill the in-control area
+    { 
+      # fill the in-control area
       plot <- plot + 
         geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
                                        y = c(yp1,rev(yp2))),
-                     aes_string(x = "x", y = "y"), 
+                     aes(x = .data[["x"]], 
+                         y = .data[["y"]]), 
                      fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
       plot <- plot + 
-        geom_step(data = data.frame(x = x1, y = y1),
-                  aes_string(x = "x", y = "y"), 
+        geom_step(data = data.frame(x = x1, 
+                                    y = y1),
+                  aes(x = .data[["x"]], 
+                      y = .data[["y"]]), 
                   lty = qcc.options("zones")$lty[1],
                   col = qcc.options("zones")$col[1])
       plot <- plot + 
-        geom_step(data = data.frame(x = x2, y = y2),
-                  aes_string(x = "x", y = "y"), 
+        geom_step(data = data.frame(x = x2, 
+                                    y = y2),
+                  aes(x = .data[["x"]], 
+                      y = .data[["y"]]), 
                   lty = qcc.options("zones")$lty[1],
                   col = qcc.options("zones")$col[1])
     }
 
-  plot <- plot + 
-    geom_text(data = data.frame(y = c(rev(center)[1],
-                                      rev(lcl)[1],
-                                      rev(ucl)[1]),
-                                x = rep(xlim[2], 3)),
-              aes_string(x = "x", y = "y"),
-              label = c(label.center, label.limits),
-              hjust = -0.2, # nudge_x = 0.2,
-              size = 10 * 5/14, col = gray(0.3))
+    plot <- plot + 
+      annotate("text", x = Inf, 
+               y = c(rev(center)[1], rev(lcl)[1], rev(ucl)[1]),
+               label = c(label.center, label.limits),
+               col = gray(0.3), size = 10 * 5/14,
+               hjust = -0.2, vjust = 0.5)
   }
   
   # draw 2-sigma warning limits
@@ -420,7 +423,6 @@ plot.qcc <- function(x, xtime = NULL,
                                   std.dev = object$std.dev,
                                   sizes = c(object$sizes, object$newsizes), 
                                   nsigmas = object$nsigmas*2/3))
-    # x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
     dx <- min(diff(df$group))/2
     x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
     if(nrow(limits.2sigma)==1)
@@ -443,19 +445,22 @@ plot.qcc <- function(x, xtime = NULL,
       plot <- plot + 
         geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
                                        y = c(yp1,rev(yp2))),
-                     aes_string(x = "x", y = "y"), 
+                     aes(x = .data[["x"]], 
+                         y = .data[["y"]]), 
                      fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
       plot <- plot + 
         geom_step(data = data.frame(x = x1, y = y1),
-                           aes_string(x = "x", y = "y"), 
+                           aes(x = .data[["x"]], 
+                               y = .data[["y"]]), 
                            lty = qcc.options("zones")$lty[2],
                            col = qcc.options("zones")$col[2])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
-                           aes_string(x = "x", y = "y"), 
+                           aes(x = .data[["x"]], 
+                               y = .data[["y"]]), 
                            lty = qcc.options("zones")$lty[2],
                            col = qcc.options("zones")$col[2])
     }
@@ -469,7 +474,6 @@ plot.qcc <- function(x, xtime = NULL,
                                   std.dev = object$std.dev,
                                   sizes = c(object$sizes, object$newsizes), 
                                   nsigmas = object$nsigmas*1/3))
-    # x1 <- x2 <- c(df$group, df$group[length(df$group)]+1)-0.5
     dx <- min(diff(df$group))/2
     x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
     if(nrow(limits.2sigma)==1)
@@ -492,19 +496,22 @@ plot.qcc <- function(x, xtime = NULL,
       plot <- plot + 
         geom_polygon(data = data.frame(x = c(xp1,rev(xp2)), 
                                        y = c(yp1,rev(yp2))),
-                     aes_string(x = "x", y = "y"), 
+                     aes(x = .data[["x"]], 
+                         y = .data[["y"]]), 
                      fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
       plot <- plot + 
         geom_step(data = data.frame(x = x1, y = y1),
-                  aes_string(x = "x", y = "y"), 
+                  aes(x = .data[["x"]], 
+                      y = .data[["y"]]), 
                   lty = qcc.options("zones")$lty[3],
                   col = qcc.options("zones")$col[3])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
-                  aes_string(x = "x", y = "y"), 
+                  aes(x = .data[["x"]], 
+                      y = .data[["y"]]), 
                   lty = qcc.options("zones")$lty[3],
                   col = qcc.options("zones")$col[3])
     }
@@ -517,7 +524,8 @@ plot.qcc <- function(x, xtime = NULL,
                col = qcc.options("zones")$col[1]) 
   } else
   {
-    geom_step(data = df, aes_string(x = "group", y = "center"),
+    geom_step(data = df, aes(x = .data[["group"]], 
+                             y = .data[["center"]]),
               col = qcc.options("zones")$col[1])
   }
 
@@ -528,15 +536,13 @@ plot.qcc <- function(x, xtime = NULL,
     plot <- plot +
       geom_vline(xintercept = mean(groups[len.obj.stats+c(0,1)]), lty = 3) +
       annotate("text", 
-               # x = min(xlim) + len.obj.stats/2,
                x = mean(c(groups[1], mean(groups[len.obj.stats+c(0,1)]))),
-               # y = max(extendrange(ylim)),
                y = max(ylim),
                label = "Calibration data", 
                hjust = 0.5, vjust = -0.5, size = 10 * 5/14) +
       annotate("text",
-               x = mean(c(mean(groups[len.obj.stats+c(0,1)]), groups[len.obj.stats+len.new.stats])),
-               # y = max(extendrange(ylim)),
+               x = mean(c(mean(groups[len.obj.stats+c(0,1)]), 
+                          groups[len.obj.stats+len.new.stats])),
                y = max(ylim),
                label = "New data", 
                hjust = 0.5, vjust = -0.5, size = 10 * 5/14)
@@ -568,36 +574,22 @@ plot.qcc <- function(x, xtime = NULL,
                    paste0("No. beyond limits = ", sum(violations == 1, na.rm=TRUE)),
                    paste0("No. violating runs = ", sum(violations > 1, na.rm=TRUE)),
                    sep = "\n")
-    
     tab1 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text1, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-      # TODO: remove
-      # theme(plot.margin = margin(0.5, 0, 0.5, 3, unit = "lines"))
     tab2 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text2, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-      # TODO: remove
-      # theme(plot.margin = margin(0.5, 0.5, 0.5, 2, unit = "lines"))
     tab3 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text3, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-      # TODO: remove
-      # theme(plot.margin = margin(0.5, 1, 0.5, 1, unit = "lines"))
 
-    # TODO: remove    
-    # plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3,
-    #                                layout_matrix = matrix(c(1,2,1,3,1,4), 
-    #                                                       nrow = 2, ncol = 3),
-    #                                heights = c(0.85, 0.15), 
-    #                                widths = c(0.35, 0.3, 0.35))
     plot <- patchwork::wrap_plots(plot, tab1, tab2, tab3, 
                                   design = c("AAA\nBCD"),
                                   heights = c(0.85, 0.15), 
                                   widths = c(0.4, 0.3, 0.3))
   }
   
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
 
