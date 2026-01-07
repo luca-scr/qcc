@@ -161,11 +161,11 @@ plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
 
 # to customize a Shewhart chart use
 q = qcc(diameter[1:25, ], type = "xbar")
-plot = plot(q, ylim = c(73.9, 74.1)) 
+graph = plot(q, ylim = c(73.9, 74.1)) 
 # returned object is of class "patchwork", then add geom_* layer to the first element
-plot[[1]] <- plot[[1]] + 
+graph[[1]] <- graph[[1]] + 
   geom_hline(yintercept = c(73.95, 74.05), lty = 2) 
-plot
+graph
 
 ##
 ##  Attribute data 

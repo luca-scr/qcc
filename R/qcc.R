@@ -338,8 +338,10 @@ plot.qcc <- function(x, xtime = NULL,
     geom_point(aes(colour = .data[["violations"]], 
                    shape = .data[["violations"]]), 
                size = 2) +
-    scale_colour_manual(values = c("black", qcc.options("rules")$col)) +
-    scale_shape_manual(values = c(20, qcc.options("rules")$pch)) +
+    scale_colour_manual(values = c("black", qcc.options("rules")$col),
+                        breaks = levels(df$violations)) +
+    scale_shape_manual(values = c(20, qcc.options("rules")$pch),
+                       breaks = levels(df$violations)) +
     labs(title = title, subtitle = "",
          x = if(missing(xlab)) "Group" else xlab,
          y = if(missing(ylab)) "Group summary statistics" else ylab) +
