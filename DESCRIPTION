@@ -23,8 +23,9 @@ Imports:
   cli, 
   crayon
 Suggests: 
-  knitr (>= 1.5), 
-  rmarkdown (>= 2.3)
+  knitr (>= 1.5),
+  rmarkdown (>= 2.3),
+  testthat (>= 3.0.0)
 VignetteBuilder: 
   knitr
 License: GPL (>= 2)
@@ -34,3 +35,4 @@ Repository: CRAN
 ByteCompile: true
 LazyData: true
 Encoding: UTF-8
+Config/testthat/edition: 3
