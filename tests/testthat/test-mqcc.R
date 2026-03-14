@@ -140,5 +140,4 @@ test_that("no visual regressions in ellipseChart", {
     "mqcc ellipseChart",
     ellipseChart(chart)
   )
-  succeed()
 })

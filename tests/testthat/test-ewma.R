@@ -86,7 +86,6 @@ test_that("no visual regressions ewma chart plots", {
     "ewma plot - chartall",
     plot(chart, chart.all = TRUE)
   )
-  succeed()
 })
 
 test_that("no visual regressions in phase II ewma chart plots", {
@@ -112,5 +111,4 @@ test_that("no visual regressions in phase II ewma chart plots", {
     "ewma phase II plot",
     plot(chart)
   )
-  succeed()
 })

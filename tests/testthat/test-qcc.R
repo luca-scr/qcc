@@ -69,7 +69,6 @@ test_that("u charts with newdata detect expected violations", {
   expect_equal(chart$type, "u")
   expect_equal(ncol(chart$limits), 2)
   expect_equal(sum(!is.na(chart$violations)), 1)
-  succeed()
 })
 
 test_that("xbar end-to-end covers print, summary, plot, and limits-mode switch", {
@@ -161,7 +160,6 @@ test_that("plot.qcc accepts Date and POSIXct xtime values", {
       add.stats = FALSE
     )
   )
-  succeed()
 })
 
 test_that("plot.qcc validates xtime class", {
@@ -293,6 +291,5 @@ test_that("no visual regressions in xbar chart plots", {
     "xbar plot - no fill",
     plot(chart, fill = FALSE)
   )
-  succeed()
 })
 

@@ -44,7 +44,6 @@ test_that("no visual regressions in xbar chart ocCurves plots", {
     "ocCurves - xbar plot",
     plot(oc)
   )
-  succeed()
 })
 
 test_that("no visual regressions in R chart ocCurves plots", {
@@ -55,7 +54,6 @@ test_that("no visual regressions in R chart ocCurves plots", {
     "ocCurves - R plot",
     plot(oc)
   )
-  succeed()
 })
 
 test_that("no visual regressions in S chart ocCurves plots", {
@@ -66,7 +64,6 @@ test_that("no visual regressions in S chart ocCurves plots", {
     "ocCurves - S plot",
     plot(oc)
   )
-  succeed()
 })
 
 test_that("no visual regressions in p/np chart ocCurves plots", {
@@ -77,7 +74,6 @@ test_that("no visual regressions in p/np chart ocCurves plots", {
     "ocCurves - p plot",
     plot(ocCurves(q))
   )
-  succeed()
 
 })
 
@@ -89,5 +85,4 @@ test_that("no visual regressions in c/u chart ocCurves plots", {
     "ocCurves - u plot",
     plot(ocCurves(q))
   )
-  succeed()
 })
