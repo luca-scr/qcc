@@ -10,5 +10,5 @@ log$
 ^cran-comments\.md$
 ^docs$
 ^pkgdown$
-^cran-comments\.md$
 ^\.github$
+^DEVELOPMENT\.md$

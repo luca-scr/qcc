@@ -306,16 +306,16 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
     plot <- ggplot(df, aes(x = .data[["shift"]], 
                            y = .data[["y"]],
                            linetype = .data[["size"]], 
-                           size = .data[["size"]],
+                           linewidth = .data[["size"]],
                            colour = .data[["size"]])) +
       geom_line() +
       scale_linetype_manual(values = lty) +
-      scale_size_manual(values = lwd) +
+      scale_linewidth_manual(values = lwd) +
       scale_colour_manual(values = col) +
       labs(title = title, 
            x = xlab, y = ylab,
            linetype = "Sample size:",
-           size = "Sample size:", 
+           linewidth = "Sample size:", 
            colour = "Sample size:") +
       scale_x_continuous(breaks = unique(as.integer(object$shift)))
   } else
@@ -338,16 +338,16 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
     plot <- ggplot(df, aes(x = .data[["multiplier"]], 
                            y = .data[["y"]],
                            linetype = .data[["size"]], 
-                           size = .data[["size"]],
+                           linewidth = .data[["size"]],
                            colour = .data[["size"]])) +
       geom_line() +
       scale_linetype_manual(values = lty) +
-      scale_size_manual(values = lwd) +
+      scale_linewidth_manual(values = lwd) +
       scale_colour_manual(values = col) +
       labs(title = title, 
            x = xlab, y = ylab,
            linetype = "Sample size:",
-           size = "Sample size:", 
+           linewidth = "Sample size:", 
            colour = "Sample size:") +
       scale_x_continuous(breaks = unique(as.integer(object$multiplier)))
   } else
@@ -369,16 +369,16 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
     plot <- ggplot(df, aes(x = .data[["multiplier"]], 
                            y = .data[["y"]], 
                            linetype = .data[["size"]], 
-                           size = .data[["size"]],
+                           linewidth = .data[["size"]],
                            colour = .data[["size"]])) +
       geom_line() +
       scale_linetype_manual(values = lty) +
-      scale_size_manual(values = lwd) +
+      scale_linewidth_manual(values = lwd) +
       scale_colour_manual(values = col) +
       labs(title = title, 
            x = xlab, y = ylab,
            linetype = "Sample size:",
-           size = "Sample size:", 
+           linewidth = "Sample size:", 
            colour = "Sample size:") +
       scale_x_continuous(breaks = unique(as.integer(object$multiplier)))
   } else
@@ -392,7 +392,7 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
                      p = object$p)
     plot <- ggplot(df, aes(x = .data[["p"]], 
                            y = .data[["y"]])) +
-      geom_line(size = lwd[1], col = col[1], lty = lty[1]) +
+      geom_line(linewidth = lwd[1], col = col[1], lty = lty[1]) +
       labs(title = title, x = xlab, y = ylab) +
       scale_x_continuous(breaks = seq(0,1,by=0.2)) 
   } else
@@ -406,7 +406,7 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
                      p = object$lambda)
     plot <- ggplot(df, aes(x = .data[["p"]], 
                            y = .data[["y"]])) +
-      geom_line(size = lwd[1], col = col[1], lty = lty[1]) +
+      geom_line(linewidth = lwd[1], col = col[1], lty = lty[1]) +
       labs(title = title, x = xlab, y = ylab) +
       scale_x_continuous(n.breaks = 7)
   }
@@ -431,4 +431,3 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
   
   return(plot)
 }
-
