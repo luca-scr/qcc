@@ -1,0 +1,79 @@
+name: refresh-vdiffr-snaps
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "tests/testthat/_snaps/**"
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-vdiffr-snaps
+  cancel-in-progress: true
+
+jobs:
+  refresh-vdiffr-snaps:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::devtools
+          needs: check
+
+      - name: Generate vdiffr snapshots
+        id: generate-snaps
+        continue-on-error: true
+        shell: Rscript {0}
+        run: |
+          options(crayon.enabled = TRUE)
+          devtools::test()
+
+      - name: Create snapshot pull request
+        if: ${{ always() && !cancelled() }}
+        id: create-pr
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.SNAPSHOT_PR_TOKEN || github.token }}
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          branch: ci/refresh-vdiffr-snaps
+          base: master
+          delete-branch: true
+          commit-message: |
+            test: refresh vdiffr snapshots
+
+            Regenerate tests/testthat/_snaps from devtools::test() on GitHub Actions.
+          title: "test: refresh vdiffr snapshots"
+          body: |
+            This PR was generated automatically by `.github/workflows/refresh-vdiffr-snaps.yaml`.
+
+            It checks out `master`, runs `devtools::test()`, and commits only the generated
+            `tests/testthat/_snaps` updates.
+          add-paths: |
+            tests/testthat/_snaps
+
+      - name: Fail job when tests fail
+        if: ${{ steps.generate-snaps.outcome == 'failure' }}
+        run: |
+          echo "devtools::test() reported failures. Snapshot PR creation was attempted before failing the job." >&2
+          exit 1
