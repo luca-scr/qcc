@@ -70,9 +70,14 @@ test_that("no visual regressions in p/np chart ocCurves plots", {
   data(orangejuice)
   q  = with(orangejuice, qcc(D[trial], sizes=size[trial], type="p"))
 
+  expect_warning(
+    ocCurves(q),
+    "discreteness of the binomial distribution"
+  )
+
   vdiffr::expect_doppelganger(
     "ocCurves - p plot",
-    plot(ocCurves(q))
+    plot(suppressWarnings(ocCurves(q)))
   )
 
 })
@@ -81,8 +86,13 @@ test_that("no visual regressions in c/u chart ocCurves plots", {
   data(pcmanufact)
   q  = with(pcmanufact, qcc(x, sizes=size, type="u"))
 
+  expect_warning(
+    ocCurves(q),
+    "discreteness of the Poisson distribution"
+  )
+
   vdiffr::expect_doppelganger(
     "ocCurves - u plot",
-    plot(ocCurves(q))
+    plot(suppressWarnings(ocCurves(q)))
   )
 })
