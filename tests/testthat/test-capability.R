@@ -63,6 +63,8 @@ test_that("No visual regressions in process capability plots", {
     "process capability plot",
     plot(capability)
   )
+
+  succeed()
 })
 
 test_that("plot.processCapability fails with unexpected objects", {

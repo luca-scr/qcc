@@ -103,5 +103,6 @@ test_that("no visual regressions in cusum plots", {
     "cusum phase II plot",
     plot(chart)
   )
+  succeed()
 
 })
