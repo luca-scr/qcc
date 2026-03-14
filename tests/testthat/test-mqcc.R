@@ -96,6 +96,7 @@ test_that("mqcc newdata stores newstats labels and preserves phase-I labels", {
 
   expect_equal(names(with_generated_labels$statistics), phase1_labels)
   expect_equal(names(with_generated_labels$newstats), expected_generated)
+
 })
 
 test_that("mqcc validates confidence.level and newlabels length", {
@@ -115,5 +116,28 @@ test_that("mqcc validates confidence.level and newlabels length", {
       plot = FALSE
     ),
     "labels must match the length of samples provided"
+  )
+})
+
+test_that("no visual regressions in ellipseChart", {
+  phase1 <- make_mqcc_phase1_data()
+  phase2 <- make_mqcc_newdata()
+
+  chart <- mqcc(
+    phase1,
+    labels = c("old-1", "old-2", "old-3", "old-4"),
+    newdata = phase2,
+    newlabels = c("new-1", "new-2"),
+    plot = FALSE,
+  )
+
+  vdiffr::expect_doppelganger(
+    "mqcc plot",
+    plot(chart)
+  )
+
+  vdiffr::expect_doppelganger(
+    "mqcc ellipseChart",
+    ellipseChart(chart)
   )
 })

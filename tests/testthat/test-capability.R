@@ -54,3 +54,20 @@ test_that("ProcessCapability returns expected indices", {
 
   expect_equal(capability$indices, expected_indices, tolerance = 1e-6)
 })
+
+test_that("No visual regressions in process capability plots", {
+  chart <- qcc(make_grouped_xbar_data(), type = "xbar", nsigmas = 3)
+  capability <- processCapability(chart, spec.limits = c(9.9, 10.1))
+
+  vdiffr::expect_doppelganger(
+    "process capability plot",
+    plot(capability)
+  )
+})
+
+test_that("plot.processCapability fails with unexpected objects", {
+  expect_error(
+    plot.processCapability(make_grouped_xbar_data()),
+    "an object of class `processCapability' is required"
+  )
+})

@@ -60,6 +60,11 @@ test_that("u charts with newdata detect expected violations", {
     )
   )
 
+  vdiffr::expect_doppelganger(
+    "u-chart plot",
+    plot(chart)
+  )
+
   expect_s3_class(chart, "qcc")
   expect_equal(chart$type, "u")
   expect_equal(ncol(chart$limits), 2)
@@ -138,6 +143,11 @@ test_that("plot.qcc accepts Date and POSIXct xtime values", {
     )
   )
   expect_true(any(class(plot_with_stats) %in% c("patchwork", "ggplot", "gg")))
+
+  vdiffr::expect_doppelganger(
+    "u chart plot - date xtime",
+    plot.qcc( chart, xtime = date_index, chart.all = TRUE, fill = FALSE, add.stats = TRUE)
+  )
 
   datetime_index <- as.POSIXct("2024-01-01 00:00:00", tz = "UTC") +
     3600 * seq_len(total_groups)
@@ -266,3 +276,20 @@ test_that("R-chart helpers keep expected structure and enforce max subgroup size
     "group size must be less than"
   )
 })
+
+test_that("no visual regressions in xbar chart plots", {
+  data("pistonrings", package = "qcc")
+  diameter <- qccGroups(data = pistonrings, diameter, sample)
+
+  chart <- qcc(diameter[1:25, ], type = "xbar", rules = 1:4)
+
+  vdiffr::expect_doppelganger(
+    "xbar plot - fill",
+    plot(chart)
+  )
+  vdiffr::expect_doppelganger(
+    "xbar plot - no fill",
+    plot(chart, fill = FALSE)
+  )
+})
+

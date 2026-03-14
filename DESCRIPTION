@@ -25,7 +25,8 @@ Imports:
 Suggests: 
   knitr (>= 1.5),
   rmarkdown (>= 2.3),
-  testthat (>= 3.0.0)
+  testthat (>= 3.0.0),
+  vdiffr
 VignetteBuilder: 
   knitr
 License: GPL (>= 2)

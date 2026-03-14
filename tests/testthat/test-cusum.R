@@ -83,3 +83,25 @@ test_that("cusum validates head.start bounds", {
     "head.start must be non-negative and less than decision.interval"
   )
 })
+
+test_that("no visual regressions in cusum plots", {
+    phase_i <- matrix(c(10, 12), ncol = 1)
+  phase_ii <- matrix(c(14, 16), ncol = 1)
+
+  chart <- cusum(
+    phase_i,
+    sizes = 1,
+    center = 10,
+    std.dev = 2,
+    decision.interval = 4,
+    se.shift = 1,
+    newdata = phase_ii,
+    newsizes = 1
+  )
+
+  vdiffr::expect_doppelganger(
+    "cusum phase II plot",
+    plot(chart)
+  )
+
+})

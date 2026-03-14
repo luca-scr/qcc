@@ -35,3 +35,54 @@ test_that("ocCurves rejects unsupported qcc chart type", {
     "Operating characteristic curves not available for this type of chart"
   )
 })
+
+test_that("no visual regressions in xbar chart ocCurves plots", {
+  chart <- qcc(make_grouped_xbar_data(), type = "xbar", nsigmas = 3)
+  oc <- ocCurves(chart)
+
+  vdiffr::expect_doppelganger(
+    "ocCurves - xbar plot",
+    plot(oc)
+  )
+})
+
+test_that("no visual regressions in R chart ocCurves plots", {
+  chart <- qcc(make_grouped_xbar_data(), type = "R")
+  oc <- ocCurves(chart)
+
+  vdiffr::expect_doppelganger(
+    "ocCurves - R plot",
+    plot(oc)
+  )
+})
+
+test_that("no visual regressions in S chart ocCurves plots", {
+  chart <- qcc(make_grouped_xbar_data(), type = "S")
+  oc <- ocCurves(chart)
+
+  vdiffr::expect_doppelganger(
+    "ocCurves - S plot",
+    plot(oc)
+  )
+})
+
+test_that("no visual regressions in p/np chart ocCurves plots", {
+  data(orangejuice)
+  q  = with(orangejuice, qcc(D[trial], sizes=size[trial], type="p"))
+
+  vdiffr::expect_doppelganger(
+    "ocCurves - p plot",
+    plot(ocCurves(q))
+  )
+
+})
+
+test_that("no visual regressions in c/u chart ocCurves plots", {
+  data(pcmanufact)
+  q  = with(pcmanufact, qcc(x, sizes=size, type="u"))
+
+  vdiffr::expect_doppelganger(
+    "ocCurves - u plot",
+    plot(ocCurves(q))
+  )
+})
