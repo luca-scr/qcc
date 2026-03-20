@@ -21,7 +21,7 @@ causeEffectDiagram <- function(cause, effect,
   }
   
   branch_count <- length(cause)
-  upper_branch_count <- branch_count - round(branch_count/2)
+  upper_branch_count <- ceiling(branch_count/2)
   lower_branch_count <- branch_count - upper_branch_count
   max_subcauses_per_branch <- max(sapply(cause, length))
 
@@ -57,19 +57,20 @@ causeEffectDiagram <- function(cause, effect,
   branch_spacing <- (100-effect_label_width)/(branch_slots+1)
   ac <- branch_spacing*(0:branch_slots)
   branch_anchors <- mean2(ac)
-  for(i in 1:(length(ac)-1))
-  { 
+  for (i in seq_len(upper_branch_count))
+  {
     plot <- plot +
       annotate("segment", x = branch_anchors[i], y = 95, xend = ac[i+1], yend = 50) +
       annotate("text", x = branch_anchors[i], y = 97, label = names(cause)[i], 
                vjust = 0, fontface = font[2], size = size[2])
-    if(i <= lower_branch_count)
-    { 
-      plot <- plot + 
-        annotate("segment", x = branch_anchors[i], y = 5, xend = ac[i+1], yend = 50) +
-        annotate("text", x = branch_anchors[i], y = 3, label = names(cause)[upper_branch_count+i], 
-                 vjust = 1, fontface = font[2], size = size[2])
-    }
+  }
+
+  for (i in seq_len(lower_branch_count))
+  {
+    plot <- plot + 
+      annotate("segment", x = branch_anchors[i], y = 5, xend = ac[i+1], yend = 50) +
+      annotate("text", x = branch_anchors[i], y = 3, label = names(cause)[upper_branch_count+i], 
+               vjust = 1, fontface = font[2], size = size[2])
   }
   # draw labels for upper branches
   for (j in 1:upper_branch_count)
@@ -90,23 +91,20 @@ causeEffectDiagram <- function(cause, effect,
     }
   }
   # draw labels for lower branches
-  for (j in 1:upper_branch_count)
+  for (j in seq_len(lower_branch_count))
   { 
     b <- (50-5)/(ac[j+1]-branch_anchors[j])
     intercept <- 5-b*branch_anchors[j]
     y <- cumsum((95-50)/(max_subcauses_per_branch+1))*(1:(max_subcauses_per_branch))
     x <- (y-intercept)/b
-    if (j <= lower_branch_count)
+    for (i in 1:length(y))
     {
-      for (i in 1:length(y))
+      label <- cause[[upper_branch_count+j]][i]
+      if (!is.na(label))
       { 
-        label <- cause[[upper_branch_count+j]][i]
-        if (!is.na(label))
-        {
-          plot <- plot + 
-            annotate("text", x = x[i], y = y[i], label = label, 
-                     hjust = -0.1, fontface = font[1], size = size[1])
-        }  
+        plot <- plot + 
+          annotate("text", x = x[i], y = y[i], label = label, 
+                   hjust = -0.1, fontface = font[1], size = size[1])
       }
     }
   }
