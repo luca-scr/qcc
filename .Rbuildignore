@@ -11,3 +11,4 @@ log$
 ^docs$
 ^pkgdown$
 ^cran-comments\.md$
+^\.github$

@@ -21,7 +21,7 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 # 
   if (length(y)!=length(x))
      stop("x and y must have the same length!")
-  if (abs(lambda)>1)
+  if (lambda < 0 || lambda > 1)
      stop("lambda parameter must be between 0 and 1")
   ord <- order(x) 
   x <- x[ord]
@@ -444,4 +444,3 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
-
