@@ -34,7 +34,9 @@ test_that("ProcessCapability rejects invalid specs", {
   )
 })
 
-test_that("ProcessCapability returns expected indices", {
+# TODO: ProcessCapability returns expected indices. One-sided case
+# TODO: processCapability returns expected indices. target-off mean
+test_that("ProcessCapability returns expected indices. Two-sided case", {
   chart <- qcc(make_grouped_xbar_data(), type = "xbar", nsigmas = 3)
   capability <- processCapability(chart, spec.limits = c(9.9, 10.1))
 
@@ -53,4 +55,76 @@ test_that("ProcessCapability returns expected indices", {
   )
 
   expect_equal(capability$indices, expected_indices, tolerance = 1e-6)
+})
+
+test_that("ProcessCapability returns valid Cp-family indices for one- and two-sided specs, and Cpm respects the target", {
+  chart <- qcc(make_grouped_xbar_data(), type = "xbar", nsigmas = 3)
+
+  two_sided_specs <- c(9.9, 10.1)
+  off_target <- 10.02
+  midpoint_target <- mean(two_sided_specs)
+
+  get_indices <- function(spec.limits, target) {
+    processCapability(
+      chart,
+      spec.limits = spec.limits,
+      target = target
+    )$indices[, "Value"]
+  }
+
+  upper_indices <- get_indices(c(NA_real_, two_sided_specs[2]), off_target)
+
+  expect_true(is.na(upper_indices["Cp"]))
+  expect_true(is.na(upper_indices["Cp_l"]))
+  expect_false(is.na(upper_indices["Cp_u"]))
+  expect_false(is.na(upper_indices["Cp_k"]))
+  expect_equal(upper_indices[["Cp_k"]], upper_indices[["Cp_u"]], tolerance = 1e-6)
+  expect_true(is.na(upper_indices["Cpm"]))
+
+  lower_indices <- get_indices(c(two_sided_specs[1], NA_real_), off_target)
+
+  expect_true(is.na(lower_indices["Cp"]))
+  expect_true(is.na(lower_indices["Cp_u"]))
+  expect_false(is.na(lower_indices["Cp_l"]))
+  expect_false(is.na(lower_indices["Cp_k"]))
+  expect_equal(lower_indices[["Cp_k"]], lower_indices[["Cp_l"]], tolerance = 1e-6)
+  expect_true(is.na(lower_indices["Cpm"]))
+
+  two_sided_off_indices <- get_indices(two_sided_specs, off_target)
+  two_sided_mid_indices <- get_indices(two_sided_specs, midpoint_target)
+
+  cp_family <- c("Cp", "Cp_l", "Cp_u", "Cp_k")
+
+  expect_false(anyNA(two_sided_off_indices[cp_family]))
+  expect_false(anyNA(two_sided_mid_indices[cp_family]))
+
+  expect_equal(
+    two_sided_off_indices[["Cp_k"]],
+    min(two_sided_off_indices[["Cp_l"]], two_sided_off_indices[["Cp_u"]]),
+    tolerance = 1e-6
+  )
+
+  expect_equal(
+    two_sided_mid_indices[["Cp_k"]],
+    min(two_sided_mid_indices[["Cp_l"]], two_sided_mid_indices[["Cp_u"]]),
+    tolerance = 1e-6
+  )
+
+  # Cp-family indices should not depend on target
+  expect_equal(
+    unname(two_sided_off_indices[cp_family]),
+    unname(two_sided_mid_indices[cp_family]),
+    tolerance = 1e-6
+  )
+
+  # Cpm should remain finite
+  expect_false(is.na(two_sided_off_indices["Cpm"]))
+  expect_false(is.na(two_sided_mid_indices["Cpm"]))
+
+
+  expect_lt(two_sided_off_indices[["Cpm"]], two_sided_mid_indices[["Cpm"]] + 1e-12)
+
+  # Cpm cannot exceed Cp
+  expect_lte(two_sided_off_indices[["Cpm"]], two_sided_off_indices[["Cp"]] + 1e-12)
+  expect_lte(two_sided_mid_indices[["Cpm"]], two_sided_mid_indices[["Cp"]] + 1e-12)
 })
