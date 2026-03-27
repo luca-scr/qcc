@@ -4,6 +4,7 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
+# TODO: implement Cpkm
 processCapability <- function(object, spec.limits, target, 
                               std.dev, nsigmas, 
                               confidence.level = 0.95, ...)
@@ -33,10 +34,13 @@ processCapability <- function(object, spec.limits, target,
   if(is.na(LSL) & is.na(USL))
      stop("invalid specification limits")
 
+  # TODO: refactor
   has.target <- (!missing(target))
-  if(!has.target) 
-    { target <- mean(spec.limits, na.rm=TRUE)
-      if(!is.na(LSL) & !is.na(USL)) has.target <- TRUE
+  if(!has.target) {
+    target <- mean(spec.limits, na.rm=TRUE) # FIX: removing NA means target == spec limits
+    if(!is.na(LSL) & !is.na(USL)) has.target <- TRUE
+    message("target value not provided; using midpoint of specification limits. Cpm may be optimistic")
+    # TODO: Explain this message in more detail in ?processCapability
   }
      
   if (is.na(LSL))

@@ -49,6 +49,15 @@ test_that("ProcessCapability rejects invalid specs", {
   )
 })
 
+test_that("ProcessCapability warns and defaults target to the midpoint when target is omitted", {
+  expect_message(
+    capability <- processCapability(chart, spec.limits = two_sided_specs),
+    "target value not provided; using midpoint of specification limits"
+  )
+  expect_true(capability$has.target)
+  expect_equal(capability$target, mean(two_sided_specs))
+})
+
 # TODO: ProcessCapability returns expected indices. One-sided case
 # TODO: processCapability returns expected indices. target-off mean
 test_that("ProcessCapability returns expected indices. Two-sided case", {
