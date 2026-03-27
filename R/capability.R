@@ -65,7 +65,7 @@ processCapability <- function(object, spec.limits, target,
   Cp <- (USL - LSL) / (2*nsigmas*std.dev)
   Cp.u <- (USL-center)/(nsigmas*std.dev)
   Cp.l <- (center-LSL)/(nsigmas*std.dev)
-  Cp.k <- min(Cp.u, Cp.l)
+  Cp.k <- min(Cp.u, Cp.l, na.rm = TRUE)
   # Cpm <- (USL - LSL) / (2*nsigmas*sqrt(sum((x-target)^2)/(n-1)))
   Cpm <- Cp / sqrt(1+((center-target)/std.dev)^2)
 
