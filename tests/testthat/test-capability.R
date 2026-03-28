@@ -1,13 +1,5 @@
 INDICES <- c("Cp", "Cp_l", "Cp_u", "Cp_k", "Cpm")
 
-get_indices <- function(spec.limits, target) {
-  processCapability(
-    chart,
-    spec.limits = spec.limits,
-    target = target
-  )$indices[, "Value"]
-}
-
 make_grouped_xbar_data <- function() {
   matrix(
     c(
@@ -24,22 +16,40 @@ midpoint_target <- mean(two_sided_specs)
 off_target <- 10.02
 chart <- qcc(make_grouped_xbar_data(), type = "xbar", nsigmas = 3)
 
+upper_capability <- processCapability(
+  chart,
+  spec.limits = c(NA_real_, two_sided_specs[2]),
+  target = off_target
+)
+lower_capability <- processCapability(
+  chart,
+  spec.limits = c(two_sided_specs[1], NA_real_),
+  target = off_target
+)
+two_sided_off_capability <- processCapability(
+  chart,
+  spec.limits = two_sided_specs,
+  target = off_target
+)
+two_sided_mid_capability <- processCapability(
+  chart,
+  spec.limits = two_sided_specs,
+  target = midpoint_target
+)
+
+capability <- two_sided_mid_capability
 
 test_that("ProcessCapability returns expected structure", {
-  capability <- processCapability(chart, spec.limits = two_sided_specs)
-
   expect_s3_class(capability, "processCapability")
   expect_equal(names(capability$spec.limits), c("LSL", "USL"))
   expect_equal(unname(capability$spec.limits), two_sided_specs)
 })
 
 test_that("processCapability returns indices matrix with expected structure", {
-  capability <- processCapability(chart, spec.limits = two_sided_specs)
   expect_true(is.matrix(capability$indices))
   expect_equal(rownames(capability$indices), INDICES)
   expect_equal(colnames(capability$indices)[1], "Value")
   expect_equal(ncol(capability$indices), 3)
-
 })
 
 test_that("ProcessCapability rejects invalid specs", {
@@ -58,11 +68,7 @@ test_that("ProcessCapability warns and defaults target to the midpoint when targ
   expect_equal(capability$target, mean(two_sided_specs))
 })
 
-# TODO: ProcessCapability returns expected indices. One-sided case
-# TODO: processCapability returns expected indices. target-off mean
-test_that("ProcessCapability returns expected indices. Two-sided case", {
-  capability <- processCapability(chart, spec.limits = two_sided_specs)
-
+test_that("ProcessCapability returns expected indices. Two-sided on-target case", {
   expected_indices <- matrix(
     c(
       1.372667, 1.441300, 1.304033, 1.304033, 1.344463,
@@ -77,28 +83,83 @@ test_that("ProcessCapability returns expected indices. Two-sided case", {
     )
   )
 
-  expect_equal(capability$indices, expected_indices, tolerance = 1e-6)
+  expect_equal(
+    two_sided_mid_capability$indices,
+    expected_indices,
+    tolerance = 1e-6
+  )
 })
 
+test_that("ProcessCapability returns expected indices. Upper spec only case", {
+  expected_upper_indices <- matrix(
+    c(
+      NA_real_, NA_real_, 1.304033, 1.304033, NA_real_,
+      NA_real_, NA_real_, 0.820114, 0.727408, NA_real_,
+      NA_real_, NA_real_, 1.787953, 1.880659, NA_real_
+    ),
+    nrow = 5,
+    ncol = 3,
+    dimnames = list(
+      INDICES,
+      c("Value", "2.5%", "97.5%")
+    )
+  )
 
-upper_indices <- get_indices(c(NA_real_, two_sided_specs[2]), off_target)
-lower_indices <- get_indices(c(two_sided_specs[1], NA_real_), off_target)
-two_sided_off_indices <- get_indices(two_sided_specs, off_target)
-two_sided_mid_indices <- get_indices(two_sided_specs, midpoint_target)
-
-test_that("ProcessCapability returns valid indices for one-sided specs", {
-  expect_true(is.na(upper_indices["Cp"]))
-  expect_true(is.na(upper_indices["Cp_l"]))
-  expect_false(is.na(upper_indices["Cp_u"]))
-  expect_false(is.na(upper_indices["Cp_k"]))
-  expect_true(is.na(upper_indices["Cpm"]))
-
-  expect_true(is.na(lower_indices["Cp"]))
-  expect_false(is.na(lower_indices["Cp_l"]))
-  expect_true(is.na(lower_indices["Cp_u"]))
-  expect_false(is.na(lower_indices["Cp_k"]))
-  expect_true(is.na(lower_indices["Cpm"]))
+  expect_equal(
+    upper_capability$indices,
+    expected_upper_indices,
+    tolerance = 1e-6
+  )
 })
+
+test_that("ProcessCapability returns expected indices. Lower spec only case", {
+  expected_lower_indices <- matrix(
+    c(
+      NA_real_, 1.441300, NA_real_, 1.441300, NA_real_,
+      NA_real_, 0.911657, NA_real_, 0.810191, NA_real_,
+      NA_real_, 1.970943, NA_real_, 2.072409, NA_real_
+    ),
+    nrow = 5,
+    ncol = 3,
+    dimnames = list(
+      INDICES,
+      c("Value", "2.5%", "97.5%")
+    )
+  )
+  
+  expect_equal(
+    lower_capability$indices,
+    expected_lower_indices,
+    tolerance = 1e-6
+  )
+})
+
+test_that("ProcessCapability returns expected indices. Two-sided off-target case", {
+  expected_indices <- matrix(
+    c(
+      1.372667, 1.441300, 1.304033, 1.304033, 1.167834,
+      0.808460, 0.911657, 0.820114, 0.727408, 0.650542,
+      1.937713, 1.970943, 1.787953, 1.880659, 1.686689
+    ),
+    nrow = 5,
+    ncol = 3,
+    dimnames = list(
+      INDICES,
+      c("Value", "2.5%", "97.5%")
+    )
+  )
+
+  expect_equal(
+    two_sided_off_capability$indices,
+    expected_indices,
+    tolerance = 1e-6
+  )
+})
+
+upper_indices <- upper_capability$indices[, "Value"]
+lower_indices <- lower_capability$indices[, "Value"]
+two_sided_off_indices <- two_sided_off_capability$indices[, "Value"]
+two_sided_mid_indices <- two_sided_mid_capability$indices[, "Value"]
 
 test_that("Cp, Cp_l, Cp_u, Cp_k do not depend on target", {
   cp_family <- c("Cp", "Cp_l", "Cp_u", "Cp_k")
@@ -128,8 +189,6 @@ test_that("Cpk collapses correctly to Cpu or Cpl in one-sided specs", {
 })
 
 test_that("Cpm calculation passes mathematical bounds", {
-  expect_false(is.na(two_sided_off_indices["Cpm"]))
-  expect_false(is.na(two_sided_mid_indices["Cpm"]))
   expect_lt(two_sided_off_indices[["Cpm"]], two_sided_mid_indices[["Cpm"]] + 1e-12)
   expect_lte(two_sided_off_indices[["Cpm"]], two_sided_off_indices[["Cp"]] + 1e-12)
   expect_lte(two_sided_mid_indices[["Cpm"]], two_sided_mid_indices[["Cp"]] + 1e-12)
