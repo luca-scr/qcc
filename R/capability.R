@@ -71,16 +71,13 @@ processCapability <- function(object, spec.limits, target,
 
   # compute confidence limits 
   alpha <- 1-confidence.level
-  Cp.limits   <- Cp*sqrt(qchisq(c(alpha/2, 1-alpha/2), n-1)/(n-1))
-  Cp.u.limits <- Cp.u*(1+c(-1,1)*qnorm(confidence.level)*
-                       sqrt(1/(9*n*Cp.u^2)+1/(2*(n-1))))
-  Cp.l.limits <- Cp.l*(1+c(-1,1)*qnorm(confidence.level)*
-                       sqrt(1/(9*n*Cp.l^2)+1/(2*(n-1))))
-  Cp.k.limits <- Cp.k*(1+c(-1,1)*qnorm(1-alpha/2)*
-                       sqrt(1/(9*n*Cp.k^2)+1/(2*(n-1))))
-  df <- n*(1+((center-target)/std.dev)^2)/
-          (1+2*((center-target)/std.dev)^2)
-  Cpm.limits <- Cpm*sqrt(qchisq(c(alpha/2, 1-alpha/2), df)/df)
+  Cp.limits   <- .chisq_limits_cp_family(Cp, n - 1, alpha)
+  Cp.u.limits <- .wald_limits_cpk_family(Cp.u, qnorm(confidence.level), n)
+  Cp.l.limits <- .wald_limits_cpk_family(Cp.l, qnorm(confidence.level), n)
+  Cp.k.limits <- .wald_limits_cpk_family(Cp.k, qnorm(1 - alpha / 2), n)
+  df <- n * (1 + ((center - target) / std.dev)^2) / (1 + 2 * ((center - target) / std.dev)^2)
+  Cpm.limits <- .chisq_limits_cp_family(Cpm, df, alpha)
+
   names(Cp.limits) <- names(Cp.k.limits) <- names(Cpm.limits) <- 
     c(paste(round(100*alpha/2, 1), "%", sep=""),
       paste(round(100*(1-alpha/2), 1), "%", sep=""))
@@ -316,3 +313,25 @@ plot.processCapability <- function(x,
   return(plot)
 }
   
+# Compute approximate confidence limits for cpu, cpl, cpk.
+# See @Bissell1990
+# - idx: point estimate of the capability index
+# - z:   normal quantile
+# - n:   sample size
+.wald_limits_cpk_family <- function(idx, z, n)
+{
+  if (is.na(idx)) return(c(NA_real_, NA_real_))
+  idx * (1 + c(-1, 1) * z * sqrt(1 / (9 * n * idx^2) + 1 / (2 * (n - 1))))
+}
+
+# Compute confidence limits for cp and cpm.
+# For Cp, see @Chou1990. For Cpm, see @Boyles1991
+# - idx: point estimate of the capability index
+# - df:  degrees of freedom
+# - alpha: total tail probability
+.chisq_limits_cp_family <- function(idx, df, alpha)
+{
+  if (is.na(idx)) return(c(NA_real_, NA_real_))
+  idx * sqrt(qchisq(c(alpha / 2, 1 - alpha / 2), df) / df)
+}
+
