@@ -81,37 +81,7 @@ qccRulesViolatingWER3 <- function(object, ...)
                         k = object$nsigmas*1/3)
 }  
 
-qccRulesViolatingWER4 <- function(object)
-{
-  # Return indices of points violating runs (WER #4)
-  run.length <- 8
-  center <- object$center
-  statistics <- c(object$statistics, object$newstats)
-  cl <- object$limits
-  diffs <- statistics - center
-  diffs[diffs > 0] <- 1
-  diffs[diffs < 0] <- -1
-  runs <- rle(diffs)
-  vruns <- rep(runs$lengths >= run.length, runs$lengths)
-  vruns.above <- (vruns & (diffs > 0))
-  vruns.below <- (vruns & (diffs < 0))
-  rvruns.above <- rle(vruns.above)
-  rvruns.below <- rle(vruns.below)
-  vbeg.above <- cumsum(rvruns.above$lengths)[rvruns.above$values] -
-    (rvruns.above$lengths - run.length)[rvruns.above$values]
-  vend.above <- cumsum(rvruns.above$lengths)[rvruns.above$values]
-  vbeg.below <- cumsum(rvruns.below$lengths)[rvruns.below$values] -
-    (rvruns.below$lengths - run.length)[rvruns.below$values]
-  vend.below <- cumsum(rvruns.below$lengths)[rvruns.below$values]
-  violators <- numeric()
-  if (length(vbeg.above)) 
-  { for (i in 1:length(vbeg.above))
-    violators <- c(violators, vbeg.above[i]:vend.above[i]) }
-  if (length(vbeg.below)) 
-  { for (i in 1:length(vbeg.below))
-    violators <- c(violators, vbeg.below[i]:vend.below[i]) }
-  return(violators)
-}
+qccRulesViolatingWER4 <- function(object) qccRulesViolatingNEL2(object, run.length = 8)
 
 # Nelson rules
 #
@@ -126,5 +96,37 @@ qccRulesViolatingWER4 <- function(object)
 # 8. Eight points in a row plot outside 1 sigma on both sides of the center line.
 
 qccRulesViolatingNEL1 <- function(object) qccRulesViolatingWER1(object, object$limits)
+
+qccRulesViolatingNEL2 <- function(object, run.length = 9)
+{
+  # Return indices of points violating nine-point runs (Nelson #2)
+  center <- object$center
+  statistics <- c(object$statistics, object$newstats)
+  diffs <- statistics - center
+  viol.above <- qccRulesViolatingRun(diffs > 0, run.length)
+  viol.below <- qccRulesViolatingRun(diffs < 0, run.length)
+  return(c(viol.above, viol.below))
+}
+
 qccRulesViolatingNEL5 <- function(object) qccRulesViolatingWER2(object)
 qccRulesViolatingNEL6 <- function(object) qccRulesViolatingWER3(object)
+
+
+qccRulesViolatingRun <- function(condition, run.length) {
+  # Returns the indices of elements that are part of a long enough run of TRUE values
+  # only starts counting from the point where the run first reaches the required length.
+  if(!length(condition))
+    return(numeric())
+
+  condition[is.na(condition)] <- FALSE
+  runs <- rle(condition)
+  ends <- cumsum(runs$lengths)
+  starts <- ends - runs$lengths + 1
+  violating.runs <- which(runs$values & runs$lengths >= run.length)
+  violators <- numeric()
+  if (length(violating.runs)) {
+    for(i in violating.runs)
+    violators <- c(violators, (starts[i] + run.length - 1):ends[i])
+  }
+  return(violators)
+}
