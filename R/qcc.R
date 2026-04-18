@@ -21,7 +21,8 @@ qcc <- function(data,
                 sizes, center, std.dev, limits, 
                 newdata, newsizes, 
                 nsigmas = 3, confidence.level, 
-                rules = c(1,4), ...)
+                rules = c(1,4),
+                rule.set = c("western-electric", "nelson"), ...)
 {
   call <- match.call()
   
@@ -85,13 +86,14 @@ qcc <- function(data,
   names(statistics) <-  rownames(data) <-  labels
   names(dimnames(data)) <- list("Group", "Samples")
   rules <- as.numeric(rules)
+  rule.set <- match.arg(rule.set)
   
   # create object of class 'qcc'
   object <- list(call = call, type = type,
                  data.name = data.name, data = data, 
                  statistics = statistics, sizes = sizes, 
                  center = center, std.dev = std.dev,
-                 rules = rules)
+                 rules = rules, rule.set = rule.set)
   class(object) <- "qcc"
 
   # check for new data provided and update object

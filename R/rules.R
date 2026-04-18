@@ -8,36 +8,86 @@
 # 3. Four of five consecutive points plot beyond a 1-sigma limit.
 # 4. Eight consecutive points plot on one side of the center line.
 
-qccRules <- function(object, rules = object$rules)
+qccRules <- function(object, rules = object$rules, rule.set = object$rule.set)
 {
   # Return a vector of indices for cases (statistics & new.statistics) 
   # in object violating specified rules (NA if no rule is violated)
   rules <- as.numeric(rules)
+  if(is.null(rule.set))
+    rule.set <- "western-electric"
+  rule.set <- match.arg(rule.set, c("western-electric", "nelson"))
   if(!(inherits(object, "qcc") | inherits(object, "mqcc")))
     stop("input object must be of class 'qcc' or 'mqcc'")
   stats <- c(object$statistics, object$newstats)
   out <- rep(NA, length(stats))
-  if(any(rules == 4)) 
-  {  
-    wer <- qccRulesViolatingWER4(object)
-    out[wer] <- 4
+  # TODO: rewrite the following decision and precedence tree
+  if(rule.set == "western-electric")
+  {
+    if(any(rules == 4))
+    {
+      wer <- qccRulesViolatingWER4(object)
+      out[wer] <- 4
+    }
+    if(any(rules == 3))
+    {
+      wer <- qccRulesViolatingWER3(object)
+      out[wer] <- 3
+    }
+    if(any(rules == 2))
+    {
+      wer <- qccRulesViolatingWER2(object)
+      out[wer] <- 2
+    }
+    if(any(rules == 1))
+    {
+      wer <- qccRulesViolatingWER1(object)
+      out[wer] <- 1
+    }
+    attr(out, "WesternElectricRules") <- rules
+  } else
+  {
+    if(any(rules == 8))
+    {
+      nel <- qccRulesViolatingNEL8(object)
+      out[nel] <- 8
+    }
+    if(any(rules == 7))
+    {
+      nel <- qccRulesViolatingNEL7(object)
+      out[nel] <- 7
+    }
+    if(any(rules == 6))
+    {
+      nel <- qccRulesViolatingNEL6(object)
+      out[nel] <- 6
+    }
+    if(any(rules == 5))
+    {
+      nel <- qccRulesViolatingNEL5(object)
+      out[nel] <- 5
+    }
+    if(any(rules == 4))
+    {
+      nel <- qccRulesViolatingNEL4(object)
+      out[nel] <- 4
+    }
+    if(any(rules == 3))
+    {
+      nel <- qccRulesViolatingNEL3(object)
+      out[nel] <- 3
+    }
+    if(any(rules == 2))
+    {
+      nel <- qccRulesViolatingNEL2(object)
+      out[nel] <- 2
+    }
+    if(any(rules == 1))
+    {
+      nel <- qccRulesViolatingNEL1(object)
+      out[nel] <- 1
+    }
+    attr(out, "NelsonRules") <- rules
   }
-  if(any(rules == 3)) 
-  {  
-    wer <- qccRulesViolatingWER3(object)
-    out[wer] <- 3
-  }
-  if(any(rules == 2)) 
-  {  
-    wer <- qccRulesViolatingWER2(object)
-    out[wer] <- 2
-  }
-  if(any(rules == 1)) 
-  {  
-    wer <- qccRulesViolatingWER1(object)
-    out[wer] <- 1
-  }
-  attr(out, "WesternElectricRules") <- rules
   return(out)
 }
 
