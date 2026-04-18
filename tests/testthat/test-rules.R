@@ -59,3 +59,32 @@ test_that("qccRules errors for objects that are not qcc or mqcc", {
     "input object must be of class 'qcc' or 'mqcc'"
   )
 })
+
+test_that("NEL1-NEL8 return expected violating indices for deterministic qcc objects", {
+  nel1_object <- make_rule_test_qcc(c(0, 3.2, -3.4, 3))
+  expect_equal(qccRulesViolatingNEL1(nel1_object), c(2, 3))
+
+  nel2_object <- make_rule_test_qcc(c(rep(0.5, 10), -0.5, rep(-0.5, 9)))
+  expect_equal(qccRulesViolatingNEL2(nel2_object), c(9, 10, 19, 20))
+
+  nel3_object <- make_rule_test_qcc(c(1:7, 7, 6:1))
+  expect_equal(qccRulesViolatingNEL3(nel3_object), c(6, 7, 13, 14))
+
+  nel4_object <- make_rule_test_qcc(c(1, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 8, 7, 9, 8))
+  expect_equal(qccRulesViolatingNEL4(nel4_object), c(14, 15))
+
+  nel5_object <- make_rule_test_qcc(c(0, 2.3, 0.4, 2.2, -2.4, -0.2, -2.5))
+  expect_equal(qccRulesViolatingNEL5(nel5_object), c(4, 7))
+
+  nel6_object <- make_rule_test_qcc(c(1.2, 1.3, 0.2, 1.4, 1.5, -1.2, -1.3, -0.1, -1.4, -1.5))
+  expect_equal(qccRulesViolatingNEL6(nel6_object), c(5, 10))
+
+  nel7_object <- make_rule_test_qcc(c(rep(0.3, 16), 1.2))
+  expect_equal(qccRulesViolatingNEL7(nel7_object), c(15, 16))
+
+  nel8_object <- make_rule_test_qcc(c(1.2, -1.3, 1.1, -1.4, 1.5, -1.2, 1.3, -1.1, 0.2))
+  expect_equal(qccRulesViolatingNEL8(nel8_object), 8)
+
+  nel8_object <- make_rule_test_qcc(rep(1.2, 8))
+  expect_equal(qccRulesViolatingNEL8(nel8_object), numeric())
+})
