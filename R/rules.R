@@ -1,3 +1,5 @@
+# TODO: Refactor WER2, NEL7, NEL8
+
 # Western Electric rules 
 #
 # A process is out of control if either
@@ -135,6 +137,35 @@ qccRulesViolatingNEL4 <- function(object)
 qccRulesViolatingNEL5 <- function(object) qccRulesViolatingWER2(object)
 qccRulesViolatingNEL6 <- function(object) qccRulesViolatingWER3(object)
 
+qccRulesViolatingNEL7 <- function(object)
+{
+  # Return indices of points inside one-sigma limits (Nelson #7)
+  run.length <- 15
+  statistics <- c(object$statistics, object$newstats)
+  limits <- qccRulesSigmaLimits(object, k = 1)
+  inside <- statistics >= limits[,1] & statistics <= limits[,2]
+  return(qccRulesViolatingRun(inside, run.length))
+}
+
+qccRulesViolatingNEL8 <- function(object)
+{
+  # Return indices of points outside one-sigma limits on both sides (Nelson #8)
+  run.length <- 8
+  statistics <- c(object$statistics, object$newstats)
+  limits <- qccRulesSigmaLimits(object, k = 1)
+  if(length(statistics) < run.length)
+    return(numeric())
+  above <- statistics > limits[,2]
+  below <- statistics < limits[,1]
+  outside <- above | below
+  outside.windows <- embed(outside, run.length)
+  above.windows <- embed(above, run.length)
+  below.windows <- embed(below, run.length)
+  violators <- which(apply(outside.windows, 1, all) &
+                     apply(above.windows, 1, any) &
+                     apply(below.windows, 1, any))
+  return(violators + run.length - 1)
+}
 
 qccRulesViolatingRun <- function(condition, run.length) {
   # Returns the indices of elements that are part of a long enough run of TRUE values
@@ -153,4 +184,17 @@ qccRulesViolatingRun <- function(condition, run.length) {
     violators <- c(violators, (starts[i] + run.length - 1):ends[i])
   }
   return(violators)
+}
+
+qccRulesSigmaLimits <- function(object, k)
+{
+  statistics <- c(object$statistics, object$newstats)
+  limits <- paste("limits.", object$type, sep = "")
+  limits <- do.call(limits, list(center = object$center,
+                                 std.dev = object$std.dev,
+                                 sizes = c(object$sizes, object$newsizes),
+                                 nsigmas = object$nsigmas*k/3))
+  if(nrow(limits) == 1)
+    limits <- limits[rep(1, length(statistics)),, drop = FALSE]
+  return(limits)
 }
