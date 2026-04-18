@@ -113,3 +113,18 @@ qccRulesViolatingWER4 <- function(object)
   return(violators)
 }
 
+# Nelson rules
+#
+# A process is out of control if any of the following occur:
+# 1. One point plots outside 3-sigma control limits.
+# 2. Nine points in a row plot on the same side of the center line.
+# 3. Six points in a row are steadily increasing or decreasing.
+# 4. Fourteen points in a row alternate up and down.
+# 5. Two of three consecutive points plot beyond a 2-sigma limit.
+# 6. Four of five consecutive points plot beyond a 1-sigma limit.
+# 7. Fifteen points in a row plot within 1 sigma of the center line.
+# 8. Eight points in a row plot outside 1 sigma on both sides of the center line.
+
+qccRulesViolatingNEL1 <- function(object) qccRulesViolatingWER1(object, object$limits)
+qccRulesViolatingNEL5 <- function(object) qccRulesViolatingWER2(object)
+qccRulesViolatingNEL6 <- function(object) qccRulesViolatingWER3(object)
