@@ -108,6 +108,30 @@ qccRulesViolatingNEL2 <- function(object, run.length = 9)
   return(c(viol.above, viol.below))
 }
 
+qccRulesViolatingNEL3 <- function(object)
+{
+  # Return indices of points violating trend runs (Nelson #3)
+  run.length <- 6
+  statistics <- c(object$statistics, object$newstats)
+  diffs <- diff(statistics)
+  viol.increase <- qccRulesViolatingRun(diffs > 0, run.length - 1) + 1
+  viol.decrease <- qccRulesViolatingRun(diffs < 0, run.length - 1) + 1
+  return(c(viol.increase, viol.decrease))
+}
+
+qccRulesViolatingNEL4 <- function(object)
+{
+  # Return indices of points violating alternating runs (Nelson #4)
+  run.length <- 14
+  statistics <- c(object$statistics, object$newstats)
+  diffs <- diff(statistics)
+  if(length(diffs) < 2) # Need at least 2 to detect alternating direction
+    return(numeric())
+  alternating <- diffs[-1] * diffs[-length(diffs)] < 0 # Identify where consecutive differences change sign
+  violators <- qccRulesViolatingRun(alternating, run.length - 2) + 2
+  return(violators)
+}
+
 qccRulesViolatingNEL5 <- function(object) qccRulesViolatingWER2(object)
 qccRulesViolatingNEL6 <- function(object) qccRulesViolatingWER3(object)
 
