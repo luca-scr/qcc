@@ -60,6 +60,27 @@ test_that("qccRules errors for objects that are not qcc or mqcc", {
   )
 })
 
+test_that("qccRules uses Western Electric rules by default for old objects", {
+  object <- make_rule_test_qcc(c(rep(0.5, 8), -0.5))
+
+  result <- qccRules(object, rules = 4)
+
+  expect_equal(result[8], 4)
+  expect_true(all(is.na(result[c(1:7, 9)])))
+  expect_equal(attr(result, "WesternElectricRules"), 4)
+})
+
+test_that("qccRules interprets numeric rule ids within the selected rule set", {
+  alternating_object <- make_rule_test_qcc(rep(c(0, 1), length.out = 15))
+
+  western <- qccRules(alternating_object, rules = 4, rule.set = "western-electric")
+  nelson <- qccRules(alternating_object, rules = 4, rule.set = "nelson")
+
+  expect_true(all(is.na(western)))
+  expect_equal(nelson, c(rep(NA, 13), 4, 4), ignore_attr = TRUE)
+  expect_equal(attr(nelson, "NelsonRules"), 4)
+})
+
 test_that("NEL1-NEL8 return expected violating indices for deterministic qcc objects", {
   nel1_object <- make_rule_test_qcc(c(0, 3.2, -3.4, 3))
   expect_equal(qccRulesViolatingNEL1(nel1_object), c(2, 3))
