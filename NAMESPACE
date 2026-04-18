@@ -48,7 +48,15 @@ export(qccRules,
        qccRulesViolatingWER1, 
        qccRulesViolatingWER2,
        qccRulesViolatingWER3, 
-       qccRulesViolatingWER4)
+       qccRulesViolatingWER4,
+       qccRulesViolatingNEL1,
+       qccRulesViolatingNEL2,
+       qccRulesViolatingNEL3,
+       qccRulesViolatingNEL4,
+       qccRulesViolatingNEL5,
+       qccRulesViolatingNEL6,
+       qccRulesViolatingNEL7,
+       qccRulesViolatingNEL8)
 
 export(paretoChart, print.paretoChart, plot.paretoChart)
 S3method("print", "paretoChart")
@@ -80,4 +88,3 @@ export(pareto.chart, process.capability, oc.curves,
 
 # exportPattern("^[^\\.]")
 # to check exported objects use getNamespaceExports("qcc")
-
