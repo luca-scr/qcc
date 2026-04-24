@@ -305,6 +305,10 @@ plot.qcc <- function(x, xtime = NULL,
   newstats <- object$newstats
   newdata.name <- object$newdata.name
   violations <- object$violations
+  rules <- object$rules
+  rule.set <- object$rule.set
+  if(is.null(rule.set)) rule.set <- "western-electric"
+  rule.set <- match.arg(rule.set, c("western-electric", "nelson"))
   statistics <- c(stats, newstats)
   groups <- if(is.null(xtime)) 1:length(statistics) else xtime
   stopifnot(length(groups) == length(statistics))
@@ -319,12 +323,23 @@ plot.qcc <- function(x, xtime = NULL,
            title <- paste(type, "chart for", newdata.name) 
   }
   
+  violation.values <- ifelse(is.na(violations), 0, violations)
+  violation.levels <- sort(unique(c(0, violation.values)))
+  rule.options <- qcc.options("rules")
+  colour.values <- setNames(
+    c("black", rule.options$col),
+    c("0", seq_along(rule.options$col))
+  )
+  shape.values <- setNames(
+    c(20, rule.options$pch),
+    c("0", seq_along(rule.options$pch))
+  )
+
   df <- data.frame(group = groups, 
                    stat = statistics, 
                    lcl = lcl, ucl = ucl,
-                   violations = factor(ifelse(is.na(violations), 
-                                              0, violations),
-                                       levels = 0:4))
+                   violations = factor(violation.values, levels = violation.levels
+                  )
   if(!chart.all & (!is.null(newstats)))
     df <- df[seq_len(length(df$group)) > length(object$statistics),]
   
@@ -340,9 +355,9 @@ plot.qcc <- function(x, xtime = NULL,
     geom_point(aes(colour = .data[["violations"]], 
                    shape = .data[["violations"]]), 
                size = 2) +
-    scale_colour_manual(values = c("black", qcc.options("rules")$col),
+    scale_colour_manual(values = colour.values,
                         breaks = levels(df$violations)) +
-    scale_shape_manual(values = c(20, qcc.options("rules")$pch),
+    scale_shape_manual(values = shape.values,
                        breaks = levels(df$violations)) +
     labs(title = title, subtitle = "",
          x = if(missing(xlab)) "Group" else xlab,
@@ -371,7 +386,9 @@ plot.qcc <- function(x, xtime = NULL,
   }
         
   # draw control limits
-  if(any(object$rules == 1))
+  has.rule <- function(x) any(rules %in% x)
+
+  if(has.rule(1))
   { 
     dx <- min(diff(df$group))/2
     x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
@@ -420,7 +437,7 @@ plot.qcc <- function(x, xtime = NULL,
   }
   
   # draw 2-sigma warning limits
-  if(any(object$rules == 2))
+  if(if(rule.set == "nelson") has.rule(5) else has.rule(2))
   { 
     limits.2sigma <- do.call(paste("limits.", object$type, sep = ""), 
                              list(center = object$center, 
@@ -471,7 +488,7 @@ plot.qcc <- function(x, xtime = NULL,
   }
   
   # draw 1-sigma warning limits
-  if(any(object$rules == 3))
+  if(if(rule.set == "nelson") has.rule(c(6, 7, 8)) else has.rule(3))
   { 
     limits.2sigma <- do.call(paste("limits.", object$type, sep = ""), 
                              list(center = object$center, 
