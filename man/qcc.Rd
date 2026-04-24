@@ -14,7 +14,8 @@ qcc(data,
     sizes, center, std.dev, limits,
     newdata, newsizes, 
     nsigmas = 3, confidence.level, 
-    rules = c(1,4), \dots)
+    rules = c(1,4),
+    rule.set = c("western-electric", "nelson"), \dots)
 
 \method{print}{qcc}(x, digits = getOption("digits"), \dots)
 
@@ -72,6 +73,8 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{rules}{a value or a vector of values specifying the rules to apply to the chart. See \code{\link{qccRules}} for possible values and their meaning.}
 
+\item{rule.set}{a character string specifying how numeric \code{rules} values are interpreted. The default is \code{"western-electric"} specifying Western Electric rules 1 through 4. Use \code{"nelson"} to apply Nelson rules 1 through 8.}
+
 \item{xtime}{a vector of date-time values as returned by \code{\link{Sys.time}} and \code{\link{Sys.Date}}. If provided it is used for x-axis so it must be of the same length as the statistic charted.}
 
 \item{add.stats}{a logical value indicating whether statistics and other information should be printed at the bottom of the chart.}
@@ -96,7 +99,12 @@ Several methods are available for estimating the standard deviation in case of a
 
 \item{\dots}{additional arguments to be passed to the generic function.} 
 }
-%\details{}
+\details{
+Numeric \code{rules} values are interpreted within \code{rule.set}. By
+default, \code{rules = c(1,4)} applies Western Electric rules 1 and 4 for
+backward compatibility. Nelson rules can be requested with
+\code{rules = 1:8, rule.set = "nelson"}.
+}
 
 \value{Returns an object of class \code{'qcc'}.}
 

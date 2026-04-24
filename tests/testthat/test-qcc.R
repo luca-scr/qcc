@@ -45,6 +45,35 @@ test_that("xbar.one charts produce the correct number of violations", {
   expect_equal(sum(!is.na(chart$violations)), 1)
 })
 
+test_that("qcc uses Western Electric rules by default", {
+  chart <- qcc(
+    c(rep(0.5, 8), -0.5),
+    type = "xbar.one",
+    center = 0,
+    std.dev = 1,
+    rules = 4
+  )
+
+  expect_equal(chart$rule.set, "western-electric")
+  expect_equal(chart$violations[8], 4)
+  expect_true(all(is.na(chart$violations[c(1:7, 9)])))
+})
+
+test_that("qcc applies Nelson rules", {
+  chart <- qcc(
+    c(rep(0.3, 16), 1.2),
+    type = "xbar.one",
+    center = 0,
+    std.dev = 1,
+    rules = 7,
+    rule.set = "nelson"
+  )
+
+  expect_equal(chart$rule.set, "nelson")
+  expect_equal(chart$violations[15:16], c(7, 7))
+  expect_true(all(is.na(chart$violations[c(1:14, 17)])))
+})
+
 test_that("u charts with newdata detect expected violations", {
   data(circuit, package = "qcc")
   outofctrl <- c(6, 20)
