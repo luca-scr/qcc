@@ -339,7 +339,7 @@ plot.qcc <- function(x, xtime = NULL,
                    stat = statistics, 
                    lcl = lcl, ucl = ucl,
                    violations = factor(violation.values, levels = violation.levels
-                  )
+                  ))
   if(!chart.all & (!is.null(newstats)))
     df <- df[seq_len(length(df$group)) > length(object$statistics),]
   
