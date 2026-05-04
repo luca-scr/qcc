@@ -73,6 +73,10 @@ export(qcc.options, qccGroups, blues.colors,
 export(describe, print.describe)
 S3method("print", "describe")
 
+export(qcc_diagnostics, print.qcc_diagnostics, plot.qcc_diagnostics)
+S3method("print", "qcc_diagnostics")
+S3method("plot", "qcc_diagnostics")
+
 # deprecated
 export(pareto.chart, process.capability, oc.curves, 
        qcc.groups, nclass.hist, cause.and.effect, 
