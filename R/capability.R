@@ -75,27 +75,31 @@ processCapability <- function(object, spec.limits, target,
   Pp.k <- min(Pp.u, Pp.l, na.rm = TRUE)
   Ppm <- Pp / sqrt(1+((center-target)/overall.std.dev)^2)
 
-  # compute confidence limits 
-  alpha <- 1-confidence.level
-  Cp.limits   <- .chisq_limits_cp_family(Cp, n - 1, alpha)
-  Cp.u.limits <- .wald_limits_cpk_family(Cp.u, qnorm(confidence.level), n)
-  Cp.l.limits <- .wald_limits_cpk_family(Cp.l, qnorm(confidence.level), n)
-  Cp.k.limits <- .wald_limits_cpk_family(Cp.k, qnorm(1 - alpha / 2), n)
-  df <- n * (1 + ((center - target) / std.dev)^2) / (1 + 2 * ((center - target) / std.dev)^2)
-  Cpm.limits <- .chisq_limits_cp_family(Cpm, df, alpha)
-  Pp.limits <- .chisq_limits_cp_family(Pp, n - 1, alpha)
-  Pp.u.limits <- .wald_limits_cpk_family(Pp.u, qnorm(confidence.level), n)
-  Pp.l.limits <- .wald_limits_cpk_family(Pp.l, qnorm(confidence.level), n)
-  Pp.k.limits <- .wald_limits_cpk_family(Pp.k, qnorm(1 - alpha / 2), n)
-  overall.df <- n * (1 + ((center - target) / overall.std.dev)^2) /
-    (1 + 2 * ((center - target) / overall.std.dev)^2)
-  Ppm.limits <- .chisq_limits_cp_family(Ppm, overall.df, alpha)
+  # compute confidence limits
+  alpha  <- 1 - confidence.level
+  z_one  <- qnorm(confidence.level)
+  z_two  <- qnorm(1 - alpha / 2)
 
-  limit.names <- c(paste(round(100*alpha/2, 1), "%", sep=""),
-                   paste(round(100*(1-alpha/2), 1), "%", sep=""))
-  names(Cp.limits) <- names(Cp.u.limits) <- names(Cp.l.limits) <- names(Cp.k.limits) <-
-    names(Cpm.limits) <- names(Pp.limits) <- names(Pp.u.limits) <- names(Pp.l.limits) <-
-    names(Pp.k.limits) <- names(Ppm.limits) <- limit.names
+  index_specs <- list(
+    Cp    = list(value = Cp,    fn = "chisq", arg = n - 1),
+    Cp_l  = list(value = Cp.l, fn = "wald",  arg = z_one),
+    Cp_u  = list(value = Cp.u, fn = "wald",  arg = z_one),
+    Cp_k  = list(value = Cp.k, fn = "wald",  arg = z_two),
+    Cpm   = list(value = Cpm,  fn = "chisq", arg = .cpm_df(n, center, target, std.dev)),
+    Pp    = list(value = Pp,   fn = "chisq", arg = n - 1),
+    Pp_l  = list(value = Pp.l, fn = "wald",  arg = z_one),
+    Pp_u  = list(value = Pp.u, fn = "wald",  arg = z_one),
+    Pp_k  = list(value = Pp.k, fn = "wald",  arg = z_two),
+    Ppm   = list(value = Ppm,  fn = "chisq", arg = .cpm_df(n, center, target, overall.std.dev))
+  )
+  limits_list <- lapply(index_specs, function(spec) {
+    if (spec$fn == "chisq")
+      .chisq_limits_cp_family(spec$value, spec$arg, alpha)
+    else
+      .wald_limits_cpk_family(spec$value, spec$arg, n)
+  })
+  limit.names <- c(paste0(round(100 * alpha / 2, 1), "%"),
+                   paste0(round(100 * (1 - alpha / 2), 1), "%"))
 
   if(is.na(LSL))  exp.LSL <- NA
   else { exp.LSL <- pnorm((LSL-center)/std.dev) * 100
@@ -106,13 +110,9 @@ processCapability <- function(object, spec.limits, target,
   obs.LSL <- sum(x<LSL)/n * 100
   obs.USL <- sum(x>USL)/n * 100
   
-  tab <- cbind(c(Cp, Cp.l, Cp.u, Cp.k, Cpm, Pp, Pp.l, Pp.u, Pp.k, Ppm),
-               rbind(Cp.limits, Cp.l.limits, Cp.u.limits, 
-                     Cp.k.limits, Cpm.limits, Pp.limits, Pp.l.limits, Pp.u.limits,
-                     Pp.k.limits, Ppm.limits))
-  rownames(tab) <- c("Cp", "Cp_l", "Cp_u", "Cp_k", "Cpm",
-                     "Pp", "Pp_l", "Pp_u", "Pp_k", "Ppm")
-  colnames(tab) <- c("Value", names(Cp.limits))
+  tab <- do.call(rbind,
+    Map(function(spec, lim) c(spec$value, lim), index_specs, limits_list))
+  colnames(tab) <- c("Value", limit.names)
 
   out <- list(data = x, data.name = object$data.name,
               center = center, std.dev = std.dev, overall.std.dev = overall.std.dev,
@@ -371,4 +371,12 @@ plot.processCapability <- function(x,
 {
   if (is.na(idx)) return(c(NA_real_, NA_real_))
   idx * sqrt(qchisq(c(alpha / 2, 1 - alpha / 2), df) / df)
+}
+
+# Satterthwaite degrees of freedom for Cpm / Ppm (Boyles 1991).
+# Same formula for both; differs only in which sigma is passed.
+.cpm_df <- function(n, center, target, sigma)
+{
+  k <- ((center - target) / sigma)^2
+  n * (1 + k) / (1 + 2 * k)
 }
