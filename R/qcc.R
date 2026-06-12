@@ -682,18 +682,18 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if (length(unique(sizes))==1) sizes <- sizes[1]
   se.stats <- std.dev/sqrt(sizes)
-  if(is.null(conf))
-     { lcl <- center - nsigmas * se.stats
-       ucl <- center + nsigmas * se.stats
-     }
-  else 
-     { if (conf > 0 & conf < 1) 
-          { nsigmas <- qnorm(1 - (1 - conf)/2)
-            lcl <- center - nsigmas * se.stats
-            ucl <- center + nsigmas * se.stats
-          }
-       else stop("invalid 'conf' argument. See help.")
-     }
+
+  if (!is.null(conf)) {
+    if (!is.numeric(conf) || length(conf) != 1L || conf <= 0 || conf >= 1) {
+      stop("invalid 'conf' argument. See help.")
+    }
+
+    nsigmas <- qnorm(1 - (1 - conf) / 2)
+  }
+
+  delta <- nsigmas * se.stats
+  lcl <- center - delta
+  ucl <- center + delta
   .construct_limits(lcl,ucl)
 }
 
@@ -831,18 +831,18 @@ limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   se.stats <- std.dev
-  if (is.null(conf)) 
-     { lcl <- center - nsigmas * se.stats
-       ucl <- center + nsigmas * se.stats
-     }
-  else 
-     { if (conf > 0 & conf < 1) 
-          { nsigmas <- qnorm(1 - (1 - conf)/2)
-            lcl <- center - nsigmas * se.stats
-            ucl <- center + nsigmas * se.stats
-          }
-       else stop("invalid conf argument. See help.")
-     }
+
+  if (!is.null(conf)) {
+    if (!is.numeric(conf) || length(conf) != 1L || conf <= 0 || conf >= 1) {
+      stop("invalid 'conf' argument. See help.")
+    }
+
+    nsigmas <- qnorm(1 - (1 - conf) / 2)
+  }
+
+  delta <- nsigmas * se.stats
+  lcl <- center - delta
+  ucl <- center + delta
   .construct_limits(lcl,ucl)
 }
 
