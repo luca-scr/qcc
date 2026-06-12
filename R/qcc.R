@@ -615,6 +615,14 @@ plot.qcc <- function(x, xtime = NULL,
 qcc.c4 <- function(n)
 { sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2)) }
 
+# Returns limits in a consistent structure for use in limits.* functions
+.construct_limits <- function(lcl,ucl) {
+  limits <- matrix(c(lcl, ucl), ncol = 2)
+  rownames(limits) <- rep("", length = nrow(limits))
+  colnames(limits) <- c("LCL", "UCL")
+  return(limits)
+}
+
 # xbar
 
 stats.xbar <- function(data, sizes)
@@ -686,10 +694,7 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid 'conf' argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 
@@ -736,10 +741,7 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
           else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  limits
+  .construct_limits(lcl,ucl)
 }
 
 # R Chart 
@@ -788,10 +790,7 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 # xbar Chart for one-at-time data
@@ -844,10 +843,7 @@ limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 
@@ -920,10 +916,7 @@ limits.np <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 # c Chart
@@ -962,10 +955,7 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 # u Chart
