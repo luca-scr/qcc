@@ -944,8 +944,7 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if (is.null(conf))
-     { lcl <- center - nsigmas * sqrt(center)
-       lcl[lcl < 0] <- 0
+     { lcl <- pmax(0, center - nsigmas * sqrt(center))
        ucl <- center + nsigmas * sqrt(center)
      }
   else 
