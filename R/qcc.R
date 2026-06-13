@@ -177,17 +177,12 @@ qcc <- function(data,
 print.qcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
-  # cat("\nCall:\n",deparse(object$call),"\n\n",sep="")
   cat(cli::rule(left = crayon::bold("Quality Control Chart"), 
                 width = min(getOption("width"),50)), "\n\n")
 
   data.name <- object$data.name
   type <- object$type
   statistics <- object$statistics
-  # cat(paste(type, "chart for", data.name, "\n"))
-  # cat("\nSummary of group statistics:\n")
-  # print(summary(statistics), digits = digits, ...)
-  
   cat("Chart type                 =", type, "\n")
   cat("Data (phase I)             =", data.name, "\n")
   cat("Number of groups           =", length(statistics), "\n")
@@ -214,9 +209,11 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
   { 
     cat("Center of group statistics =", signif(center, digits = digits), "\n")   } else
   { 
-    out <- paste(signif(center, digits = digits))
-    out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]      
-    out <- paste0(paste(out, collapse = " "), " ...")
+    ng  <- length(center)
+    center <- paste(signif(center, digits = digits))
+    out <- if(ng > 3) c(center[1:2], "...", center[ng]) else center
+    out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)] 
+    out <-paste(out, collapse = " ")
     cat("Center of group statistics = ", out, "\n", sep = "")
   }
   
@@ -226,9 +223,11 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
     cat("Standard deviation         =", signif(sd, digits = digits), "\n") 
   } else
   { 
-    out <- paste(signif(sd, digits = digits))
-    out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)]
-    out <- paste0(paste(out, collapse = " "), " ...")
+    ng  <- length(sd)
+    sd <- paste(signif(sd, digits = digits))
+    out <- if(ng > 3) c(sd[1:2], "...", sd[ng]) else sd
+    out <- out[which(cumsum(nchar(out)+1) < getOption("width")-40)] 
+    out <-paste(out, collapse = " ")
     cat("Standard deviation         = ", out, "\n", sep = "")
   }
 
@@ -236,10 +235,6 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
   newstats <- object$newstats
   if (!is.null(newstats)) 
   { 
-    # cat(cli::rule(line = 1, width = 50), "\n")
-    # cat(paste("\nSummary of group statistics in ", 
-    #           newdata.name, ":\n", sep = ""))
-    # print(summary(newstats), digits = digits, ...)
     cat("\nNew data (phase II)        =", newdata.name, "\n")
     cat("Number of groups           =", length(newstats), "\n")
     newsizes <- object$newsizes
@@ -259,13 +254,10 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
     }
   }
   
-  # cat(cli::rule(line = 1, width = 50), "\n")
   limits <- object$limits
   if(!is.null(limits)) 
   { 
-    # cat("Control limits:\n")
     cat("\nControl limits at nsigmas  =", object$nsigmas, "\n")    
-    # names(dimnames(limits)) <- c("Control limits             =", "")
     .printShortMatrix(limits, digits = digits, ...) 
   }
 
@@ -337,6 +329,7 @@ plot.qcc <- function(x, xtime = NULL,
 
   df <- data.frame(group = groups, 
                    stat = statistics, 
+                   center = center,
                    lcl = lcl, ucl = ucl,
                    violations = factor(violation.values, levels = violation.levels
                   ))

@@ -12,3 +12,5 @@ log$
 ^pkgdown$
 ^cran-comments\.md$
 ^\.github$
+^\.positai$
+^\.claude$

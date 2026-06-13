@@ -103,7 +103,7 @@ blues.colors <- function (n)
   if(is.na(chead <- as.numeric(chead))) chead <- 5
   if(is.na(ctail <- as.numeric(ctail))) ctail <- 1
   
-  if(nr > (head + tail + 1))
+  if(nr > (head + tail))
   { 
     if(is.null(rnames)) 
       rnames <- paste("[", 1:nr, ",]", sep ="")
@@ -112,7 +112,7 @@ blues.colors <- function (n)
                x[(nr-tail+1):nr,,drop=FALSE])
     rownames(x) <- c(rnames[1:head], ":", rnames[(nr-tail+1):nr])
   }
-  if(nc > (chead + ctail + 1))
+  if(nc > (chead + ctail))
   { 
     if(is.null(cnames)) 
       cnames <- paste("[,", 1:nc, "]", sep ="")
@@ -123,6 +123,7 @@ blues.colors <- function (n)
   }
   names(dimnames(x)) <- dnames
   print(x, na.print = "", ...)
+  invisible(x)
 }
 
 # Convert a geom_text size (mm) to points, consistent with ggplot2
