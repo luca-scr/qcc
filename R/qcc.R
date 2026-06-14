@@ -51,7 +51,7 @@ qcc <- function(data,
        else if (length(sizes) != nrow(data))
                 stop("sizes length doesn't match with data") }
 
-  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
+  labels <- rownames(data) %||% 1:nrow(data)
 
   stats <- paste("stats.", type, sep = "")
   if (!exists(stats, mode="function"))
@@ -298,11 +298,10 @@ plot.qcc <- function(x, xtime = NULL,
   newdata.name <- object$newdata.name
   violations <- object$violations
   rules <- object$rules
-  rule.set <- object$rule.set
-  if(is.null(rule.set)) rule.set <- "western-electric"
+  rule.set <- object$rule.set %||% "western-electric"
   rule.set <- match.arg(rule.set, c("western-electric", "nelson"))
   statistics <- c(stats, newstats)
-  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  groups <- xtime %||% 1:length(statistics)
   stopifnot(length(groups) == length(statistics))
   
   if(missing(title))

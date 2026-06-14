@@ -36,7 +36,7 @@ cusum <- function(data,
   if(ncol(data) == 1 & any(sizes > 1) & missing(std.dev))
      stop("sizes larger than 1 but data appears to be single samples. In this case you must provide also the std.dev")
   
-  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
+  labels <- rownames(data) %||% 1:nrow(data)
 
   stats <- paste("stats.", type, sep = "")
   if(!exists(stats, mode="function"))
@@ -250,7 +250,7 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   cusum.pos <- object$pos
   cusum.neg <- object$neg
   statistics <- c(stats, newstats)
-  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  groups <- xtime %||% 1:length(statistics)
   stopifnot(length(groups) == length(statistics))
   
   if(missing(title))

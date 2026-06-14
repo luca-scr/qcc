@@ -279,8 +279,7 @@ plot.mqcc <- function(x,
   rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], 
        col = qcc.options("bg.figure"))
   axis(1, at = indices, las = axes.las,
-       labels = if(is.null(names(statistics))) 
-                   as.character(indices) else names(statistics),
+       labels = names(statistics) %||% as.character(indices),
        cex.axis = par("cex.axis")*0.9)
   axis(2, las = axes.las, cex.axis = par("cex.axis")*0.9)
   box()

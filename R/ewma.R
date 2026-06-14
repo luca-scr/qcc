@@ -58,7 +58,7 @@ ewma <- function(data,
   # used for computing statistics and std.dev
   type <- if(any(sizes==1)) "xbar.one" else "xbar"
 
-  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
+  labels <- rownames(data) %||% 1:nrow(data)
 
   stats <- paste("stats.", type, sep = "")
   if(!exists(stats, mode="function"))
@@ -264,7 +264,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   newdata.name <- object$newdata.name
   violations <- object$violations
   statistics <- c(stats, newstats)
-  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  groups <- xtime %||% 1:length(statistics)
   stopifnot(length(groups) == length(statistics))
 
   if(missing(title))
