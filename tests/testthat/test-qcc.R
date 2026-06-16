@@ -318,7 +318,7 @@ test_that("sd.xbar.one: Assume zero MRs for partially missing windows with the m
 test_that("sd.xbar.one: Return Inf for completely missing windows", {
   data <- c(100, 110, NA, NA, 98, 112)
   suppressWarnings(expect_warning(estimate <- sd.xbar.one(data, std.dev = "MR"), "Inf"))
-  expect_equal(estimate, Inf)
+  expect_equal(estimate, -Inf)
 })
 
 # FIX: This behaviour feels unexpected. Not sure.

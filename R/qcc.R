@@ -811,13 +811,13 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
     { sd <- std.dev }
   else
     { switch(std.dev, 
-             "MR" = { d2 <- qcc.options("exp.R.unscaled")
-                      if(is.null(d2))
-                         stop(".qcc.options$exp.R.unscaled is null")
-                      d <- 0
-                      for(j in r:n)
-                          d <- d+abs(diff(range(data[c(j:(j-r+1))], na.rm=TRUE)))
-                      sd <- (d/(n-r+1))/d2[r] },
+             "MR" = {
+                d2 <- qcc.options("exp.R.unscaled")
+                moving_ranges <- apply(embed(data, r), 1L, function(x) {
+                  diff(range(x, na.rm = TRUE))
+                })
+                sd <- mean(moving_ranges) / d2[r]
+             },
              "SD" = { sd <- sd(data)/qcc.c4(n) },
              # "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) }, # FIX: This handles NAs
              sd <- NULL)
