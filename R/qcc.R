@@ -803,14 +803,14 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
   else
     { switch(std.dev, 
              "MR" = {
+                data <- data[!is.na(data)]
                 d2 <- qcc.options("exp.R.unscaled")
                 moving_ranges <- apply(embed(data, r), 1L, function(x) {
-                  diff(range(x, na.rm = TRUE))
+                  diff(range(x))
                 })
                 sd <- mean(moving_ranges) / d2[r]
              },
-             "SD" = { sd <- sd(data)/qcc.c4(n) },
-             # "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) }, # FIX: This handles NAs
+             "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) },
              sd <- NULL)
     }
   return(sd)

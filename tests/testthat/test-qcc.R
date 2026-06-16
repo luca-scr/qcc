@@ -311,21 +311,19 @@ test_that("sd.xbar.one: SD-based estimator produces expected estimate", {
 test_that("sd.xbar.one: Assume zero MRs for partially missing windows with the mean MR estimator", {
   data <- c(100, 110, NA, 105, 98, 112)
   estimate <- sd.xbar.one(data, std.dev = "MR")
-  expect_equal(estimate, 5.49645390)
+  expect_equal(estimate, 7.97872340)
 })
 
-# FIX: This behaviour is unexpected
 test_that("sd.xbar.one: Return Inf for completely missing windows", {
   data <- c(100, 110, NA, NA, 98, 112)
-  suppressWarnings(expect_warning(estimate <- sd.xbar.one(data, std.dev = "MR"), "Inf"))
-  expect_equal(estimate, -Inf)
+  expect_no_warning(estimate <- sd.xbar.one(data, std.dev = "MR"))
+  expect_equal(estimate, 10.6382979)
 })
 
-# FIX: This behaviour feels unexpected. Not sure.
 test_that("sd.xbar.one: Return NA for missing data using the SD-based estimator", {
   data <- c(100, 110, NA, 105, 98, 112)
   estimate <- sd.xbar.one(data, std.dev = "SD")
-  expect_true(is.na(estimate))
+  expect_equal(estimate, 6.471123)
 })
 
 test_that("sd.xbar.one: mean MR estimator accepts r != 2.", {
