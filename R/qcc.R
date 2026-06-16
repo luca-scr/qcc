@@ -819,6 +819,7 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
                           d <- d+abs(diff(range(data[c(j:(j-r+1))], na.rm=TRUE)))
                       sd <- (d/(n-r+1))/d2[r] },
              "SD" = { sd <- sd(data)/qcc.c4(n) },
+             # "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) }, # FIX: This handles NAs
              sd <- NULL)
     }
   return(sd)

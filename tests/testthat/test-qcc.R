@@ -295,3 +295,41 @@ test_that("R-chart helpers keep expected structure and enforce max subgroup size
     "group size must be less than"
   )
 })
+
+test_that("sd.xbar.one: mean MR estimator produces expected estimate.", {
+  data <- c(100, 110, 95, 105, 98, 112, 101, 99, 107, 103)
+  estimate <- sd.xbar.one(data, std.dev = "MR")
+  expect_equal(estimate, 7.97872340)
+})
+
+test_that("sd.xbar.one: SD-based estimator produces expected estimate", {
+  data <- c(100, 110, 95, 105, 98, 112, 101, 99, 107, 103)
+  estimate <- sd.xbar.one(data, std.dev = "SD")
+  expect_equal(estimate, 5.61029128)
+})
+
+test_that("sd.xbar.one: Assume zero MRs for partially missing windows with the mean MR estimator", {
+  data <- c(100, 110, NA, 105, 98, 112)
+  estimate <- sd.xbar.one(data, std.dev = "MR")
+  expect_equal(estimate, 5.49645390)
+})
+
+# FIX: This behaviour is unexpected
+test_that("sd.xbar.one: Return Inf for completely missing windows", {
+  data <- c(100, 110, NA, NA, 98, 112)
+  suppressWarnings(expect_warning(estimate <- sd.xbar.one(data, std.dev = "MR"), "Inf"))
+  expect_equal(estimate, Inf)
+})
+
+# FIX: This behaviour feels unexpected. Not sure.
+test_that("sd.xbar.one: Return NA for missing data using the SD-based estimator", {
+  data <- c(100, 110, NA, 105, 98, 112)
+  estimate <- sd.xbar.one(data, std.dev = "SD")
+  expect_true(is.na(estimate))
+})
+
+test_that("sd.xbar.one: mean MR estimator accepts r != 2.", {
+  data <- c(100, 110, 95, 105, 98, 112, 101, 99, 107, 103)
+  estimate <- sd.xbar.one(data, std.dev = "MR", r = 3)
+  expect_equal(estimate, 7.16184288)
+})
