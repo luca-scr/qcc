@@ -303,17 +303,11 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     coord_cartesian(xlim = xlim+c(-0.5,0.5), 
                     ylim = extendrange(ylim),
                     expand = FALSE, clip = "off") +
-    theme_light() + 
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", size = 11),
-          axis.title.y = element_text(margin = margin(t = 0, r = 30, b = 0, l = 0)),
-          legend.position = "none",
-          plot.margin = margin(5, 30, 5, 5),
-          axis.text.y = element_text(angle = 90, 
-                                     margin = margin(l = 5, r = 5),
-                                     hjust = 0.5, vjust = 0.5))
+    theme_qcc(
+      axis.title.y = element_text(
+        margin = margin(t = 0, r = 30, b = 0, l = 0)
+      ),
+    ) 
   
   plot <- plot + 
   {
