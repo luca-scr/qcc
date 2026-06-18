@@ -5,6 +5,88 @@
 #-------------------------------------------------------------------#
 
 # TODO: implement Cpkm
+
+
+#' Process capability analysis
+#' 
+#' Computes process capability indices for a \code{'qcc'} object of type
+#' \code{"xbar"} and plot the histogram.
+#' 
+#' This function calculates confidence limits for \eqn{C_p}{C_p} using the
+#' method described by Chou et al. (1990).  Approximate confidence limits for
+#' \eqn{C_{pl}}{C_pl}, \eqn{C_{pu}}{C_pu} and \eqn{C_{pk}}{C_pk} are computed
+#' using the method in Bissell (1990).  Confidence limits for
+#' \eqn{C_{pm}}{C_pm} are based on the method of Boyles (1991); this method is
+#' approximate and it assumes that the target is midway between the
+#' specification limits.
+#' 
+#' @aliases processCapability print.processCapability summary.processCapability
+#' plot.processCapability
+#' @param object a \code{'qcc'} object of type \code{"xbar"}
+#' @param spec.limits a two-values vector specifying the lower and upper
+#' specification limits. For one-sided specification limits, the value of the
+#' missing limit must be set to \code{NA}.
+#' @param target a value specifying the target of the process. If missing the
+#' value from the \code{'qcc'} object is used if not \code{NULL}, otherwise the
+#' target is set at the middle value between specification limits.
+#' @param std.dev a value specifying the within-group standard deviation. If
+#' not provided is taken from the \code{'qcc'} object.
+#' @param nsigmas a numeric value specifying the number of sigmas to use. If
+#' not provided is taken from the \code{'qcc'} object.
+#' @param confidence.level a numeric value between 0 and 1 specifying the level
+#' to use for computing confidence intervals.
+#' @param x an object of class \code{'processCapability'}.
+#' @param add.stats a logical value indicating whether statistics and
+#' capability indices should be added at the bottom of the chart.
+#' @param breaks a value or a function used to select the number of bins in a
+#' histogram. See the help for \code{\link{nclass.scott}} for more details.
+#' @param fill,color values specifying the colour of the filled area and the
+#' border used for drawing the histogram.
+#' @param title a character string specifying the plot title. Set \code{title =
+#' NULL} to remove the title.
+#' @param xlab a character string specifying the label for the x-axis.
+#' @param digits the number of significant digits to use.
+#' @param \dots catches further ignored arguments.
+#' @return Invisibly returns a list with components: \item{nobs}{number of
+#' observations} \item{center}{center} \item{std.dev}{standard deviation}
+#' \item{target}{target} \item{spec.limits}{a vector of values giving the lower
+#' specification limit (LSL) and the upper specification limit (USL)}
+#' \item{indices}{a matrix of capability indices (\eqn{C_p}{C_p},
+#' \eqn{C_{pl}}{C_pl}, \eqn{C_{pu}}{C_pu}, \eqn{C_{pk}}{C_pk},
+#' \eqn{C_{pm}}{C_pm}) and the corresponding confidence limits.} \item{exp}{a
+#' vector of values giving the expected fraction, based on a normal
+#' approximation, of the observations less than LSL and greater than USL.}
+#' \item{obs}{a vector of values giving the fraction of observations less than
+#' LSL and greater than USL.}
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Bissell, A.F. (1990) \emph{How reliable is your capability
+#' index?}, Applied Statistics, 39, 331-340.
+#' 
+#' Boyles, R.A. (1991) \emph{The Taguchi capability index}, Journal of Quality
+#' Technology, 23, 107-126.
+#' 
+#' Chou, Y., Owen D.B. and Borrego S.A. (1990) \emph{Lower Confidence Limits on
+#' Process Capability Indices}, Journal of Quality Technology, 22, 223-229.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
+#' @examples
+#' 
+#' data(pistonrings)
+#' diameter  = qccGroups(data = pistonrings, diameter, sample)
+#' q  = qcc(diameter[1:25,], type="xbar", nsigmas=3)
+#' pc  = processCapability(q, spec.limits=c(73.95,74.05))
+#' pc
+#' plot(pc)
+#' plot(processCapability(q, spec.limits=c(73.95,74.05), target=74.02))
+#' plot(processCapability(q, spec.limits=c(73.99,74.01)))
+#' plot(processCapability(q, spec.limits = c(73.99, 74.1)))
+#' 
 processCapability <- function(object, spec.limits, target, 
                               std.dev, nsigmas, 
                               confidence.level = 0.95, ...)

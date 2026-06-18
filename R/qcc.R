@@ -15,6 +15,243 @@
 #  Main function to create a 'qcc' object
 #
 
+
+
+#' Quality Control Charts
+#' 
+#' Create an object of class \code{'qcc'} to perform statistical quality
+#' control. This object may then be used to plot Shewhart charts, drawing OC
+#' curves, computes capability indices, and more.
+#' 
+#' Numeric \code{rules} values are interpreted within \code{rule.set}. By
+#' default, \code{rules = c(1,4)} applies Western Electric rules 1 and 4 for
+#' backward compatibility. Nelson rules can be requested with \code{rules =
+#' 1:8, rule.set = "nelson"}.
+#' 
+#' @aliases qcc print.qcc summary.qcc plot.qcc
+#' @param data a data frame, a matrix or a vector containing observed data for
+#' the variable to chart. Each row of a data frame or a matrix, and each value
+#' of a vector, refers to a sample or ''rationale group''.
+#' @param type a character string specifying the group statistics to compute.
+#' \cr Available methods are: \tabular{lll}{ \tab Statistic charted \tab Chart
+#' description \cr \code{"xbar"} \tab mean \tab means of a continuous process
+#' variable \cr \code{"R"} \tab range \tab ranges of a continuous process
+#' variable \cr \code{"S"} \tab standard deviation \tab standard deviations of
+#' a continuous variable \cr \code{"xbar.one"} \tab mean \tab one-at-time data
+#' of a continuous process variable \cr \code{"p"} \tab proportion \tab
+#' proportion of nonconforming units \cr \code{"np"} \tab count \tab number of
+#' nonconforming units \cr \code{"c"} \tab count \tab nonconformities per unit
+#' \cr \code{"u"} \tab count \tab average nonconformities per unit \cr
+#' \code{"g"} \tab count \tab number of non-events between events \cr }
+#' Furthermore, a user specified type of chart, say \code{"newchart"}, can be
+#' provided. This requires the definition of \code{"stats.newchart"},
+#' \code{"sd.newchart"}, and \code{"limits.newchart"}. As an example, see
+#' \code{\link{stats.xbar}}.
+#' @param sizes a value or a vector of values specifying the sample sizes
+#' associated with each group. For continuous data provided as data frame or
+#' matrix the sample sizes are obtained counting the non-\code{NA} elements of
+#' each row. For \code{"p"}, \code{"np"} and \code{"u"} charts the argument
+#' \code{sizes} is required.
+#' @param center a value specifying the center of group statistics or the
+#' ''target'' value of the process.
+#' @param std.dev a value or an available method specifying the within-group
+#' standard deviation(s) of the process. \cr Several methods are available for
+#' estimating the standard deviation in case of a continuous process variable;
+#' see \code{\link{sd.xbar}}, \code{\link{sd.xbar.one}}, \code{\link{sd.R}},
+#' \code{\link{sd.S}}.
+#' @param limits a two-values vector specifying control limits.
+#' @param newdata a data frame, matrix or vector, as for the \code{data}
+#' argument, providing further data to plot but not included in the
+#' computations.
+#' @param newsizes a vector as for the \code{sizes} argument providing further
+#' data sizes to plot but not included in the computations.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{confidence.level}
+#' argument is provided.
+#' @param confidence.level a numeric value between 0 and 1 specifying the
+#' confidence level of the computed probability limits.
+#' @param rules a value or a vector of values specifying the rules to apply to
+#' the chart. See \code{\link{qccRules}} for possible values and their meaning.
+#' @param rule.set a character string specifying how numeric \code{rules}
+#' values are interpreted. The default is \code{"western-electric"} specifying
+#' Western Electric rules 1 through 4. Use \code{"nelson"} to apply Nelson
+#' rules 1 through 8.
+#' @param xtime a vector of date-time values as returned by
+#' \code{\link{Sys.time}} and \code{\link{Sys.Date}}. If provided it is used
+#' for x-axis so it must be of the same length as the statistic charted.
+#' @param add.stats a logical value indicating whether statistics and other
+#' information should be printed at the bottom of the chart.
+#' @param chart.all a logical value indicating whether both statistics for
+#' \code{data} and for \code{newdata} (if given) should be plotted.
+#' @param fill a logical value specifying if the in-control area should be
+#' filled with the color specified in \code{qcc.options("zones")$fill}.
+#' @param label.center a character specifying the label for center line.
+#' @param label.limits a character vector specifying the labels for control
+#' limits.
+#' @param title a character string specifying the main title. Set \code{title =
+#' NULL} to remove the title.
+#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
+#' @param xlim,ylim a numeric vector specifying the limits for the x-axis and
+#' the y-axis.
+#' @param digits the number of significant digits to use.
+#' @param x an object of class \code{'qcc'}.
+#' @param \dots additional arguments to be passed to the generic function.
+#' @return Returns an object of class \code{'qcc'}.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qccRules}}, \code{\link{cusum}}, \code{\link{ewma}},
+#' \code{\link{ocCurves}}, \code{\link{processCapability}},
+#' \code{\link{qccGroups}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' 
+#' Scrucca, L. (2004). qcc: an R package for quality control charting and
+#' statistical process control. \emph{R News} 4/1, 11-17.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
+#' @examples
+#' 
+#' ##
+#' ##  Continuous data 
+#' ##
+#' data(pistonrings)
+#' diameter  = qccGroups(data = pistonrings, diameter, sample)
+#' 
+#' (q  = qcc(diameter[1:25,], type="xbar"))
+#' plot(q)
+#' 
+#' (q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+#' plot(q)
+#' 
+#' q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
+#' plot(q, chart.all=FALSE)
+#' 
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], nsigmas=2))
+#' 
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99))
+#' 
+#' q  = qcc(diameter[1:25,], type="R")
+#' q
+#' plot(q)
+#' 
+#' plot(qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+#' 
+#' plot(qcc(diameter[1:25,], type="S"))
+#' 
+#' plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
+#' 
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], rules = 1:4))
+#' 
+#' # variable control limits
+#' out  = c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
+#' diameter  = qccGroups(data = pistonrings[-out,], diameter, sample)
+#' plot(qcc(diameter[1:25,], type="xbar"))
+#' plot(qcc(diameter[1:25,], type="R"))
+#' plot(qcc(diameter[1:25,], type="S"))
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+#' plot(qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+#' plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
+#' 
+#' # to customize a Shewhart chart use
+#' q = qcc(diameter[1:25, ], type = "xbar")
+#' graph = plot(q, ylim = c(73.9, 74.1)) 
+#' # returned object is of class "patchwork", then add geom_* layer to the first element
+#' graph[[1]] <- graph[[1]] + 
+#'   geom_hline(yintercept = c(73.95, 74.05), lty = 2) 
+#' graph
+#' 
+#' ##
+#' ##  Attribute data 
+#' ##
+#' 
+#' data(orangejuice)
+#' 
+#' q  = with(orangejuice, 
+#'           qcc(D[trial], sizes=size[trial], type="p"))
+#' q
+#' plot(q)
+#' 
+#' # remove out-of-control points (see help(orangejuice) for the reasons)
+#' outofctrl  = c(15,23)
+#' q1  = with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p"))
+#' plot(q1)
+#' q1  = with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p",
+#'                newdata=D[!trial], newsizes=size[!trial]))
+#' plot(q1)
+#' 
+#' data(orangejuice2)
+#' q2  = with(orangejuice2, 
+#'            qcc(D[trial], sizes=size[trial], type="p"))
+#' plot(q2)
+#' q2  = with(orangejuice2, 
+#'            qcc(D[trial], sizes=size[trial], type="p", 
+#'                newdata=D[!trial], newsizes=size[!trial]))
+#' plot(q2)
+#' 
+#' data(circuit)
+#' plot(with(circuit, qcc(x[trial], sizes=size[trial], type="c")))
+#' 
+#' # remove out-of-control points (see help(circuit) for the reasons)
+#' outofctrl  = c(15,23)
+#' q1  = with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p"))
+#' plot(q1)
+#' q1  = with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p",
+#'                newdata=D[!trial], newsizes=size[!trial]))
+#' plot(q1)
+#' 
+#' outofctrl  = c(6,20)
+#' q1  = with(circuit[-outofctrl,], 
+#'            qcc(x[trial], sizes=size[trial], type="c"))
+#' plot(q1)
+#' q1  = with(circuit[-outofctrl,], 
+#'            qcc(x[trial], sizes=size[trial], type="c", 
+#'                newdata = x[!trial], newsizes = size[!trial]))
+#' plot(q1)
+#' q1  = with(circuit[-outofctrl,], 
+#'            qcc(x[trial], sizes=size[trial], type="u", 
+#'            newdata = x[!trial], newsizes = size[!trial]))
+#' plot(q1)
+#' 
+#' data(pcmanufact)
+#' q1  = with(pcmanufact, qcc(x, sizes=size, type="u"))
+#' q1
+#' plot(q1)
+#' 
+#' data(dyedcloth)
+#' # variable control limits
+#' plot(with(dyedcloth, qcc(x, sizes=size, type="u")))
+#' # standardized control chart
+#' q  = with(dyedcloth, qcc(x, sizes=size, type="u"))
+#' z  = (q$statistics - q$center)/sqrt(q$center/q$size)
+#' plot(qcc(z, sizes = 1, type = "u", center = 0, std.dev = 1, limits = c(-3,3)),
+#'      title = "Standardized u chart")
+#'     
+#' ##
+#' ##  Continuous one-at-time data 
+#' ##
+#' 
+#' data(viscosity)
+#' q  = with(viscosity, 
+#'           qcc(viscosity[trial], type = "xbar.one"))
+#' q
+#' plot(q)
+#' # batch 4 is out-of-control because of a process temperature controller
+#' # failure; remove it and recompute
+#' viscosity  = viscosity[-4,]
+#' plot(with(viscosity, 
+#'           qcc(viscosity[trial], type = "xbar.one", newdata = viscosity[!trial])))
+#' 
 qcc <- function(data, 
                 type = c("xbar", "R", "S", "xbar.one", 
                          "p", "np", "c", "u", "g"),
@@ -615,6 +852,68 @@ qcc.c4 <- function(n)
 
 # xbar
 
+
+
+#' Statistics used in computing and drawing a Shewhart xbar chart
+#' 
+#' These functions are used to compute statistics required by the xbar chart.
+#' 
+#' The following methods are available for estimating the process standard
+#' deviation: \describe{ \item{list("\"UWAVE-R\"")}{UnWeighted AVErage of
+#' within-group estimates based on within-group Ranges}
+#' \item{list("\"UWAVE-SD\"")}{UnWeighted AVErage of within-group estimates
+#' based on within-group Standard Deviations}
+#' \item{list("\"MVLUE-R\"")}{Minimum Variance Linear Unbiased Estimator
+#' computed as a weighted average of within-group estimates based on
+#' within-group Ranges} \item{list("\"MVLUE-SD\"")}{Minimum Variance Linear
+#' Unbiased Estimator computed as a weighted average of within-group estimates
+#' based on within-group Standard Deviations}
+#' \item{list("\"RMSDF\"")}{Root-Mean-Square estimator computed as a weighted
+#' average of within-group estimates based on within-group Standard Deviations}
+#' }
+#' 
+#' Depending on the chart, a method may be available or not, or set as the
+#' default according to the following table: %\tabular{lcccc}{ %Method \tab\tab
+#' \code{"xbar"} \tab \code{"R"} \tab \code{"S"} \cr %\code{"UWAVE-R"} \tab\tab
+#' default \tab default \tab not available \cr %\code{"UWAVE-SD"} \tab\tab \tab
+#' not available \tab default \cr %\code{"MVLUE-R"} \tab\tab \tab \tab not
+#' available \cr %\code{"MVLUE-SD"} \tab\tab \tab not available \tab \cr
+#' %\code{"RMSDF"} \tab\tab \tab not available \tab \cr %}
+#' 
+#' Detailed definitions of formulae implemented are available in the SAS/QC
+#' User's Guide.
+#' 
+#' @aliases stats.xbar sd.xbar limits.xbar
+#' @param data the observed data values
+#' @param center sample/group center statistic
+#' @param sizes samples sizes. Optional
+#' @param std.dev within group standard deviation. Optional for \code{sd.xbar}
+#' function, required for \code{limits.xbar}. See details.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.xbar} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.xbar} returns \code{std.dev} the standard deviation of
+#' the statistic charted. This is based on results from Burr (1969).
+#' 
+#' The function \code{limits.xbar} returns a matrix with lower and upper
+#' control limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Burr, I.W. (1969) Control charts for measurements with varying
+#' sample sizes. \emph{Journal of Quality Technology}, 1(3), 163-167.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.xbar <- function(data, sizes)
 {
   data <- as.matrix(data)
@@ -690,6 +989,41 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # S chart
 
+
+
+#' Functions to plot Shewhart S chart
+#' 
+#' These functions are used to compute statistics required by the S chart.
+#' 
+#' 
+#' @aliases stats.S sd.S limits.S
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes. Optional
+#' @param std.dev within group standard deviation. Optional for \code{sd.S}
+#' function, required for \code{limits.S}. See \code{\link{sd.xbar}}.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.S} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.S} returns \code{std.dev} the standard deviation of
+#' the statistic charted.
+#' 
+#' The function \code{limits.S} returns a matrix with lower and upper control
+#' limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.S <- function(data, sizes)
 {
   data <- as.matrix(data)
@@ -736,6 +1070,41 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # R Chart 
 
+
+
+#' Statistics used in computing and drawing a Shewhart R chart
+#' 
+#' These functions are used to compute statistics required by the R chart.
+#' 
+#' 
+#' @aliases stats.R sd.R limits.R
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes. Optional
+#' @param std.dev within group standard deviation. Optional for \code{sd.R}
+#' function, required for \code{limits.R}. See \code{\link{sd.xbar}}.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.R} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.R} returns \code{std.dev} the standard deviation of
+#' the statistic charted.
+#' 
+#' The function \code{limits.R} returns a matrix with lower and upper control
+#' limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.R <- function(data, sizes)
 {
   data <- as.matrix(data)
@@ -785,6 +1154,76 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # xbar Chart for one-at-time data
 
+
+
+#' Statistics used in computing and drawing a Shewhart xbar chart for
+#' one-at-time data
+#' 
+#' These functions are used to compute statistics required by the xbar chart
+#' for one-at-time data.
+#' 
+#' Methods available for estimating the process standard deviation: \itemize{
+#' \item\code{"MR"} = moving range: this is estimate is based on the scaled
+#' mean of moving ranges \item\code{"SD"} = sample standard deviation: this
+#' estimate is defined as \code{sd(x)/cd(n)}, where \code{n} is the number of
+#' individual measurements of \code{x}. }
+#' 
+#' @aliases stats.xbar.one sd.xbar.one limits.xbar.one
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes. Not needed, \code{size = 1} is used.
+#' @param r number of successive pairs of observations for computing the
+#' standard deviation based on moving ranges of r points.
+#' @param std.dev within group standard deviation. Optional for
+#' \code{sd.xbar.one} function, required for \code{limits.xbar.one}. See
+#' details.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.xbar.one} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.xbar.one} returns \code{std.dev} the standard
+#' deviation of the statistic charted.
+#' 
+#' The function \code{limits.xbar.one} returns a matrix with lower and upper
+#' control limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
+#' @examples
+#' 
+#' # Water content of antifreeze data (Wetherill and Brown, 1991, p. 120)
+#' x  = c(2.23, 2.53, 2.62, 2.63, 2.58, 2.44, 2.49, 2.34, 2.95, 2.54, 2.60, 2.45,
+#'        2.17, 2.58, 2.57, 2.44, 2.38, 2.23, 2.23, 2.54, 2.66, 2.84, 2.81, 2.39,
+#'        2.56, 2.70, 3.00, 2.81, 2.77, 2.89, 2.54, 2.98, 2.35, 2.53)
+#' # the Shewhart control chart for one-at-time data
+#' # 1) using MR (default)
+#' qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
+#' # 2) using SD
+#' qcc(x, type="xbar.one", std.dev = "SD", data.name="Water content (in ppm) of batches of antifreeze")
+#' 
+#' # "as the size increases further, we would expect sigma-hat to settle down
+#' #  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991,
+#' # p. 121)
+#' sigma  = NA
+#' k  = 2:24
+#' for (j in k)
+#'     sigma[j]  = sd.xbar.one(x, k=j)
+#' plot(k, sigma[k], type="b")     # plot estimates of sigma for 
+#' abline(h=sd(x), col=2, lty=2)   # different values of k
+#' 
 stats.xbar.one <- function(data, sizes)
 {
   statistics <- as.vector(data)
@@ -840,6 +1279,40 @@ limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # p Chart
 
+
+
+#' Statistics used in computing and drawing a Shewhart p chart
+#' 
+#' These functions are used to compute statistics required by the p chart.
+#' 
+#' 
+#' @aliases stats.p sd.p limits.p
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes.
+#' @param std.dev within group standard deviation.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.p} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.p} returns \code{std.dev} the standard deviation of
+#' the statistic charted.
+#' 
+#' The function \code{limits.p} returns a matrix with lower and upper control
+#' limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.p <- function(data, sizes)
 {
   data <- as.vector(data)
@@ -866,6 +1339,40 @@ limits.p <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # np Chart
 
+
+
+#' Statistics used in computing and drawing a Shewhart np chart
+#' 
+#' These functions are used to compute statistics required by the np chart.
+#' 
+#' 
+#' @aliases stats.np sd.np limits.np
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes.
+#' @param std.dev within group standard deviation.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.np} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.np} returns \code{std.dev} the standard deviation of
+#' the statistic charted.
+#' 
+#' The function \code{limits.np} returns a matrix with lower and upper control
+#' limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.np <- function(data, sizes)
 {
   data <- as.vector(data)
@@ -912,6 +1419,40 @@ limits.np <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # c Chart
 
+
+
+#' Functions to plot Shewhart c chart
+#' 
+#' Statistics used in computing and drawing a Shewhart c chart.
+#' 
+#' 
+#' @aliases stats.c sd.c limits.c
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes.
+#' @param std.dev within group standard deviation.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.c} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.c} returns \code{std.dev} the standard deviation of
+#' the statistic charted.
+#' 
+#' The function \code{limits.c} returns a matrix with lower and upper control
+#' limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.c <- function(data, sizes)
 {
   data <- as.vector(data)
@@ -950,6 +1491,40 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 
 # u Chart
 
+
+
+#' Statistics used in computing and drawing a Shewhart u chart
+#' 
+#' These functions are used to compute statistics required by the u chart.
+#' 
+#' 
+#' @aliases stats.u sd.u limits.u
+#' @param data the observed data values
+#' @param center sample/group center statistic.
+#' @param sizes samples sizes.
+#' @param std.dev within group standard deviation.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the \code{conf} argument is
+#' provided.
+#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
+#' to use for computing control limits.
+#' @param \dots catches further ignored arguments.
+#' @return The function \code{stats.u} returns a list with components
+#' \code{statistics} and \code{center}.
+#' 
+#' The function \code{sd.u} returns \code{std.dev} the standard deviation of
+#' the statistic charted.
+#' 
+#' The function \code{limits.u} returns a matrix with lower and upper control
+#' limits.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
+#' Quality Control}, 7th ed. New York: John Wiley & Sons.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
 stats.u <- function(data, sizes)
 {
   data <- as.vector(data)

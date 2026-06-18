@@ -4,6 +4,87 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
+
+
+#' Operating Characteristic Function
+#' 
+#' Draws the operating characteristic curves for a \code{'qcc'} object.
+#' 
+#' An operating characteristic curve graphically provides information about the
+#' probability of not detecting a shift in the process. \code{ocCurves} is a
+#' generic function which calls the proper function depending on the type of
+#' \code{'qcc'} object. Further arguments provided through \code{\dots} are
+#' passed to the specific function depending on the type of chart.
+#' 
+#' The probabilities are based on the conventional assumptions about process
+#' distributions: the normal distribution for \code{"xbar"}, \code{"R"}, and
+#' \code{"S"}, the binomial distribution for \code{"p"} and \code{"np"}, and
+#' the Poisson distribution for \code{"c"} and \code{"u"}. They are all
+#' sensitive to departures from those assumptions, but to varying degrees. The
+#' performance of the \code{"S"} chart, and especially the \code{"R"} chart,
+#' are likely to be seriously affected by longer tails.
+#' 
+#' @aliases ocCurves print.ocCurves plot.ocCurves ocCurves.xbar ocCurves.R
+#' ocCurves.S ocCurves.p ocCurves.c
+#' @param object an object of class \code{'qcc'}.
+#' @param size a vector of values specifying the sample sizes for which to draw
+#' the OC curves.
+#' @param shift,multiplier a vector of values specifying the shift or
+#' multiplier values (in units of sigma).
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits; if \code{nsigmas} is \code{NULL},
+#' \code{object$conf} is used to set up probability limits.
+#' @param x an object of class \code{'ocCurves'}.
+#' @param digits the number of significant digits to use.
+#' @param what a string specifying the quantity to plot on the y-axis. Possible
+#' values are \code{"beta"} for the probability of not detecting a shift, and
+#' \code{"ARL"} for the average run length.
+#' @param title a character string specifying the main title. Set \code{title =
+#' NULL} to remove the title.
+#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
+#' @param lty,lwd,col values or vector of values controlling the line type,
+#' line width and colour of curves.
+#' @param \dots catches further ignored arguments.
+#' @return The function returns an object of class \code{'ocCurves'} which
+#' contains a matrix or a vector of beta values (the probability of type II
+#' error) and ARL (average run length).
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' 
+#' Scrucca, L. (2004). qcc: an R package for quality control charting and
+#' statistical process control. \emph{R News} 4/1, 11-17.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
+#' @examples
+#' 
+#' data(pistonrings)
+#' diameter  = qccGroups(diameter, sample, data = pistonrings)
+#' oc  = ocCurves.xbar(qcc(diameter, type="xbar", nsigmas=3))
+#' oc
+#' plot(oc)
+#' 
+#' data(orangejuice)
+#' oc  = with(orangejuice,
+#'            ocCurves(qcc(D[trial], sizes=size[trial], type="p")))
+#' oc
+#' plot(oc)
+#' 
+#' data(circuit)
+#' oc  = with(circuit,
+#'            ocCurves(qcc(x[trial], sizes=size[trial], type="c")))
+#' oc
+#' plot(oc)
+#' 
 ocCurves <- function(object, ...)
 {
 # Compute and draws the operating characteristic curves for a qcc object 

@@ -4,6 +4,108 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
+
+
+#' Cusum chart
+#' 
+#' Create an object of class \code{'cusum.qcc'} to compute a Cusum chart for
+#' statistical quality control.
+#' 
+#' Cusum charts display how the group summary statistics deviate above or below
+#' the process center or target value, relative to the standard errors of the
+#' summary statistics. Useful to detect small and permanent variation on the
+#' mean of the process.
+#' 
+#' @aliases cusum cusum.qcc print.cusum.qcc summary.cusum.qcc plot.cusum.qcc
+#' @param data a data frame, a matrix or a vector containing observed data for
+#' the variable to chart. Each row of a data frame or a matrix, and each value
+#' of a vector, refers to a sample or ''rationale group''.
+#' @param sizes a value or a vector of values specifying the sample sizes
+#' associated with each group. If not provided the sample sizes are obtained
+#' counting the non-\code{NA} elements of each row of a data frame or a matrix;
+#' sample sizes are set all equal to one if \code{data} is a vector.
+#' @param center a value specifying the center of group statistics or the
+#' ''target'' value of the process.
+#' @param std.dev a value or an available method specifying the within-group
+#' standard deviation(s) of the process. \cr Several methods are available for
+#' estimating the standard deviation. See \code{\link{sd.xbar}} and
+#' \code{\link{sd.xbar.one}} for, respectively, the grouped data case and the
+#' individual observations case.
+#' @param decision.interval A numeric value specifying the number of standard
+#' errors of the summary statistics at which the cumulative sum is out of
+#' control.
+#' @param se.shift The amount of shift to detect in the process, measured in
+#' standard errors of the summary statistics.
+#' @param head.start The initializing value for the above-target and
+#' below-target cumulative sums, measured in standard errors of the summary
+#' statistics. Use zero for the traditional Cusum chart, or a positive value
+#' less than the \code{decision.interval} for a Fast Initial Response.
+#' @param newdata a data frame, matrix or vector, as for the \code{data}
+#' argument, providing further data to plot but not included in the
+#' computations.
+#' @param newsizes a vector as for the \code{sizes} argument providing further
+#' data sizes to plot but not included in the computations.
+#' @param xtime a vector of date-time values as returned by
+#' \code{\link{Sys.time}} and \code{\link{Sys.Date}}. If provided it is used
+#' for x-axis so it must be of the same length as the statistic charted.
+#' @param add.stats a logical value indicating whether statistics and other
+#' information should be printed at the bottom of the chart.
+#' @param chart.all a logical value indicating whether both statistics for
+#' \code{data} and for \code{newdata} (if given) should be plotted.
+#' @param fill a logical value specifying if the in-control area should be
+#' filled with the color specified in \code{qcc.options("zones")$fill}.
+#' @param label.bounds a character vector specifying the labels for the the
+#' decision interval boundaries.
+#' @param title a character string specifying the main title. Set \code{title =
+#' NULL} to remove the title.
+#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
+#' @param xlim,ylim a numeric vector specifying the limits for the x-axis and
+#' the y-axis.
+#' @param digits the number of significant digits to use.
+#' @param x an object of class \code{'cusum.qcc'}.
+#' @param \dots additional arguments to be passed to the generic function.
+#' @return Returns an object of class \code{'cusum.qcc'}.
+#' @author Luca Scrucca
+#' @seealso \code{\link{qcc}}, \code{\link{ewma}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' 
+#' Scrucca, L. (2004). qcc: an R package for quality control charting and
+#' statistical process control. \emph{R News} 4/1, 11-17.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot
+#' @examples
+#' 
+#' ##
+#' ## Grouped-data
+#' ##
+#' data(pistonrings)
+#' diameter  = qccGroups(data = pistonrings, diameter, sample)
+#' 
+#' q  = cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+#' summary(q)
+#' plot(q)
+#' 
+#' q  = cusum(diameter[1:25,], newdata=diameter[26:40,])
+#' summary(q)
+#' plot(q, chart.all=FALSE)
+#' 
+#' ##
+#' ## Individual observations
+#' ##
+#' data(viscosity)
+#' q  = with(viscosity, cusum(viscosity[trial], newdata = viscosity[!trial]))
+#' summary(q)
+#' plot(q)
+#' 
 cusum <- function(data, 
                   sizes, center, std.dev, 
                   decision.interval = 5, se.shift = 1,

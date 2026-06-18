@@ -10,6 +10,167 @@
 # Last modified: October 2009                                                 #
 #-----------------------------------------------------------------------------#
 
+
+
+#' Multivariate Quality Control Charts
+#' 
+#' Create an object of class \code{'mqcc'} to perform multivariate statistical
+#' quality control.
+#' 
+#' 
+#' @aliases mqcc print.mqcc summary.mqcc plot.mqcc
+#' @param data For subgrouped data, a list with a data frame or a matrix for
+#' each variable to monitor. Each row of the data frame or matrix refers to a
+#' sample or ''rationale'' group.  For individual observations, where each
+#' sample has a single observation, users can provide a list with a data frame
+#' or a matrix having a single column, or a data frame or a matrix where each
+#' rows refer to samples and columns to variables. See examples.
+#' @param type a character string specifying the type of chart:
+#' 
+#' \tabular{ll}{ \tab Chart description \cr \code{"T2"} \tab Hotelling
+#' \eqn{T^2} chart for subgrouped data \cr \code{"T2.single"} \tab Hotelling
+#' \eqn{T^2} chart for individual observations \cr }
+#' @param center a vector of values to use for center of input variables.
+#' @param cov a matrix of values to use for the covariance matrix of input
+#' variables.
+#' @param limits a logical indicating if control limits (Phase I) must be
+#' computed (by default using \code{\link{limits.T2}} or
+#' \code{\link{limits.T2.single}}) and plotted, or a two-values vector
+#' specifying control limits.
+#' @param pred.limits a logical indicating if prediction limits (Phase II) must
+#' be computed (by default using \code{\link{limits.T2}} or
+#' \code{\link{limits.T2.single}}) and plotted, or a two-values vector
+#' specifying prediction limits.
+#' @param data.name a string specifying the name of the variable which appears
+#' on the plots. If not provided is taken from the object given as data.
+#' @param labels a character vector of labels for each group.
+#' @param newdata a data frame, matrix or vector, as for the \code{data}
+#' argument, providing further data to plot but not included in the
+#' computations.
+#' @param newlabels a character vector of labels for each new group defined in
+#' the argument \code{newdata}.
+#' @param confidence.level a numeric value between 0 and 1 specifying the
+#' confidence level of the computed probability limits.  By default is set at
+#' \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variables, and
+#' \eqn{0.0027} is the probability of Type I error for a single Shewhart chart
+#' at the usual 3-sigma control level.
+#' @param plot logical. If \code{TRUE} a quality chart is plotted.
+#' @param add.stats a logical value indicating whether statistics and other
+#' information should be printed at the bottom of the chart.
+#' @param chart.all a logical value indicating whether both statistics for
+#' \code{data} and for \code{newdata} (if given) should be plotted.
+#' @param fill a logical value specifying if the in-control area should be
+#' filled with the color specified in \code{qcc.options("zones")$fill}.
+#' @param label.limits a character vector specifying the labels for control
+#' limits (Phase I).
+#' @param label.pred.limits a character vector specifying the labels for
+#' prediction control limits (Phase II).
+#' @param title a character string specifying the main title. Set \code{title =
+#' FALSE} or \code{title = NA} to remove the title.
+#' @param xlab a string giving the label for the x-axis.
+#' @param ylab a string giving the label for the y-axis.
+#' @param ylim a numeric vector specifying the limits for the y-axis.
+#' @param axes.las numeric in {0,1,2,3} specifying the style of axis labels.
+#' See \code{help(par)}.
+#' @param digits the number of significant digits to use when \code{add.stats =
+#' TRUE}.
+#' @param restore.par a logical value indicating whether the previous
+#' \code{par} settings must be restored. If you need to add points, lines, etc.
+#' to a control chart set this to \code{FALSE}.
+#' @param x an object of class \code{'mqcc'}.
+#' @param \dots additional arguments to be passed to the generic function.
+#' @return Returns an object of class \code{'mqcc'}.
+#' @author Luca Scrucca
+#' @seealso \code{\link{stats.T2}}, \code{\link{stats.T2.single}},
+#' \code{\link{limits.T2}}, \code{\link{limits.T2.single}},
+#' \code{\link{ellipseChart}}, \code{\link{qcc}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' 
+#' Scrucca, L. (2004). qcc: an R package for quality control charting and
+#' statistical process control. \emph{R News} 4/1, 11-17.
+#' 
+#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' New York: Chapman & Hall.
+#' @keywords htest hplot multivariate
+#' @examples
+#' 
+#' ##
+#' ##  Subgrouped data
+#' ##
+#' 
+#' data(RyanMultivar)
+#' str(RyanMultivar)
+#' 
+#' q  = mqcc(RyanMultivar, type = "T2")
+#' summary(q)
+#' ellipseChart(q)
+#' ellipseChart(q, show.id = TRUE)
+#' q  = mqcc(RyanMultivar, type = "T2", pred.limits = TRUE)
+#' 
+#' # Xbar-charts for single variables computed adjusting the 
+#' # confidence level of the T^2 chart:
+#' q1  = with(RyanMultivar, 
+#'            qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2)))
+#' summary(q1)
+#' q2  = with(RyanMultivar,
+#'            qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))
+#' summary(q2)
+#' 
+#' require(MASS)
+#' # generate new "in control" data
+#' Xnew  = list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
+#' for(i in 1:4)
+#'    { x  = mvrnorm(10, mu = q$center, Sigma = q$cov)
+#'      Xnew$X1[,i]  = x[,1]
+#'      Xnew$X2[,i]  = x[,2] 
+#'    }
+#' qq  = mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
+#' summary(qq)
+#' 
+#' # generate new "out of control" data
+#' Xnew  = list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
+#' for(i in 1:4)
+#'    { x  = mvrnorm(10, mu = 1.2*q$center, Sigma = q$cov)
+#'      Xnew$X1[,i]  = x[,1]
+#'      Xnew$X2[,i]  = x[,2] 
+#'    }
+#' qq  = mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
+#' summary(qq)
+#' 
+#' ##
+#' ## Individual observations data
+#' ##
+#' 
+#' data(boiler)
+#' str(boiler)
+#' 
+#' q  = mqcc(boiler, type = "T2.single", confidence.level = 0.999)
+#' summary(q)
+#' 
+#' # generate new "in control" data
+#' boilerNew  = mvrnorm(10, mu = q$center, Sigma = q$cov)
+#' qq  = mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+#'            newdata = boilerNew, pred.limits = TRUE)
+#' summary(qq)
+#' 
+#' # generate new "out of control" data
+#' boilerNew  = mvrnorm(10, mu = 1.01*q$center, Sigma = q$cov)
+#' qq  = mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+#'            newdata = boilerNew, pred.limits = TRUE)
+#' summary(qq)
+#' 
+#' # provides "robust" estimates of means and covariance matrix
+#' rob  = cov.rob(boiler)
+#' qrob  = mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
+#' summary(qrob)
+#' 
 mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
                  limits = TRUE, pred.limits = FALSE,
                  data.name, labels, newdata, newlabels, 
@@ -407,6 +568,51 @@ plot.mqcc <- function(x,
   invisible() 
 }
 
+
+
+#' Multivariate Quality Control Charts
+#' 
+#' Plot an ellipse chart for a bivariate quality control data.
+#' 
+#' 
+#' @param object an object of class \code{'mqcc'}.
+#' @param chart.all a logical value indicating whether both statistics for
+#' \code{data} and for \code{newdata} (if given) should be plotted.
+#' @param show.id a logical value indicating whether to plot point labels
+#' (\code{TRUE}) or symbols (\code{FALSE}) for group means.
+#' @param ngrid a value for the size of the grid over which the ellipse is
+#' evaluated.
+#' @param confidence.level a numeric value between 0 and 1 specifying the
+#' confidence level of the computed probability limits.
+#' @param correct.multiple a logical value indicating whether to correct or not
+#' for multiple comparisons.
+#' @param title a character string specifying the main title. Set \code{title =
+#' FALSE} or \code{title = NA} to remove the title.
+#' @param xlim a numeric vector specifying the limits for the x-axis.
+#' @param ylim a numeric vector specifying the limits for the y-axis.
+#' @param xlab a string giving the label for the x-axis.
+#' @param ylab a string giving the label for the y-axis.
+#' @param restore.par a logical value indicating whether the previous
+#' \code{par} settings must be restored. If you need to add points, lines, etc.
+#' to a control chart set this to \code{FALSE}.
+#' @param \dots additional arguments to be passed to the generic
+#' \code{\link{points}} function.
+#' @author Luca Scrucca
+#' @seealso \code{\link{mqcc}}, \code{\link{stats.T2}},
+#' \code{\link{stats.T2.single}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' @keywords htest hplot multivariate
+#' @examples
+#' 
+#' # See examples in help(mqcc)
+#' 
 ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
                          confidence.level, correct.multiple = TRUE,
                          title, xlim, ylim, xlab, ylab,
@@ -526,6 +732,42 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
 
 # T2 chart
 
+
+
+#' Statistics used in computing and drawing the Hotelling T^2 chart for
+#' subgrouped data
+#' 
+#' These functions are used to compute statistics required by the \eqn{T^2}
+#' chart.
+#' 
+#' 
+#' @aliases stats.T2 limits.T2
+#' @param data the observed data values
+#' @param center a vector of values to use for center of input variables.
+#' @param cov a matrix of values to use for the covariance matrix of input
+#' variables.
+#' @param ngroups number of groups
+#' @param size sample size
+#' @param nvars number of variables
+#' @param conf confidence level (0 < \code{conf} < 1)
+#' @return The function \code{stats.T2} returns a list with components:
+#' \item{statistics}{a vector of values for the \eqn{T^2} statistic}
+#' \item{means}{a matrix of within group means for each variable}
+#' \item{center}{sample/group center statistic} \item{S}{covariance matrix}
+#' 
+#' The function \code{limits.T2} returns a list with components:
+#' \item{control}{control limits} \item{prediction}{pred.limits}
+#' @author Luca Scrucca
+#' @seealso \code{\link{mqcc}}, \code{\link{stats.T2.single}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' @keywords htest hplot multivariate
 stats.T2 <- function(data, center = NULL, cov = NULL)
 { 
   data <- lapply(data, data.matrix) 
@@ -576,6 +818,43 @@ limits.T2 <- function(ngroups, size, nvars,  conf)
 
 # T2 chart single observation per group
 
+
+
+#' Statistics used in computing and drawing the Hotelling T^2 chart for
+#' individual observations data
+#' 
+#' These functions are used to compute statistics required by the \eqn{T^2}
+#' chart for individual observations.
+#' 
+#' 
+#' @aliases stats.T2.single limits.T2.single
+#' @param data the observed data values
+#' @param center a vector of values to use for center of input variables.
+#' @param cov a matrix of values to use for the covariance matrix of input
+#' variables.
+#' @param ngroups number of groups
+#' @param size sample size
+#' @param nvars number of variables
+#' @param conf confidence level (0 < \code{conf} < 1)
+#' @return The function \code{stats.T2.single} returns a list with components:
+#' \item{statistics}{a vector of values for the \eqn{T^2} statistic}
+#' \item{means}{a matrix of within group means for each variable (which is
+#' equal to \code{data} since sample are of sizes one)}
+#' \item{center}{sample/group center statistic} \item{S}{covariance matrix}
+#' 
+#' The function \code{limits.T2.single} returns a list with components:
+#' \item{control}{control limits} \item{prediction}{pred.limits}
+#' @author Luca Scrucca
+#' @seealso \code{\link{mqcc}}, \code{\link{stats.T2}}
+#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
+#' Statistical Process Control with Industrial Applications}, SIAM.
+#' 
+#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' 7th ed. New York: John Wiley & Sons.
+#' 
+#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#' ed. New York: John Wiley & Sons, Inc.
+#' @keywords htest hplot multivariate
 stats.T2.single <- function(data, center = NULL, cov = NULL)
 { 
   data <- as.matrix(as.data.frame(data))
