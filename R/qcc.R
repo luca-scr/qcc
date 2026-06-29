@@ -44,7 +44,7 @@ qcc <- function(data,
      { if (any(type==c("p", "np", "u")))
           stop(paste("sample 'sizes' must be given for a", type, "Chart"))
        else
-          sizes <- apply(data, 1, function(x) sum(!is.na(x)))  }
+          sizes <- as.integer(rowSums(!is.na(data))) }
   else
      { if (length(sizes)==1)
           sizes <- rep(sizes, nrow(data))
@@ -106,7 +106,7 @@ qcc <- function(data,
       if(any(type==c("p", "np", "u")))
         stop(paste("sample 'newsizes' must be given for a", type, "Chart"))
       else
-        newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+        newsizes <- as.integer(rowSums(!is.na(newdata)))
     } else
     { 
       if(length(newsizes)==1)
@@ -619,8 +619,8 @@ stats.xbar <- function(data, sizes)
 {
   data <- as.matrix(data)
   if(missing(sizes))
-    sizes <- apply(data, 1, function(x) sum(!is.na(x)))
-  statistics <- apply(data, 1, mean, na.rm=TRUE)
+    sizes <- as.integer(rowSums(!is.na(data)))
+  statistics <- rowMeans(data, na.rm = TRUE)
   center <- sum(sizes * statistics)/sum(sizes)
   list(statistics = statistics, center = center)
 }
@@ -629,7 +629,7 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
 {
   data <- as.matrix(data)
   if(missing(sizes))
-    sizes <- apply(data, 1, function(x) sum(!is.na(x)))
+    sizes <- as.integer(rowSums(!is.na(data)))
   if(any(sizes == 1))
     stop("group sizes must be larger than one")
   if(!is.numeric(std.dev))
@@ -694,7 +694,7 @@ stats.S <- function(data, sizes)
 {
   data <- as.matrix(data)
   if (missing(sizes))
-     sizes <- apply(data, 1, function(x) sum(!is.na(x)))
+     sizes <- as.integer(rowSums(!is.na(data)))
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
@@ -740,7 +740,7 @@ stats.R <- function(data, sizes)
 {
   data <- as.matrix(data)
   if (missing(sizes))
-     sizes <- apply(data, 1, function(x) sum(!is.na(x)))
+     sizes <- as.integer(rowSums(!is.na(data)))
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
@@ -975,4 +975,3 @@ limits.u <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if (length(unique(sizes))==1) sizes <- sizes[1]
   limits.c(center * sizes, std.dev, sizes, nsigmas, conf) / sizes
 }
-

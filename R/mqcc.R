@@ -583,7 +583,7 @@ stats.T2.single <- function(data, center = NULL, cov = NULL)
   p <- ncol(data)                       # num. of variables
   n <- 1                                # samples sizes
   if(is.null(center))
-    { center <- apply(data, 2, mean) }  # overall mean
+    { center <- colMeans(data) }  # overall mean
   x <- scale(data, center = center, scale = FALSE)
   if(is.null(cov))
     { cov <- crossprod(x)/(m-1) }       # sample covar matrix

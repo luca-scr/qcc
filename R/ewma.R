@@ -49,7 +49,7 @@ ewma <- function(data,
   data <- data.matrix(data)
 
   if(missing(sizes)) 
-    { sizes <- apply(data, 1, function(x) sum(!is.na(x)))  }
+    { sizes <- as.integer(rowSums(!is.na(data)))  }
   else
     { if(length(sizes)==1)
          sizes <- rep(sizes, nrow(data))
@@ -99,7 +99,7 @@ ewma <- function(data,
     newdata <- data.matrix(newdata)
     if(missing(newsizes))
     { 
-      newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+      newsizes <- as.integer(rowSums(!is.na(newdata)))
     } else
     { 
       if(length(newsizes)==1)
