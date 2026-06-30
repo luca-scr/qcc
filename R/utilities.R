@@ -4,6 +4,8 @@
 #                                                                   #
 #-------------------------------------------------------------------#
 
+# Remove this definition when the minimum supported R version becomes 4.4
+`%||%` <- function(x, y) if (is.null(x)) y else x
 qccGroups <- function(data, x, sample)
 {
   # collect x and sample from data if provided

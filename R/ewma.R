@@ -49,7 +49,7 @@ ewma <- function(data,
   data <- data.matrix(data)
 
   if(missing(sizes)) 
-    { sizes <- apply(data, 1, function(x) sum(!is.na(x)))  }
+    { sizes <- as.integer(rowSums(!is.na(data)))  }
   else
     { if(length(sizes)==1)
          sizes <- rep(sizes, nrow(data))
@@ -58,7 +58,7 @@ ewma <- function(data,
   # used for computing statistics and std.dev
   type <- if(any(sizes==1)) "xbar.one" else "xbar"
 
-  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
+  labels <- rownames(data) %||% 1:nrow(data)
 
   stats <- paste("stats.", type, sep = "")
   if(!exists(stats, mode="function"))
@@ -99,7 +99,7 @@ ewma <- function(data,
     newdata <- data.matrix(newdata)
     if(missing(newsizes))
     { 
-      newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+      newsizes <- as.integer(rowSums(!is.na(newdata)))
     } else
     { 
       if(length(newsizes)==1)
@@ -264,7 +264,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   newdata.name <- object$newdata.name
   violations <- object$violations
   statistics <- c(stats, newstats)
-  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  groups <- xtime %||% 1:length(statistics)
   stopifnot(length(groups) == length(statistics))
 
   if(missing(title))
@@ -310,16 +310,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
     coord_cartesian(xlim = xlim+c(-0.5,0.5), 
                     ylim = extendrange(ylim),
                     expand = FALSE, clip = "off") +
-    theme_light() + 
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", size = 11),
-          legend.position = "none",
-          plot.margin = margin(5, 30, 5, 5),
-          axis.text.y = element_text(angle = 90, 
-                                     margin = margin(l = 5, r = 5),
-                                     hjust = 0.5, vjust = 0.5))
+      theme_qcc()
   
   plot <- plot + 
   {

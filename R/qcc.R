@@ -44,14 +44,14 @@ qcc <- function(data,
      { if (any(type==c("p", "np", "u")))
           stop(paste("sample 'sizes' must be given for a", type, "Chart"))
        else
-          sizes <- apply(data, 1, function(x) sum(!is.na(x)))  }
+          sizes <- as.integer(rowSums(!is.na(data))) }
   else
      { if (length(sizes)==1)
           sizes <- rep(sizes, nrow(data))
        else if (length(sizes) != nrow(data))
                 stop("sizes length doesn't match with data") }
 
-  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
+  labels <- rownames(data) %||% 1:nrow(data)
 
   stats <- paste("stats.", type, sep = "")
   if (!exists(stats, mode="function"))
@@ -106,7 +106,7 @@ qcc <- function(data,
       if(any(type==c("p", "np", "u")))
         stop(paste("sample 'newsizes' must be given for a", type, "Chart"))
       else
-        newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+        newsizes <- as.integer(rowSums(!is.na(newdata)))
     } else
     { 
       if(length(newsizes)==1)
@@ -298,11 +298,10 @@ plot.qcc <- function(x, xtime = NULL,
   newdata.name <- object$newdata.name
   violations <- object$violations
   rules <- object$rules
-  rule.set <- object$rule.set
-  if(is.null(rule.set)) rule.set <- "western-electric"
+  rule.set <- object$rule.set %||% "western-electric"
   rule.set <- match.arg(rule.set, c("western-electric", "nelson"))
   statistics <- c(stats, newstats)
-  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  groups <- xtime %||% 1:length(statistics)
   stopifnot(length(groups) == length(statistics))
   
   if(missing(title))
@@ -357,16 +356,7 @@ plot.qcc <- function(x, xtime = NULL,
          y = if(missing(ylab)) "Group summary statistics" else ylab) +
     coord_cartesian(xlim = xlim, ylim = ylim,
                     expand = FALSE, clip = "off") +
-    theme_light() + 
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", size = 11),
-          legend.position = "none",
-          plot.margin = margin(5, 30, 5, 5),
-          axis.text.y = element_text(angle = 90, 
-                                     margin = margin(l = 5, r = 5),
-                                     hjust = 0.5, vjust = 0.5))
+    theme_qcc()
 
   plot <- plot + 
   {
@@ -615,14 +605,22 @@ plot.qcc <- function(x, xtime = NULL,
 qcc.c4 <- function(n)
 { sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2)) }
 
+# Returns limits in a consistent structure for use in limits.* functions
+.construct_limits <- function(lcl,ucl) {
+  limits <- matrix(c(lcl, ucl), ncol = 2)
+  rownames(limits) <- rep("", length = nrow(limits))
+  colnames(limits) <- c("LCL", "UCL")
+  return(limits)
+}
+
 # xbar
 
 stats.xbar <- function(data, sizes)
 {
   data <- as.matrix(data)
   if(missing(sizes))
-    sizes <- apply(data, 1, function(x) sum(!is.na(x)))
-  statistics <- apply(data, 1, mean, na.rm=TRUE)
+    sizes <- as.integer(rowSums(!is.na(data)))
+  statistics <- rowMeans(data, na.rm = TRUE)
   center <- sum(sizes * statistics)/sum(sizes)
   list(statistics = statistics, center = center)
 }
@@ -631,7 +629,7 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
 {
   data <- as.matrix(data)
   if(missing(sizes))
-    sizes <- apply(data, 1, function(x) sum(!is.na(x)))
+    sizes <- as.integer(rowSums(!is.na(data)))
   if(any(sizes == 1))
     stop("group sizes must be larger than one")
   if(!is.numeric(std.dev))
@@ -674,22 +672,19 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if (length(unique(sizes))==1) sizes <- sizes[1]
   se.stats <- std.dev/sqrt(sizes)
-  if(is.null(conf))
-     { lcl <- center - nsigmas * se.stats
-       ucl <- center + nsigmas * se.stats
-     }
-  else 
-     { if (conf > 0 & conf < 1) 
-          { nsigmas <- qnorm(1 - (1 - conf)/2)
-            lcl <- center - nsigmas * se.stats
-            ucl <- center + nsigmas * se.stats
-          }
-       else stop("invalid 'conf' argument. See help.")
-     }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+
+  if (!is.null(conf)) {
+    if (!is.numeric(conf) || length(conf) != 1L || conf <= 0 || conf >= 1) {
+      stop("invalid 'conf' argument. See help.")
+    }
+
+    nsigmas <- qnorm(1 - (1 - conf) / 2)
+  }
+
+  delta <- nsigmas * se.stats
+  lcl <- center - delta
+  ucl <- center + delta
+  .construct_limits(lcl,ucl)
 }
 
 
@@ -699,7 +694,7 @@ stats.S <- function(data, sizes)
 {
   data <- as.matrix(data)
   if (missing(sizes))
-     sizes <- apply(data, 1, function(x) sum(!is.na(x)))
+     sizes <- as.integer(rowSums(!is.na(data)))
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
@@ -736,10 +731,7 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
           else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  limits
+  .construct_limits(lcl,ucl)
 }
 
 # R Chart 
@@ -748,7 +740,7 @@ stats.R <- function(data, sizes)
 {
   data <- as.matrix(data)
   if (missing(sizes))
-     sizes <- apply(data, 1, function(x) sum(!is.na(x)))
+     sizes <- as.integer(rowSums(!is.na(data)))
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
@@ -788,10 +780,7 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 # xbar Chart for one-at-time data
@@ -813,14 +802,15 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
     { sd <- std.dev }
   else
     { switch(std.dev, 
-             "MR" = { d2 <- qcc.options("exp.R.unscaled")
-                      if(is.null(d2))
-                         stop(".qcc.options$exp.R.unscaled is null")
-                      d <- 0
-                      for(j in r:n)
-                          d <- d+abs(diff(range(data[c(j:(j-r+1))], na.rm=TRUE)))
-                      sd <- (d/(n-r+1))/d2[r] },
-             "SD" = { sd <- sd(data)/qcc.c4(n) },
+             "MR" = {
+                data <- data[!is.na(data)]
+                d2 <- qcc.options("exp.R.unscaled")
+                moving_ranges <- apply(embed(data, r), 1L, function(x) {
+                  diff(range(x))
+                })
+                sd <- mean(moving_ranges) / d2[r]
+             },
+             "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) },
              sd <- NULL)
     }
   return(sd)
@@ -832,22 +822,19 @@ limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   se.stats <- std.dev
-  if (is.null(conf)) 
-     { lcl <- center - nsigmas * se.stats
-       ucl <- center + nsigmas * se.stats
-     }
-  else 
-     { if (conf > 0 & conf < 1) 
-          { nsigmas <- qnorm(1 - (1 - conf)/2)
-            lcl <- center - nsigmas * se.stats
-            ucl <- center + nsigmas * se.stats
-          }
-       else stop("invalid conf argument. See help.")
-     }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+
+  if (!is.null(conf)) {
+    if (!is.numeric(conf) || length(conf) != 1L || conf <= 0 || conf >= 1) {
+      stop("invalid 'conf' argument. See help.")
+    }
+
+    nsigmas <- qnorm(1 - (1 - conf) / 2)
+  }
+
+  delta <- nsigmas * se.stats
+  lcl <- center - delta
+  ucl <- center + delta
+  .construct_limits(lcl,ucl)
 }
 
 
@@ -920,10 +907,7 @@ limits.np <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 # c Chart
@@ -951,8 +935,7 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if (is.null(conf))
-     { lcl <- center - nsigmas * sqrt(center)
-       lcl[lcl < 0] <- 0
+     { lcl <- pmax(0, center - nsigmas * sqrt(center))
        ucl <- center + nsigmas * sqrt(center)
      }
   else 
@@ -962,10 +945,7 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
 
 # u Chart
@@ -995,4 +975,3 @@ limits.u <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if (length(unique(sizes))==1) sizes <- sizes[1]
   limits.c(center * sizes, std.dev, sizes, nsigmas, conf) / sizes
 }
-

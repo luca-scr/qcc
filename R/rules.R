@@ -117,10 +117,10 @@ qccRulesViolatingWER2 <- function(object,
                                      nsigmas = k))
   i <- if(nrow(limits) > 1) seq(run.length, length(statistics)) else 1
   viol.above <- embed(statistics, run.length) > limits[i,2]
-  viol.above <- which(apply(viol.above, 1, sum) >= run.points & viol.above[,1])
+  viol.above <- which(rowSums(viol.above) >= run.points & viol.above[,1])
   viol.above <- viol.above + (run.length-1)
   viol.below <- embed(statistics, run.length) < limits[i,1]
-  viol.below <- which(apply(viol.below, 1, sum) >= run.points & viol.below[,1])
+  viol.below <- which(rowSums(viol.below) >= run.points & viol.below[,1])
   viol.below <- viol.below + (run.length-1)
   return(c(viol.above, viol.below))
 }

@@ -18,7 +18,7 @@ cusum <- function(data,
   data <- data.matrix(data)
 
   if(missing(sizes)) 
-    { sizes <- apply(data, 1, function(x) sum(!is.na(x)))  }
+    { sizes <- as.integer(rowSums(!is.na(data)))  }
   else
     { if(length(sizes)==1)
          sizes <- rep(sizes, nrow(data))
@@ -36,7 +36,7 @@ cusum <- function(data,
   if(ncol(data) == 1 & any(sizes > 1) & missing(std.dev))
      stop("sizes larger than 1 but data appears to be single samples. In this case you must provide also the std.dev")
   
-  labels <- if(is.null(rownames(data))) 1:nrow(data) else rownames(data)
+  labels <- rownames(data) %||% 1:nrow(data)
 
   stats <- paste("stats.", type, sep = "")
   if(!exists(stats, mode="function"))
@@ -77,7 +77,7 @@ cusum <- function(data,
     newdata <- data.matrix(newdata)
     if(missing(newsizes))
     { 
-      newsizes <- apply(newdata, 1, function(x) sum(!is.na(x))) 
+      newsizes <- as.integer(rowSums(!is.na(newdata)))
     } else
     { 
       if(length(newsizes)==1)
@@ -250,7 +250,7 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   cusum.pos <- object$pos
   cusum.neg <- object$neg
   statistics <- c(stats, newstats)
-  groups <- if(is.null(xtime)) 1:length(statistics) else xtime
+  groups <- xtime %||% 1:length(statistics)
   stopifnot(length(groups) == length(statistics))
   
   if(missing(title))
@@ -303,17 +303,11 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     coord_cartesian(xlim = xlim+c(-0.5,0.5), 
                     ylim = extendrange(ylim),
                     expand = FALSE, clip = "off") +
-    theme_light() + 
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", size = 11),
-          axis.title.y = element_text(margin = margin(t = 0, r = 30, b = 0, l = 0)),
-          legend.position = "none",
-          plot.margin = margin(5, 30, 5, 5),
-          axis.text.y = element_text(angle = 90, 
-                                     margin = margin(l = 5, r = 5),
-                                     hjust = 0.5, vjust = 0.5))
+    theme_qcc(
+      axis.title.y = element_text(
+        margin = margin(t = 0, r = 30, b = 0, l = 0)
+      ),
+    ) 
   
   plot <- plot + 
   {
@@ -445,4 +439,3 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
-
