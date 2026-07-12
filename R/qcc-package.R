@@ -38,4 +38,5 @@
 #' @aliases .printShortMatrix print.qccplot .qcc.options qcc.c4 qccStartupMessage
 #' @author Luca Scrucca
 #' @keywords internal package
+#' @name qcc-internal
 NULL
