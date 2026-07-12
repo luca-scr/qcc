@@ -31,26 +31,6 @@
 NULL
 
 
-# TODO: Add this to the indivdual depracated functions in R/depracated.R
-
-#' Deprecated Functions in qcc package
-#'
-#' These functions are provided for compatibility with older versions of the
-#' package qcc, and they will likely be removed in the future.
-#' 
-#' @aliases qcc.groups pareto.chart process.capability oc.curves cause.and.effect qcc.overdispersion.test
-#' @export qcc.groups
-#' @export pareto.chart
-#' @export process.capability
-#' @export oc.curves
-#' @export cause.and.effect
-#' @export qcc.overdispersion.test
-#' @param ... all arguments are passed down.
-#' @seealso [deprecated()]
-NULL
-
-
-
 #' Internal 'qcc' functions
 #'
 #' Internal functions for package qcc.
