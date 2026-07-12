@@ -31,7 +31,7 @@
 #' 8. Eight points in a row plot outside 1 sigma on both sides of the center
 #'    line.
 #'
-#' @aliases qccRules qccRulesViolatingWER1 qccRulesViolatingWER2 qccRulesViolatingWER3 qccRulesViolatingWER4 qccRulesViolatingNEL1 qccRulesViolatingNEL2 qccRulesViolatingNEL3 qccRulesViolatingNEL4 qccRulesViolatingNEL5 qccRulesViolatingNEL6 qccRulesViolatingNEL7 qccRulesViolatingNEL8
+#' @aliases rules qccRules
 #' @param object an object of class `'qcc'`.
 #' @param rules a vector of values specifying the rules used to declare a
 #' process out-of-control. Numeric values are interpreted within
@@ -139,7 +139,7 @@ qccRules <- function(object, rules = object$rules, rule.set = object$rule.set)
   return(out)
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingWER1 <- function(object, limits = object$limits)
 {
@@ -152,7 +152,7 @@ qccRulesViolatingWER1 <- function(object, limits = object$limits)
   return(c(index.above.ucl, index.below.lcl))
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingWER2 <- function(object, 
                                   run.points = 2,
@@ -177,7 +177,7 @@ qccRulesViolatingWER2 <- function(object,
   return(c(viol.above, viol.below))
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingWER3 <- function(object, ...)
 {
@@ -187,7 +187,7 @@ qccRulesViolatingWER3 <- function(object, ...)
                         k = object$nsigmas*1/3)
 }  
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingWER4 <- function(object) qccRulesViolatingNEL2(object, run.length = 8)
 
@@ -203,11 +203,11 @@ qccRulesViolatingWER4 <- function(object) qccRulesViolatingNEL2(object, run.leng
 # 7. Fifteen points in a row plot within 1 sigma of the center line.
 # 8. Eight points in a row plot outside 1 sigma on both sides of the center line.
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL1 <- function(object) qccRulesViolatingWER1(object, object$limits)
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL2 <- function(object, run.length = 9)
 {
@@ -220,7 +220,7 @@ qccRulesViolatingNEL2 <- function(object, run.length = 9)
   return(c(viol.above, viol.below))
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL3 <- function(object)
 {
@@ -233,7 +233,7 @@ qccRulesViolatingNEL3 <- function(object)
   return(c(viol.increase, viol.decrease))
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL4 <- function(object)
 {
@@ -248,14 +248,14 @@ qccRulesViolatingNEL4 <- function(object)
   return(violators)
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL5 <- function(object) qccRulesViolatingWER2(object)
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL6 <- function(object) qccRulesViolatingWER3(object)
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL7 <- function(object)
 {
@@ -267,7 +267,7 @@ qccRulesViolatingNEL7 <- function(object)
   return(qccRulesViolatingRun(inside, run.length))
 }
 
-#' @rdname rules
+#' @rdname qccRules
 #' @export
 qccRulesViolatingNEL8 <- function(object)
 {
