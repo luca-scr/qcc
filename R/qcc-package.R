@@ -12,8 +12,6 @@
 #' See [vignette and documentation](../doc/index.html) accompanying the
 #' package.
 #'
-#' @name qcc-package
-#' @docType package
 #' @import stats utils ggplot2 patchwork
 #' @importFrom graphics strheight strwidth hist abline axis box contour lines mtext par points polygon rect text
 #' @importFrom grDevices gray adjustcolor palette extendrange nclass.FD nclass.Sturges
@@ -27,8 +25,8 @@
 #' [paretoChart()], [causeEffectDiagram()].
 #' @references Scrucca, L. (2004). qcc: an R package for quality control
 #' charting and statistical process control. *R News* 4/1, 11-17.
-#' @keywords package
-NULL
+#' @keywords package internal
+"_PACKAGE"
 
 
 #' Internal 'qcc' functions
