@@ -7,39 +7,42 @@
 
 
 #' EWMA smoothing function
-#' 
+#'
 #' Compute Exponential Weighted Moving Average.
-#' 
+#'
 #' EWMA function smooths a series of data based on a moving average with
 #' weights which decay exponentially.
-#' 
-#' For each \eqn{y_t}{y_t} value the smoothed value is computed as \deqn{z_t =
-#' \lambda y_t + (1-\lambda) z_{t-1}} where \eqn{0 \le \lambda \le 1}{0 <=
-#' lambda <= 1} is the parameter which controls the weights applied.
-#' 
+#'
+#' For each \eqn{y_t}{y_t} value the smoothed value is computed as
+#' \deqn{z_t = \lambda y_t + (1-\lambda) z_{t-1}}
+#' where \eqn{0 \le \lambda \le 1}{0 <= lambda <= 1} controls the weights
+#' applied.
+#'
 #' @param x a vector of x-values.
 #' @param y a vector of y-values.
 #' @param lambda the smoothing parameter.
 #' @param start the starting value.
-#' @param \dots additional arguments (currently not used).
-#' @return Returns a list with elements: \item{x}{ordered x-values}
-#' \item{y}{smoothed y-values} \item{lambda}{the smoothing parameter}
-#' \item{start}{the starting value}
+#' @param ... additional arguments (currently not used).
+#' @return Returns a list with elements:
+#' - `x`: ordered x-values.
+#' - `y`: smoothed y-values.
+#' - `lambda`: the smoothing parameter.
+#' - `start`: the starting value.
 #' @author Luca Scrucca
-#' @seealso \code{\link{qcc}}, \code{\link{cusum}}
-#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
-#' Quality Control}, 7th ed. New York: John Wiley & Sons.
-#' 
-#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' @seealso [qcc()], [cusum()]
+#' @references Montgomery, D.C. (2013) *Introduction to Statistical
+#' Quality Control*, 7th ed. New York: John Wiley & Sons.
+#'
+#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
 #' New York: Chapman & Hall.
 #' @keywords hplot
 #' @examples
-#' 
+#'
 #' x  = 1:50
 #' y  = rnorm(50, sin(x/5), 0.5)
 #' plot(x,y)
 #' lines(ewmaSmooth(x,y,lambda=0.1), col="red")
-#' 
+#'
 ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 {
 #
@@ -74,90 +77,89 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 
 
 #' EWMA chart
-#' 
-#' Create an object of class \code{'ewma.qcc'} to compute and draw an
+#'
+#' Create an object of class `'ewma.qcc'` to compute and draw an
 #' Exponential Weighted Moving Average (EWMA) chart for statistical quality
 #' control.
-#' 
+#'
 #' EWMA chart smooths a series of data based on a moving average with weights
 #' which decay exponentially. Useful to detect small and permanent variation on
 #' the mean of the process.
-#' 
+#'
 #' @aliases ewma ewma.qcc print.ewma.qcc summary.ewma.qcc plot.ewma.qcc
 #' @param data a data frame, a matrix or a vector containing observed data for
 #' the variable to chart. Each row of a data frame or a matrix, and each value
 #' of a vector, refers to a sample or ''rationale group''.
 #' @param sizes a value or a vector of values specifying the sample sizes
 #' associated with each group. If not provided the sample sizes are obtained
-#' counting the non-\code{NA} elements of each row of a data frame or a matrix;
-#' sample sizes are set all equal to one if \code{data} is a vector.
+#' counting the non-`NA` elements of each row of a data frame or a matrix;
+#' sample sizes are set all equal to one if `data` is a vector.
 #' @param center a value specifying the center of group statistics or target.
 #' @param std.dev a value or an available method specifying the within-group
-#' standard deviation(s) of the process. \cr Several methods are available for
-#' estimating the standard deviation. See \code{\link{sd.xbar}} and
-#' \code{\link{sd.xbar.one}} for, respectively, the grouped data case and the
-#' individual observations case.
-#' @param lambda the smoothing parameter \eqn{0 \le \lambda \le 1}{0 <= lambda
-#' <= 1}
+#' standard deviation(s) of the process. Several methods are available for
+#' estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
+#' respectively, the grouped data case and the individual observations case.
+#' @param lambda the smoothing parameter \eqn{0 \le \lambda \le 1}{0 <=
+#' lambda <= 1}.
 #' @param nsigmas a numeric value specifying the number of sigmas to use for
 #' computing control limits.
-#' @param newdata a data frame, matrix or vector, as for the \code{data}
+#' @param newdata a data frame, matrix or vector, as for the `data`
 #' argument, providing further data to plot but not included in the
 #' computations.
-#' @param newsizes a vector as for the \code{sizes} argument providing further
+#' @param newsizes a vector as for the `sizes` argument providing further
 #' data sizes to plot but not included in the computations.
 #' @param xtime a vector of date-time values as returned by
-#' \code{\link{Sys.time}} and \code{\link{Sys.Date}}. If provided it is used
+#' [Sys.time()] and [Sys.Date()]. If provided it is used
 #' for x-axis so it must be of the same length as the statistic charted.
 #' @param add.stats a logical value indicating whether statistics and other
 #' information should be printed at the bottom of the chart.
 #' @param chart.all a logical value indicating whether both statistics for
-#' \code{data} and for \code{newdata} (if given) should be plotted.
+#' `data` and for `newdata` (if given) should be plotted.
 #' @param fill a logical value specifying if the in-control area should be
-#' filled with the color specified in \code{qcc.options("zones")$fill}.
+#' filled with the color specified in `qcc.options("zones")$fill`.
 #' @param label.center a character specifying the label for center line.
 #' @param label.limits a character vector specifying the labels for control
 #' limits.
-#' @param title a character string specifying the main title. Set \code{title =
-#' NULL} to remove the title.
+#' @param title a character string specifying the main title. Set `title =
+#' NULL` to remove the title.
 #' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
 #' @param xlim,ylim a numeric vector specifying the limits for the x-axis and
 #' the y-axis.
 #' @param digits the number of significant digits to use.
-#' @param x an object of class \code{'ewma.qcc'}.
-#' @param \dots additional arguments to be passed to the generic function.
-#' @return Returns an object of class \code{'ewma.qcc'}.
+#' @param x an object of class `'ewma.qcc'`.
+#' @param ... additional arguments to be passed to the generic function.
+#' @return Returns an object of class `'ewma.qcc'`.
 #' @author Luca Scrucca
-#' @seealso \code{\link{qcc}}, \code{\link{ewmaSmooth}}, \code{\link{cusum}}
-#' @references Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
-#' Statistical Process Control with Industrial Applications}, SIAM.
-#' 
-#' Montgomery, D.C. (2013) \emph{Introduction to Statistical Quality Control},
+#' @seealso [qcc()], [ewmaSmooth()], [cusum()]
+#' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
+#' Statistical Process Control with Industrial Applications*, SIAM.
+#'
+#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
 #' 7th ed. New York: John Wiley & Sons.
-#' 
-#' Ryan, T. P. (2011), \emph{Statistical Methods for Quality Improvement}, 3rd
+#'
+#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
 #' ed. New York: John Wiley & Sons, Inc.
-#' 
+#'
 #' Scrucca, L. (2004). qcc: an R package for quality control charting and
-#' statistical process control. \emph{R News} 4/1, 11-17.
-#' 
-#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' statistical process control. *R News* 4/1, 11-17.
+#'
+#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
 #' New York: Chapman & Hall.
 #' @keywords htest hplot
 #' @examples
-#' 
+#'
 #' ##
 #' ## Grouped-data
 #' ##
 #' data(pistonrings)
 #' diameter = qccGroups(data = pistonrings, diameter, sample)
-#' 
+#'
 #' q = ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 #' summary(q)
 #' plot(q)
-#' 
+#'
 #' ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,]) 
-#' 
+#'
 #' ##
 #' ## Individual observations
 #' ##
@@ -166,7 +168,7 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 #'                          newdata = viscosity[!trial]))
 #' summary(q)
 #' plot(q)
-#' 
+#'
 ewma <- function(data, 
                  sizes, center, std.dev, 
                  lambda = 0.2, nsigmas = 3, 

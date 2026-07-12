@@ -3,15 +3,15 @@
 
 
 #' Quality Control Charts
-#' 
+#'
 #' Shewhart quality control charts for continuous, attribute and count data.
 #' Cusum and EWMA charts. Operating characteristic curves. Process capability
 #' analysis. Pareto chart and cause-and-effect chart. Multivariate control
 #' charts.
-#' 
-#' See \href{../doc/index.html}{vignette and documentation} accompanying the
+#'
+#' See [vignette and documentation](../doc/index.html) accompanying the
 #' package.
-#' 
+#'
 #' @name qcc-package
 #' @docType package
 #' @import stats utils ggplot2 patchwork
@@ -22,36 +22,36 @@
 #' @importFrom cli rule
 #' @importFrom crayon bold
 #' @author Luca Scrucca
-#' @seealso \code{\link{qcc}}, \code{\link{mqcc}}, \code{\link{cusum}},
-#' \code{\link{ewma}}, \code{\link{ocCurves}}, \code{\link{processCapability}},
-#' \code{\link{paretoChart}}, \code{\link{causeEffectDiagram}}.
+#' @seealso [qcc()], [mqcc()], [cusum()],
+#' [ewma()], [ocCurves()], [processCapability()],
+#' [paretoChart()], [causeEffectDiagram()].
 #' @references Scrucca, L. (2004). qcc: an R package for quality control
-#' charting and statistical process control. \emph{R News} 4/1, 11-17.
+#' charting and statistical process control. *R News* 4/1, 11-17.
 #' @keywords package
 NULL
 
 
 
-#' Deprecated Functions in \pkg{qcc} package
-#' 
+#' Deprecated Functions in qcc package
+#'
 #' These functions are provided for compatibility with older versions of the
-#' package \pkg{qcc}, and they will likely be removed in the future.
-#' 
-#' 
+#' package qcc, and they will likely be removed in the future.
+#'
+#'
 #' @aliases qcc.groups pareto.chart process.capability oc.curves
 #' cause.and.effect qcc.overdispersion.test
-#' @param \dots all arguments are passed down.
-#' @seealso \code{\link{deprecated}}
+#' @param ... all arguments are passed down.
+#' @seealso [deprecated()]
 NULL
 
 
 
 #' Internal 'qcc' functions
-#' 
-#' Internal functions for package \pkg{qcc}.
-#' 
+#'
+#' Internal functions for package qcc.
+#'
 #' These functions are not intended to be called by the user.
-#' 
+#'
 #' @aliases .printShortMatrix print.qccplot .qcc.options qcc.c4
 #' qccStartupMessage
 #' @author Luca Scrucca

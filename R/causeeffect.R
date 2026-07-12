@@ -7,29 +7,29 @@
 
 
 #' Cause and Effect Diagram
-#' 
+#'
 #' Draw a basic cause and effect diagram.
-#' 
-#' 
+#'
+#'
 #' @param cause a list of causes and branches providing descriptive labels (see
 #' the example below).
 #' @param effect a string label or the effect.
-#' @param title a character string specifying the main title. Set \code{title =
-#' NULL} to remove the title.
+#' @param title a character string specifying the main title. Set `title =
+#' NULL` to remove the title.
 #' @param cex a vector of values for the graphical character expansion. The
 #' values refer, in order, to branches, causes and effect.
 #' @param font a vector of values for the font to use. The values refer, in
 #' order, to branches, causes and effect.
-#' @param \dots catches further ignored arguments.
+#' @param ... catches further ignored arguments.
 #' @author Luca Scrucca
-#' @references Montgomery, D.C. (2013) \emph{Introduction to Statistical
-#' Quality Control}, 7th ed. New York: John Wiley & Sons.
-#' 
-#' Wetherill, G.B. and Brown, D.W. (1991) \emph{Statistical Process Control}.
+#' @references Montgomery, D.C. (2013) *Introduction to Statistical
+#' Quality Control*, 7th ed. New York: John Wiley & Sons.
+#'
+#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
 #' New York: Chapman & Hall.
 #' @keywords hplot
 #' @examples
-#' 
+#'
 #' causeEffectDiagram(cause = list(Measurements = c("Micrometers", 
 #'                                                  "Microscopes", 
 #'                                                  "Inspectors"),
@@ -50,7 +50,7 @@
 #'                                              "Bits", 
 #'                                              "Sockets")),
 #'                    effect = "Surface Flaws")
-#' 
+#'
 causeEffectDiagram <- function(cause, effect, 
                                title = "Cause-and-Effect diagram",
                                cex = c(0.9,1,1.2), 
