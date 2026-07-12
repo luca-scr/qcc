@@ -1,6 +1,6 @@
 # TODO: replace @import with @importFrom for best practice
 # TODO: Review that the @importFrom arguments are actually still in use
-
+# TODO: When documenting a method, always include a link back to the generic using [generic_name()] so the reader can easily find the full documentation and other methods.
 
 #' Quality Control Charts
 #'
@@ -31,15 +31,20 @@
 NULL
 
 
+# TODO: Add this to the indivdual depracated functions in R/depracated.R
 
 #' Deprecated Functions in qcc package
 #'
 #' These functions are provided for compatibility with older versions of the
 #' package qcc, and they will likely be removed in the future.
-#'
-#'
-#' @aliases qcc.groups pareto.chart process.capability oc.curves
-#' cause.and.effect qcc.overdispersion.test
+#' 
+#' @aliases qcc.groups pareto.chart process.capability oc.curves cause.and.effect qcc.overdispersion.test
+#' @export qcc.groups
+#' @export pareto.chart
+#' @export process.capability
+#' @export oc.curves
+#' @export cause.and.effect
+#' @export qcc.overdispersion.test
 #' @param ... all arguments are passed down.
 #' @seealso [deprecated()]
 NULL
@@ -51,11 +56,8 @@ NULL
 #' Internal functions for package qcc.
 #'
 #' These functions are not intended to be called by the user.
-#'
-#' @aliases .printShortMatrix print.qccplot .qcc.options qcc.c4
-#' qccStartupMessage
+#' 
+#' @aliases .printShortMatrix print.qccplot .qcc.options qcc.c4 qccStartupMessage
 #' @author Luca Scrucca
 #' @keywords internal package
 NULL
-
-

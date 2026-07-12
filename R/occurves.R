@@ -23,9 +23,14 @@
 #' sensitive to departures from those assumptions, but to varying degrees. The
 #' performance of the `"S"` chart, and especially the `"R"` chart,
 #' are likely to be seriously affected by longer tails.
-#'
-#' @aliases ocCurves print.ocCurves plot.ocCurves ocCurves.xbar ocCurves.R
-#' ocCurves.S ocCurves.p ocCurves.c
+#' 
+#' @aliases ocCurves print.ocCurves plot.ocCurves ocCurves.xbar ocCurves.R ocCurves.S ocCurves.p ocCurves.c
+#' @export ocCurves
+#' @export ocCurves.xbar
+#' @export ocCurves.R
+#' @export ocCurves.S
+#' @export ocCurves.p
+#' @export ocCurves.c
 #' @param object an object of class `'qcc'`.
 #' @param size a vector of values specifying the sample sizes for which to draw
 #' the OC curves.
@@ -337,6 +342,9 @@ ocCurves.c <- function(object, ...)
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
+#' @export print.ocCurves
 print.ocCurves <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -352,6 +360,9 @@ print.ocCurves <- function(x, digits =  getOption("digits"), ...)
 }
 
 
+#' @rdname ocCurves
+#' @export
+#' @export plot.ocCurves
 plot.ocCurves <- function(x, what = c("beta", "ARL"),
                           title, xlab, ylab, lty, lwd, col,
                           ...)

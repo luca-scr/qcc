@@ -9,6 +9,9 @@
 #' non-events between events.
 #'
 #' @aliases stats.g sd.g limits.g
+#' @export stats.g
+#' @export sd.g
+#' @export limits.g
 #' @param data the observed data values
 #' @param center sample center statistic
 #' @param sizes sample sizes (not used)

@@ -29,6 +29,7 @@
 #' 1:8, rule.set = "nelson"`.
 #'
 #' @aliases qcc print.qcc summary.qcc plot.qcc
+#' @export qcc
 #' @param data a data frame, a matrix or a vector containing observed data for
 #' the variable to chart. Each row of a data frame or a matrix, and each value
 #' of a vector, refers to a sample or ''rationale group''.
@@ -414,6 +415,11 @@ qcc <- function(data,
   return(object)
 }
 
+# HACK: we export print.qcc for backward compatibility
+
+#' @rdname qcc
+#' @export
+#' @export print.qcc
 print.qcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -504,9 +510,19 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
   invisible()
 }
 
+# HACK: we export summary.qcc for backward compatibility
+
+#' @rdname qcc
+#' @export
+#' @export summary.qcc
 summary.qcc <- function(object, ...) print.qcc(object, ...)
 
 
+# HACK: we export plot.qcc for backward-compatibility
+
+#' @rdname qcc
+#' @export
+#' @export plot.qcc
 plot.qcc <- function(x, xtime = NULL,
                      add.stats = qcc.options("add.stats"), 
                      chart.all = qcc.options("chart.all"), 
@@ -891,6 +907,9 @@ qcc.c4 <- function(n)
 #' User's Guide.
 #'
 #' @aliases stats.xbar sd.xbar limits.xbar
+#' @export stats.xbar
+#' @export sd.xbar
+#' @export limits.xbar
 #' @param data the observed data values
 #' @param center sample/group center statistic
 #' @param sizes samples sizes. Optional
@@ -1004,6 +1023,9 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'
 #'
 #' @aliases stats.S sd.S limits.S
+#' @export stats.S
+#' @export sd.S
+#' @export limits.S
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes. Optional
@@ -1085,6 +1107,9 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'
 #'
 #' @aliases stats.R sd.R limits.R
+#' @export stats.R
+#' @export sd.R
+#' @export limits.R
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes. Optional
@@ -1178,6 +1203,9 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'   `x`.
 #'
 #' @aliases stats.xbar.one sd.xbar.one limits.xbar.one
+#' @export stats.xbar.one
+#' @export sd.xbar.one
+#' @export limits.xbar.one
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes. Not needed, `size = 1` is used.
@@ -1296,6 +1324,9 @@ limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'
 #'
 #' @aliases stats.p sd.p limits.p
+#' @export stats.p
+#' @export sd.p
+#' @export limits.p
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes.
@@ -1356,6 +1387,9 @@ limits.p <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'
 #'
 #' @aliases stats.np sd.np limits.np
+#' @export stats.np
+#' @export sd.np
+#' @export limits.np
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes.
@@ -1436,6 +1470,9 @@ limits.np <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'
 #'
 #' @aliases stats.c sd.c limits.c
+#' @export stats.c
+#' @export sd.c
+#' @export limits.c
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes.
@@ -1508,6 +1545,9 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 #'
 #'
 #' @aliases stats.u sd.u limits.u
+#' @export stats.u
+#' @export sd.u
+#' @export limits.u
 #' @param data the observed data values
 #' @param center sample/group center statistic.
 #' @param sizes samples sizes.

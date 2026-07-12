@@ -17,6 +17,7 @@
 #' mean of the process.
 #'
 #' @aliases cusum cusum.qcc print.cusum.qcc summary.cusum.qcc plot.cusum.qcc
+#' @export cusum
 #' @param data a data frame, a matrix or a vector containing observed data for
 #' the variable to chart. Each row of a data frame or a matrix, and each value
 #' of a vector, refers to a sample or ''rationale group''.
@@ -241,6 +242,12 @@ cusum <- function(data,
   return(object)
 }
 
+# HACK: we use @method because the class name has `.`
+
+#' @rdname cusum
+#' @method print cusum.qcc
+#' @export
+#' @export print.cusum.qcc
 print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -322,8 +329,20 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
   invisible()
 }
 
+# HACK: we use @method because the class name has `.`
+
+#' @rdname cusum
+#' @method summary cusum.qcc
+#' @export
+#' @export summary.cusum.qcc
 summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 
+# HACK: we use @method because the class name has `.`
+
+#' @rdname cusum
+#' @method plot cusum.qcc
+#' @export
+#' @export plot.cusum.qcc
 plot.cusum.qcc <- function(x, xtime = NULL,
                            add.stats = qcc.options("add.stats"), 
                            chart.all = qcc.options("chart.all"), 

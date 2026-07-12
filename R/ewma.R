@@ -36,6 +36,7 @@
 #' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
 #' New York: Chapman & Hall.
 #' @keywords hplot
+#' @export
 #' @examples
 #'
 #' x  = 1:50
@@ -87,6 +88,7 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 #' the mean of the process.
 #'
 #' @aliases ewma ewma.qcc print.ewma.qcc summary.ewma.qcc plot.ewma.qcc
+#' @export ewma
 #' @param data a data frame, a matrix or a vector containing observed data for
 #' the variable to chart. Each row of a data frame or a matrix, and each value
 #' of a vector, refers to a sample or ''rationale group''.
@@ -289,6 +291,10 @@ ewma <- function(data,
 }
 
 
+#' @rdname ewma
+#' @method print ewma.qcc
+#' @export
+#' @export print.ewma.qcc
 print.ewma.qcc <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -369,9 +375,17 @@ print.ewma.qcc <- function(x, digits =  getOption("digits"), ...)
   invisible()
 }
 
+#' @rdname ewma
+#' @method summary ewma.qcc
+#' @export
+#' @export summary.ewma.qcc
 summary.ewma.qcc <- function(object, ...) print.ewma.qcc(object, ...)
 
 
+#' @rdname ewma
+#' @method plot ewma.qcc
+#' @export
+#' @export plot.ewma.qcc
 plot.ewma.qcc <- function(x, xtime = NULL,
                           add.stats = qcc.options("add.stats"), 
                           chart.all = qcc.options("chart.all"), 

@@ -28,6 +28,7 @@
 #' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
 #' New York: Chapman & Hall.
 #' @keywords hplot
+#' @export
 #' @examples
 #'
 #' causeEffectDiagram(cause = list(Measurements = c("Micrometers", 

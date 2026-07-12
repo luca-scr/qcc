@@ -19,6 +19,7 @@
 #'
 #'
 #' @aliases mqcc print.mqcc summary.mqcc plot.mqcc
+#' @export mqcc
 #' @param data For subgrouped data, a list with a data frame or a matrix for
 #' each variable to monitor. Each row of the data frame or matrix refers to a
 #' sample or ''rationale'' group.  For individual observations, where each
@@ -313,6 +314,10 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
   return(object)
 }
 
+#' @rdname mqcc
+#' @method print mqcc
+#' @export
+#' @export print.mqcc
 print.mqcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x  # Argh.  Really want to use 'object' anyway
@@ -368,8 +373,16 @@ print.mqcc <- function(x, digits = getOption("digits"), ...)
   invisible()        
 }
 
+#' @rdname mqcc
+#' @method summary mqcc
+#' @export
+#' @export summary.mqcc
 summary.mqcc <- function(object, ...) print.mqcc(object, ...)
 
+#' @rdname mqcc
+#' @method plot mqcc
+#' @export
+#' @export plot.mqcc
 plot.mqcc <- function(x, 
                       add.stats = qcc.options("add.stats"), 
                       chart.all = qcc.options("chart.all"), 
@@ -610,6 +623,7 @@ plot.mqcc <- function(x,
 #' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
 #' ed. New York: John Wiley & Sons, Inc.
 #' @keywords htest hplot multivariate
+#' @export
 #' @examples
 #'
 #' # See examples in help(mqcc)
@@ -743,6 +757,8 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
 #'
 #'
 #' @aliases stats.T2 limits.T2
+#' @export stats.T2
+#' @export limits.T2
 #' @param data the observed data values
 #' @param center a vector of values to use for center of input variables.
 #' @param cov a matrix of values to use for the covariance matrix of input
@@ -831,6 +847,8 @@ limits.T2 <- function(ngroups, size, nvars,  conf)
 #'
 #'
 #' @aliases stats.T2.single limits.T2.single
+#' @export stats.T2.single
+#' @export limits.T2.single
 #' @param data the observed data values
 #' @param center a vector of values to use for center of input variables.
 #' @param cov a matrix of values to use for the covariance matrix of input

@@ -14,6 +14,7 @@
 #' increasing order, and a line is also added to show the cumulative sum.
 #'
 #' @aliases paretoChart print.paretoChart plot.paretoChart blues.colors
+#' @export paretoChart
 #' @param data a vector of values. `names(data)` are used for labelling
 #' the bars.
 #' @param plot a logical specifying if the chart should be provided
@@ -86,6 +87,9 @@ paretoChart <- function(data, ...)
   return(object)
 }
 
+#' @rdname paretoChart
+#' @export
+#' @export print.paretoChart
 print.paretoChart <- function(x, digits = getOption("digits") - 3, ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -94,6 +98,9 @@ print.paretoChart <- function(x, digits = getOption("digits") - 3, ...)
   print(object$tab, digits = digits, ...)
 }
 
+#' @rdname paretoChart
+#' @export
+#' @export plot.paretoChart
 plot.paretoChart <- function(x, 
                              title, xlab,
                              ylab = "Frequency", 

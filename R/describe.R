@@ -14,6 +14,7 @@
 #' another variable.
 #'
 #' @aliases describe print.describe
+#' @export describe
 #' @param data a matrix or data frame.
 #' @param by a factor or character vector specifying the conditioning variable.
 #' This may be a variable included in `data` or an object defined in the
@@ -130,6 +131,10 @@ describe <- function(data, by, detailed = FALSE, ...)
   return(obj)
 }
 
+#' @rdname describe
+#' @method print describe
+#' @export
+#' @export print.describe
 print.describe <- function(x, digits = getOption("digits") - 3, ...)
 {
 

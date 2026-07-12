@@ -25,6 +25,7 @@
 #' empty values.
 #' @author Luca Scrucca
 #' @seealso [qcc()]
+#' @export
 #' @examples
 #'
 #' data(pistonrings)
@@ -89,8 +90,8 @@ qccGroups <- function(data, x, sample)
 #' @param ... additional arguments to be passed to low level functions.
 #' @return The value of suggested number of classes/bins.
 #' @author Luca Scrucca
-#' @seealso [grDevices::nclass.FD()],
-#' [grDevices::nclass.Sturges()]
+#' @seealso [grDevices::nclass.FD()], [grDevices::nclass.Sturges()]
+#' @export
 #' @examples
 #'
 #' set.seed(1)
@@ -129,6 +130,7 @@ nclass.hist <- function(x, ...)
 #' @references Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process
 #' Control*, New York, Chapman and Hall, pp. 216--218
 #' @keywords htest
+#' @export
 #' @examples
 #'
 #' # data from Wetherill and Brown (1991) pp. 212--213, 216--218:
@@ -171,6 +173,8 @@ qccOverdispersionTest <- function(x, size,
   return(out)
 }
 
+#' @rdname paretoChart
+#' @export
 blues.colors <- function (n) 
 {
   palette <- grDevices::colorRampPalette(c("#03396c", "#005b96", "#6497b1", "#b3cde0"), 
@@ -294,6 +298,7 @@ expand_right_margin <- function(p, extra_right_pt)
 #' @author Luca Scrucca
 #' @seealso [qcc()]
 #' @keywords htest hplot
+#' @export
 #' @examples
 #'
 #' old  = qcc.options()			# save defaults

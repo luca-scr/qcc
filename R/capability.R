@@ -19,9 +19,9 @@
 #' \eqn{C_{pm}}{C_pm} are based on the method of Boyles (1991); this method is
 #' approximate and it assumes that the target is midway between the
 #' specification limits.
-#'
-#' @aliases processCapability print.processCapability summary.processCapability
-#' plot.processCapability
+#' 
+#' @aliases processCapability print.processCapability summary.processCapability plot.processCapability
+#' @export processCapability
 #' @param object a `'qcc'` object of type `"xbar"`
 #' @param spec.limits a two-values vector specifying the lower and upper
 #' specification limits. For one-sided specification limits, the value of the
@@ -217,6 +217,10 @@ processCapability <- function(object, spec.limits, target,
   return(out)
 }
 
+#' @rdname processCapability
+#' @method print processCapability
+#' @export
+#' @export print.processCapability
 print.processCapability <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -262,9 +266,17 @@ print.processCapability <- function(x, digits = getOption("digits"), ...)
   invisible()
 }
 
+#' @rdname processCapability
+#' @method summary processCapability
+#' @export
+#' @export summary.processCapability
 summary.processCapability <- function(object, ...) 
   print.processCapability(object, ...)
 
+#' @rdname processCapability
+#' @method plot processCapability
+#' @export
+#' @export plot.processCapability
 plot.processCapability <- function(x, 
                                    add.stats = qcc.options("add.stats"),
                                    breaks = nclass.hist, 
