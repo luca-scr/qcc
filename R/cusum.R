@@ -66,7 +66,7 @@
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'cusum.qcc'`.
 #' @author Luca Scrucca
-#' @seealso [qcc()], [ewma()]
+#' @family control charts
 #' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
 #' Statistical Process Control with Industrial Applications*, SIAM.
 #'

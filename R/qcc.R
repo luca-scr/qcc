@@ -102,9 +102,8 @@
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'qcc'`.
 #' @author Luca Scrucca
-#' @seealso [qccRules()], [cusum()], [ewma()],
-#' [ocCurves()], [processCapability()],
-#' [qccGroups()]
+#' @family control charts
+#' @seealso [qccRules()], [ocCurves()], [processCapability()], [qccGroups()]
 #' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
 #' Statistical Process Control with Industrial Applications*, SIAM.
 #'

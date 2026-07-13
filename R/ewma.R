@@ -132,7 +132,8 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'ewma.qcc'`.
 #' @author Luca Scrucca
-#' @seealso [qcc()], [ewmaSmooth()], [cusum()]
+#' @family control charts
+#' @seealso [ewmaSmooth()]
 #' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
 #' Statistical Process Control with Industrial Applications*, SIAM.
 #'
