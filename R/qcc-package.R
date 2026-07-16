@@ -26,7 +26,8 @@
 #' See [vignette and documentation](../doc/index.html) accompanying the
 #' package.
 #'
-#' @import stats utils ggplot2 patchwork
+#' @import stats ggplot2 patchwork
+#' @importFrom utils packageVersion
 #' @importFrom graphics strheight strwidth hist abline axis box contour lines mtext par points polygon rect text
 #' @importFrom grDevices gray adjustcolor palette extendrange nclass.FD nclass.Sturges
 #' @importFrom MASS mvrnorm
