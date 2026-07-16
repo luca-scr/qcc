@@ -1,17 +1,3 @@
-#-----------------------------------------------------------------------------#
-#                                                                             #
-#  MULTIVARIATE CONTROL CHARTS                                                #
-#                                                                             #
-#  Written by: Luca Scrucca                                                   #
-#              Department of Statistics                                       #
-#              University of Perugia, ITALY                                   #
-#              luca@stat.unipg.it                                             #
-#                                                                             #
-# Last modified: October 2009                                                 #
-#-----------------------------------------------------------------------------#
-
-
-
 #' Multivariate Quality Control Charts
 #'
 #' Create an object of class `'mqcc'` to perform multivariate statistical

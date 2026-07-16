@@ -1,11 +1,3 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#          Operating Characteristic Curves                          #
-#                                                                   #
-#-------------------------------------------------------------------#
-
-
-
 #' Operating Characteristic Function
 #'
 #' Draws the operating characteristic curves for a `'qcc'` object.

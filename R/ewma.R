@@ -1,82 +1,3 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#                       EWMA CHART                                  #
-#                                                                   #
-#-------------------------------------------------------------------#
-
-
-
-#' EWMA smoothing function
-#'
-#' Compute Exponential Weighted Moving Average.
-#'
-#' EWMA function smooths a series of data based on a moving average with
-#' weights which decay exponentially.
-#'
-#' For each \eqn{y_t}{y_t} value the smoothed value is computed as
-#' \deqn{z_t = \lambda y_t + (1-\lambda) z_{t-1}}
-#' where \eqn{0 \le \lambda \le 1}{0 <= lambda <= 1} controls the weights
-#' applied.
-#'
-#' @param x a vector of x-values.
-#' @param y a vector of y-values.
-#' @param lambda the smoothing parameter.
-#' @param start the starting value.
-#' @param ... additional arguments (currently not used).
-#' @return Returns a list with elements:
-#' - `x`: ordered x-values.
-#' - `y`: smoothed y-values.
-#' - `lambda`: the smoothing parameter.
-#' - `start`: the starting value.
-#' @author Luca Scrucca
-#' @seealso [qcc()], [cusum()]
-#' @references Montgomery, D.C. (2013) *Introduction to Statistical
-#' Quality Control*, 7th ed. New York: John Wiley & Sons.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
-#' @keywords hplot
-#' @export
-#' @examples
-#'
-#' x  = 1:50
-#' y  = rnorm(50, sin(x/5), 0.5)
-#' plot(x,y)
-#' lines(ewmaSmooth(x,y,lambda=0.1), col="red")
-#'
-ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
-{
-#
-# Exponential-Weighted Moving Average 
-# 
-# Return smooth values based on 
-# 
-# z_t = lambda*y_t + (1-lambda)*z_t-1      
-# 
-# where 0<= lambda <=1 is the parameter which controls the weights applied 
-# to the data, and start is the starting value.
-# Returns a list with elements:
-# x = ordered x-values
-# y = smoothed fitted values of y
-# 
-  if (length(y)!=length(x))
-     stop("x and y must have the same length!")
-  if (lambda < 0 || lambda > 1)
-     stop("lambda parameter must be between 0 and 1")
-  ord <- order(x) 
-  x <- x[ord]
-  y <- y[ord]
-  n <- length(y)
-  if (missing(start)) start <- y[1]
-  z <- c(start, y)
-  for (i in 2:(n + 1))
-    z[i] <- lambda * z[i] + (1 - lambda) * z[i - 1]
-  list(x=x, y=z[-1], lambda=lambda, start=start)
-}
-
-
-
-
 #' EWMA chart
 #'
 #' Create an object of class `'ewma.qcc'` to compute and draw an
@@ -583,3 +504,72 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   
   return(plot)
 }
+
+#' EWMA smoothing function
+#'
+#' Compute Exponential Weighted Moving Average.
+#'
+#' EWMA function smooths a series of data based on a moving average with
+#' weights which decay exponentially.
+#'
+#' For each \eqn{y_t}{y_t} value the smoothed value is computed as
+#' \deqn{z_t = \lambda y_t + (1-\lambda) z_{t-1}}
+#' where \eqn{0 \le \lambda \le 1}{0 <= lambda <= 1} controls the weights
+#' applied.
+#'
+#' @param x a vector of x-values.
+#' @param y a vector of y-values.
+#' @param lambda the smoothing parameter.
+#' @param start the starting value.
+#' @param ... additional arguments (currently not used).
+#' @return Returns a list with elements:
+#' - `x`: ordered x-values.
+#' - `y`: smoothed y-values.
+#' - `lambda`: the smoothing parameter.
+#' - `start`: the starting value.
+#' @author Luca Scrucca
+#' @seealso [qcc()], [cusum()]
+#' @references Montgomery, D.C. (2013) *Introduction to Statistical
+#' Quality Control*, 7th ed. New York: John Wiley & Sons.
+#'
+#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
+#' New York: Chapman & Hall.
+#' @keywords hplot
+#' @export
+#' @examples
+#'
+#' x  = 1:50
+#' y  = rnorm(50, sin(x/5), 0.5)
+#' plot(x,y)
+#' lines(ewmaSmooth(x,y,lambda=0.1), col="red")
+#'
+ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
+{
+#
+# Exponential-Weighted Moving Average 
+# 
+# Return smooth values based on 
+# 
+# z_t = lambda*y_t + (1-lambda)*z_t-1      
+# 
+# where 0<= lambda <=1 is the parameter which controls the weights applied 
+# to the data, and start is the starting value.
+# Returns a list with elements:
+# x = ordered x-values
+# y = smoothed fitted values of y
+# 
+  if (length(y)!=length(x))
+     stop("x and y must have the same length!")
+  if (lambda < 0 || lambda > 1)
+     stop("lambda parameter must be between 0 and 1")
+  ord <- order(x) 
+  x <- x[ord]
+  y <- y[ord]
+  n <- length(y)
+  if (missing(start)) start <- y[1]
+  z <- c(start, y)
+  for (i in 2:(n + 1))
+    z[i] <- lambda * z[i] + (1 - lambda) * z[i - 1]
+  list(x=x, y=z[-1], lambda=lambda, start=start)
+}
+

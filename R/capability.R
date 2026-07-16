@@ -1,12 +1,3 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#    Process Capability Analysis                                    #
-#                                                                   #
-#-------------------------------------------------------------------#
-
-# TODO: implement Cpkm
-
-
 #' Process capability analysis
 #'
 #' Computes process capability indices for a `'qcc'` object of type
@@ -94,8 +85,7 @@ processCapability <- function(object, spec.limits, target,
                               std.dev, nsigmas, 
                               confidence.level = 0.95, ...)
 {
-# Computes process capability indices for a qcc object of type "xbar" 
-# and plot the histogram
+# TODO: implement Cpkm
 
   if ((missing(object)) | (!inherits(object, "qcc")))
      stop("an object of class 'qcc' is required")
