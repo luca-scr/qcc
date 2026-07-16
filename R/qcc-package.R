@@ -1,3 +1,17 @@
+
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                     QUALITY CONTROL CHARTS IN R                            #
+#                                                                            #
+#  An R package for statistical in-line quality control.                     #
+#                                                                            #
+#  Written by: Luca Scrucca                                                  #
+#              Department of Economics                                       #
+#              University of Perugia, ITALY                                  #
+#              luca.scrucca@unipg.it                                         #
+#                                                                            #
+#----------------------------------------------------------------------------#
+
 # TODO: replace @import with @importFrom for best practice
 # TODO: Review that the @importFrom arguments are actually still in use
 # TODO: When documenting a method, always include a link back to the generic using [generic_name()] so the reader can easily find the full documentation and other methods.

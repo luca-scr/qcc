@@ -1,22 +1,3 @@
-#----------------------------------------------------------------------------#
-#                                                                            #
-#                     QUALITY CONTROL CHARTS IN R                            #
-#                                                                            #
-#  An R package for statistical in-line quality control.                     #
-#                                                                            #
-#  Written by: Luca Scrucca                                                  #
-#              Department of Economics                                       #
-#              University of Perugia, ITALY                                  #
-#              luca.scrucca@unipg.it                                         #
-#                                                                            #
-#----------------------------------------------------------------------------#
-
-#
-#  Main function to create a 'qcc' object
-#
-
-
-
 #' Quality Control Charts
 #'
 #' Create an object of class `'qcc'` to perform statistical quality
