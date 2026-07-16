@@ -50,7 +50,7 @@
 #'
 #' These functions are not intended to be called by the user.
 #' 
-#' @aliases .printShortMatrix print.qccplot .qcc.options qcc.c4 qccStartupMessage
+#' @aliases .printShortMatrix .qcc.options qcc.c4 qccStartupMessage
 #' @author Luca Scrucca
 #' @keywords internal package
 #' @name qcc-internal

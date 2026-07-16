@@ -556,6 +556,5 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     
   }
   
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }

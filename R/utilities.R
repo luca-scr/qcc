@@ -1,12 +1,3 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-# Miscellaneous functions                                           #
-#                                                                   #
-#-------------------------------------------------------------------#
-
-# Remove this definition when the minimum supported R version becomes 4.4
-`%||%` <- function(x, y) if (is.null(x)) y else x
-
 #' Grouping data based on a sample indicator
 #'
 #' This function allows to easily group data to use as input to the
@@ -51,30 +42,6 @@ qccGroups <- function(data, x, sample)
   x <- t(sapply(x, as.vector))
   return(x)
 }
-
-# print.qccplot <- function(x, ...)
-# {
-# # print a graph produced by qcc package
-#   if(inherits(x, "grob"))
-#   {
-#     grid::grid.newpage()
-#     grid::grid.draw(x)
-#   } else
-#   { 
-#     class(x) <- "ggplot"
-#     print(x)
-#   }
-# }
-
-# ggplot_get_limits <- function(plot) 
-# {
-# # Get limits of ggplot object 'plot'
-#   gb <- ggplot_build(plot)
-#   list(x = gb$layout$panel_params[[1]]$x.range,
-#        y = gb$layout$panel_params[[1]]$y.range)
-# }
-
-
 
 #' Histogram number of classes/bins
 #'
@@ -221,37 +188,6 @@ blues.colors <- function (n)
   print(x, na.print = "", ...)
   invisible(x)
 }
-
-# Convert a geom_text size (mm) to points, consistent with ggplot2
-mm_to_pt <- function(mm) 72.27/25.4 * mm
-
-# Measure label width in points using grid's text grob
-text_width_pt <- function(label,
-                          size_mm   = 3.88,   # ≈ 11 pt, the ggplot2 default
-                          family    = NULL,   # falls back to theme_get()$text$family
-                          face      = "plain") 
-{
-  if(is.null(family)) 
-    family <- ggplot2::theme_get()$text$family
-  gp <- grid::gpar(fontsize = mm_to_pt(size_mm), fontfamily = family, fontface = face)
-  tg <- grid::textGrob(label, gp = gp)
-  grid::convertWidth(grid::grobWidth(tg), "pt", valueOnly = TRUE)
-}
-
-# Read the current plot margin (top, right, bottom, left) in points and return a new margin with extra right space
-expand_right_margin <- function(p, extra_right_pt) 
-{
-  m <- p$theme$plot.margin
-  if (is.null(m)) m <- ggplot2::theme_get()$plot.margin
-  unit <- attr(m, "unit"); if (is.null(unit)) unit <- "pt"
-  vals <- as.numeric(m)                # c(top, right, bottom, left)
-  vals[2] <- vals[2] + extra_right_pt  # add to right
-  ggplot2::theme(plot.margin = ggplot2::margin(vals[1], vals[2], vals[3], vals[4], unit = unit))
-}
-
-# Options retrieval and setting -------------------------------------------
-
-
 
 #' Set or return options for the qcc package.
 #'

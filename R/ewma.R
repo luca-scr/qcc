@@ -581,6 +581,5 @@ plot.ewma.qcc <- function(x, xtime = NULL,
                                   widths = c(0.6, 0.4))
   }
   
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }

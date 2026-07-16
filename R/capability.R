@@ -436,7 +436,6 @@ plot.processCapability <- function(x,
                                   widths = c(0.24, 0.16, 0.18, 0.18, 0.24))
   }
 
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
   
