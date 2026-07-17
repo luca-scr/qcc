@@ -42,16 +42,3 @@
 #' charting and statistical process control. *R News* 4/1, 11-17.
 #' @keywords package internal
 "_PACKAGE"
-
-
-#' Internal 'qcc' functions
-#'
-#' Internal functions for package qcc.
-#'
-#' These functions are not intended to be called by the user.
-#' 
-#' @aliases .printShortMatrix .qcc.options qcc.c4 qccStartupMessage
-#' @author Luca Scrucca
-#' @keywords internal package
-#' @name qcc-internal
-NULL

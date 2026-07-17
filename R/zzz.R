@@ -1,7 +1,12 @@
+#' Package Startup Message
+#'
+#' Builds the qcc package startup message with its version and citation
+#' reminder. The greeter for interactive sessions was obtained by
+#' running `figlet qcc`.
+#'
+#' @keywords internal
 qccStartupMessage <- function()
 {
-# Startup message obtained as 
-# > figlet qcc
   msg <- c(paste0(
 "  __ _  ___ ___ 
  / _  |/ __/ __|  Quality Control Charts and 

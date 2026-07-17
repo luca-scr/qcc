@@ -149,11 +149,20 @@ blues.colors <- function (n)
   palette(n)
 }
 
-
+#' Print Representative Columns and Rows for a Matrix
+#'
+#' Prints a shortened matrix containing configurable numbers of leading and
+#' trailing rows and columns.
+#'
+#' @param x A matrix to summarize.
+#' @param head number of initial rows to print
+#' @param tail number of last rows to print
+#' @param chead number of initial columns to print
+#' @param ctail number of last columns to print
+#' @param ... extra arguments passed to [print()]
+#' @keywords internal
 .printShortMatrix <- function(x, head = 2, tail = 1, chead = 5, ctail = 1, ...)
 { 
-# print a short version of a matrix by allowing to select 
-# the number of head/tail rows and columns to display
   x <- as.matrix(x)
   nr <- nrow(x)
   nc <- ncol(x)
@@ -272,6 +281,12 @@ qcc.options <- function(...)
 }
 
 
+#' Default `qcc` Settings
+#'
+#' Stores the statistical constants and graphical settings used as the qcc
+#' package defaults. See [qcc.options()].
+#'
+#' @keywords internal
 ".qcc.options" <- list(
   exp.R.unscaled = c(NA, 1.128, 1.693, 2.059, 2.326, 2.534, 2.704, 2.847, 2.970, 3.078, 3.173, 3.258, 3.336, 3.407, 3.472, 3.532, 3.588, 3.640, 3.689, 3.735, 3.778, 3.819, 3.858, 3.895, 3.931),
   se.R.unscaled = c(NA, 0.8525033, 0.8883697, 0.8798108, 0.8640855, 0.8480442, 0.8332108, 0.8198378, 0.8078413, 0.7970584, 0.7873230, 0.7784873, 0.7704257, 0.7630330, 0.7562217, 0.7499188, 0.7440627, 0.7386021, 0.7334929, 0.7286980, 0.7241851, 0.7199267, 0.7158987, 0.7120802, 0.7084528, 0.7050004, 0.7017086, 0.6985648, 0.6955576, 0.6926770, 0.6899137, 0.6872596, 0.6847074, 0.6822502, 0.6798821, 0.6775973, 0.6753910, 0.6732584, 0.6711952, 0.6691976, 0.6672619, 0.6653848, 0.6635632, 0.6617943, 0.6600754, 0.6584041, 0.6567780, 0.6551950, 0.6536532, 0.6521506),
