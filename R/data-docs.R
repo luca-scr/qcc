@@ -96,47 +96,24 @@
 
 
 
-# TODO: data: merge orangejuice and orangejuice2
 
 #' Orange juice data
 #'
-#' Frozen orange juice concentrate is packed in 6-oz cardboard cans. These cans
-#' are formed on a machine by spinning them from cardboard stock and attaching
-#' a metal bottom panel. A can is then inspected to determine whether, when
-#' filled, the liquid could possible leak either on the side seam or around the
-#' bottom joint. If this occurs, a can is considered nonconforming. The data
-#' were collected as 30 samples of 50 cans each at half-hour intervals over a
-#' three-shift period in which the machine was in continuous operation. From
-#' sample 15 used a new batch of cardboard stock was punt into production.
-#' Sample 23 was obtained when an inexperienced operator was temporarily
-#' assigned to the machine. After the first 30 samples, a machine adjustment
-#' was made. Then further 24 samples were taken from the process.
+#' Frozen orange juice concentrate is packaged in 6-ounce cardboard cans. A
+#' machine forms each can by spinning it from cardboard stock and attaching a
+#' metal bottom panel. A can is classified as nonconforming if an inspection
+#' indicates that it could leak when filled, either along the side seam or
+#' around the bottom joint.
 #'
-#' @format A data frame with 54 observations on the following 4 variables:
-#' \describe{
-#'   \item{sample}{sample id}
-#'   \item{D}{number of defectives}
-#'   \item{size}{sample sizes} 
-#'   \item{trial}{trial samples (TRUE/FALSE)}
-#' }
+#' Thirty samples of 50 cans each were collected at half-hour intervals while
+#' the machine operated continuously over three shifts. A new batch of cardboard
+#' stock was introduced beginning with sample 15, and an inexperienced operator
+#' was temporarily assigned to the machine for sample 23. After these 30
+#' samples, the machine was adjusted and 24 additional samples were collected.
+#' The `orangejuice2` dataset contains samples collected after this adjustment.
 #'
-#' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
-#' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 152--155.
-#'
-#' @family datasets in `qcc` package
-"orangejuice"
-
-
-
-
-
-#' Orange juice data -- Part 2
-#'
-#' A full description of the problem is given in \code{\link{orangejuice}}. \cr
-#'
-#' This dataset contains samples taken after the machine adjustment was made.
-#'
-#' @format A data frame with 64 observations on the following 4 variables:
+#' @format `orangejuice` is a data frame with 54 observations and `orangejuice2`
+#' is a data frame with 64 observations. Both contain the following 4 variables:
 #' \describe{
 #'   \item{sample}{sample id}
 #'   \item{D}{number of defectives}
@@ -145,9 +122,13 @@
 #' }
 #'
 #' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
-#' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 155--159.
+#' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 152--159.
 #'
 #' @family datasets in `qcc` package
+"orangejuice"
+
+#' @rdname orangejuice
+#' @format NULL
 "orangejuice2"
 
 
