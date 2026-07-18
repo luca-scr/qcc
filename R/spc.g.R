@@ -3,24 +3,18 @@
 #' These functions are used to compute statistics required by the g chart
 #' (geometric distribution) for use with the qcc package.
 #'
-#' The g chart plots the number of non-events between events.  np charts do not
+#' The g chart plots the number of non-events between events. np charts do not
 #' work well when the probability of an event is rare (see example below).
 #' Instead of plotting the number of events, the g chart plots the number of
 #' non-events between events.
 #'
-#' @aliases stats.g sd.g limits.g
-#' @export stats.g
-#' @export sd.g
-#' @export limits.g
-#' @param data the observed data values
-#' @param center sample center statistic
+#' The geometric distribution is quite skewed so it is best to set `conf`
+#' at the required confidence interval (0 < conf < 1) rather than as a
+#' multiplier of sigma.
+#'
+#' @inheritParams spc_common data center nsigmas conf
 #' @param sizes sample sizes (not used)
 #' @param std.dev standard deviation of geometric distribution
-#' @param nsigmas a numeric value specifying the number of sigmas to use for
-#' computing control limits. It is ignored when the `conf` argument is
-#' provided.
-#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
-#' to use for computing control limits.
 #' @param ... catches further ignored arguments.
 #' @return The function `stats.g()` returns a list with components
 #' `statistics` and `center`.
@@ -30,25 +24,20 @@
 #'
 #' The function `limits.g()` returns a matrix with lower and upper control
 #' limits.
-#' @note The geometric distribution is quite skewed so it is best to set conf
-#' at the required confidence interval (0 < conf < 1) rather than as a
-#' multiplier of sigma.
 #' @author Greg Snow (greg.snow@ihc.com)
-#' @seealso [qcc()]
-#' @references Kaminsky, FC et. al. (1992) *Statistical Control Charts
-#' Based on a Geometric Distribution*, Journal of Quality Technology, 24, pp
-#' 63--69.
-#'
-#' Yang, Z et. al. (2002) On the Performance of Geometric Charts with Estimated
-#' Control Limits, *Journal of Quality Technology*, 34, pp 448--458.
-#' @keywords hplot
+#' @inherit spc_common seealso
+#' @references `r refs("kaminsky_1992", "yang_2002")`
+#' @name stats.g
 #' @examples
 #'
 #' success  = rbinom(1000, 1, 0.01)
 #' num.noevent  = diff(which(c(1,success)==1))-1
 #' qcc(success, type = "np", sizes = 1)
 #' qcc(num.noevent, type = "g")
-#'
+NULL
+
+#' @rdname stats.g
+#' @export
 stats.g <- function (data, sizes) 
 {
   statistics <- as.vector(data)
@@ -56,6 +45,8 @@ stats.g <- function (data, sizes)
   list(statistics = statistics, center = center)
 }
 
+#' @rdname stats.g
+#' @export
 sd.g <- function (data, sizes, ...)
 {
   data <- as.vector(data)
@@ -64,6 +55,8 @@ sd.g <- function (data, sizes, ...)
   return(std.dev)
 }
 
+#' @rdname stats.g
+#' @export
 limits.g <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {
   if(is.null(nsigmas) & is.null(conf))

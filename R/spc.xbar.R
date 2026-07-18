@@ -31,20 +31,10 @@
 #' Detailed definitions of formulae implemented are available in the SAS/QC
 #' User's Guide.
 #'
-#' @aliases stats.xbar sd.xbar limits.xbar
-#' @export stats.xbar
-#' @export sd.xbar
-#' @export limits.xbar
-#' @param data the observed data values
-#' @param center sample/group center statistic
+#' @inheritParams spc_common data center nsigmas conf
 #' @param sizes samples sizes. Optional
 #' @param std.dev within group standard deviation. Optional for `sd.xbar`
-#' function, required for `limits.xbar`. See details.
-#' @param nsigmas a numeric value specifying the number of sigmas to use for
-#' computing control limits. It is ignored when the `conf` argument is
-#' provided.
-#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
-#' to use for computing control limits.
+#'   function, required for `limits.xbar`. See details.
 #' @param ... catches further ignored arguments.
 #' @return The function `stats.xbar` returns a list with components
 #' `statistics` and `center`.
@@ -54,17 +44,13 @@
 #'
 #' The function `limits.xbar` returns a matrix with lower and upper
 #' control limits.
-#' @author Luca Scrucca
-#' @seealso [qcc()]
-#' @references Burr, I.W. (1969) Control charts for measurements with varying
-#' sample sizes. *Journal of Quality Technology*, 1(3), 163-167.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
-#' @keywords htest hplot
+#' @inherit spc_common author seealso
+#' @references `r refs("burr_1969", "montgomery2013", "wetherill_brown_1991")`
+#' @name stats.xbar
+NULL
+
+#' @rdname stats.xbar
+#' @export
 stats.xbar <- function(data, sizes)
 {
   data <- as.matrix(data)
@@ -75,6 +61,8 @@ stats.xbar <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
+#' @rdname stats.xbar
+#' @export
 sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"), ...)
 {
   data <- as.matrix(data)
@@ -116,6 +104,8 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
   return(sd)
 }
 
+#' @rdname stats.xbar
+#' @export
 limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {
   if(is.null(nsigmas) & is.null(conf))

@@ -11,23 +11,12 @@
 #'   `sd(x) / cd(n)`, where `n` is the number of individual measurements of
 #'   `x`.
 #'
-#' @aliases stats.xbar.one sd.xbar.one limits.xbar.one
-#' @export stats.xbar.one
-#' @export sd.xbar.one
-#' @export limits.xbar.one
-#' @param data the observed data values
-#' @param center sample/group center statistic.
+#' @inheritParams spc_common data center nsigmas conf
 #' @param sizes samples sizes. Not needed, `size = 1` is used.
 #' @param r number of successive pairs of observations for computing the
 #' standard deviation based on moving ranges of r points.
 #' @param std.dev within group standard deviation. Optional for
-#' `sd.xbar.one` function, required for `limits.xbar.one`. See
-#' details.
-#' @param nsigmas a numeric value specifying the number of sigmas to use for
-#' computing control limits. It is ignored when the `conf` argument is
-#' provided.
-#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
-#' to use for computing control limits.
+#'   `sd.xbar.one` function, required for `limits.xbar.one`. See details.
 #' @param ... catches further ignored arguments.
 #' @return The function `stats.xbar.one` returns a list with components
 #' `statistics` and `center`.
@@ -37,19 +26,10 @@
 #'
 #' The function `limits.xbar.one` returns a matrix with lower and upper
 #' control limits.
-#' @author Luca Scrucca
-#' @seealso [qcc()]
-#' @references Montgomery, D.C. (2013) *Introduction to Statistical
-#' Quality Control*, 7th ed. New York: John Wiley & Sons.
-#'
-#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
-#' ed. New York: John Wiley & Sons, Inc.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
-#' @keywords htest hplot
+#' @inherit spc_common author seealso
+#' @references `r refs("montgomery2013", "ryan_2011", "wetherill_brown_1991")`
+#' @name stats.xbar.one
 #' @examples
-#'
 #' x <- antifreeze[["water"]] # See `?antifreeze`
 #' # 1) using MR (default)
 #' qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
@@ -63,7 +43,12 @@
 #' for (j in k) sigma[j] <- sd.xbar.one(x, k=j)
 #' plot(k, sigma[k], type="b")     # plot estimates of sigma for 
 #' abline(h=sd(x), col=2, lty=2)   # different values of k
-#'
+NULL
+
+# TODO: Estimator efficiency should be discussed in a vignette. Currently at docs @examples
+
+#' @rdname stats.xbar.one
+#' @export
 stats.xbar.one <- function(data, sizes)
 {
   statistics <- as.vector(data)
@@ -71,6 +56,8 @@ stats.xbar.one <- function(data, sizes)
   list(statistics = statistics, center = center)
 }
 
+#' @rdname stats.xbar.one
+#' @export
 sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
 {
   data <- as.vector(data)
@@ -96,6 +83,8 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
 }
 
 
+#' @rdname stats.xbar.one
+#' @export
 limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {
   if(is.null(nsigmas) & is.null(conf))

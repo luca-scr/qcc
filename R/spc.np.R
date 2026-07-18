@@ -2,20 +2,7 @@
 #'
 #' These functions are used to compute statistics required by the np chart.
 #'
-#'
-#' @aliases stats.np sd.np limits.np
-#' @export stats.np
-#' @export sd.np
-#' @export limits.np
-#' @param data the observed data values
-#' @param center sample/group center statistic.
-#' @param sizes samples sizes.
-#' @param std.dev within group standard deviation.
-#' @param nsigmas a numeric value specifying the number of sigmas to use for
-#' computing control limits. It is ignored when the `conf` argument is
-#' provided.
-#' @param conf a numeric value in \eqn{(0,1)} specifying the confidence level
-#' to use for computing control limits.
+#' @inheritParams spc_common data center sizes std.dev nsigmas conf
 #' @param ... catches further ignored arguments.
 #' @return The function `stats.np` returns a list with components
 #' `statistics` and `center`.
@@ -25,14 +12,13 @@
 #'
 #' The function `limits.np` returns a matrix with lower and upper control
 #' limits.
-#' @author Luca Scrucca
-#' @seealso [qcc()]
-#' @references Montgomery, D.C. (2013) *Introduction to Statistical
-#' Quality Control*, 7th ed. New York: John Wiley & Sons.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
-#' @keywords htest hplot
+#' @inherit spc_common author seealso
+#' @references `r refs("montgomery2013", "wetherill_brown_1991")`
+#' @name stats.np
+NULL
+
+#' @rdname stats.np
+#' @export
 stats.np <- function(data, sizes)
 {
   data <- as.vector(data)
@@ -44,6 +30,8 @@ stats.np <- function(data, sizes)
   list(statistics = data, center = center)
 }
 
+#' @rdname stats.np
+#' @export
 sd.np <- function(data, sizes, ...)
 {
   data <- as.vector(data)
@@ -55,6 +43,8 @@ sd.np <- function(data, sizes, ...)
   return(std.dev)
 }
 
+#' @rdname stats.np
+#' @export
 limits.np <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 { 
   if(is.null(nsigmas) & is.null(conf))
