@@ -94,8 +94,7 @@ nclass.hist <- function(x, ...)
 #' distribution.
 #' @return The function returns a matrix of results.
 #' @author Luca Scrucca
-#' @references Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process
-#' Control*, New York, Chapman and Hall, pp. 216--218
+#' @references `r refs("wetherill_brown_1991")`
 #' @keywords htest
 #' @export
 #' @examples

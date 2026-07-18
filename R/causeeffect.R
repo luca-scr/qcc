@@ -14,11 +14,7 @@
 #' order, to branches, causes and effect.
 #' @param ... catches further ignored arguments.
 #' @author Luca Scrucca
-#' @references Montgomery, D.C. (2013) *Introduction to Statistical
-#' Quality Control*, 7th ed. New York: John Wiley & Sons.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
+#' @references `r refs("montgomery2013", "wetherill_brown_1991")`
 #' @keywords hplot
 #' @export
 #' @examples

@@ -55,20 +55,7 @@
 #' @author Luca Scrucca
 #' @family control charts
 #' @seealso [ewmaSmooth()]
-#' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
-#' Statistical Process Control with Industrial Applications*, SIAM.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
-#' ed. New York: John Wiley & Sons, Inc.
-#'
-#' Scrucca, L. (2004). qcc: an R package for quality control charting and
-#' statistical process control. *R News* 4/1, 11-17.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
 #' @keywords htest hplot
 #' @examples
 #'
@@ -529,11 +516,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
 #' - `start`: the starting value.
 #' @author Luca Scrucca
 #' @seealso [qcc()], [cusum()]
-#' @references Montgomery, D.C. (2013) *Introduction to Statistical
-#' Quality Control*, 7th ed. New York: John Wiley & Sons.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
+#' @references `r refs("montgomery2013", "wetherill_brown_1991")`
 #' @keywords hplot
 #' @export
 #' @examples

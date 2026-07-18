@@ -38,7 +38,6 @@
 #' @seealso [qcc()], [mqcc()], [cusum()],
 #' [ewma()], [ocCurves()], [processCapability()],
 #' [paretoChart()], [causeEffectDiagram()].
-#' @references Scrucca, L. (2004). qcc: an R package for quality control
-#' charting and statistical process control. *R News* 4/1, 11-17.
+#' @references `r refs("scrucca_2004")`
 #' @keywords package internal
 "_PACKAGE"

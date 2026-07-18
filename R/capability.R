@@ -54,20 +54,7 @@
 #'   LSL and greater than USL.
 #' @author Luca Scrucca
 #' @seealso [qcc()]
-#' @references Bissell, A.F. (1990) *How reliable is your capability
-#' index?*, Applied Statistics, 39, 331-340.
-#'
-#' Boyles, R.A. (1991) *The Taguchi capability index*, Journal of Quality
-#' Technology, 23, 107-126.
-#'
-#' Chou, Y., Owen D.B. and Borrego S.A. (1990) *Lower Confidence Limits on
-#' Process Capability Indices*, Journal of Quality Technology, 22, 223-229.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
+#' @references `r refs("bissell_1990", "boyles_1991", "chou_owen_borrego_1990", "montgomery2013", "wetherill_brown_1991")`
 #' @keywords htest hplot
 #' @examples
 #'

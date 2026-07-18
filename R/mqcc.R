@@ -72,20 +72,7 @@
 #' @seealso [stats.T2()], [stats.T2.single()],
 #' [limits.T2()], [limits.T2.single()],
 #' [ellipseChart()], [qcc()]
-#' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
-#' Statistical Process Control with Industrial Applications*, SIAM.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
-#' ed. New York: John Wiley & Sons, Inc.
-#'
-#' Scrucca, L. (2004). qcc: an R package for quality control charting and
-#' statistical process control. *R News* 4/1, 11-17.
-#'
-#' Wetherill, G.B. and Brown, D.W. (1991) *Statistical Process Control*.
-#' New York: Chapman & Hall.
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
 #' @keywords htest hplot multivariate
 #' @examples
 #'
@@ -600,14 +587,7 @@ plot.mqcc <- function(x,
 #' @author Luca Scrucca
 #' @seealso [mqcc()], [stats.T2()],
 #' [stats.T2.single()]
-#' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
-#' Statistical Process Control with Industrial Applications*, SIAM.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
-#' ed. New York: John Wiley & Sons, Inc.
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011")`
 #' @keywords htest hplot multivariate
 #' @export
 #' @examples
@@ -764,14 +744,7 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
 #' - `prediction`: prediction limits.
 #' @author Luca Scrucca
 #' @seealso [mqcc()], [stats.T2.single()]
-#' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
-#' Statistical Process Control with Industrial Applications*, SIAM.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
-#' ed. New York: John Wiley & Sons, Inc.
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011")`
 #' @keywords htest hplot multivariate
 stats.T2 <- function(data, center = NULL, cov = NULL)
 { 
@@ -855,14 +828,7 @@ limits.T2 <- function(ngroups, size, nvars,  conf)
 #' - `prediction`: prediction limits.
 #' @author Luca Scrucca
 #' @seealso [mqcc()], [stats.T2()]
-#' @references Mason, R.L. and Young, J.C. (2002) *Multivariate
-#' Statistical Process Control with Industrial Applications*, SIAM.
-#'
-#' Montgomery, D.C. (2013) *Introduction to Statistical Quality Control*,
-#' 7th ed. New York: John Wiley & Sons.
-#'
-#' Ryan, T. P. (2011), *Statistical Methods for Quality Improvement*, 3rd
-#' ed. New York: John Wiley & Sons, Inc.
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011")`
 #' @keywords htest hplot multivariate
 stats.T2.single <- function(data, center = NULL, cov = NULL)
 { 

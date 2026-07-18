@@ -58,6 +58,31 @@ NULL
     "Ryan, T. P. (2011).",
     "*Statistical Methods for Quality Improvement*, 3rd ed.",
     "New York: John Wiley & Sons, Inc."
+  ),
+  mason_young_2002 = paste(
+    "Mason, R. L., and Young, J. C. (2002).",
+    "*Multivariate Statistical Process Control with Industrial Applications*.",
+    "SIAM."
+  ),
+  scrucca_2004 = paste(
+    "Scrucca, L. (2004).",
+    "qcc: an R package for quality control charting and statistical process control.",
+    "*R News*, **4**(1), 11--17."
+  ),
+  bissell_1990 = paste(
+    "Bissell, A. F. (1990).",
+    "How reliable is your capability index?",
+    "*Applied Statistics*, **39**, 331--340."
+  ),
+  boyles_1991 = paste(
+    "Boyles, R. A. (1991).",
+    "The Taguchi capability index.",
+    "*Journal of Quality Technology*, **23**, 107--126."
+  ),
+  chou_owen_borrego_1990 = paste(
+    "Chou, Y., Owen, D. B., and Borrego, S. A. (1990).",
+    "Lower confidence limits on process capability indices.",
+    "*Journal of Quality Technology*, **22**, 223--229."
   )
 )
 
