@@ -38,7 +38,7 @@ stats.c <- function(data, sizes)
   data <- as.vector(data)
   sizes <- as.vector(sizes)
   if (length(unique(sizes)) != 1)
-     stop("all sizes must be be equal for a c chart")
+     stop("all sizes must be equal for a c chart")
   statistics <- data
   center <- mean(statistics)
   list(statistics = statistics, center = center)
