@@ -140,6 +140,30 @@ qccOverdispersionTest <- function(x, size,
   return(out)
 }
 
+#' Compute c4 constant
+#'
+#' Computes the c4 bias-correction factor for the sample standard deviation at
+#' a given sample size.
+#' @param n sample size(s)
+#' @keywords internal
+qcc.c4 <- \(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
+
+
+#' Control Limits Constructor
+#'
+#' Returns lower and upper control limit vectors in a consistent structure.
+#' Used by limits.*() functions.
+#'
+#' @keywords internal
+.construct_limits <- function(lcl,ucl) {
+  limits <- matrix(c(lcl, ucl), ncol = 2)
+  rownames(limits) <- rep("", length = nrow(limits))
+  colnames(limits) <- c("LCL", "UCL")
+  return(limits)
+}
+
+# FIX: blues.colors is used by ocCurves and should not be documented with paretoChart
+
 #' @rdname paretoChart
 #' @export
 blues.colors <- function (n) 
