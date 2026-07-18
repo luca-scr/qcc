@@ -49,14 +49,14 @@
 #' qcc(success, type = "np", sizes = 1)
 #' qcc(num.noevent, type = "g")
 #'
-"stats.g" <- function (data, sizes) 
+stats.g <- function (data, sizes) 
 {
   statistics <- as.vector(data)
   center <- mean(statistics)
   list(statistics = statistics, center = center)
 }
 
-"sd.g" <- function (data, sizes, ...)
+sd.g <- function (data, sizes, ...)
 {
   data <- as.vector(data)
   p <- 1/mean(data)
@@ -64,15 +64,14 @@
   return(std.dev)
 }
 
-"limits.g" <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
+limits.g <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if (is.null(conf)) 
     {
       p <- 1/center
-      lcl <- center - conf * sqrt(1-p)/p
-      lcl[lcl < 0] <- 0
+      lcl <- pmax(0, center - conf * sqrt(1-p)/p)
       ucl <- center + conf * sqrt(1-p)/p
       warning("The Geometric distribution is quite skewed, it is better to set conf at the required confidence level (0 < conf < 1) instead of as a multiplier of sigma.")
   }
@@ -84,8 +83,5 @@
     }
     else stop("invalid conf argument. See help.")
   }
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+  .construct_limits(lcl,ucl)
 }
