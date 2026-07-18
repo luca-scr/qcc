@@ -5,6 +5,7 @@
 #' running `figlet qcc`.
 #'
 #' @keywords internal
+#' @noRd
 qccStartupMessage <- function()
 {
   msg <- c(paste0(
