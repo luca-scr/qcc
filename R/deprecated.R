@@ -4,8 +4,8 @@
 #' package qcc, and they will likely be removed in the future.
 #'
 #' @param ... all arguments are passed down.
-#' @seealso [base::.Deprecated()]
-#' @aliases qcc-deprecated
+#' @name qcc-deprecated
+
 #' @rdname qcc-deprecated
 #' @export
 pareto.chart <- function(...) 
