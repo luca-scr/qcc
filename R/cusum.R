@@ -8,83 +8,50 @@
 #' summary statistics. Useful to detect small and permanent variation on the
 #' mean of the process.
 #'
-#' @aliases cusum cusum.qcc print.cusum.qcc summary.cusum.qcc plot.cusum.qcc
-#' @export cusum
-#' @param data a data frame, a matrix or a vector containing observed data for
-#' the variable to chart. Each row of a data frame or a matrix, and each value
-#' of a vector, refers to a sample or ''rationale group''.
+#' @aliases cusum.qcc
+#' @inheritParams chart_common data newdata newsizes center
 #' @param sizes a value or a vector of values specifying the sample sizes
-#' associated with each group. If not provided the sample sizes are obtained
-#' counting the non-`NA` elements of each row of a data frame or a matrix;
-#' sample sizes are set all equal to one if `data` is a vector.
-#' @param center a value specifying the center of group statistics or the
-#' ''target'' value of the process.
+#'   associated with each group. If not provided the sample sizes are obtained
+#'   counting the non-`NA` elements of each row of a data frame or a matrix;
+#'   sample sizes are set all equal to one if `data` is a vector.
 #' @param std.dev a value or an available method specifying the within-group
-#' standard deviation(s) of the process. Several methods are available for
-#' estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
-#' respectively, the grouped data case and the individual observations case.
+#'   standard deviation(s) of the process. Several methods are available for
+#'   estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
+#'   respectively, the grouped data case and the individual observations case.
 #' @param decision.interval A numeric value specifying the number of standard
-#' errors of the summary statistics at which the cumulative sum is out of
-#' control.
+#'   errors of the summary statistics at which the cumulative sum is out of
+#'   control.
 #' @param se.shift The amount of shift to detect in the process, measured in
-#' standard errors of the summary statistics.
+#'   standard errors of the summary statistics.
 #' @param head.start The initializing value for the above-target and
-#' below-target cumulative sums, measured in standard errors of the summary
-#' statistics. Use zero for the traditional Cusum chart, or a positive value
-#' less than the `decision.interval` for a Fast Initial Response.
-#' @param newdata a data frame, matrix or vector, as for the `data`
-#' argument, providing further data to plot but not included in the
-#' computations.
-#' @param newsizes a vector as for the `sizes` argument providing further
-#' data sizes to plot but not included in the computations.
-#' @param xtime a vector of date-time values as returned by
-#' [Sys.time()] and [Sys.Date()]. If provided it is used
-#' for x-axis so it must be of the same length as the statistic charted.
-#' @param add.stats a logical value indicating whether statistics and other
-#' information should be printed at the bottom of the chart.
-#' @param chart.all a logical value indicating whether both statistics for
-#' `data` and for `newdata` (if given) should be plotted.
-#' @param fill a logical value specifying if the in-control area should be
-#' filled with the color specified in `qcc.options("zones")$fill`.
+#'   below-target cumulative sums, measured in standard errors of the summary
+#'   statistics. Use zero for the traditional Cusum chart, or a positive value
+#'   less than the `decision.interval` for a Fast Initial Response.
 #' @param label.bounds a character vector specifying the labels for the the
-#' decision interval boundaries.
-#' @param title a character string specifying the main title. Set `title =
-#' NULL` to remove the title.
-#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
-#' @param xlim,ylim a numeric vector specifying the limits for the x-axis and
-#' the y-axis.
-#' @param digits the number of significant digits to use.
+#'   decision interval boundaries.
 #' @param x an object of class `'cusum.qcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'cusum.qcc'`.
 #' @author Luca Scrucca
 #' @family control charts
 #' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
-#' @keywords htest hplot
+#' @export
 #' @examples
-#'
-#' ##
 #' ## Grouped-data
-#' ##
-#' data(pistonrings)
-#' diameter  = qccGroups(data = pistonrings, diameter, sample)
+#' diameter <- qccGroups(data = pistonrings, diameter, sample)
 #'
-#' q  = cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+#' q <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
 #' summary(q)
 #' plot(q)
 #'
-#' q  = cusum(diameter[1:25,], newdata=diameter[26:40,])
+#' q <- cusum(diameter[1:25,], newdata=diameter[26:40,])
 #' summary(q)
 #' plot(q, chart.all=FALSE)
 #'
-#' ##
 #' ## Individual observations
-#' ##
-#' data(viscosity)
-#' q  = with(viscosity, cusum(viscosity[trial], newdata = viscosity[!trial]))
+#' q  <- with(viscosity, cusum(viscosity[trial], newdata = viscosity[!trial]))
 #' summary(q)
 #' plot(q)
-#'
 cusum <- function(data, 
                   sizes, center, std.dev, 
                   decision.interval = 5, se.shift = 1,
@@ -221,7 +188,6 @@ cusum <- function(data,
   return(object)
 }
 
-# HACK: we use @method because the class name has `.`
 
 #' @rdname cusum
 #' @method print cusum.qcc
@@ -308,7 +274,6 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
   invisible()
 }
 
-# HACK: we use @method because the class name has `.`
 
 #' @rdname cusum
 #' @method summary cusum.qcc
@@ -316,12 +281,12 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
 #' @export summary.cusum.qcc
 summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 
-# HACK: we use @method because the class name has `.`
 
 #' @rdname cusum
 #' @method plot cusum.qcc
 #' @export
 #' @export plot.cusum.qcc
+#' @inheritParams plot_common
 plot.cusum.qcc <- function(x, xtime = NULL,
                            add.stats = qcc.options("add.stats"), 
                            chart.all = qcc.options("chart.all"), 

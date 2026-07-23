@@ -5,8 +5,7 @@
 #' A Pareto chart is a barplot where the categories are ordered in non
 #' increasing order, and a line is also added to show the cumulative sum.
 #'
-#' @aliases paretoChart print.paretoChart plot.paretoChart blues.colors
-#' @export paretoChart
+#' @export
 #' @param data a vector of values. `names(data)` are used for labelling
 #' the bars.
 #' @param plot a logical specifying if the chart should be provided
@@ -29,7 +28,6 @@
 #' @author Luca Scrucca
 #' @seealso [barplot()]
 #' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
-#' @keywords hplot
 #' @examples
 #'
 #' defect  = c(80, 27, 66, 94, 33)

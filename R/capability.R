@@ -11,8 +11,7 @@
 #' approximate and it assumes that the target is midway between the
 #' specification limits.
 #' 
-#' @aliases processCapability print.processCapability summary.processCapability plot.processCapability
-#' @export processCapability
+#' @export
 #' @param object a `'qcc'` object of type `"xbar"`
 #' @param spec.limits a two-values vector specifying the lower and upper
 #' specification limits. For one-sided specification limits, the value of the
@@ -55,7 +54,6 @@
 #' @author Luca Scrucca
 #' @seealso [qcc()]
 #' @references `r refs("bissell_1990", "boyles_1991", "chou_owen_borrego_1990", "montgomery2013", "wetherill_brown_1991")`
-#' @keywords htest hplot
 #' @examples
 #'
 #' data(pistonrings)
@@ -153,6 +151,7 @@ processCapability <- function(object, spec.limits, target,
     (1 + 2 * ((center - target) / overall.std.dev)^2)
   Ppm.limits <- .chisq_limits_cp_family(Ppm, overall.df, alpha)
 
+  # limit.names <- (c(alpha/2, 1-alpha/2) * 100) |> round(1) |> paste0("%") # Remove `round`?
   limit.names <- c(paste(round(100*alpha/2, 1), "%", sep=""),
                    paste(round(100*(1-alpha/2), 1), "%", sep=""))
   names(Cp.limits) <- names(Cp.u.limits) <- names(Cp.l.limits) <- names(Cp.k.limits) <-
@@ -416,22 +415,46 @@ plot.processCapability <- function(x,
   return(plot)
 }
   
-# Compute approximate confidence limits for cpu, cpl, cpk.
-# See @Bissell1990
-# - idx: point estimate of the capability index
-# - z:   normal quantile
-# - n:   sample size
+#' Wald confidence limits for Cpk-family indices
+#'
+#' Computes approximate two-sided confidence limits for \eqn{C_{pu}}{C_pu},
+#' \eqn{C_{pl}}{C_pl}, and \eqn{C_{pk}}{C_pk} using the Wald method described
+#' by Bissell (1990).
+#'
+#' @param idx A numeric scalar giving the point estimate of the capability
+#'   index.
+#' @param z A numeric scalar giving the normal quantile.
+#' @param n A numeric scalar giving the sample size.
+#'
+#' @return A numeric vector of length two containing the lower and upper
+#'   confidence limits. Returns two `NA` values when `idx` is `NA`.
+#'
+#' @references `r refs("bissell_1990")`
+#' @keywords internal
+#' @noRd
 .wald_limits_cpk_family <- function(idx, z, n)
 {
   if (is.na(idx)) return(c(NA_real_, NA_real_))
   idx * (1 + c(-1, 1) * z * sqrt(1 / (9 * n * idx^2) + 1 / (2 * (n - 1))))
 }
 
-# Compute confidence limits for cp and cpm.
-# For Cp, see @Chou1990. For Cpm, see @Boyles1991
-# - idx: point estimate of the capability index
-# - df:  degrees of freedom
-# - alpha: total tail probability
+#' Chi-squared confidence limits for Cp-family indices
+#'
+#' Computes two-sided confidence limits for \eqn{C_p}{C_p} using the method of
+#' Chou et al. (1990), and approximate limits for \eqn{C_{pm}}{C_pm} using the
+#' method of Boyles (1991).
+#'
+#' @param idx A numeric scalar giving the point estimate of the capability
+#'   index.
+#' @param df A numeric scalar giving the degrees of freedom.
+#' @param alpha A numeric scalar giving the total tail probability.
+#'
+#' @return A numeric vector of length two containing the lower and upper
+#'   confidence limits. Returns two `NA` values when `idx` is `NA`.
+#'
+#' @references `r refs("boyles_1991", "chou_owen_borrego_1990")`
+#' @keywords internal
+#' @noRd
 .chisq_limits_cp_family <- function(idx, df, alpha)
 {
   if (is.na(idx)) return(c(NA_real_, NA_real_))

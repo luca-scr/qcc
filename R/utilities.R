@@ -268,7 +268,6 @@ blues.colors <- function (n)
 #' for the rest of the session.
 #' @author Luca Scrucca
 #' @seealso [qcc()]
-#' @keywords htest hplot
 #' @export
 #' @examples
 #'

@@ -15,7 +15,6 @@
 #' @param ... catches further ignored arguments.
 #' @author Luca Scrucca
 #' @references `r refs("montgomery2013", "wetherill_brown_1991")`
-#' @keywords hplot
 #' @export
 #' @examples
 #'

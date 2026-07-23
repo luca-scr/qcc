@@ -13,8 +13,7 @@
 #' variables, such as numeric, factor, and logical, conditioning or not on
 #' another variable.
 #'
-#' @aliases describe print.describe
-#' @export describe
+#' @export
 #' @param data a matrix or data frame.
 #' @param by a factor or character vector specifying the conditioning variable.
 #' This may be a variable included in `data` or an object defined in the
@@ -27,12 +26,10 @@
 #' @author Luca Scrucca
 #' @seealso [summary()], [by()]
 #' @examples
-#'
 #' data(warpbreaks)
 #' describe(warpbreaks)
 #' describe(warpbreaks, detail = TRUE)
 #' describe(warpbreaks, by = wool)
-#'
 describe <- function(data, by, detailed = FALSE, ...)
 {
   data_name <- deparse(substitute(data))

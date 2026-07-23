@@ -26,6 +26,15 @@
 #' See [vignette and documentation](../doc/index.html) accompanying the
 #' package.
 #'
+#' @author Luca Scrucca
+#' @seealso [qcc()], [mqcc()], [cusum()],
+#' [ewma()], [ocCurves()], [processCapability()],
+#' [paretoChart()], [causeEffectDiagram()].
+#' @references `r refs("scrucca_2004")`
+#' @keywords package internal
+"_PACKAGE"
+
+## usethis namespace: start
 #' @import stats ggplot2 patchwork
 #' @importFrom utils packageVersion
 #' @importFrom graphics strheight strwidth hist abline axis box contour lines mtext par points polygon rect text
@@ -34,10 +43,6 @@
 #' @importFrom scales label_percent
 #' @importFrom cli rule
 #' @importFrom crayon bold
-#' @author Luca Scrucca
-#' @seealso [qcc()], [mqcc()], [cusum()],
-#' [ewma()], [ocCurves()], [processCapability()],
-#' [paretoChart()], [causeEffectDiagram()].
-#' @references `r refs("scrucca_2004")`
-#' @keywords package internal
-"_PACKAGE"
+## usethis namespace: end
+NULL
+

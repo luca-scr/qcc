@@ -1,3 +1,47 @@
+#' Shared Control Chart (Shewhart, EWMA, CUSUM) Documentation
+#'
+#' @name chart_common
+#' @param data a data frame, a matrix or a vector containing observed data for
+#'   the variable to chart. Each row of a data frame or a matrix, and each value
+#'   of a vector, refers to a sample or ''rationale group''.
+#' @param newdata a data frame, matrix or vector, as for the `data`
+#'   argument, providing further data to plot but not included in the
+#'   computations.
+#' @param newsizes a vector as for the `sizes` argument providing further
+#'   data sizes to plot but not included in the computations.
+#' @param center a value specifying the center of group statistics or target.
+#' @keywords internal
+NULL
+
+#' Shared Plotting Documentation
+#'
+#' @name plot_common
+#' @param xtime a vector of date-time values as returned by
+#'   [Sys.time()] and [Sys.Date()]. If provided it is used
+#'   for x-axis so it must be of the same length as the statistic charted.
+#' @param add.stats a logical value indicating whether statistics and other
+#'   information should be printed at the bottom of the chart.
+#' @param chart.all a logical value indicating whether both statistics for
+#'   `data` and for `newdata` (if given) should be plotted.
+#' @param fill a logical value specifying if the in-control area should be
+#'   filled with the color specified in `qcc.options("zones")$fill`.
+#' @param title a character string specifying the main title. Set `title =
+#'   NULL` to remove the title.
+#' @param xlab a string giving the label for the x-axis.
+#' @param ylab a string giving the label for the y-axis.
+#' @param xlim a numeric vector specifying the limits for the x-axis.
+#' @param ylim a numeric vector specifying the limits for the y-axis.
+#' @param digits the number of significant digits to use.
+#' @keywords internal
+NULL 
+
+# TODO: Select parameters in `@inheritParams plot_common` calls when [https://github.com/r-lib/roxygen2/issues/1879] gets fixed.
+# As of writing this, `roxygen2` does not allow multiple filtered `@inheritParams` in the same `.Rd`
+# `plot.<object>()` shares same `.Rd` as `<object>()`,
+# So we can't filter both `@inheritParams spc_common` and `@inheritParams plot_common` until roxygen/issue-1879 gets fixed.
+
+
+
 #' Shared Chart Methods Documentation 
 #'
 #' @name spc_common
@@ -9,7 +53,6 @@
 #' Ignored when the `conf` argument is provided.
 #' @param conf Confidence level used to compute control limits.
 #' Must be a numeric value in \eqn{(0,1)}.
-#' @param ... Additional ignored arguments.
 #' @author Luca Scrucca
 #' @seealso [qcc()]
 #' @keywords internal

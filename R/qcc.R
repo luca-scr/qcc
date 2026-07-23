@@ -9,11 +9,8 @@
 #' backward compatibility. Nelson rules can be requested with `rules =
 #' 1:8, rule.set = "nelson"`.
 #'
-#' @aliases qcc print.qcc summary.qcc plot.qcc
-#' @export qcc
-#' @param data a data frame, a matrix or a vector containing observed data for
-#' the variable to chart. Each row of a data frame or a matrix, and each value
-#' of a vector, refers to a sample or ''rationale group''.
+#' @export
+#' @inheritParams chart_common data newdata newsizes center
 #' @param type a character string specifying the group statistics to compute.
 #' Available methods are:
 #'
@@ -38,18 +35,11 @@
 #' matrix the sample sizes are obtained counting the non-`NA` elements of
 #' each row. For `"p"`, `"np"` and `"u"` charts the argument
 #' `sizes` is required.
-#' @param center a value specifying the center of group statistics or the
-#' ''target'' value of the process.
 #' @param std.dev a value or an available method specifying the within-group
 #' standard deviation(s) of the process. Several methods are available for
 #' estimating the standard deviation in case of a continuous process variable;
 #' see [sd.xbar()], [sd.xbar.one()], [sd.R()], and [sd.S()].
 #' @param limits a two-values vector specifying control limits.
-#' @param newdata a data frame, matrix or vector, as for the `data`
-#' argument, providing further data to plot but not included in the
-#' computations.
-#' @param newsizes a vector as for the `sizes` argument providing further
-#' data sizes to plot but not included in the computations.
 #' @param nsigmas a numeric value specifying the number of sigmas to use for
 #' computing control limits. It is ignored when the `confidence.level`
 #' argument is provided.
@@ -61,24 +51,9 @@
 #' values are interpreted. The default is `"western-electric"` specifying
 #' Western Electric rules 1 through 4. Use `"nelson"` to apply Nelson
 #' rules 1 through 8.
-#' @param xtime a vector of date-time values as returned by
-#' [Sys.time()] and [Sys.Date()]. If provided it is used
-#' for x-axis so it must be of the same length as the statistic charted.
-#' @param add.stats a logical value indicating whether statistics and other
-#' information should be printed at the bottom of the chart.
-#' @param chart.all a logical value indicating whether both statistics for
-#' `data` and for `newdata` (if given) should be plotted.
-#' @param fill a logical value specifying if the in-control area should be
-#' filled with the color specified in `qcc.options("zones")$fill`.
 #' @param label.center a character specifying the label for center line.
 #' @param label.limits a character vector specifying the labels for control
 #' limits.
-#' @param title a character string specifying the main title. Set `title =
-#' NULL` to remove the title.
-#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
-#' @param xlim,ylim a numeric vector specifying the limits for the x-axis and
-#' the y-axis.
-#' @param digits the number of significant digits to use.
 #' @param x an object of class `'qcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'qcc'`.
@@ -86,13 +61,8 @@
 #' @family control charts
 #' @seealso [qccRules()], [ocCurves()], [processCapability()], [qccGroups()]
 #' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
-#' @keywords htest hplot
 #' @examples
-#'
-#' ##
 #' ##  Continuous data 
-#' ##
-#' data(pistonrings)
 #' diameter  = qccGroups(data = pistonrings, diameter, sample)
 #'
 #' (q  = qcc(diameter[1:25,], type="xbar"))
@@ -101,14 +71,14 @@
 #' (q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
 #' plot(q)
 #'
-#' q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
+#' q = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
 #' plot(q, chart.all=FALSE)
 #'
 #' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], nsigmas=2))
 #'
 #' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99))
 #'
-#' q  = qcc(diameter[1:25,], type="R")
+#' q <- qcc(diameter[1:25,], type="R")
 #' q
 #' plot(q)
 #'
@@ -131,39 +101,33 @@
 #' plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
 #'
 #' # to customize a Shewhart chart use
-#' q = qcc(diameter[1:25, ], type = "xbar")
+#' q <- qcc(diameter[1:25, ], type = "xbar")
 #' graph = plot(q, ylim = c(73.9, 74.1)) 
 #' # returned object is of class "patchwork", then add geom_* layer to the first element
 #' graph[[1]] <- graph[[1]] + 
 #'   geom_hline(yintercept = c(73.95, 74.05), lty = 2) 
 #' graph
 #'
-#' ##
 #' ##  Attribute data 
-#' ##
-#'
-#' data(orangejuice)
-#'
-#' q  = with(orangejuice, 
-#'           qcc(D[trial], sizes=size[trial], type="p"))
+#' q <- with(orangejuice, qcc(D[trial], sizes=size[trial], type="p"))
 #' q
 #' plot(q)
 #'
 #' # remove out-of-control points (see help(orangejuice) for the reasons)
-#' outofctrl  = c(15,23)
-#' q1  = with(orangejuice[-outofctrl,], 
+#' outofctrl <- c(15,23)
+#' q1 <- with(orangejuice[-outofctrl,], 
 #'            qcc(D[trial], sizes=size[trial], type="p"))
 #' plot(q1)
-#' q1  = with(orangejuice[-outofctrl,], 
+#' q1 <- with(orangejuice[-outofctrl,], 
 #'            qcc(D[trial], sizes=size[trial], type="p",
 #'                newdata=D[!trial], newsizes=size[!trial]))
 #' plot(q1)
 #'
 #' data(orangejuice2)
-#' q2  = with(orangejuice2, 
+#' q2  <- with(orangejuice2, 
 #'            qcc(D[trial], sizes=size[trial], type="p"))
 #' plot(q2)
-#' q2  = with(orangejuice2, 
+#' q2  <- with(orangejuice2, 
 #'            qcc(D[trial], sizes=size[trial], type="p", 
 #'                newdata=D[!trial], newsizes=size[!trial]))
 #' plot(q2)
@@ -173,29 +137,29 @@
 #'
 #' # remove out-of-control points (see help(circuit) for the reasons)
 #' outofctrl  = c(15,23)
-#' q1  = with(orangejuice[-outofctrl,], 
+#' q1  <- with(orangejuice[-outofctrl,], 
 #'            qcc(D[trial], sizes=size[trial], type="p"))
 #' plot(q1)
-#' q1  = with(orangejuice[-outofctrl,], 
+#' q1  <- with(orangejuice[-outofctrl,], 
 #'            qcc(D[trial], sizes=size[trial], type="p",
 #'                newdata=D[!trial], newsizes=size[!trial]))
 #' plot(q1)
 #'
 #' outofctrl  = c(6,20)
-#' q1  = with(circuit[-outofctrl,], 
+#' q1  <- with(circuit[-outofctrl,], 
 #'            qcc(x[trial], sizes=size[trial], type="c"))
 #' plot(q1)
-#' q1  = with(circuit[-outofctrl,], 
+#' q1  <- with(circuit[-outofctrl,], 
 #'            qcc(x[trial], sizes=size[trial], type="c", 
 #'                newdata = x[!trial], newsizes = size[!trial]))
 #' plot(q1)
-#' q1  = with(circuit[-outofctrl,], 
+#' q1  <- with(circuit[-outofctrl,], 
 #'            qcc(x[trial], sizes=size[trial], type="u", 
 #'            newdata = x[!trial], newsizes = size[!trial]))
 #' plot(q1)
 #'
 #' data(pcmanufact)
-#' q1  = with(pcmanufact, qcc(x, sizes=size, type="u"))
+#' q1  <- with(pcmanufact, qcc(x, sizes=size, type="u"))
 #' q1
 #' plot(q1)
 #'
@@ -203,26 +167,21 @@
 #' # variable control limits
 #' plot(with(dyedcloth, qcc(x, sizes=size, type="u")))
 #' # standardized control chart
-#' q  = with(dyedcloth, qcc(x, sizes=size, type="u"))
-#' z  = (q$statistics - q$center)/sqrt(q$center/q$size)
+#' q  <- with(dyedcloth, qcc(x, sizes=size, type="u"))
+#' z  <- (q$statistics - q$center)/sqrt(q$center/q$size)
 #' plot(qcc(z, sizes = 1, type = "u", center = 0, std.dev = 1, limits = c(-3,3)),
 #'      title = "Standardized u chart")
 #'     
-#' ##
 #' ##  Continuous one-at-time data 
-#' ##
 #'
-#' data(viscosity)
-#' q  = with(viscosity, 
-#'           qcc(viscosity[trial], type = "xbar.one"))
+#' q <- with(viscosity, qcc(viscosity[trial], type = "xbar.one"))
 #' q
 #' plot(q)
 #' # batch 4 is out-of-control because of a process temperature controller
 #' # failure; remove it and recompute
-#' viscosity  = viscosity[-4,]
+#' viscosity  <- viscosity[-4,]
 #' plot(with(viscosity, 
 #'           qcc(viscosity[trial], type = "xbar.one", newdata = viscosity[!trial])))
-#'
 qcc <- function(data, 
                 type = c("xbar", "R", "S", "xbar.one", 
                          "p", "np", "c", "u", "g"),
@@ -382,7 +341,6 @@ qcc <- function(data,
   return(object)
 }
 
-# HACK: we export print.qcc for backward compatibility
 
 #' @rdname qcc
 #' @export
@@ -477,19 +435,16 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
   invisible()
 }
 
-# HACK: we export summary.qcc for backward compatibility
-
 #' @rdname qcc
 #' @export
 #' @export summary.qcc
 summary.qcc <- function(object, ...) print.qcc(object, ...)
 
 
-# HACK: we export plot.qcc for backward-compatibility
-
 #' @rdname qcc
 #' @export
 #' @export plot.qcc
+#' @inheritParams plot_common 
 plot.qcc <- function(x, xtime = NULL,
                      add.stats = qcc.options("add.stats"), 
                      chart.all = qcc.options("chart.all"), 

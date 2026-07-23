@@ -16,13 +16,7 @@
 #' performance of the `"S"` chart, and especially the `"R"` chart,
 #' are likely to be seriously affected by longer tails.
 #' 
-#' @aliases ocCurves print.ocCurves plot.ocCurves ocCurves.xbar ocCurves.R ocCurves.S ocCurves.p ocCurves.c
-#' @export ocCurves
-#' @export ocCurves.xbar
-#' @export ocCurves.R
-#' @export ocCurves.S
-#' @export ocCurves.p
-#' @export ocCurves.c
+#' @export
 #' @param object an object of class `'qcc'`.
 #' @param size a vector of values specifying the sample sizes for which to draw
 #' the OC curves.
@@ -48,7 +42,6 @@
 #' @author Luca Scrucca
 #' @seealso [qcc()]
 #' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
-#' @keywords htest hplot
 #' @examples
 #'
 #' data(pistonrings)
@@ -94,6 +87,8 @@ ocCurves <- function(object, ...)
 }
 
 
+#' @rdname ocCurves
+#' @export
 ocCurves.xbar <- function(object, 
                           size = c(1,5,10,15,20), 
                           shift = seq(0, 5, by = 0.1), 
@@ -130,6 +125,8 @@ ocCurves.xbar <- function(object,
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.R <- function(object, 
                        size = c(2,5,10,15,20), 
                        multiplier = seq(1, 6, by = 0.1),
@@ -189,6 +186,8 @@ ocCurves.R <- function(object,
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.S <- function(object, 
                        size = c(2,5,10,15,20), 
                        multiplier = seq(1,6,by=0.1),
@@ -242,6 +241,8 @@ ocCurves.S <- function(object,
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.p <- function(object, ...)
 {
   if (!(object$type=="p" | object$type=="np"))
@@ -280,6 +281,8 @@ ocCurves.p <- function(object, ...)
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.c <- function(object, ...)
 {
   if (!(object$type=="c" | object$type=="u"))

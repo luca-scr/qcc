@@ -8,47 +8,22 @@
 #' which decay exponentially. Useful to detect small and permanent variation on
 #' the mean of the process.
 #'
-#' @aliases ewma ewma.qcc print.ewma.qcc summary.ewma.qcc plot.ewma.qcc
-#' @export ewma
-#' @param data a data frame, a matrix or a vector containing observed data for
-#' the variable to chart. Each row of a data frame or a matrix, and each value
-#' of a vector, refers to a sample or ''rationale group''.
+#' @aliases ewma.qcc
+#' @inheritParams chart_common data newdata newsizes center
 #' @param sizes a value or a vector of values specifying the sample sizes
-#' associated with each group. If not provided the sample sizes are obtained
-#' counting the non-`NA` elements of each row of a data frame or a matrix;
-#' sample sizes are set all equal to one if `data` is a vector.
-#' @param center a value specifying the center of group statistics or target.
+#'   associated with each group. If not provided the sample sizes are obtained
+#'   counting the non-`NA` elements of each row of a data frame or a matrix;
+#'   sample sizes are set all equal to one if `data` is a vector.
 #' @param std.dev a value or an available method specifying the within-group
-#' standard deviation(s) of the process. Several methods are available for
-#' estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
-#' respectively, the grouped data case and the individual observations case.
+#'   standard deviation(s) of the process. Several methods are available for
+#'   estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
+#'   respectively, the grouped data case and the individual observations case.
 #' @param lambda the smoothing parameter \eqn{0 \le \lambda \le 1}{0 <=
-#' lambda <= 1}.
+#'  lambda <= 1}.
 #' @param nsigmas a numeric value specifying the number of sigmas to use for
-#' computing control limits.
-#' @param newdata a data frame, matrix or vector, as for the `data`
-#' argument, providing further data to plot but not included in the
-#' computations.
-#' @param newsizes a vector as for the `sizes` argument providing further
-#' data sizes to plot but not included in the computations.
-#' @param xtime a vector of date-time values as returned by
-#' [Sys.time()] and [Sys.Date()]. If provided it is used
-#' for x-axis so it must be of the same length as the statistic charted.
-#' @param add.stats a logical value indicating whether statistics and other
-#' information should be printed at the bottom of the chart.
-#' @param chart.all a logical value indicating whether both statistics for
-#' `data` and for `newdata` (if given) should be plotted.
-#' @param fill a logical value specifying if the in-control area should be
-#' filled with the color specified in `qcc.options("zones")$fill`.
+#'  computing control limits.
 #' @param label.center a character specifying the label for center line.
-#' @param label.limits a character vector specifying the labels for control
-#' limits.
-#' @param title a character string specifying the main title. Set `title =
-#' NULL` to remove the title.
-#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
-#' @param xlim,ylim a numeric vector specifying the limits for the x-axis and
-#' the y-axis.
-#' @param digits the number of significant digits to use.
+#' @param label.limits a character vector specifying the labels for control limits.
 #' @param x an object of class `'ewma.qcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'ewma.qcc'`.
@@ -56,30 +31,22 @@
 #' @family control charts
 #' @seealso [ewmaSmooth()]
 #' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
-#' @keywords htest hplot
+#' @export
 #' @examples
-#'
-#' ##
 #' ## Grouped-data
-#' ##
-#' data(pistonrings)
-#' diameter = qccGroups(data = pistonrings, diameter, sample)
+#' diameter <- qccGroups(data = pistonrings, diameter, sample)
 #'
-#' q = ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
+#' q <- ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
 #' summary(q)
 #' plot(q)
 #'
 #' ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,]) 
 #'
-#' ##
 #' ## Individual observations
-#' ##
-#' data(viscosity)
-#' q = with(viscosity, ewma(viscosity[trial], lambda = 0.2, nsigmas = 2.7,
+#' q <- with(viscosity, ewma(viscosity[trial], lambda = 0.2, nsigmas = 2.7,
 #'                          newdata = viscosity[!trial]))
 #' summary(q)
 #' plot(q)
-#'
 ewma <- function(data, 
                  sizes, center, std.dev, 
                  lambda = 0.2, nsigmas = 3, 
@@ -295,6 +262,7 @@ summary.ewma.qcc <- function(object, ...) print.ewma.qcc(object, ...)
 #' @method plot ewma.qcc
 #' @export
 #' @export plot.ewma.qcc
+#' @inheritParams plot_common
 plot.ewma.qcc <- function(x, xtime = NULL,
                           add.stats = qcc.options("add.stats"), 
                           chart.all = qcc.options("chart.all"), 
@@ -517,30 +485,14 @@ plot.ewma.qcc <- function(x, xtime = NULL,
 #' @author Luca Scrucca
 #' @seealso [qcc()], [cusum()]
 #' @references `r refs("montgomery2013", "wetherill_brown_1991")`
-#' @keywords hplot
 #' @export
 #' @examples
-#'
 #' x  = 1:50
 #' y  = rnorm(50, sin(x/5), 0.5)
 #' plot(x,y)
 #' lines(ewmaSmooth(x,y,lambda=0.1), col="red")
-#'
 ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
 {
-#
-# Exponential-Weighted Moving Average 
-# 
-# Return smooth values based on 
-# 
-# z_t = lambda*y_t + (1-lambda)*z_t-1      
-# 
-# where 0<= lambda <=1 is the parameter which controls the weights applied 
-# to the data, and start is the starting value.
-# Returns a list with elements:
-# x = ordered x-values
-# y = smoothed fitted values of y
-# 
   if (length(y)!=length(x))
      stop("x and y must have the same length!")
   if (lambda < 0 || lambda > 1)
@@ -555,4 +507,3 @@ ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
     z[i] <- lambda * z[i] + (1 - lambda) * z[i - 1]
   list(x=x, y=z[-1], lambda=lambda, start=start)
 }
-
