@@ -1,40 +1,53 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#                       EWMA CHART                                  #
-#                                                                   #
-#-------------------------------------------------------------------#
-
-ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
-{
-#
-# Exponential-Weighted Moving Average 
-# 
-# Return smooth values based on 
-# 
-# z_t = lambda*y_t + (1-lambda)*z_t-1      
-# 
-# where 0<= lambda <=1 is the parameter which controls the weights applied 
-# to the data, and start is the starting value.
-# Returns a list with elements:
-# x = ordered x-values
-# y = smoothed fitted values of y
-# 
-  if (length(y)!=length(x))
-     stop("x and y must have the same length!")
-  if (lambda < 0 || lambda > 1)
-     stop("lambda parameter must be between 0 and 1")
-  ord <- order(x) 
-  x <- x[ord]
-  y <- y[ord]
-  n <- length(y)
-  if (missing(start)) start <- y[1]
-  z <- c(start, y)
-  for (i in 2:(n + 1))
-    z[i] <- lambda * z[i] + (1 - lambda) * z[i - 1]
-  list(x=x, y=z[-1], lambda=lambda, start=start)
-}
-
-
+#' EWMA chart
+#'
+#' Create an object of class `'ewma.qcc'` to compute and draw an
+#' Exponential Weighted Moving Average (EWMA) chart for statistical quality
+#' control.
+#'
+#' EWMA chart smooths a series of data based on a moving average with weights
+#' which decay exponentially. Useful to detect small and permanent variation on
+#' the mean of the process.
+#'
+#' @aliases ewma.qcc
+#' @inheritParams chart_common data newdata newsizes center
+#' @param sizes a value or a vector of values specifying the sample sizes
+#'   associated with each group. If not provided the sample sizes are obtained
+#'   counting the non-`NA` elements of each row of a data frame or a matrix;
+#'   sample sizes are set all equal to one if `data` is a vector.
+#' @param std.dev a value or an available method specifying the within-group
+#'   standard deviation(s) of the process. Several methods are available for
+#'   estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
+#'   respectively, the grouped data case and the individual observations case.
+#' @param lambda the smoothing parameter \eqn{0 \le \lambda \le 1}{0 <=
+#'  lambda <= 1}.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#'  computing control limits.
+#' @param label.center a character specifying the label for center line.
+#' @param label.limits a character vector specifying the labels for control limits.
+#' @param x an object of class `'ewma.qcc'`.
+#' @param object an object of class `'ewma.qcc'`.
+#' @param ... additional arguments to be passed to the generic function.
+#' @return Returns an object of class `'ewma.qcc'`.
+#' @author Luca Scrucca
+#' @family control charts
+#' @seealso [ewmaSmooth()]
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
+#' @export
+#' @examples
+#' ## Grouped-data
+#' diameter <- qccGroups(data = pistonrings, diameter, sample)
+#'
+#' q <- ewma(diameter[1:25,], lambda=0.2, nsigmas=3)
+#' summary(q)
+#' plot(q)
+#'
+#' ewma(diameter[1:25,], lambda=0.2, nsigmas=2.7, newdata=diameter[26:40,]) 
+#'
+#' ## Individual observations
+#' q <- with(viscosity, ewma(viscosity[trial], lambda = 0.2, nsigmas = 2.7,
+#'                          newdata = viscosity[!trial]))
+#' summary(q)
+#' plot(q)
 ewma <- function(data, 
                  sizes, center, std.dev, 
                  lambda = 0.2, nsigmas = 3, 
@@ -155,6 +168,10 @@ ewma <- function(data,
 }
 
 
+#' @rdname ewma
+#' @method print ewma.qcc
+#' @export
+#' @export print.ewma.qcc
 print.ewma.qcc <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -235,9 +252,18 @@ print.ewma.qcc <- function(x, digits =  getOption("digits"), ...)
   invisible()
 }
 
+#' @rdname ewma
+#' @method summary ewma.qcc
+#' @export
+#' @export summary.ewma.qcc
 summary.ewma.qcc <- function(object, ...) print.ewma.qcc(object, ...)
 
 
+#' @rdname ewma
+#' @method plot ewma.qcc
+#' @export
+#' @export plot.ewma.qcc
+#' @inheritParams plot_common
 plot.ewma.qcc <- function(x, xtime = NULL,
                           add.stats = qcc.options("add.stats"), 
                           chart.all = qcc.options("chart.all"), 
@@ -432,6 +458,53 @@ plot.ewma.qcc <- function(x, xtime = NULL,
                                   widths = c(0.6, 0.4))
   }
   
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
+}
+
+#' EWMA smoothing function
+#'
+#' Compute Exponential Weighted Moving Average.
+#'
+#' EWMA function smooths a series of data based on a moving average with
+#' weights which decay exponentially.
+#'
+#' For each \eqn{y_t}{y_t} value the smoothed value is computed as
+#' \deqn{z_t = \lambda y_t + (1-\lambda) z_{t-1}}
+#' where \eqn{0 \le \lambda \le 1}{0 <= lambda <= 1} controls the weights
+#' applied.
+#'
+#' @param x a vector of x-values.
+#' @param y a vector of y-values.
+#' @param lambda the smoothing parameter.
+#' @param start the starting value.
+#' @param ... additional arguments (currently not used).
+#' @return Returns a list with elements:
+#' - `x`: ordered x-values.
+#' - `y`: smoothed y-values.
+#' - `lambda`: the smoothing parameter.
+#' - `start`: the starting value.
+#' @author Luca Scrucca
+#' @seealso [qcc()], [cusum()]
+#' @references `r refs("montgomery2013", "wetherill_brown_1991")`
+#' @export
+#' @examples
+#' x  = 1:50
+#' y  = rnorm(50, sin(x/5), 0.5)
+#' plot(x,y)
+#' lines(ewmaSmooth(x,y,lambda=0.1), col="red")
+ewmaSmooth <- function(x, y, lambda = 0.20, start, ...)
+{
+  if (length(y)!=length(x))
+     stop("x and y must have the same length!")
+  if (lambda < 0 || lambda > 1)
+     stop("lambda parameter must be between 0 and 1")
+  ord <- order(x) 
+  x <- x[ord]
+  y <- y[ord]
+  n <- length(y)
+  if (missing(start)) start <- y[1]
+  z <- c(start, y)
+  for (i in 2:(n + 1))
+    z[i] <- lambda * z[i] + (1 - lambda) * z[i - 1]
+  list(x=x, y=z[-1], lambda=lambda, start=start)
 }

@@ -1,20 +1,188 @@
-#----------------------------------------------------------------------------#
-#                                                                            #
-#                     QUALITY CONTROL CHARTS IN R                            #
-#                                                                            #
-#  An R package for statistical in-line quality control.                     #
-#                                                                            #
-#  Written by: Luca Scrucca                                                  #
-#              Department of Economics                                       #
-#              University of Perugia, ITALY                                  #
-#              luca.scrucca@unipg.it                                         #
-#                                                                            #
-#----------------------------------------------------------------------------#
-
-#
-#  Main function to create a 'qcc' object
-#
-
+#' Quality Control Charts
+#'
+#' Create an object of class `'qcc'` to perform statistical quality
+#' control. This object may then be used to plot Shewhart charts, drawing OC
+#' curves, computes capability indices, and more.
+#'
+#' Numeric `rules` values are interpreted within `rule.set`. By
+#' default, `rules = c(1,4)` applies Western Electric rules 1 and 4 for
+#' backward compatibility. Nelson rules can be requested with `rules =
+#' 1:8, rule.set = "nelson"`.
+#'
+#' @export
+#' @inheritParams chart_common data newdata newsizes center
+#' @param type a character string specifying the group statistics to compute.
+#' Available methods are:
+#'
+#' | Type | Statistic charted | Chart description |
+#' | --- | --- | --- |
+#' | `"xbar"` | mean | means of a continuous process variable |
+#' | `"R"` | range | ranges of a continuous process variable |
+#' | `"S"` | standard deviation | standard deviations of a continuous variable |
+#' | `"xbar.one"` | mean | one-at-time data of a continuous process variable |
+#' | `"p"` | proportion | proportion of nonconforming units |
+#' | `"np"` | count | number of nonconforming units |
+#' | `"c"` | count | nonconformities per unit |
+#' | `"u"` | count | average nonconformities per unit |
+#' | `"g"` | count | number of non-events between events |
+#'
+#' Furthermore, a user specified type of chart, say `"newchart"`, can be
+#' provided. This requires the definition of `"stats.newchart"`,
+#' `"sd.newchart"`, and `"limits.newchart"`. As an example, see
+#' [stats.xbar()].
+#' @param sizes a value or a vector of values specifying the sample sizes
+#' associated with each group. For continuous data provided as data frame or
+#' matrix the sample sizes are obtained counting the non-`NA` elements of
+#' each row. For `"p"`, `"np"` and `"u"` charts the argument
+#' `sizes` is required.
+#' @param std.dev a value or an available method specifying the within-group
+#' standard deviation(s) of the process. Several methods are available for
+#' estimating the standard deviation in case of a continuous process variable;
+#' see [sd.xbar()], [sd.xbar.one()], [sd.R()], and [sd.S()].
+#' @param limits a two-values vector specifying control limits.
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits. It is ignored when the `confidence.level`
+#' argument is provided.
+#' @param confidence.level a numeric value between 0 and 1 specifying the
+#' confidence level of the computed probability limits.
+#' @param rules a value or a vector of values specifying the rules to apply to
+#' the chart. See [qccRules()] for possible values and their meaning.
+#' @param rule.set a character string specifying how numeric `rules`
+#' values are interpreted. The default is `"western-electric"` specifying
+#' Western Electric rules 1 through 4. Use `"nelson"` to apply Nelson
+#' rules 1 through 8.
+#' @param label.center a character specifying the label for center line.
+#' @param label.limits a character vector specifying the labels for control
+#' limits.
+#' @param x an object of class `'qcc'`.
+#' @param object an object of class `'qcc'`.
+#' @param ... additional arguments to be passed to the generic function.
+#' @return Returns an object of class `'qcc'`.
+#' @author Luca Scrucca
+#' @family control charts
+#' @seealso [qccRules()], [ocCurves()], [processCapability()], [qccGroups()]
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
+#' @examples
+#' ##  Continuous data 
+#' diameter  = qccGroups(data = pistonrings, diameter, sample)
+#'
+#' (q  = qcc(diameter[1:25,], type="xbar"))
+#' plot(q)
+#'
+#' (q  = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+#' plot(q)
+#'
+#' q = qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,])
+#' plot(q, chart.all=FALSE)
+#'
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], nsigmas=2))
+#'
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], confidence.level=0.99))
+#'
+#' q <- qcc(diameter[1:25,], type="R")
+#' q
+#' plot(q)
+#'
+#' plot(qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+#'
+#' plot(qcc(diameter[1:25,], type="S"))
+#'
+#' plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
+#'
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,], rules = 1:4))
+#'
+#' # variable control limits
+#' out  = c(9, 10, 30, 35, 45, 64, 65, 74, 75, 85, 99, 100)
+#' diameter  = qccGroups(data = pistonrings[-out,], diameter, sample)
+#' plot(qcc(diameter[1:25,], type="xbar"))
+#' plot(qcc(diameter[1:25,], type="R"))
+#' plot(qcc(diameter[1:25,], type="S"))
+#' plot(qcc(diameter[1:25,], type="xbar", newdata=diameter[26:40,]))
+#' plot(qcc(diameter[1:25,], type="R", newdata=diameter[26:40,]))
+#' plot(qcc(diameter[1:25,], type="S", newdata=diameter[26:40,]))
+#'
+#' # to customize a Shewhart chart use
+#' q <- qcc(diameter[1:25, ], type = "xbar")
+#' graph = plot(q, ylim = c(73.9, 74.1)) 
+#' # returned object is of class "patchwork", then add geom_* layer to the first element
+#' graph[[1]] <- graph[[1]] + 
+#'   geom_hline(yintercept = c(73.95, 74.05), lty = 2) 
+#' graph
+#'
+#' ##  Attribute data 
+#' q <- with(orangejuice, qcc(D[trial], sizes=size[trial], type="p"))
+#' q
+#' plot(q)
+#'
+#' # remove out-of-control points (see help(orangejuice) for the reasons)
+#' outofctrl <- c(15,23)
+#' q1 <- with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p"))
+#' plot(q1)
+#' q1 <- with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p",
+#'                newdata=D[!trial], newsizes=size[!trial]))
+#' plot(q1)
+#'
+#' data(orangejuice2)
+#' q2  <- with(orangejuice2, 
+#'            qcc(D[trial], sizes=size[trial], type="p"))
+#' plot(q2)
+#' q2  <- with(orangejuice2, 
+#'            qcc(D[trial], sizes=size[trial], type="p", 
+#'                newdata=D[!trial], newsizes=size[!trial]))
+#' plot(q2)
+#'
+#' data(circuit)
+#' plot(with(circuit, qcc(x[trial], sizes=size[trial], type="c")))
+#'
+#' # remove out-of-control points (see help(circuit) for the reasons)
+#' outofctrl  = c(15,23)
+#' q1  <- with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p"))
+#' plot(q1)
+#' q1  <- with(orangejuice[-outofctrl,], 
+#'            qcc(D[trial], sizes=size[trial], type="p",
+#'                newdata=D[!trial], newsizes=size[!trial]))
+#' plot(q1)
+#'
+#' outofctrl  = c(6,20)
+#' q1  <- with(circuit[-outofctrl,], 
+#'            qcc(x[trial], sizes=size[trial], type="c"))
+#' plot(q1)
+#' q1  <- with(circuit[-outofctrl,], 
+#'            qcc(x[trial], sizes=size[trial], type="c", 
+#'                newdata = x[!trial], newsizes = size[!trial]))
+#' plot(q1)
+#' q1  <- with(circuit[-outofctrl,], 
+#'            qcc(x[trial], sizes=size[trial], type="u", 
+#'            newdata = x[!trial], newsizes = size[!trial]))
+#' plot(q1)
+#'
+#' data(pcmanufact)
+#' q1  <- with(pcmanufact, qcc(x, sizes=size, type="u"))
+#' q1
+#' plot(q1)
+#'
+#' data(dyedcloth)
+#' # variable control limits
+#' plot(with(dyedcloth, qcc(x, sizes=size, type="u")))
+#' # standardized control chart
+#' q  <- with(dyedcloth, qcc(x, sizes=size, type="u"))
+#' z  <- (q$statistics - q$center)/sqrt(q$center/q$size)
+#' plot(qcc(z, sizes = 1, type = "u", center = 0, std.dev = 1, limits = c(-3,3)),
+#'      title = "Standardized u chart")
+#'     
+#' ##  Continuous one-at-time data 
+#'
+#' q <- with(viscosity, qcc(viscosity[trial], type = "xbar.one"))
+#' q
+#' plot(q)
+#' # batch 4 is out-of-control because of a process temperature controller
+#' # failure; remove it and recompute
+#' viscosity  <- viscosity[-4,]
+#' plot(with(viscosity, 
+#'           qcc(viscosity[trial], type = "xbar.one", newdata = viscosity[!trial])))
 qcc <- function(data, 
                 type = c("xbar", "R", "S", "xbar.one", 
                          "p", "np", "c", "u", "g"),
@@ -174,6 +342,10 @@ qcc <- function(data,
   return(object)
 }
 
+
+#' @rdname qcc
+#' @export
+#' @export print.qcc
 print.qcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -264,9 +436,16 @@ print.qcc <- function(x, digits = getOption("digits"), ...)
   invisible()
 }
 
+#' @rdname qcc
+#' @export
+#' @export summary.qcc
 summary.qcc <- function(object, ...) print.qcc(object, ...)
 
 
+#' @rdname qcc
+#' @export
+#' @export plot.qcc
+#' @inheritParams plot_common 
 plot.qcc <- function(x, xtime = NULL,
                      add.stats = qcc.options("add.stats"), 
                      chart.all = qcc.options("chart.all"), 
@@ -595,383 +774,4 @@ plot.qcc <- function(x, xtime = NULL,
   }
   
   return(plot)
-}
-
-
-#
-#  Functions used to compute Shewhart charts statistics
-#
-
-qcc.c4 <- function(n)
-{ sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2)) }
-
-# Returns limits in a consistent structure for use in limits.* functions
-.construct_limits <- function(lcl,ucl) {
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
-}
-
-# xbar
-
-stats.xbar <- function(data, sizes)
-{
-  data <- as.matrix(data)
-  if(missing(sizes))
-    sizes <- as.integer(rowSums(!is.na(data)))
-  statistics <- rowMeans(data, na.rm = TRUE)
-  center <- sum(sizes * statistics)/sum(sizes)
-  list(statistics = statistics, center = center)
-}
-
-sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"), ...)
-{
-  data <- as.matrix(data)
-  if(missing(sizes))
-    sizes <- as.integer(rowSums(!is.na(data)))
-  if(any(sizes == 1))
-    stop("group sizes must be larger than one")
-  if(!is.numeric(std.dev))
-    std.dev <- match.arg(std.dev, choices = eval(formals(sd.xbar)$std.dev))
-  if(is.numeric(std.dev))
-    { sd <- std.dev }
-  else
-    { switch(std.dev, 
-             "UWAVE-R" = {  R <- apply(data, 1, function(x) 
-                                       diff(range(x, na.rm = TRUE)))
-                            d2 <- qcc.options("exp.R.unscaled")[sizes]
-                            sd <- sum(R/d2)/length(sizes) 
-                         }, 
-             "UWAVE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            sd <- sum(S/qcc.c4(sizes))/length(sizes) 
-                          },
-             "MVLUE-R"  = { R <- apply(data, 1, function(x) 
-                            diff(range(x, na.rm = TRUE)))
-                            d2 <- qcc.options("exp.R.unscaled")[sizes]
-                            d3 <- qcc.options("se.R.unscaled")[sizes]
-                            w  <- (d2/d3)^2
-                            sd <- sum(R/d2*w)/sum(w) 
-                          }, 
-             "MVLUE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            w  <- qcc.c4(sizes)^2/(1-qcc.c4(sizes)^2)
-                            sd <- sum(S/qcc.c4(sizes)*w)/sum(w) 
-                          },
-             "RMSDF" =    { S <- apply(data, 1, sd, na.rm = TRUE)
-                            w  <- sizes-1
-                            sd <- sqrt(sum(S^2*w)/sum(w))/qcc.c4(sum(w)+1) 
-                          }
-      )
-    }
-  return(sd)
-}
-
-limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  if (length(unique(sizes))==1) sizes <- sizes[1]
-  se.stats <- std.dev/sqrt(sizes)
-
-  if (!is.null(conf)) {
-    if (!is.numeric(conf) || length(conf) != 1L || conf <= 0 || conf >= 1) {
-      stop("invalid 'conf' argument. See help.")
-    }
-
-    nsigmas <- qnorm(1 - (1 - conf) / 2)
-  }
-
-  delta <- nsigmas * se.stats
-  lcl <- center - delta
-  ucl <- center + delta
-  .construct_limits(lcl,ucl)
-}
-
-
-# S chart
-
-stats.S <- function(data, sizes)
-{
-  data <- as.matrix(data)
-  if (missing(sizes))
-     sizes <- as.integer(rowSums(!is.na(data)))
-  if(ncol(data)==1) 
-    { statistics <- as.vector(data) }
-  else 
-    { statistics <- sqrt(apply(data, 1, var, na.rm=TRUE)) }
-  if (length(sizes == 1))
-     sizes <- rep(sizes, length(statistics))
-  center <- sum(sizes * statistics)/sum(sizes)
-  list(statistics = statistics, center = center)
-}
-
-sd.S <- function(data, sizes, std.dev = c("UWAVE-SD", "MVLUE-SD", "RMSDF"), ...)
-{
-  if (!is.numeric(std.dev))
-     std.dev <- match.arg(std.dev)
-  sd.xbar(data, sizes, std.dev)
-}
-
-limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  if(length(unique(sizes))==1) sizes <- sizes[1]
-  se.stats <- std.dev * sqrt(1 - qcc.c4(sizes)^2)
-  if (is.null(conf)) 
-     { lcl <- pmax(0, center - nsigmas * se.stats)
-       ucl <- center + nsigmas * se.stats
-     }
-  else 
-     { if (conf > 0 & conf < 1) 
-          { ucl <- std.dev * sqrt(qchisq(1 - (1 - conf)/2, sizes - 1)/
-                                  (sizes - 1))
-            lcl <- std.dev * sqrt(qchisq((1 - conf)/2, sizes - 1)/
-                                  (sizes - 1))
-          }
-          else stop("invalid conf argument. See help.")
-     }
-  .construct_limits(lcl,ucl)
-}
-
-# R Chart 
-
-stats.R <- function(data, sizes)
-{
-  data <- as.matrix(data)
-  if (missing(sizes))
-     sizes <- as.integer(rowSums(!is.na(data)))
-  if(ncol(data)==1) 
-    { statistics <- as.vector(data) }
-  else 
-    { statistics <- apply(data, 1, function(x) diff(range(x, na.rm=TRUE))) }
-  if (length(sizes == 1))
-     sizes <- rep(sizes, length(statistics))
-  center <- sum(sizes * statistics)/sum(sizes)
-  list(statistics = statistics, center = center)
-}
-
-sd.R <- function(data, sizes, std.dev = c("UWAVE-R", "MVLUE-R"), ...)
-{
-  if (!is.numeric(std.dev))
-     std.dev <- match.arg(std.dev)
-  sd.xbar(data, sizes, std.dev)
-}
-
-limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  if (length(unique(sizes))==1) sizes <- sizes[1]
-  se.R.unscaled <- qcc.options("se.R.unscaled")
-  Rtab <- length(se.R.unscaled)
-  if (is.null(conf)) 
-     { if (any(sizes > Rtab))
-          stop(paste("group size must be less than", 
-                      Rtab + 1, "when giving nsigmas"))
-       se.R <- se.R.unscaled[sizes] * std.dev
-       lcl <- pmax(0, center - nsigmas * se.R)
-       ucl <- center + nsigmas * se.R
-     }
-  else 
-     { if (conf > 0 && conf < 1) 
-          { ucl <- qtukey(1 - (1 - conf)/2, sizes, 1e100) * std.dev
-            lcl <- qtukey((1 - conf)/2, sizes, 1e100) * std.dev
-          }
-       else stop("invalid conf argument. See help.")
-     }
-  .construct_limits(lcl,ucl)
-}
-
-# xbar Chart for one-at-time data
-
-stats.xbar.one <- function(data, sizes)
-{
-  statistics <- as.vector(data)
-  center <- mean(statistics)
-  list(statistics = statistics, center = center)
-}
-
-sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
-{
-  data <- as.vector(data)
-  n <- length(data)
-  if(!is.numeric(std.dev)) 
-     std.dev <- match.arg(std.dev)
-  if(is.numeric(std.dev)) 
-    { sd <- std.dev }
-  else
-    { switch(std.dev, 
-             "MR" = {
-                data <- data[!is.na(data)]
-                d2 <- qcc.options("exp.R.unscaled")
-                moving_ranges <- apply(embed(data, r), 1L, function(x) {
-                  diff(range(x))
-                })
-                sd <- mean(moving_ranges) / d2[r]
-             },
-             "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) },
-             sd <- NULL)
-    }
-  return(sd)
-}
-
-
-limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  se.stats <- std.dev
-
-  if (!is.null(conf)) {
-    if (!is.numeric(conf) || length(conf) != 1L || conf <= 0 || conf >= 1) {
-      stop("invalid 'conf' argument. See help.")
-    }
-
-    nsigmas <- qnorm(1 - (1 - conf) / 2)
-  }
-
-  delta <- nsigmas * se.stats
-  lcl <- center - delta
-  ucl <- center + delta
-  .construct_limits(lcl,ucl)
-}
-
-
-# p Chart
-
-stats.p <- function(data, sizes)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  pbar <- sum(data)/sum(sizes)
-  list(statistics = data/sizes, center = pbar)
-}
-
-sd.p <- function(data, sizes, ...)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  pbar <- sum(data)/sum(sizes)
-  std.dev <- sqrt(pbar * (1 - pbar) / sizes)
-  if (length(unique(std.dev)) == 1)
-     std.dev <- std.dev[1]
-  return(std.dev)
-}
-
-limits.p <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{ 
-  limits.np(center * sizes, std.dev, sizes, nsigmas, conf) / sizes
-}
-
-# np Chart
-
-stats.np <- function(data, sizes)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  pbar <- sum(data)/sum(sizes)
-  center <- sizes * pbar
-  if (length(unique(center)) == 1)
-     center <- center[1]
-  list(statistics = data, center = center)
-}
-
-sd.np <- function(data, sizes, ...)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  pbar <- sum(data)/sum(sizes)
-  std.dev <- sqrt(sizes * pbar * (1 - pbar))
-  if (length(unique(std.dev)) == 1)
-     std.dev <- std.dev[1]
-  return(std.dev)
-}
-
-limits.np <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{ 
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  sizes <- as.vector(sizes)
-  if (length(unique(sizes)) == 1) sizes <- sizes[1]
-  pbar <- mean(center / sizes)
-  if (is.null(conf))
-     { tol <- nsigmas * sqrt(pbar * (1 - pbar) * sizes)
-       lcl <- pmax(center - tol, 0)
-       ucl <- pmin(center + tol, sizes)
-     }
-  else
-     { if (conf > 0 & conf < 1)
-          { lcl <- qbinom((1 - conf)/2, sizes, pbar)
-            ucl <- qbinom((1 - conf)/2, sizes, pbar, lower.tail = FALSE)
-          }
-       else stop("invalid conf argument. See help.")
-     }
-  .construct_limits(lcl,ucl)
-}
-
-# c Chart
-
-stats.c <- function(data, sizes)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  if (length(unique(sizes)) != 1)
-     stop("all sizes must be be equal for a c chart")
-  statistics <- data
-  center <- mean(statistics)
-  list(statistics = statistics, center = center)
-}
-
-sd.c <- function(data, sizes, ...)
-{
-  data <- as.vector(data)
-  std.dev <- sqrt(mean(data))
-  return(std.dev)
-}
-
-limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  if (is.null(conf))
-     { lcl <- pmax(0, center - nsigmas * sqrt(center))
-       ucl <- center + nsigmas * sqrt(center)
-     }
-  else 
-     { if (conf > 0 & conf < 1) 
-          { ucl <- qpois(1 - (1 - conf)/2, center)
-            lcl <- qpois((1 - conf)/2, center)
-          }
-       else stop("invalid conf argument. See help.")
-     }
-  .construct_limits(lcl,ucl)
-}
-
-# u Chart
-
-stats.u <- function(data, sizes)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  statistics <- data/sizes
-  center <- sum(sizes * statistics)/sum(sizes)
-  list(statistics = statistics, center = center)
-}
-
-sd.u <- function(data, sizes, ...)
-{
-  data <- as.vector(data)
-  sizes <- as.vector(sizes)
-  std.dev <- sqrt(sum(data)/sum(sizes))
-  return(std.dev)
-}
-
-limits.u <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
-{
-  if(is.null(nsigmas) & is.null(conf))
-    stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
-  sizes <- as.vector(sizes)
-  if (length(unique(sizes))==1) sizes <- sizes[1]
-  limits.c(center * sizes, std.dev, sizes, nsigmas, conf) / sizes
 }

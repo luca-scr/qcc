@@ -2,6 +2,34 @@
 # Descriptive statistics for a matrix or data frame
 #
 
+
+
+#' Descriptive statistics
+#'
+#' Compute and print descriptive statistics for a matrix or data frame,
+#' eventually conditioning on another variable.
+#'
+#' This function provides simple descriptive statistics for different types of
+#' variables, such as numeric, factor, and logical, conditioning or not on
+#' another variable.
+#'
+#' @export
+#' @param data a matrix or data frame.
+#' @param by a factor or character vector specifying the conditioning variable.
+#' This may be a variable included in `data` or an object defined in the
+#' current environment.
+#' @param detailed a logical specifying if detailed statistics should be
+#' provided.
+#' @param ... additional arguments to be passed to the generic function.
+#' @param x an object of class `'describe'`.
+#' @param digits the number of significant digits to use.
+#' @author Luca Scrucca
+#' @seealso [summary()], [by()]
+#' @examples
+#' data(warpbreaks)
+#' describe(warpbreaks)
+#' describe(warpbreaks, detail = TRUE)
+#' describe(warpbreaks, by = wool)
 describe <- function(data, by, detailed = FALSE, ...)
 {
   data_name <- deparse(substitute(data))
@@ -100,6 +128,10 @@ describe <- function(data, by, detailed = FALSE, ...)
   return(obj)
 }
 
+#' @rdname describe
+#' @method print describe
+#' @export
+#' @export print.describe
 print.describe <- function(x, digits = getOption("digits") - 3, ...)
 {
 

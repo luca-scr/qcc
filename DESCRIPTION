@@ -11,7 +11,7 @@ Authors@R: c(person("Luca", "Scrucca", role = c("aut", "cre", "cph"),
              person("Peter", "Bloomfield", role = "ctb",
                     email = "Peter_Bloomfield@ncsu.edu"))
 Depends: 
-  R (>= 4.1), 
+  R (>= 4.4), 
   ggplot2 (>= 4.0),
   patchwork (>= 1.3)
 Imports: 
@@ -36,3 +36,5 @@ ByteCompile: true
 LazyData: true
 Encoding: UTF-8
 Config/testthat/edition: 3
+Config/roxygen2/markdown: TRUE
+Config/roxygen2/version: 8.0.0

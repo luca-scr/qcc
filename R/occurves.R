@@ -1,9 +1,67 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#          Operating Characteristic Curves                          #
-#                                                                   #
-#-------------------------------------------------------------------#
-
+#' Operating Characteristic Function
+#'
+#' Draws the operating characteristic curves for a `'qcc'` object.
+#'
+#' An operating characteristic curve graphically provides information about the
+#' probability of not detecting a shift in the process. `ocCurves` is a
+#' generic function which calls the proper function depending on the type of
+#' `'qcc'` object. Further arguments provided through `...` are
+#' passed to the specific function depending on the type of chart.
+#'
+#' The probabilities are based on the conventional assumptions about process
+#' distributions: the normal distribution for `"xbar"`, `"R"`, and
+#' `"S"`, the binomial distribution for `"p"` and `"np"`, and
+#' the Poisson distribution for `"c"` and `"u"`. They are all
+#' sensitive to departures from those assumptions, but to varying degrees. The
+#' performance of the `"S"` chart, and especially the `"R"` chart,
+#' are likely to be seriously affected by longer tails.
+#' 
+#' @export
+#' @param object an object of class `'qcc'`.
+#' @param size a vector of values specifying the sample sizes for which to draw
+#' the OC curves.
+#' @param shift,multiplier a vector of values specifying the shift or
+#' multiplier values (in units of sigma).
+#' @param nsigmas a numeric value specifying the number of sigmas to use for
+#' computing control limits; if `nsigmas` is `NULL`,
+#' `object$conf` is used to set up probability limits.
+#' @param x an object of class `'ocCurves'`.
+#' @param digits the number of significant digits to use.
+#' @param what a string specifying the quantity to plot on the y-axis. Possible
+#' values are `"beta"` for the probability of not detecting a shift, and
+#' `"ARL"` for the average run length.
+#' @param title a character string specifying the main title. Set `title =
+#' NULL` to remove the title.
+#' @param xlab,ylab a string giving the label for the x-axis and the y-axis.
+#' @param lty,lwd,col values or vector of values controlling the line type,
+#' line width and colour of curves.
+#' @param ... catches further ignored arguments.
+#' @return The function returns an object of class `'ocCurves'` which
+#' contains a matrix or a vector of beta values (the probability of type II
+#' error) and ARL (average run length).
+#' @author Luca Scrucca
+#' @seealso [qcc()]
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
+#' @examples
+#'
+#' data(pistonrings)
+#' diameter  = qccGroups(diameter, sample, data = pistonrings)
+#' oc  = ocCurves.xbar(qcc(diameter, type="xbar", nsigmas=3))
+#' oc
+#' plot(oc)
+#'
+#' data(orangejuice)
+#' oc  = with(orangejuice,
+#'            ocCurves(qcc(D[trial], sizes=size[trial], type="p")))
+#' oc
+#' plot(oc)
+#'
+#' data(circuit)
+#' oc  = with(circuit,
+#'            ocCurves(qcc(x[trial], sizes=size[trial], type="c")))
+#' oc
+#' plot(oc)
+#'
 ocCurves <- function(object, ...)
 {
 # Compute and draws the operating characteristic curves for a qcc object 
@@ -29,6 +87,8 @@ ocCurves <- function(object, ...)
 }
 
 
+#' @rdname ocCurves
+#' @export
 ocCurves.xbar <- function(object, 
                           size = c(1,5,10,15,20), 
                           shift = seq(0, 5, by = 0.1), 
@@ -65,6 +125,8 @@ ocCurves.xbar <- function(object,
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.R <- function(object, 
                        size = c(2,5,10,15,20), 
                        multiplier = seq(1, 6, by = 0.1),
@@ -124,6 +186,8 @@ ocCurves.R <- function(object,
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.S <- function(object, 
                        size = c(2,5,10,15,20), 
                        multiplier = seq(1,6,by=0.1),
@@ -177,6 +241,8 @@ ocCurves.S <- function(object,
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.p <- function(object, ...)
 {
   if (!(object$type=="p" | object$type=="np"))
@@ -215,6 +281,8 @@ ocCurves.p <- function(object, ...)
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
 ocCurves.c <- function(object, ...)
 {
   if (!(object$type=="c" | object$type=="u"))
@@ -256,6 +324,9 @@ ocCurves.c <- function(object, ...)
   return(out)
 }
 
+#' @rdname ocCurves
+#' @export
+#' @export print.ocCurves
 print.ocCurves <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -271,6 +342,9 @@ print.ocCurves <- function(x, digits =  getOption("digits"), ...)
 }
 
 
+#' @rdname ocCurves
+#' @export
+#' @export plot.ocCurves
 plot.ocCurves <- function(x, what = c("beta", "ARL"),
                           title, xlab, ylab, lty, lwd, col,
                           ...)

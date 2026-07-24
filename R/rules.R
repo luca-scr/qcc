@@ -1,17 +1,60 @@
 # TODO: Refactor WER2, NEL7, NEL8
+# TODO: Add references and review implementation against references
 
-# Western Electric rules 
-#
-# A process is out of control if either
-# 1. One point plots outside 3-sigma control limits.
-# 2. Two of three consecutive points plot beyond a 2-sigma limit.
-# 3. Four of five consecutive points plot beyond a 1-sigma limit.
-# 4. Eight consecutive points plot on one side of the center line.
+#' Rules for Shewhart charts
+#'
+#' Functions which implement rules to signal out-of-control (OOC) or
+#' out-of-trend (OOT) points in Shewhart control charts.
+#'
+#' The `qccRulesViolatingWER1`, `qccRulesViolatingWER2`, ...,
+#' `qccRulesViolatingWER4` functions return the indices violating the
+#' corresponding Western Electric rule:
+#'
+#' 1. One point plots outside 3-sigma control limits.
+#' 2. Two of three consecutive points plot beyond a 2-sigma limit.
+#' 3. Four of five consecutive points plot beyond a 1-sigma limit.
+#' 4. Eight consecutive points plot on one side of the center line.
+#'
+#' The `qccRulesViolatingNEL1`, `qccRulesViolatingNEL2`, ...,
+#' `qccRulesViolatingNEL8` functions return the indices violating the
+#' corresponding Nelson rule:
+#'
+#' 1. One point plots outside 3-sigma control limits.
+#' 2. Nine points in a row plot on the same side of the center line.
+#' 3. Six points in a row are steadily increasing or decreasing.
+#' 4. Fourteen points in a row alternate up and down.
+#' 5. Two of three consecutive points plot beyond a 2-sigma limit on the same
+#'    side.
+#' 6. Four of five consecutive points plot beyond a 1-sigma limit on the same
+#'    side.
+#' 7. Fifteen points in a row plot within 1 sigma of the center line.
+#' 8. Eight points in a row plot outside 1 sigma on both sides of the center
+#'    line.
+#'
+#' @param object an object of class `'qcc'`.
+#' @author Luca Scrucca
+#' @author Anas Sheashaey
+#' @name rules
+NULL
 
+
+#' @rdname rules
+#' @param rules a vector of values specifying the rules used to declare a
+#'   process OOC or OOT. Numeric values are interpreted differently depending
+#'   on the value of `rule.set`.
+#' @param rule.set a character string selecting the rule set used to interpret
+#'   numeric `rules` values. Use `"western-electric"` for Western
+#'   Electric rules or `"nelson"` for Nelson rules. default: `"western-electric"`
+#' @return The function `qccRules` returns a vector of the same length as the statistics
+#'   charted with value `NA` if no rule is violated, and numerical values
+#'   corresponding to the violated rule. If more than one rule is violated, the
+#'   value returned corresponds to the most serious violation.
+#' @export
 qccRules <- function(object, rules = object$rules, rule.set = object$rule.set)
 {
   # Return a vector of indices for cases (statistics & new.statistics) 
   # in object violating specified rules (NA if no rule is violated)
+
   rules <- as.numeric(rules)
   if(is.null(rule.set))
     rule.set <- "western-electric"
@@ -91,6 +134,10 @@ qccRules <- function(object, rules = object$rules, rule.set = object$rule.set)
   return(out)
 }
 
+#' @rdname rules
+#' @param limits a two-column matrix containing the lower and upper control
+#'   limits.
+#' @export
 qccRulesViolatingWER1 <- function(object, limits = object$limits)
 {
   # Return cases beyond control limits (WER #1)
@@ -102,6 +149,13 @@ qccRulesViolatingWER1 <- function(object, limits = object$limits)
   return(c(index.above.ucl, index.below.lcl))
 }
 
+#' @rdname rules
+#' @param run.points the minimum number of points beyond the sigma limit
+#'   needed to signal a violation.
+#' @param run.length the number of consecutive points in the run.
+#' @param k the number of standard deviations from the center line used to
+#'   define the sigma limits.
+#' @export
 qccRulesViolatingWER2 <- function(object, 
                                   run.points = 2,
                                   run.length = 3,
@@ -125,6 +179,9 @@ qccRulesViolatingWER2 <- function(object,
   return(c(viol.above, viol.below))
 }
 
+#' @rdname rules
+#' @param ... additional arguments, currently ignored.
+#' @export
 qccRulesViolatingWER3 <- function(object, ...)
 {
   qccRulesViolatingWER2(object, 
@@ -133,22 +190,16 @@ qccRulesViolatingWER3 <- function(object, ...)
                         k = object$nsigmas*1/3)
 }  
 
+#' @rdname rules
+#' @export
 qccRulesViolatingWER4 <- function(object) qccRulesViolatingNEL2(object, run.length = 8)
 
-# Nelson rules
-#
-# A process is out of control if any of the following occur:
-# 1. One point plots outside 3-sigma control limits.
-# 2. Nine points in a row plot on the same side of the center line.
-# 3. Six points in a row are steadily increasing or decreasing.
-# 4. Fourteen points in a row alternate up and down.
-# 5. Two of three consecutive points plot beyond a 2-sigma limit.
-# 6. Four of five consecutive points plot beyond a 1-sigma limit.
-# 7. Fifteen points in a row plot within 1 sigma of the center line.
-# 8. Eight points in a row plot outside 1 sigma on both sides of the center line.
-
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL1 <- function(object) qccRulesViolatingWER1(object, object$limits)
 
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL2 <- function(object, run.length = 9)
 {
   # Return indices of points violating nine-point runs (Nelson #2)
@@ -160,6 +211,8 @@ qccRulesViolatingNEL2 <- function(object, run.length = 9)
   return(c(viol.above, viol.below))
 }
 
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL3 <- function(object)
 {
   # Return indices of points violating trend runs (Nelson #3)
@@ -171,6 +224,8 @@ qccRulesViolatingNEL3 <- function(object)
   return(c(viol.increase, viol.decrease))
 }
 
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL4 <- function(object)
 {
   # Return indices of points violating alternating runs (Nelson #4)
@@ -184,9 +239,16 @@ qccRulesViolatingNEL4 <- function(object)
   return(violators)
 }
 
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL5 <- function(object) qccRulesViolatingWER2(object)
+
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL6 <- function(object) qccRulesViolatingWER3(object)
 
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL7 <- function(object)
 {
   # Return indices of points inside one-sigma limits (Nelson #7)
@@ -197,6 +259,8 @@ qccRulesViolatingNEL7 <- function(object)
   return(qccRulesViolatingRun(inside, run.length))
 }
 
+#' @rdname rules
+#' @export
 qccRulesViolatingNEL8 <- function(object)
 {
   # Return indices of points outside one-sigma limits on both sides (Nelson #8)

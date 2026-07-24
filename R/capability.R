@@ -1,16 +1,76 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#    Process Capability Analysis                                    #
-#                                                                   #
-#-------------------------------------------------------------------#
-
-# TODO: implement Cpkm
+#' Process capability analysis
+#'
+#' Computes process capability indices for a `'qcc'` object of type
+#' `"xbar"` and plot the histogram.
+#'
+#' This function calculates confidence limits for \eqn{C_p}{C_p} using the
+#' method described by Chou et al. (1990). Approximate confidence limits for
+#' \eqn{C_{pl}}{C_pl}, \eqn{C_{pu}}{C_pu}, and \eqn{C_{pk}}{C_pk} are computed
+#' using the method in Bissell (1990). Confidence limits for
+#' \eqn{C_{pm}}{C_pm} are based on the method of Boyles (1991); this method is
+#' approximate and it assumes that the target is midway between the
+#' specification limits.
+#' 
+#' @export
+#' @param object a `'qcc'` object of type `"xbar"`
+#' @param spec.limits a two-values vector specifying the lower and upper
+#' specification limits. For one-sided specification limits, the value of the
+#' missing limit must be set to `NA`.
+#' @param target a value specifying the target of the process. If missing the
+#' value from the `'qcc'` object is used if not `NULL`, otherwise the
+#' target is set at the middle value between specification limits.
+#' @param std.dev a value specifying the within-group standard deviation. If
+#' not provided is taken from the `'qcc'` object.
+#' @param nsigmas a numeric value specifying the number of sigmas to use. If
+#' not provided is taken from the `'qcc'` object.
+#' @param confidence.level a numeric value between 0 and 1 specifying the level
+#' to use for computing confidence intervals.
+#' @param x an object of class `'processCapability'`.
+#' @param add.stats a logical value indicating whether statistics and
+#' capability indices should be added at the bottom of the chart.
+#' @param breaks a value or a function used to select the number of bins in a
+#' histogram. See the help for [nclass.scott()] for more details.
+#' @param fill,color values specifying the colour of the filled area and the
+#' border used for drawing the histogram.
+#' @param title a character string specifying the plot title. Set `title =
+#' NULL` to remove the title.
+#' @param xlab a character string specifying the label for the x-axis.
+#' @param digits the number of significant digits to use.
+#' @param ... catches further ignored arguments.
+#' @return Invisibly returns a list with components:
+#' - `nobs`: number of observations.
+#' - `center`: center.
+#' - `std.dev`: standard deviation.
+#' - `target`: target.
+#' - `spec.limits`: a vector of values giving the lower specification limit
+#'   (LSL) and the upper specification limit (USL).
+#' - `indices`: a matrix of capability indices (\eqn{C_p}{C_p},
+#'   \eqn{C_{pl}}{C_pl}, \eqn{C_{pu}}{C_pu}, \eqn{C_{pk}}{C_pk},
+#'   \eqn{C_{pm}}{C_pm}) and the corresponding confidence limits.
+#' - `exp`: a vector of values giving the expected fraction, based on a normal
+#'   approximation, of the observations less than LSL and greater than USL.
+#' - `obs`: a vector of values giving the fraction of observations less than
+#'   LSL and greater than USL.
+#' @author Luca Scrucca
+#' @seealso [qcc()]
+#' @references `r refs("bissell_1990", "boyles_1991", "chou_owen_borrego_1990", "montgomery2013", "wetherill_brown_1991")`
+#' @examples
+#'
+#' data(pistonrings)
+#' diameter  = qccGroups(data = pistonrings, diameter, sample)
+#' q  = qcc(diameter[1:25,], type="xbar", nsigmas=3)
+#' pc  = processCapability(q, spec.limits=c(73.95,74.05))
+#' pc
+#' plot(pc)
+#' plot(processCapability(q, spec.limits=c(73.95,74.05), target=74.02))
+#' plot(processCapability(q, spec.limits=c(73.99,74.01)))
+#' plot(processCapability(q, spec.limits = c(73.99, 74.1)))
+#'
 processCapability <- function(object, spec.limits, target, 
                               std.dev, nsigmas, 
                               confidence.level = 0.95, ...)
 {
-# Computes process capability indices for a qcc object of type "xbar" 
-# and plot the histogram
+# TODO: implement Cpkm
 
   if ((missing(object)) | (!inherits(object, "qcc")))
      stop("an object of class 'qcc' is required")
@@ -91,6 +151,7 @@ processCapability <- function(object, spec.limits, target,
     (1 + 2 * ((center - target) / overall.std.dev)^2)
   Ppm.limits <- .chisq_limits_cp_family(Ppm, overall.df, alpha)
 
+  # limit.names <- (c(alpha/2, 1-alpha/2) * 100) |> round(1) |> paste0("%") # Remove `round`?
   limit.names <- c(paste(round(100*alpha/2, 1), "%", sep=""),
                    paste(round(100*(1-alpha/2), 1), "%", sep=""))
   names(Cp.limits) <- names(Cp.u.limits) <- names(Cp.l.limits) <- names(Cp.k.limits) <-
@@ -132,6 +193,10 @@ processCapability <- function(object, spec.limits, target,
   return(out)
 }
 
+#' @rdname processCapability
+#' @method print processCapability
+#' @export
+#' @export print.processCapability
 print.processCapability <- function(x, digits = getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -177,9 +242,17 @@ print.processCapability <- function(x, digits = getOption("digits"), ...)
   invisible()
 }
 
+#' @rdname processCapability
+#' @method summary processCapability
+#' @export
+#' @export summary.processCapability
 summary.processCapability <- function(object, ...) 
   print.processCapability(object, ...)
 
+#' @rdname processCapability
+#' @method plot processCapability
+#' @export
+#' @export plot.processCapability
 plot.processCapability <- function(x, 
                                    add.stats = qcc.options("add.stats"),
                                    breaks = nclass.hist, 
@@ -339,26 +412,49 @@ plot.processCapability <- function(x,
                                   widths = c(0.24, 0.16, 0.18, 0.18, 0.24))
   }
 
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }
   
-# Compute approximate confidence limits for cpu, cpl, cpk.
-# See @Bissell1990
-# - idx: point estimate of the capability index
-# - z:   normal quantile
-# - n:   sample size
+#' Wald confidence limits for Cpk-family indices
+#'
+#' Computes approximate two-sided confidence limits for \eqn{C_{pu}}{C_pu},
+#' \eqn{C_{pl}}{C_pl}, and \eqn{C_{pk}}{C_pk} using the Wald method described
+#' by Bissell (1990).
+#'
+#' @param idx A numeric scalar giving the point estimate of the capability
+#'   index.
+#' @param z A numeric scalar giving the normal quantile.
+#' @param n A numeric scalar giving the sample size.
+#'
+#' @return A numeric vector of length two containing the lower and upper
+#'   confidence limits. Returns two `NA` values when `idx` is `NA`.
+#'
+#' @references `r refs("bissell_1990")`
+#' @keywords internal
+#' @noRd
 .wald_limits_cpk_family <- function(idx, z, n)
 {
   if (is.na(idx)) return(c(NA_real_, NA_real_))
   idx * (1 + c(-1, 1) * z * sqrt(1 / (9 * n * idx^2) + 1 / (2 * (n - 1))))
 }
 
-# Compute confidence limits for cp and cpm.
-# For Cp, see @Chou1990. For Cpm, see @Boyles1991
-# - idx: point estimate of the capability index
-# - df:  degrees of freedom
-# - alpha: total tail probability
+#' Chi-squared confidence limits for Cp-family indices
+#'
+#' Computes two-sided confidence limits for \eqn{C_p}{C_p} using the method of
+#' Chou et al. (1990), and approximate limits for \eqn{C_{pm}}{C_pm} using the
+#' method of Boyles (1991).
+#'
+#' @param idx A numeric scalar giving the point estimate of the capability
+#'   index.
+#' @param df A numeric scalar giving the degrees of freedom.
+#' @param alpha A numeric scalar giving the total tail probability.
+#'
+#' @return A numeric vector of length two containing the lower and upper
+#'   confidence limits. Returns two `NA` values when `idx` is `NA`.
+#'
+#' @references `r refs("boyles_1991", "chou_owen_borrego_1990")`
+#' @keywords internal
+#' @noRd
 .chisq_limits_cp_family <- function(idx, df, alpha)
 {
   if (is.na(idx)) return(c(NA_real_, NA_real_))

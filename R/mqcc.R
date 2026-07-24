@@ -1,15 +1,115 @@
-#-----------------------------------------------------------------------------#
-#                                                                             #
-#  MULTIVARIATE CONTROL CHARTS                                                #
-#                                                                             #
-#  Written by: Luca Scrucca                                                   #
-#              Department of Statistics                                       #
-#              University of Perugia, ITALY                                   #
-#              luca@stat.unipg.it                                             #
-#                                                                             #
-# Last modified: October 2009                                                 #
-#-----------------------------------------------------------------------------#
-
+#' Multivariate Quality Control Charts
+#'
+#' Create an object of class `'mqcc'` to perform multivariate statistical
+#' quality control.
+#'
+#'
+#' @param data For subgrouped data, a list with a data frame or a matrix for
+#'   each variable to monitor. Each row of the data frame or matrix refers to a
+#'   sample or ''rationale'' group.  For individual observations, where each
+#'   sample has a single observation, users can provide a list with a data frame
+#'   or a matrix having a single column, or a data frame or a matrix where each
+#'   rows refer to samples and columns to variables. See examples.
+#' @param type a character string specifying the type of chart:
+#'   - `"T2"`: Hotelling \eqn{T^2} chart for subgrouped data.
+#'   - `"T2.single"`: Hotelling \eqn{T^2} chart for individual observations.
+#' @param center a vector of values to use for center of input variables.
+#' @param cov a matrix of values to use for the covariance matrix of input
+#'   variables.
+#' @param limits a logical indicating if control limits (Phase I) must be
+#'   computed (by default using [limits.T2()] or
+#'   [limits.T2.single()]) and plotted, or a two-values vector
+#'   specifying control limits.
+#' @param pred.limits a logical indicating if prediction limits (Phase II) must
+#'   be computed (by default using [limits.T2()] or
+#'   [limits.T2.single()]) and plotted, or a two-values vector
+#'   specifying prediction limits.
+#' @param data.name a string specifying the name of the variable which appears
+#'   on the plots. If not provided is taken from the object given as data.
+#' @param labels a character vector of labels for each group.
+#' @param newdata a data frame, matrix or vector, as for the `data`
+#'   argument, providing further data to plot but not included in the
+#'   computations.
+#' @param newlabels a character vector of labels for each new group defined in
+#'   the argument `newdata`.
+#' @param confidence.level a numeric value between 0 and 1 specifying the
+#'   confidence level of the computed probability limits.  By default is set at
+#'   \eqn{(1 - 0.0027)^p} where \eqn{p} is the number of variables, and
+#'   \eqn{0.0027} is the probability of Type I error for a single Shewhart chart
+#'   at the usual 3-sigma control level.
+#' @param plot logical. If `TRUE` a quality chart is plotted.
+#' See `help(par)`.
+#' @param digits the number of significant digits to use when `add.stats =
+#' TRUE`.
+#' @param restore.par a logical value indicating whether the previous
+#' `par` settings must be restored. If you need to add points, lines, etc.
+#' to a control chart set this to `FALSE`.
+#' @param x an object of class `'mqcc'`.
+#' @param object an object of class `'mqcc'`.
+#' @param ... additional arguments to be passed to the generic function.
+#' @return Returns an object of class `'mqcc'`.
+#' @author Luca Scrucca
+#' @seealso [stats.T2()], [stats.T2.single()], [limits.T2()], [limits.T2.single()], [ellipseChart()], [qcc()]
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
+#' @export
+#' @examples
+#' ##  Subgrouped data
+#' q  = mqcc(RyanMultivar, type = "T2")
+#' summary(q)
+#' ellipseChart(q)
+#' ellipseChart(q, show.id = TRUE)
+#' q  = mqcc(RyanMultivar, type = "T2", pred.limits = TRUE)
+#'
+#' # Xbar-charts for single variables computed adjusting the 
+#' # confidence level of the T^2 chart:
+#' q1  = with(RyanMultivar, 
+#'            qcc(X1, type = "xbar", confidence.level = q$confidence.level^(1/2)))
+#' summary(q1)
+#' q2  = with(RyanMultivar,
+#'            qcc(X2, type = "xbar", confidence.level = q$confidence.level^(1/2)))
+#' summary(q2)
+#'
+#' require(MASS)
+#' # generate new "in control" data
+#' Xnew  = list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
+#' for(i in 1:4)
+#'    { x  = mvrnorm(10, mu = q$center, Sigma = q$cov)
+#'      Xnew$X1[,i]  = x[,1]
+#'      Xnew$X2[,i]  = x[,2] 
+#'    }
+#' qq  = mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
+#' summary(qq)
+#'
+#' # generate new "out of control" data
+#' Xnew  = list(X1 = matrix(NA, 10, 4), X2 =  matrix(NA, 10, 4))
+#' for(i in 1:4)
+#'    { x  = mvrnorm(10, mu = 1.2*q$center, Sigma = q$cov)
+#'      Xnew$X1[,i]  = x[,1]
+#'      Xnew$X2[,i]  = x[,2] 
+#'    }
+#' qq  = mqcc(RyanMultivar, type = "T2", newdata = Xnew, pred.limits = TRUE)
+#' summary(qq)
+#'
+#' ## Individual observations data
+#' q = mqcc(boiler, type = "T2.single", confidence.level = 0.999)
+#' summary(q)
+#'
+#' # generate new "in control" data
+#' boilerNew  = mvrnorm(10, mu = q$center, Sigma = q$cov)
+#' qq  = mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+#'            newdata = boilerNew, pred.limits = TRUE)
+#' summary(qq)
+#'
+#' # generate new "out of control" data
+#' boilerNew  = mvrnorm(10, mu = 1.01*q$center, Sigma = q$cov)
+#' qq  = mqcc(boiler, type = "T2.single", confidence.level = 0.999, 
+#'            newdata = boilerNew, pred.limits = TRUE)
+#' summary(qq)
+#'
+#' # provides "robust" estimates of means and covariance matrix
+#' rob  = cov.rob(boiler)
+#' qrob  = mqcc(boiler, type = "T2.single", center = rob$center, cov = rob$cov)
+#' summary(qrob)
 mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
                  limits = TRUE, pred.limits = FALSE,
                  data.name, labels, newdata, newlabels, 
@@ -151,6 +251,10 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
   return(object)
 }
 
+#' @rdname mqcc
+#' @method print mqcc
+#' @export
+#' @export print.mqcc
 print.mqcc <- function(x, digits = getOption("digits"), ...)
 {
   object <- x  # Argh.  Really want to use 'object' anyway
@@ -206,8 +310,24 @@ print.mqcc <- function(x, digits = getOption("digits"), ...)
   invisible()        
 }
 
+#' @rdname mqcc
+#' @method summary mqcc
+#' @export
+#' @export summary.mqcc
 summary.mqcc <- function(object, ...) print.mqcc(object, ...)
 
+#' @rdname mqcc
+#' @method plot mqcc
+#' @export
+#' @export plot.mqcc
+#' @inheritParams plot_common add.stats chart.all fill xlab ylab ylim
+#' @param title a character string specifying the main title. Set `title =
+#'   FALSE` or `title = NA` to remove the title.
+#' @param label.limits a character vector specifying the labels for control
+#'   limits (Phase I).
+#' @param label.pred.limits a character vector specifying the labels for
+#'   prediction control limits (Phase II).
+#' @param axes.las numeric in \{0,1,2,3\} specifying the style of axis labels.
 plot.mqcc <- function(x, 
                       add.stats = qcc.options("add.stats"), 
                       chart.all = qcc.options("chart.all"), 
@@ -407,6 +527,36 @@ plot.mqcc <- function(x,
   invisible() 
 }
 
+
+
+#' Multivariate Quality Control Charts
+#'
+#' Plot an ellipse chart for a bivariate quality control data.
+#'
+#'
+#' @inheritParams plot_common chart.all xlab ylab xlim ylim
+#' @param object an object of class `'mqcc'`.
+#' @param show.id a logical value indicating whether to plot point labels
+#' (`TRUE`) or symbols (`FALSE`) for group means.
+#' @param ngrid a value for the size of the grid over which the ellipse is
+#' evaluated.
+#' @param confidence.level a numeric value between 0 and 1 specifying the
+#' confidence level of the computed probability limits.
+#' @param correct.multiple a logical value indicating whether to correct or not
+#' for multiple comparisons.
+#' @param title a character string specifying the main title. Set `title =
+#' FALSE` or `title = NA` to remove the title.
+#' @param restore.par a logical value indicating whether the previous
+#' `par` settings must be restored. If you need to add points, lines, etc.
+#' to a control chart set this to `FALSE`.
+#' @param ... additional arguments to be passed to the generic
+#' [points()] function.
+#' @author Luca Scrucca
+#' @seealso [mqcc()], [stats.T2()], [stats.T2.single()]
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011")`
+#' @export
+#' @examples
+#' # See examples in help(mqcc)
 ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
                          confidence.level, correct.multiple = TRUE,
                          title, xlim, ylim, xlab, ylab,
@@ -522,95 +672,4 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   }
   #
   invisible() 
-}
-
-# T2 chart
-
-stats.T2 <- function(data, center = NULL, cov = NULL)
-{ 
-  data <- lapply(data, data.matrix) 
-  m <- unique(sapply(data, nrow))[1]    # num. of samples
-  n <- unique(sapply(data, ncol))       # samples sizes
-  p <- length(data)                     # num. of variables
-  #
-  means <- lapply(data, function(x) 
-                        rowMeans(x, na.rm = TRUE))  # within-sample means
-  means <- as.matrix(as.data.frame(means))
-  if(is.null(center))
-     center <- sapply(data, mean, na.rm = TRUE)     # overall mean
-  x <- scale(means, center = center, scale = FALSE)
-  if(is.null(cov))
-    { cov <- matrix(0, p, p)            # pooled within-sample covar matrix
-      for(k in 1:m)
-          cov <- cov + crossprod(scale(sapply(data, function(x) x[k,]),
-                                       center = means[k,], scale = FALSE))/(n-1)
-          # cov <- cov + var(sapply(data, function(x) x[k,]))
-       cov <- cov/m 
-    }
-  cov.inv <- solve(cov)
-  # Hotelling's T^2 statistic
-  T2 <- n*apply(x, 1, function(x) x %*% cov.inv %*% x)
-  list(statistics = T2, means = means, center = center, cov = cov)
-}
-
-limits.T2 <- function(ngroups, size, nvars,  conf)
-{ 
-  m   <- ngroups     # num. of samples
-  n   <- size        # samples size
-  p   <- nvars       # num. of variables
-  # Phase 1 control limits   
-  ucl <- p*(m-1)*(n-1)/(m*n-m-p+1)*qf(conf, p, m*n-m-p+1)
-  lcl <- 0
-  ctrl.limits <- matrix(c(lcl, ucl), ncol = 2)
-  # Phase 2 prediction limits   
-  ucl <- p*(m+1)*(n-1)/(m*n-m-p+1)*qf(conf, p, m*n-m-p+1)
-  lcl <- 0
-  pred.limits <- matrix(c(lcl, ucl), ncol = 2)
-  #
-  rownames(ctrl.limits) <- rownames(pred.limits) <- rep("", nrow(pred.limits))
-  colnames(ctrl.limits) <- c("LCL", "UCL")
-  colnames(pred.limits) <- c("LPL", "UPL")
-  #
-  return(list(control = ctrl.limits, prediction = pred.limits))
-}
-
-# T2 chart single observation per group
-
-stats.T2.single <- function(data, center = NULL, cov = NULL)
-{ 
-  data <- as.matrix(as.data.frame(data))
-  m <- nrow(data)                       # num. of samples
-  p <- ncol(data)                       # num. of variables
-  n <- 1                                # samples sizes
-  if(is.null(center))
-    { center <- colMeans(data) }  # overall mean
-  x <- scale(data, center = center, scale = FALSE)
-  if(is.null(cov))
-    { cov <- crossprod(x)/(m-1) }       # sample covar matrix
-  cov.inv <- solve(cov)
-  # Hotelling's T^2 statistic
-  T2 <- apply(x, 1, function(x) x %*% cov.inv %*% x)
-  list(statistics = T2, means = data, center = center, cov = cov)
-}
-
-limits.T2.single <- function(ngroups, size = 1, nvars, conf)
-{ 
-  m   <- ngroups     # num. of samples
-  n   <- size        # samples size
-  p   <- nvars       # num. of variables
-  # Phase 1 control limits
-  # Tracy Mason Young (1992)
-  ucl <- (m-1)^2/m*qbeta(conf, p/2, (m-p-1)/2)
-  lcl <- 0
-  ctrl.limits <- matrix(c(lcl, ucl), ncol = 2)
-  # Phase 2 prediction limits
-  ucl <- p*(m+1)*(m-1)/(m*(m-p))*qf(conf, p, m-p)
-  lcl <- 0
-  pred.limits <- matrix(c(lcl, ucl), ncol = 2)
-  #
-  rownames(ctrl.limits) <- rownames(pred.limits) <- rep("", nrow(pred.limits))
-  colnames(ctrl.limits) <- c("LCL", "UCL")
-  colnames(pred.limits) <- c("LPL", "UPL")
-  #
-  return(list(control = ctrl.limits, prediction = pred.limits))
 }

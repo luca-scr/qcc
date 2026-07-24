@@ -1,9 +1,58 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#                      CUSUM CHART                                  #
-#                                                                   #
-#-------------------------------------------------------------------#
-
+#' Cusum chart
+#'
+#' Create an object of class `'cusum.qcc'` to compute a Cusum chart for
+#' statistical quality control.
+#'
+#' Cusum charts display how the group summary statistics deviate above or below
+#' the process center or target value, relative to the standard errors of the
+#' summary statistics. Useful to detect small and permanent variation on the
+#' mean of the process.
+#'
+#' @aliases cusum.qcc
+#' @inheritParams chart_common data newdata newsizes center
+#' @param sizes a value or a vector of values specifying the sample sizes
+#'   associated with each group. If not provided the sample sizes are obtained
+#'   counting the non-`NA` elements of each row of a data frame or a matrix;
+#'   sample sizes are set all equal to one if `data` is a vector.
+#' @param std.dev a value or an available method specifying the within-group
+#'   standard deviation(s) of the process. Several methods are available for
+#'   estimating the standard deviation. See [sd.xbar()] and [sd.xbar.one()] for,
+#'   respectively, the grouped data case and the individual observations case.
+#' @param decision.interval A numeric value specifying the number of standard
+#'   errors of the summary statistics at which the cumulative sum is out of
+#'   control.
+#' @param se.shift The amount of shift to detect in the process, measured in
+#'   standard errors of the summary statistics.
+#' @param head.start The initializing value for the above-target and
+#'   below-target cumulative sums, measured in standard errors of the summary
+#'   statistics. Use zero for the traditional Cusum chart, or a positive value
+#'   less than the `decision.interval` for a Fast Initial Response.
+#' @param label.bounds a character vector specifying the labels for the the
+#'   decision interval boundaries.
+#' @param x an object of class `'cusum.qcc'`.
+#' @param object an object of class `'cusum.qcc'`.
+#' @param ... additional arguments to be passed to the generic function.
+#' @return Returns an object of class `'cusum.qcc'`.
+#' @author Luca Scrucca
+#' @family control charts
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
+#' @export
+#' @examples
+#' ## Grouped-data
+#' diameter <- qccGroups(data = pistonrings, diameter, sample)
+#'
+#' q <- cusum(diameter[1:25,], decision.interval = 4, se.shift = 1)
+#' summary(q)
+#' plot(q)
+#'
+#' q <- cusum(diameter[1:25,], newdata=diameter[26:40,])
+#' summary(q)
+#' plot(q, chart.all=FALSE)
+#'
+#' ## Individual observations
+#' q  <- with(viscosity, cusum(viscosity[trial], newdata = viscosity[!trial]))
+#' summary(q)
+#' plot(q)
 cusum <- function(data, 
                   sizes, center, std.dev, 
                   decision.interval = 5, se.shift = 1,
@@ -140,6 +189,11 @@ cusum <- function(data,
   return(object)
 }
 
+
+#' @rdname cusum
+#' @method print cusum.qcc
+#' @export
+#' @export print.cusum.qcc
 print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -221,8 +275,19 @@ print.cusum.qcc <- function(x, digits =  getOption("digits"), ...)
   invisible()
 }
 
+
+#' @rdname cusum
+#' @method summary cusum.qcc
+#' @export
+#' @export summary.cusum.qcc
 summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 
+
+#' @rdname cusum
+#' @method plot cusum.qcc
+#' @export
+#' @export plot.cusum.qcc
+#' @inheritParams plot_common
 plot.cusum.qcc <- function(x, xtime = NULL,
                            add.stats = qcc.options("add.stats"), 
                            chart.all = qcc.options("chart.all"), 
@@ -436,6 +501,5 @@ plot.cusum.qcc <- function(x, xtime = NULL,
     
   }
   
-  # class(plot) <- c("qccplot", class(plot))
   return(plot)
 }

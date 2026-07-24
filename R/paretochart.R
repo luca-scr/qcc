@@ -1,9 +1,43 @@
-#-------------------------------------------------------------------#
-#                                                                   #
-#                     PARETO CHART                                  #
-#                                                                   #
-#-------------------------------------------------------------------#
-
+#' Pareto chart
+#'
+#' Computes a table of statistics and plot a Pareto chart.
+#'
+#' A Pareto chart is a barplot where the categories are ordered in non
+#' increasing order, and a line is also added to show the cumulative sum.
+#'
+#' @export
+#' @param data a vector of values. `names(data)` are used for labelling
+#' the bars.
+#' @param plot a logical specifying if the chart should be provided
+#' (`TRUE`, default).
+#' @param x an object of class `'paretoChart'` returned by a call to
+#' `paretoChart()` function.
+#' @param title a character string specifying the main title. Set `title =
+#' NULL` to remove the title.
+#' @param xlab a string specifying the label for the x-axis.
+#' @param ylab a string specifying the label for the y-axis.
+#' @param ylab2 a string specifying the label for the second y-axis on the
+#' right side.
+#' @param ylim a numeric vector specifying the limits for the y-axis.
+#' @param col a value for the color, a vector of colors, or a palette for the
+#' bars. See the help for [colors()] and [palette()].
+#' @param ... catch other optional arguments.
+#' @return Returns an object of class `'paretoChart'` containing the
+#' descriptive statistics used to draw the Pareto chart. This object has
+#' associated a `print` and `plot` method.
+#' @author Luca Scrucca
+#' @seealso [barplot()]
+#' @references `r refs("mason_young_2002", "montgomery2013", "ryan_2011", "scrucca_2004", "wetherill_brown_1991")`
+#' @examples
+#'
+#' defect  = c(80, 27, 66, 94, 33)
+#' names(defect)  = c("price code", "schedule date", "supplier code", "contact num.", "part num.")
+#' pc = paretoChart(defect, ylab = "Error frequency")
+#' pc
+#' plot(pc)
+#'
+#' plot(paretoChart(defect, ylab = "Error frequency"), col=rainbow(length(defect)))
+#'
 paretoChart <- function(data, ...)
 { 
   call <- match.call(expand.dots = TRUE)
@@ -30,6 +64,10 @@ paretoChart <- function(data, ...)
   return(object)
 }
 
+#' @rdname paretoChart
+#' @param digits the number of significant digits to use.
+#' @export
+#' @export print.paretoChart
 print.paretoChart <- function(x, digits = getOption("digits") - 3, ...)
 {
   object <- x   # Argh.  Really want to use 'object' anyway
@@ -38,6 +76,9 @@ print.paretoChart <- function(x, digits = getOption("digits") - 3, ...)
   print(object$tab, digits = digits, ...)
 }
 
+#' @rdname paretoChart
+#' @export
+#' @export plot.paretoChart
 plot.paretoChart <- function(x, 
                              title, xlab,
                              ylab = "Frequency", 
