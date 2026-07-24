@@ -55,6 +55,7 @@
 #' @param label.limits a character vector specifying the labels for control
 #' limits.
 #' @param x an object of class `'qcc'`.
+#' @param object an object of class `'qcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'qcc'`.
 #' @author Luca Scrucca

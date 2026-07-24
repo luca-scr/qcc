@@ -65,6 +65,7 @@ paretoChart <- function(data, ...)
 }
 
 #' @rdname paretoChart
+#' @param digits the number of significant digits to use.
 #' @export
 #' @export print.paretoChart
 print.paretoChart <- function(x, digits = getOption("digits") - 3, ...)

@@ -163,9 +163,12 @@ qcc.c4 <- \(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
   return(limits)
 }
 
-# FIX: blues.colors is used by ocCurves and should not be documented with paretoChart
-
-#' @rdname paretoChart
+#' Blue color palette
+#'
+#' Creates a palette of blue colors.
+#'
+#' @param n the number of colors.
+#' @return A character vector containing the requested colors.
 #' @export
 blues.colors <- function (n) 
 {

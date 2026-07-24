@@ -30,6 +30,7 @@
 #' @param label.bounds a character vector specifying the labels for the the
 #'   decision interval boundaries.
 #' @param x an object of class `'cusum.qcc'`.
+#' @param object an object of class `'cusum.qcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'cusum.qcc'`.
 #' @author Luca Scrucca

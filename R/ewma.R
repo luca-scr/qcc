@@ -25,6 +25,7 @@
 #' @param label.center a character specifying the label for center line.
 #' @param label.limits a character vector specifying the labels for control limits.
 #' @param x an object of class `'ewma.qcc'`.
+#' @param object an object of class `'ewma.qcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'ewma.qcc'`.
 #' @author Luca Scrucca

@@ -45,6 +45,7 @@
 #' `par` settings must be restored. If you need to add points, lines, etc.
 #' to a control chart set this to `FALSE`.
 #' @param x an object of class `'mqcc'`.
+#' @param object an object of class `'mqcc'`.
 #' @param ... additional arguments to be passed to the generic function.
 #' @return Returns an object of class `'mqcc'`.
 #' @author Luca Scrucca
@@ -326,7 +327,7 @@ summary.mqcc <- function(object, ...) print.mqcc(object, ...)
 #'   limits (Phase I).
 #' @param label.pred.limits a character vector specifying the labels for
 #'   prediction control limits (Phase II).
-#' @param axes.las numeric in {0,1,2,3} specifying the style of axis labels.
+#' @param axes.las numeric in \{0,1,2,3\} specifying the style of axis labels.
 plot.mqcc <- function(x, 
                       add.stats = qcc.options("add.stats"), 
                       chart.all = qcc.options("chart.all"), 
