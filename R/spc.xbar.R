@@ -124,5 +124,5 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   delta <- nsigmas * se.stats
   lcl <- center - delta
   ucl <- center + delta
-  .construct_limits(lcl,ucl)
+  new_limits(lcl,ucl)
 }

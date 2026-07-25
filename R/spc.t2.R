@@ -58,18 +58,13 @@ limits.T2 <- function(ngroups, size, nvars,  conf)
   m   <- ngroups
   n   <- size
   p   <- nvars
-  # Phase 1 control limits
+  # Phase 1 upper control limit
   ucl <- p*(m-1)*(n-1)/(m*n-m-p+1)*qf(conf, p, m*n-m-p+1)
-  lcl <- 0
-  ctrl.limits <- matrix(c(lcl, ucl), ncol = 2)
-  # Phase 2 prediction limits
-  ucl <- p*(m+1)*(n-1)/(m*n-m-p+1)*qf(conf, p, m*n-m-p+1)
-  lcl <- 0
-  pred.limits <- matrix(c(lcl, ucl), ncol = 2)
+  # Phase 2 upper prediction limit
+  upl <- p*(m+1)*(n-1)/(m*n-m-p+1)*qf(conf, p, m*n-m-p+1)
 
-  rownames(ctrl.limits) <- rownames(pred.limits) <- rep("", nrow(pred.limits))
-  colnames(ctrl.limits) <- c("LCL", "UCL")
-  colnames(pred.limits) <- c("LPL", "UPL")
-
-  return(list(control = ctrl.limits, prediction = pred.limits))
+  list(
+    control = new_limits(0,ucl),
+    prediction = new_limits(0,upl, names = c("LPL", "UPL"))
+  )
 }

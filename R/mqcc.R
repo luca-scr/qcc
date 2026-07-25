@@ -212,8 +212,7 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
   else 
     { if(!is.numeric(limits))
          stop("'limits' must be a vector of length 2 or a 2-columns matrix")
-      limits <- matrix(limits, ncol = 2)
-      dimnames(limits) <- list(rep("",nrow(limits)), c("LCL ", "UCL"))
+      limits <- new_limits(matrix(limits, ncol = 2))
     }
   object$limits <- limits
   # compute prediction limits
@@ -229,8 +228,7 @@ mqcc <- function(data, type = c("T2", "T2.single"), center, cov,
   else 
     { if(!is.numeric(pred.limits))
          stop("'pred.limits' must be a vector of length 2 or a 2-columns matrix")
-      pred.limits <- matrix(pred.limits, ncol = 2)
-      dimnames(pred.limits) <- list(rep("",nrow(pred.limits)), c("LPL ", "UPL"))
+      pred.limits <- matrix(pred.limits, ncol = 2) |> new_limits(names = c("LPL", "UPL"))
     }
   object$pred.limits  <- pred.limits
 

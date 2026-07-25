@@ -331,8 +331,7 @@ qcc <- function(data,
           warning("'std.dev' is not used when limits is given")
        if (!is.numeric(limits))
           stop("'limits' must be a vector of length 2 or a 2-columns matrix")
-       limits <- matrix(limits, ncol = 2)
-       dimnames(limits) <- list(rep("",nrow(limits)), c("LCL ", "UCL"))
+       limits <- new_limits(matrix(limits, ncol = 2))
      }
   object$limits <- limits
   

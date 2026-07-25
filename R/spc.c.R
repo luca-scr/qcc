@@ -56,5 +56,5 @@ limits.c <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
        else stop("invalid conf argument. See help.")
      }
-  .construct_limits(lcl,ucl)
+  new_limits(lcl,ucl)
 }

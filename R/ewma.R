@@ -158,9 +158,7 @@ ewma <- function(data,
   object$sigma <- sqrt(sigma2)
   object$lambda <- lambda
   object$nsigmas <- nsigmas
-  limits <- cbind(lcl,ucl)
-  colnames(limits) <- c("LCL", "UCL")
-  object$limits <- limits
+  object$limits <- new_limits(lcl,ucl)
   object$violations <- ifelse(y < lcl | y > ucl, 1, NA)
 
   class(object) <- "ewma.qcc"

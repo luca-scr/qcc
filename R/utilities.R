@@ -148,19 +148,19 @@ qccOverdispersionTest <- function(x, size,
 #' @noRd
 qcc.c4 <- \(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
 
-
-#' Control Limits Constructor
+#' Construct Control Limits
 #'
-#' Returns lower and upper control limit vectors in a consistent structure.
-#' Used by limits.*() functions.
+#' Creates a two-column matrix of lower and upper control limits.
+#'
+#' @param ... A two-column matrix or separate lower and upper limit vectors.
+#' @param names Column names for the lower and upper limits.
 #'
 #' @keywords internal
 #' @noRd
-.construct_limits <- function(lcl,ucl) {
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+new_limits <- function(..., names = c("LCL", "UCL")) {
+  limits <- cbind(...)
+  dimnames(limits) <- list(rep("", nrow(limits)), names)
+  limits
 }
 
 #' Blue color palette
