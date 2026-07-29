@@ -126,6 +126,11 @@ NULL
     "Chou, Y., Owen, D. B., and Borrego, S. A. (1990).",
     "Lower confidence limits on process capability indices.",
     "*Journal of Quality Technology*, **22**, 223--229."
+  ),
+  cano_moguerza_redchuk_2012 = paste(
+    "Cano, Emilio L., Moguerza, Javier M. and Redchuk, Andres. 2012.",
+    "*Six Sigma with {R}. Statistical Engineering for ProcessImprovement*,",
+    "Use R!, vol. 36. Springer, New York."
   )
 )
 

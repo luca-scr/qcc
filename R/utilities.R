@@ -333,4 +333,21 @@ qcc.options <- function(...)
   add.stats = TRUE,
   chart.all = TRUE, 
   fill = TRUE)
-  
+
+
+#' Validate Sample Sizes
+#'
+#' Replace invalid sample sizes with NA, or error in strict mode.
+#'
+#' @keywords internal
+#' @noRd
+assert_n <- \(n, strict = FALSE) {
+  invalid <- !is.finite(n) | n < 2 | n != floor(n)
+
+  if (!any(invalid)) return(invisible(n))
+
+  if (strict) cli::cli_abort("Invalid sample sizes: {n[invalid]}.")
+
+  cli_warn("Replacing invalid sample sizes with `NA`: {n[invalid]}.")
+  invisible(replace(n, invalid, NA_real_))
+}
