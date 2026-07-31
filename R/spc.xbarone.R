@@ -61,7 +61,7 @@ stats.xbar.one <- function(data, sizes)
 sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
 {
   data <- as.vector(data)
-  n <- length(data)
+  n <- length(data) # FIX: not used
   if(!is.numeric(std.dev)) 
      std.dev <- match.arg(std.dev)
   if(is.numeric(std.dev)) 

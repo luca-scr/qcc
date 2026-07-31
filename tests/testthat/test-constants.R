@@ -2,13 +2,26 @@
 
 # HACK: We use `testthat::describe` because we have `qcc::describe`
 testthat::describe("d2()", {
-  test_that("Returns tabulated values", {
+  it("returns tabulated values", {
     expected <- c( # SOURCE: d2 <- qcc::qcc.options("exp.R.unscaled")
       1.128, 1.693, 2.059, 2.326, 2.534, 2.704, 2.847, 2.970,
       3.078, 3.173, 3.258, 3.336, 3.407, 3.472, 3.532, 3.588,
       3.640, 3.689, 3.735, 3.778, 3.819, 3.858, 3.895, 3.931
     )
     expect_equal(d2(2:25), expected, tolerance = 5e-4)
+  })
+
+  it("reasonably approximates Wardell2025 analytic solutions", {
+    expect_equal(
+      d2(2:5),
+      c(
+        2 / sqrt(pi),
+        3 / sqrt(pi),
+        12 / (pi * sqrt(pi)) * atan(sqrt(2)),
+        30 / pi^(3 / 2) * atan(sqrt(2)) - 5 / sqrt(pi)
+      ),
+      tolerance = testthat_tolerance()
+    )
   })
 
   test_that("Handles unsupported sample sizes", {
@@ -19,7 +32,7 @@ testthat::describe("d2()", {
 
 
 testthat::describe("d3()", {
-  test_that("Returns tabulated values",{
+  it("returns tabulated values",{
     expected <- c( # SOURCE: d3 <- qcc::qcc.options("se.R.unscaled")
       0.8525033, 0.8883697, 0.8798108, 0.8640855, 0.8480442, 0.8332108, 0.8198378,
       0.8078413, 0.7970584, 0.7873230, 0.7784873, 0.7704257, 0.7630330, 0.7562217,
@@ -41,14 +54,27 @@ testthat::describe("d3()", {
     )
   })
 
-  test_that("Handles unsupported sample sizes", {
+  it("reasonably approximates Wardell2025 analytic solutions", {
+    expect_equal(
+      d3(2:5),
+      c(
+        sqrt(2 - 4 / pi),
+        sqrt((2 * pi + 3 * sqrt(3) - 9) / pi),
+        sqrt((2 * pi + 2 * sqrt(3) + 6) / pi - d2(4)^2),
+        sqrt((2 * pi^2 + 10 * sqrt(3) * (atan(sqrt(5 / 3)) + 2 * sqrt(3) * atan(sqrt(1 / 5)))) / pi^2 - d2(5)^2)
+      ),
+      tolerance = testthat_tolerance()
+    )
+  })
+
+  it("handles unsupported sample sizes", {
     expect_warning(x <- d3(c(0, 1, 20.5, Inf, -Inf, NA, NaN, 2)))
     expect_equal(x, c(rep(NA, 7), d3(2)))
   })
 })
 
 testthat::describe("c4()", {
-  test_that("Returns expected values",{
+  it("returns expected values",{
     expected <- c( # SOURCE: c4 <- qcc:::qcc.c4(2:50)
       0.7978846, 0.8862269, 0.9213177, 0.9399856, 0.9515329, 0.9593688, 0.9650305,
       0.9693107, 0.9726593, 0.9753501, 0.9775594, 0.9794056, 0.9809714, 0.9823162,
@@ -61,7 +87,7 @@ testthat::describe("c4()", {
     expect_equal(c4(2:50), expected, tolerance = 5e-4)
   })
 
-  test_that("Handles unsupported sample sizes", {
+  it("handles unsupported sample sizes", {
     expect_warning(x <- c4(c(0, 1, 20.5, Inf, -Inf, NA, NaN, 2)))
     expect_equal(x, c(rep(NA, 7), c4(2)))
   })
