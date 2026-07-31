@@ -146,6 +146,7 @@ qccOverdispersionTest <- function(x, size,
 #' @param n sample size(s)
 #' @keywords internal
 #' @noRd
+# DEPRECATE qcc.c4 -> .c4
 qcc.c4 <- \(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
 
 #' Construct Control Limits
@@ -237,11 +238,11 @@ blues.colors <- function (n)
 #' - `exp.R.unscaled`: a vector specifying, for each sample size, the expected
 #'   value of the relative range (i.e. \eqn{R/\sigma}) for a normal
 #'   distribution. This appears as \eqn{d_2} on most tables containing factors
-#'   for the construction of control charts.
+#'   for the construction of control charts. Superseded with [d2()].
 #' - `se.R.unscaled`: a vector specifying, for each sample size, the standard
 #'   error of the relative range (i.e. \eqn{R/\sigma}) for a normal
 #'   distribution. This appears as \eqn{d_3} on most tables containing factors
-#'   for the construction of control charts.
+#'   for the construction of control charts. Superceded with [d3()].
 #' - `beyond.limits$pch`: plotting character used to highlight points beyond
 #'   control limits.
 #' - `beyond.limits$col`: color used to highlight points beyond control

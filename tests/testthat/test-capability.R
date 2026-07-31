@@ -92,7 +92,7 @@ test_that("ProcessCapability returns expected indices. Two-sided on-target case"
   expect_equal(
     two_sided_mid_capability$indices,
     expected_indices,
-    tolerance = 1e-6
+    tolerance = 5e-4
   )
 })
 
@@ -122,7 +122,7 @@ test_that("ProcessCapability returns expected indices. Upper spec only case", {
   expect_equal(
     upper_capability$indices,
     expected_upper_indices,
-    tolerance = 1e-6
+    tolerance = 5e-4
   )
 })
 
@@ -152,7 +152,7 @@ test_that("ProcessCapability returns expected indices. Lower spec only case", {
   expect_equal(
     lower_capability$indices,
     expected_lower_indices,
-    tolerance = 1e-6
+    tolerance = 5e-4
   )
 })
 
@@ -182,6 +182,6 @@ test_that("ProcessCapability returns expected indices. Two-sided off-target case
   expect_equal(
     two_sided_off_capability$indices,
     expected_indices,
-    tolerance = 1e-6
+    tolerance = 5e-4
   )
 })

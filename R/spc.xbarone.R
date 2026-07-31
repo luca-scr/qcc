@@ -70,13 +70,12 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
     { switch(std.dev, 
              "MR" = {
                 data <- data[!is.na(data)]
-                d2 <- qcc.options("exp.R.unscaled")
                 moving_ranges <- apply(embed(data, r), 1L, function(x) {
                   diff(range(x))
                 })
-                sd <- mean(moving_ranges) / d2[r]
+                sd <- mean(moving_ranges) / .d2(r)
              },
-             "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) },
+             "SD" = { sd <- sd(data, na.rm = TRUE)/.c4(sum(!is.na(data))) },
              sd <- NULL)
     }
   return(sd)

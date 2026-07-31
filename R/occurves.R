@@ -157,18 +157,9 @@ ocCurves.R <- function(object,
   }
   else
   { 
-    exp.R.unscaled <- qcc.options("exp.R.unscaled")
-    se.R.unscaled <- qcc.options("se.R.unscaled")
-    Rtab <- min(length(exp.R.unscaled), length(se.R.unscaled))
-    if (any(size > Rtab))
-      stop(paste("group size must be less than",
-                 Rtab + 1, "when giving nsigmas"))
-    beta.fun2 <- function(c, n, conf)
-    {
-      d2 <- exp.R.unscaled[n]
-      d3 <- se.R.unscaled[n]
-      lcl <- pmax(0, d2 - conf * d3)
-      ucl <- d2 + conf * d3
+    beta.fun2 <- function(c, n, conf) {
+      lcl <- pmax(0, .d2(n) - conf * .d3(n))
+      ucl <- .d2(n) + conf * .d3(n)
       ptukey(ucl / c, n, Inf) - ptukey(lcl / c, n, Inf)
     }
     beta <- outer(multiplier, size, beta.fun2, nsigmas)
@@ -220,8 +211,8 @@ ocCurves.S <- function(object,
   { 
     beta.fun2 <- function(c, n, nsigmas)
     {
-      center <- qcc.c4(n)
-      tol <- sqrt(1 - qcc.c4(n)^2)
+      center <- .c4(n)
+      tol <- sqrt(1 - .c4(n)^2)
       lcl <- pmax(0, center - nsigmas * tol)
       ucl <- center + nsigmas * tol
       pchisq((n-1)*(ucl/c)^2, n-1) - pchisq((n-1)*(lcl/c)^2, n-1)

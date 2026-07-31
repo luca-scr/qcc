@@ -53,13 +53,9 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if (length(unique(sizes))==1) sizes <- sizes[1]
-  se.R.unscaled <- qcc.options("se.R.unscaled")
-  Rtab <- length(se.R.unscaled)
   if (is.null(conf)) 
-     { if (any(sizes > Rtab))
-          stop(paste("group size must be less than", 
-                      Rtab + 1, "when giving nsigmas"))
-       se.R <- se.R.unscaled[sizes] * std.dev
+     {
+       se.R <- .d3(sizes) * std.dev
        lcl <- pmax(0, center - nsigmas * se.R)
        ucl <- center + nsigmas * se.R
      }

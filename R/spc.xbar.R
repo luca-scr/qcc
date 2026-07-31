@@ -78,26 +78,23 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
     { switch(std.dev, 
              "UWAVE-R" = {  R <- apply(data, 1, function(x) 
                                        diff(range(x, na.rm = TRUE)))
-                            d2 <- qcc.options("exp.R.unscaled")[sizes]
-                            sd <- sum(R/d2)/length(sizes) 
+                            sd <- sum(R/.d2(sizes))/length(sizes) 
                          }, 
              "UWAVE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            sd <- sum(S/qcc.c4(sizes))/length(sizes) 
+                            sd <- sum(S/.c4(sizes))/length(sizes) 
                           },
              "MVLUE-R"  = { R <- apply(data, 1, function(x) 
                             diff(range(x, na.rm = TRUE)))
-                            d2 <- qcc.options("exp.R.unscaled")[sizes]
-                            d3 <- qcc.options("se.R.unscaled")[sizes]
-                            w  <- (d2/d3)^2
-                            sd <- sum(R/d2*w)/sum(w) 
+                            w  <- (.d2(sizes)/.d3(sizes))^2
+                            sd <- sum(R/.d2(sizes)*w)/sum(w) 
                           }, 
              "MVLUE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            w  <- qcc.c4(sizes)^2/(1-qcc.c4(sizes)^2)
-                            sd <- sum(S/qcc.c4(sizes)*w)/sum(w) 
+                            w  <- .c4(sizes)^2/(1-.c4(sizes)^2)
+                            sd <- sum(S/.c4(sizes)*w)/sum(w) 
                           },
              "RMSDF" =    { S <- apply(data, 1, sd, na.rm = TRUE)
                             w  <- sizes-1
-                            sd <- sqrt(sum(S^2*w)/sum(w))/qcc.c4(sum(w)+1) 
+                            sd <- sqrt(sum(S^2*w)/sum(w))/.c4(sum(w)+1) 
                           }
       )
     }
