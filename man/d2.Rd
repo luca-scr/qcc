@@ -13,7 +13,7 @@ d2(n)
 A vector of calculated \eqn{d_2}{d2} constants.
 }
 \description{
-Calculate the \eqn{d_2}{d2} constant for sample sizes \code{n}.
+Calculate the \eqn{d_2}{d2} constants for a vector \code{n} of sample sizes.
 }
 \details{
 \eqn{d_2(n)}{d2(n)} is the expected value of the range of n observations

@@ -13,19 +13,24 @@
 #  I recommend that more constants are added to this file is they can be defined as
 #   moments of statistical distributions or have potential for reuse in the package.
 #
-# 10.3390/math13091537 (Wardell 2025) defines a polynomial approximation for d2 and d3
-#  that are probably better than Minitab's. If polynomial approximation turns out better
-#  than numerical integration, use Wardell's algorithm to avoid potential infringement
-#  of Minitab patent/copyright. Wardell's algorithm seems better anyway on first sight.
+#  ACCURACY:
+#    Numerical integration is more accurate (verified informally) than rational function 
+#    approximations suggested by Wardell2025 & Minitab. Thier suggestions probably
+#    targets Excel users, not systems with [integrate()] & [ptukey()] equivalents (like R).
+#    The only way (I could think of) accuracy could be improved is through tweaking
+#    [integrate()] accuracy or short-circuiting to analytic solutions were analytic
+#    solutions are defined (as in Wardell2025), That would be the equivalent of
+#    a table-lookup.
 #
+# TODO: Cite Wardell2025 (for d2 and d3) although we don't use their approximation.
 # TODO: Cite the original publication for the numerical integration method used in .d2 and .d3
 # TODO: Cite the original publication for the closed-form expression used in .c4
-# TODO: Test wether polynomial approximations of d2 & d3 are more accurate than numerical integration.
-# PERFORMANCE: `integrate_ok`: Repeated sample sizes cause unnecessary integrations.
-#   Deduplicate then map results back.
 # PERFORMANCE: expose a `_d2` argument to `.d3()` and don't use it in `d3()`.
 #   this way, `.d3()` can skip recomputing .d2 in formulas that compute both.
-#   This is probably extravagant.
+#   This would probably be overengineered.
+# TODO: d4 -> MMR estimator.
+# TODO: c5 -> MVLUE-SD and S-chart SE
+# TODO: c4_prime() -> MSSD estimator, due to autocorrelation, c4 would not be 100% correct
 
 #' The \eqn{d_2}{d2} Constant
 #'
@@ -45,6 +50,7 @@
 #' @export
 d2 <- function(n) assert_n(n) |> .d2()
 
+# Analytic solutions for `n` in [2, 5] in Wardell2025
 .d2 <- \(n) integrate_ok(
   \(x, n_i) 1 - ptukey(x, n_i, Inf),
   0, Inf, n
@@ -59,6 +65,9 @@ d2 <- function(n) assert_n(n) |> .d2()
 #' from a standard normal distribution.
 #' \deqn{d_3(n) = \frac{Stdev(r)}{\sigma}}{d3(n) = stdev(r)/sigma}
 #'
+#' Not to be confused with the \eqn{D_3}{D3}, which is
+#' \deqn{D_4=1-3\frac{d_3}{d_2}}{D4 = 1 - 3 * (d3 / d2)}
+#'
 #' @param n A vector of sample sizes.
 #' @return A vector of calculated \eqn{d_3}{d3} constants.
 #' @references `r refs("cano_moguerza_redchuk_2012")`
@@ -69,6 +78,7 @@ d2 <- function(n) assert_n(n) |> .d2()
 #' @export
 d3 <- function(n) assert_n(n) |> .d3()
 
+# Analytic solutions for `n` in [2, 5] in Wardell2025
 .d3 <- \(n) {
   sqrt(
     2 * integrate_ok(
@@ -105,14 +115,16 @@ c4 <- function(n) assert_n(n) |> .c4()
 
 #' Vectorized `integrate()` Wrapper
 #'
-#' Applies `integrate()` over a parameter vector, preserves missing values, and
-#' warns when the estimated absolute error exceeds `max_error`.
+#' Applies `integrate()` over a parameter vector, preserves missing values, skips
+#' repeated parameters, and warns when the estimated absolute error exceeds `max_error`.
 #'
 #' @keywords internal
 #' @noRd
 integrate_ok <- \(f, lower, upper, parameter, ..., max_error = 1e-3) {
-  vapply(
-    parameter,
+  parameter_unique <- unique(parameter)
+
+  values <- vapply(
+    parameter_unique,
     \(parameter_i) {
       if (is.na(parameter_i))
         return(NA_real_)
@@ -132,4 +144,6 @@ integrate_ok <- \(f, lower, upper, parameter, ..., max_error = 1e-3) {
     },
     numeric(1)
   )
+
+  values[match(parameter, parameter_unique)]
 }

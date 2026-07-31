@@ -30,11 +30,11 @@ The available options are:
 \item \code{exp.R.unscaled}: a vector specifying, for each sample size, the expected
 value of the relative range (i.e. \eqn{R/\sigma}) for a normal
 distribution. This appears as \eqn{d_2} on most tables containing factors
-for the construction of control charts.
+for the construction of control charts. Superseded with \code{\link[=d2]{d2()}}.
 \item \code{se.R.unscaled}: a vector specifying, for each sample size, the standard
 error of the relative range (i.e. \eqn{R/\sigma}) for a normal
 distribution. This appears as \eqn{d_3} on most tables containing factors
-for the construction of control charts.
+for the construction of control charts. Superceded with \code{\link[=d3]{d3()}}.
 \item \code{beyond.limits$pch}: plotting character used to highlight points beyond
 control limits.
 \item \code{beyond.limits$col}: color used to highlight points beyond control

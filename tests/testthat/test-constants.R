@@ -30,6 +30,15 @@ testthat::describe("d3()", {
       0.6617943, 0.6600754, 0.6584041, 0.6567780, 0.6551950, 0.6536532, 0.6521506
     )
     expect_equal(d3(2:50), expected, tolerance = 5e-4)
+
+    # Test input vectors with repeated elements because our implementation [integrate_ok()]
+    #   deduplicates its input then maps back to the original vector length and order,
+    #   for the sake of better performance.
+    expect_equal(
+      d3(c(rep(2,7),5, rep(6,7))), 
+      expected[c(rep(1, 7), 4, rep(5, 7))],
+      tolerance = 5e-4
+    )
   })
 
   test_that("Handles unsupported sample sizes", {

@@ -13,12 +13,15 @@ d3(n)
 A vector of calculated \eqn{d_3}{d3} constants.
 }
 \description{
-Calculate the \eqn{d_3}{d3} constant for sample sizes \code{n}.
+Calculate the \eqn{d_3}{d3} constants for a vector \code{n} of sample sizes.
 }
 \details{
-\eqn{d_3(n)}{d3(n)} is the standard deviation of n observations
+\eqn{d_3(n)}{d3(n)} is the standard deviation of the range of \code{n} observations
 from a standard normal distribution.
 \deqn{d_3(n) = \frac{Stdev(r)}{\sigma}}{d3(n) = stdev(r)/sigma}
+
+Not to be confused with the \eqn{D_3}{D3}, which is
+\deqn{D_4=1-3\frac{d_3}{d_2}}{D4 = 1 - 3 * (d3 / d2)}
 }
 \references{
 \itemize{
