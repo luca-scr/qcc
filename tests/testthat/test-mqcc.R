@@ -117,3 +117,12 @@ test_that("mqcc validates confidence.level and newlabels length", {
     "labels must match the length of samples provided"
   )
 })
+
+test_that("ellipseChart matches its visual snapshot", {
+  chart <- mqcc(RyanMultivar, type = "T2", plot = FALSE)
+
+  vdiffr::expect_doppelganger(
+    "ellipse chart",
+    function() ellipseChart(chart)
+  )
+})
