@@ -63,6 +63,7 @@ stats.xbar <- function(data, sizes)
 
 #' @rdname stats.xbar
 #' @export
+# PERF: Use matrixStats instead of apply
 sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"), ...)
 {
   data <- as.matrix(data)
@@ -70,35 +71,36 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
     sizes <- as.integer(rowSums(!is.na(data)))
   if(any(sizes == 1))
     stop("group sizes must be larger than one")
-  if(!is.numeric(std.dev))
-    std.dev <- match.arg(std.dev, choices = eval(formals(sd.xbar)$std.dev))
   if(is.numeric(std.dev))
-    { sd <- std.dev }
-  else
-    { switch(std.dev, 
-             "UWAVE-R" = {  R <- apply(data, 1, function(x) 
-                                       diff(range(x, na.rm = TRUE)))
-                            sd <- sum(R/.d2(sizes))/length(sizes) 
-                         }, 
-             "UWAVE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            sd <- sum(S/.c4(sizes))/length(sizes) 
-                          },
-             "MVLUE-R"  = { R <- apply(data, 1, function(x) 
-                            diff(range(x, na.rm = TRUE)))
-                            w  <- (.d2(sizes)/.d3(sizes))^2
-                            sd <- sum(R/.d2(sizes)*w)/sum(w) 
-                          }, 
-             "MVLUE-SD" = { S <- apply(data, 1, sd, na.rm = TRUE)
-                            w  <- .c4(sizes)^2/(1-.c4(sizes)^2)
-                            sd <- sum(S/.c4(sizes)*w)/sum(w) 
-                          },
-             "RMSDF" =    { S <- apply(data, 1, sd, na.rm = TRUE)
-                            w  <- sizes-1
-                            sd <- sqrt(sum(S^2*w)/sum(w))/.c4(sum(w)+1) 
-                          }
-      )
-    }
-  return(sd)
+    return(std.dev)
+
+  std.dev <- match.arg(std.dev)
+  switch(std.dev,
+         "UWAVE-R" = {
+           R <- apply(data, 1, \(x) diff(range(x, na.rm = TRUE)))
+           sum(R/.d2(sizes))/length(sizes)
+         },
+         "UWAVE-SD" = {
+           S <- apply(data, 1, sd, na.rm = TRUE)
+           sum(S/.c4(sizes))/length(sizes)
+         },
+         "MVLUE-R" = {
+           R <- apply(data, 1, \(x) diff(range(x, na.rm = TRUE)))
+           d2 <- .d2(sizes)
+           w <- (d2/.d3(sizes))^2
+           sum(R/d2*w)/sum(w)
+         },
+         "MVLUE-SD" = {
+           S <- apply(data, 1, sd, na.rm = TRUE)
+           c4 <- .c4(sizes)
+           w <- c4^2 / (1 - c4^2)
+           sum(S / c4 * w) / sum(w)
+         },
+         "RMSDF" = {
+           S <- apply(data, 1, sd, na.rm = TRUE)
+           w <- sizes - 1
+           sqrt(sum(S^2 * w) / sum(w)) / .c4(sum(w) + 1)
+         })
 }
 
 #' @rdname stats.xbar
@@ -107,6 +109,7 @@ limits.xbar <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 {
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
+
   if (length(unique(sizes))==1) sizes <- sizes[1]
   se.stats <- std.dev/sqrt(sizes)
 

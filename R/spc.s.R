@@ -23,6 +23,7 @@ NULL
 
 #' @rdname stats.S
 #' @export
+# PERF: Replace apply call with matrixStats
 stats.S <- function(data, sizes)
 {
   data <- as.matrix(data)
