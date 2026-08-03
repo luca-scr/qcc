@@ -32,7 +32,6 @@ stats.T2 <- function(data, center = NULL, cov = NULL)
   means <- as.matrix(as.data.frame(means))
   if(is.null(center))
      center <- sapply(data, mean, na.rm = TRUE)     # overall mean
-  x <- scale(means, center = center, scale = FALSE)
   if(is.null(cov))
     { cov <- matrix(0, p, p)            # pooled within-sample covar matrix
       for(k in 1:m)
@@ -41,9 +40,8 @@ stats.T2 <- function(data, center = NULL, cov = NULL)
           # cov <- cov + var(sapply(data, function(x) x[k,]))
        cov <- cov/m 
     }
-  cov.inv <- solve(cov)
   # Hotelling's T^2 statistic
-  T2 <- n*apply(x, 1, function(x) x %*% cov.inv %*% x)
+  T2 <- n * stats::mahalanobis(means, center, cov)
   list(statistics = T2, means = means, center = center, cov = cov)
 }
 

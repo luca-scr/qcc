@@ -616,11 +616,9 @@ ellipseChart <- function(object, chart.all = TRUE, show.id = FALSE, ngrid = 50,
   #
   grid <- cbind(seq(xlim[1], xlim[2], length = ngrid),
                 seq(ylim[1], ylim[2], length = ngrid))
-  x     <- grid - matrix(center, ngrid, 2, byrow=TRUE)
-  cov.inv <- solve(object$cov)
-  T2    <- n*apply(expand.grid(x[,1], x[,2]), 1,
-                               function(x) x %*% cov.inv %*% x)
-  T2    <- matrix(T2, ngrid, ngrid)
+  grid.points <- expand.grid(grid[,1], grid[,2])
+  T2 <- n * stats::mahalanobis(grid.points, center, cov)
+  T2 <- matrix(T2, ngrid, ngrid)
   q <- object$limits[2]
   
   cex.labels <- par("cex")*qcc.options("cex")

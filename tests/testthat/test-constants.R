@@ -1,5 +1,3 @@
-# TODO: After stablizing the implementation, replace fixtures with expect_snapshot
-
 # HACK: We use `testthat::describe` because we have `qcc::describe`
 testthat::describe("d2()", {
   it("returns tabulated values", {

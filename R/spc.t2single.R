@@ -32,9 +32,8 @@ stats.T2.single <- function(data, center = NULL, cov = NULL)
   x <- scale(data, center = center, scale = FALSE)
   if(is.null(cov))
     { cov <- crossprod(x)/(m-1) }       # sample covar matrix
-  cov.inv <- solve(cov)
   # Hotelling's T^2 statistic
-  T2 <- apply(x, 1, function(x) x %*% cov.inv %*% x)
+  T2 <- stats::mahalanobis(data, center, cov)
   list(statistics = T2, means = data, center = center, cov = cov)
 }
 

@@ -8,6 +8,7 @@
 #   returned component is named `cov`.
 # FIX: the following tests assert a stable implementation. Not tests for
 #   correctness!
+# HACK: we use expect_snapshot instead of expect_equal because expected output is large.
 
 testthat::describe("stats.T2()", {
   it("reproduces grouped Hotelling statistics", {
