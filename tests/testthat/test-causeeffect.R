@@ -39,19 +39,20 @@ test_that("causeEffectDiagram renders each odd-count branch title and item once"
   expect_true(all(cMan %in% labels))
 })
 
-test_that("causeEffectDiagram builds the documentation example (even case)", {
-  plot <- causeEffectDiagram(
-    cause = list(
-      Measurements = c("Micrometers", "Microscopes", "Inspectors"),
-      Materials = c("Alloys", "Lubricants", "Suppliers"),
-      Personnel = c("Shifts", "Supervisors", "Training", "Operators"),
-      Environment = c("Condensation", "Moisture"),
-      Methods = c("Brake", "Engager", "Angle"),
-      Machines = c("Speed", "Lathes", "Bits", "Sockets")
-    ),
-    effect = "Surface Flaws"
-  )
+test_that("causeEffectDiagram reproduces the documentation example (even case)", {
+  vdiffr::expect_doppelganger(
+    "causeEffectDiagram",
+    causeEffectDiagram(
+      cause = list(
+        Measurements = c("Micrometers", "Microscopes", "Inspectors"),
+        Materials = c("Alloys", "Lubricants", "Suppliers"),
+        Personnel = c("Shifts", "Supervisors", "Training", "Operators"),
+        Environment = c("Condensation", "Moisture"),
+        Methods = c("Brake", "Engager", "Angle"),
+        Machines = c("Speed", "Lathes", "Bits", "Sockets")
+      ),
+      effect = "Surface Flaws"
+    )
 
-  expect_s3_class(plot, "ggplot")
-  expect_no_error(ggplot2::ggplot_build(plot))
+  )
 })
