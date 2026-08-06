@@ -26,7 +26,7 @@ testthat::describe("sd.xbar.one", {
 
     # This behavior should be optional, because it is only correct under the
     #   assumption that missing data and non-missing data share the same
-    #   distribution.
+    #   distribution. or warn when omitting NAs
     it("ignores missing data", {
       mat <- rbind(
         c(100, 110, 102, 99, NA,  105, 98, 112),
