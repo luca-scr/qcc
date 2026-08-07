@@ -315,8 +315,13 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   cusum.pos <- object$pos
   cusum.neg <- object$neg
   statistics <- c(stats, newstats)
-  groups <- xtime %||% 1:length(statistics)
-  stopifnot(length(groups) == length(statistics))
+  plot.index <- qcc_plot_index(
+    n_phase1 = length(stats),
+    n_phase2 = length(newstats),
+    xtime = xtime,
+    chart_all = chart.all
+  )
+  groups <- plot.index$group
   
   if(missing(title))
   { 
@@ -328,18 +333,24 @@ plot.cusum.qcc <- function(x, xtime = NULL,
            title <- paste(type, "Chart for", newdata.name) 
   }
   
-  df <- data.frame(group = groups, 
-                   cusum_pos = cusum.pos,
-                   cusum_neg = cusum.neg,
-                   ldb = ldb, udb = udb,
-                   violations_lower = factor(ifelse(is.na(violations$lower), 
-                                                    0, violations$lower),
-                                             levels = 0:1),
-                   violations_upper = factor(ifelse(is.na(violations$upper), 
-                                                    0, violations$upper),
-                                             levels = 0:1))
-  if(!chart.all & (!is.null(newstats)))
-    df <- df[df$group > length(object$statistics),]
+  plot.data <- data.frame(
+    cusum_pos = cusum.pos,
+    cusum_neg = cusum.neg,
+    ldb = ldb,
+    udb = udb,
+    violations_lower = factor(
+      ifelse(is.na(violations$lower), 0, violations$lower),
+      levels = 0:1
+    ),
+    violations_upper = factor(
+      ifelse(is.na(violations$upper), 0, violations$upper),
+      levels = 0:1
+    )
+  )
+  df <- cbind(
+    plot.index,
+    plot.data[plot.index$row, , drop = FALSE]
+  )
 
   if(missing(ylim))
     ylim <- range(df[,c("cusum_pos", "cusum_neg", "ldb", "udb")], na.rm = TRUE)
@@ -374,13 +385,7 @@ plot.cusum.qcc <- function(x, xtime = NULL,
       ),
     ) 
   
-  plot <- plot + 
-  {
-    if(is.numeric(groups))
-      scale_x_continuous(breaks = pretty(df$group, n = 7))
-    else
-      scale_x_date(breaks = pretty(df$group, n = 7))
-  }
+  plot <- plot + scale_x_qcc(groups, xlim)
     
   lab <- "Above target"
   if (add.stats && object$head.start > 0)

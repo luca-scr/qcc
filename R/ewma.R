@@ -288,8 +288,13 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   newdata.name <- object$newdata.name
   violations <- object$violations
   statistics <- c(stats, newstats)
-  groups <- xtime %||% 1:length(statistics)
-  stopifnot(length(groups) == length(statistics))
+  plot.index <- qcc_plot_index(
+    n_phase1 = length(stats),
+    n_phase2 = length(newstats),
+    xtime = xtime,
+    chart_all = chart.all
+  )
+  groups <- plot.index$group
 
   if(missing(title))
   { 
@@ -301,15 +306,20 @@ plot.ewma.qcc <- function(x, xtime = NULL,
            title <- paste(type, "Chart for", newdata.name) 
   }
 
-  df <- data.frame(group = groups, 
-                   stat = statistics,
-                   ewma = ewma,
-                   limits = limits,
-                   violations = factor(ifelse(is.na(violations), 0, violations),
-                                             levels = 0:1),
-                   check.names = FALSE)
-  if(!chart.all & (!is.null(newstats)))
-    df <- df[df$group > length(object$statistics),]
+  plot.data <- data.frame(
+    stat = statistics,
+    ewma = ewma,
+    limits = limits,
+    violations = factor(
+      ifelse(is.na(violations), 0, violations),
+      levels = 0:1
+    ),
+    check.names = FALSE
+  )
+  df <- cbind(
+    plot.index,
+    plot.data[plot.index$row, , drop = FALSE]
+  )
   
   if(missing(ylim))
     ylim <- range(df[,c("stat", "limits.LCL", "limits.UCL")], na.rm = TRUE)
@@ -336,13 +346,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
                     expand = FALSE, clip = "off") +
       theme_qcc()
   
-  plot <- plot + 
-  {
-    if(is.numeric(df$group))
-      scale_x_continuous(breaks = pretty(df$group, n = 7))
-    else
-      scale_x_date(breaks = pretty(df$group, n = 7))
-  }
+  plot <- plot + scale_x_qcc(groups, xlim)
    
   # draw control limits
   if(all(is.finite(limits)))
