@@ -19,6 +19,17 @@ theme_qcc <- function(...) {
     theme(...)
 }
 
+theme_qcc_void <- function(...) {
+  bg_margin <- qcc.options("bg.margin")
+
+  theme_void() +
+    theme(
+      plot.background = element_rect(fill = bg_margin, color = bg_margin),
+      plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines")
+    ) +
+    theme(...)
+}
+
 #' Build a Plot Index for Control Charts
 #'
 #' Validates plotting coordinates and maps chart rows to displayed groups and

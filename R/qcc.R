@@ -727,10 +727,7 @@ plot.qcc <- function(x, xtime = NULL,
     # write info at bottom
     tab_base <- ggplot() + 
       ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_void() +
-      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")),
-            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
+      theme_qcc_void()
     
     text1 <- paste(paste0("Number of groups = ", length(statistics)),
                    paste0("Center = ", if(length(center) == 1) 

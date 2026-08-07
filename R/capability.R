@@ -339,10 +339,7 @@ plot.processCapability <- function(x,
     # write info at bottom
     tab_base <- ggplot() + 
       ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_void() +
-      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")),
-            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
+      theme_qcc_void()
 
     text1 <- c(paste0("Number of obs = ", nobs),
                paste0("Center = ", signif(object$center, digits)),
@@ -352,8 +349,6 @@ plot.processCapability <- function(x,
     tab1 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text1, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-    # TODO: remove
-    # theme(plot.margin = margin(0.5, 0, 0.5, 2, unit = "lines"))
     
     text2 <- paste(paste0("Target = ", if(object$has.target) signif(object$target, digits) else ""),
                    paste0("LSL = ", signif(object$spec.limits[1], digits)),
@@ -362,8 +357,6 @@ plot.processCapability <- function(x,
     tab2 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text2, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-    # TODO: remove
-    # theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
     
     text3 <- paste(paste0("Cp     = ", ifelse(is.na(Cp), "", signif(Cp, 3))),
                    paste0("Cp_l  = ", ifelse(is.na(Cp_l), "", signif(Cp_l, 3))),
@@ -374,8 +367,6 @@ plot.processCapability <- function(x,
     tab3 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text3, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-    # TODO: remove
-    # theme(plot.margin = margin(0.5, 0, 0.5, 0.5, unit = "lines"))
     
     text4 <- paste(paste0("Pp     = ", ifelse(is.na(Pp), "", signif(Pp, 3))),
                     paste0("Pp_l  = ", ifelse(is.na(Pp_l), "", signif(Pp_l, 3))),
@@ -395,16 +386,6 @@ plot.processCapability <- function(x,
     tab5 <- tab_base + 
       geom_text(aes(x = -Inf, y = Inf), label = text5, 
                 hjust = 0, vjust = 1, size = 10 * 5/14)
-    # TODO: remove
-    # theme(plot.margin = margin(0.5, 1, 0.2, 0.5, unit = "lines"))
-
-    # TODO: remove
-    # plot <- gridExtra::arrangeGrob(plot, tab1, tab2, tab3, tab4,
-    #                                # gridExtra::grid.arrange(plot, tab1, tab2, tab3, tab4,
-    #                                layout_matrix = matrix(c(1,2,1,3,1,4,1,5), 
-    #                                                       nrow = 2, ncol = 4),
-    #                                heights = c(0.78, 0.22), 
-    #                                widths = c(0.35, 0.2, 0.2, 0.25))
     
     plot <- patchwork::wrap_plots(plotlist = list(plot, tab1, tab2, tab3, tab4, tab5),
                                   design = "AAAAA\nBCDEF",
