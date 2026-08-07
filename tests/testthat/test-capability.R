@@ -185,3 +185,14 @@ test_that("ProcessCapability returns expected indices. Two-sided off-target case
     tolerance = 5e-4
   )
 })
+
+test_that("plot.processCapability with footer matches its visual snapshot", {
+  vdiffr::expect_doppelganger(
+    "process capability with footer",
+    plot.processCapability(
+      two_sided_mid_capability,
+      add.stats = TRUE,
+      title = "Process capability"
+    )
+  )
+})

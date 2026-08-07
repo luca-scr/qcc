@@ -289,3 +289,22 @@ test_that("R-chart helpers keep expected structure", {
   expect_true(all(r_limits[, "UCL"] >= r_limits[, "LCL"]))
 })
 
+test_that("plot.qcc with footer matches its visual snapshot", {
+  chart <- qcc(
+    c(9.8, 10.1, 10.0, 10.2, 9.9, 10.05),
+    type = "xbar.one",
+    center = 10,
+    std.dev = 0.1,
+    rules = 1
+  )
+
+  vdiffr::expect_doppelganger(
+    "qcc chart with footer",
+    plot.qcc(
+      chart,
+      add.stats = TRUE,
+      fill = FALSE,
+      title = "QCC chart"
+    )
+  )
+})
