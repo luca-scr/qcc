@@ -724,41 +724,31 @@ plot.qcc <- function(x, xtime = NULL,
   
   if(add.stats) 
   { 
-    # write info at bottom
-    tab_base <- ggplot() + 
-      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_qcc_void()
-    
-    text1 <- paste(paste0("Number of groups = ", length(statistics)),
-                   paste0("Center = ", if(length(center) == 1) 
-                     signif(center[1], digits) else "variable"),
-                   paste0("StdDev = ", if(length(std.dev) == 1) 
-                     signif(std.dev[1], digits) else "variable"), 
-                   sep = "\n")
-    text2 <- paste("",
-                   paste0("LCL = ", if(length(unique(lcl)) == 1) 
-                     signif(lcl[1], digits) else "variable"),
-                   paste0("UCL = " ,if(length(unique(ucl)) == 1) 
-                     signif(ucl[1], digits) else "variable"), 
-                   sep = "\n")
-    text3 <- paste("",
-                   paste0("No. beyond limits = ", sum(violations == 1, na.rm=TRUE)),
-                   paste0("No. violating runs = ", sum(violations > 1, na.rm=TRUE)),
-                   sep = "\n")
-    tab1 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    tab2 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    tab3 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text3, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
+    display_scalar <- \(x)
+      if (length(x) != 1L) "variable" else signif(x[[1L]], digits)
 
-    plot <- patchwork::wrap_plots(plot, tab1, tab2, tab3, 
-                                  design = c("AAA\nBCD"),
-                                  heights = c(0.85, 0.15), 
-                                  widths = c(0.4, 0.3, 0.3))
+    sections <- list(
+      `Process Summary` = c(
+        "Number of groups" = length(statistics),
+        "Center" = display_scalar(center),
+        "StdDev" = display_scalar(std.dev)
+      ),
+      Limits = c(
+        "LCL" = display_scalar(unique(lcl)), # HACK: is `unique` necessary?
+        "UCL" = display_scalar(unique(ucl))
+      ),
+      Violations = c(
+        "Beyond limits" = sum(violations == 1, na.rm = TRUE),
+        "Violating runs" = sum(violations > 1, na.rm = TRUE)
+      )
+    )
+
+    plot <- .add_footer(
+      plot,
+      sections,
+      widths = c(0.4, 0.3, 0.3),
+      heights = c(0.85, 0.15)
+    )
   }
   
   return(plot)

@@ -419,34 +419,34 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   
   if(add.stats) 
   { 
-    # write info at bottom
-    tab_base <- ggplot() + 
-      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_qcc_void()
+    display <- \(x, suffix = "") {
+      if (length(x) != 1L)
+        return("variable")
 
-    text1 <- paste(paste0("Number of groups = ", length(statistics)),
-                   paste0("Center = ", if(length(center) == 1) 
-                     signif(center[1], digits) else "variable"),
-                   paste0("StdDev = ", if(length(std.dev) == 1) 
-                     signif(std.dev[1], digits) else "variable"), sep = "\n")
-    
-    text2 <- paste(paste0("Smoothing parameter = ", 
-                          signif(object$lambda, digits = digits)),
-                   paste0("Control limits at ", object$nsigmas, "xStdErr"),
-                   paste0("No. beyond limits = ", 
-                          sum(violations, na.rm = TRUE)), sep = "\n")
-    tab1 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    tab2 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    plot <- patchwork::wrap_plots(plot, tab1, tab2,
-                                  design = c("AA\nBC"),
-                                  heights = c(0.85, 0.15), 
-                                  widths = c(0.6, 0.4))
+      paste0(signif(x[[1L]], digits), suffix)
+    }
+
+    sections <- list(
+      `Process Summary` = c(
+        "Number of groups" = length(statistics),
+        "Center" = display(center),
+        "StdDev" = display(std.dev)
+      ),
+      Parameters = c(
+        "Smoothing parameter" = display(object$lambda),
+        "Control limits" = display(object$nsigmas, " \u00d7 StdErr"),
+        "Beyond limits" = sum(violations, na.rm = TRUE)
+      )
+    )
+
+    plot <- .add_footer(
+      plot,
+      sections,
+      widths = c(0.4, 0.6),
+      heights = c(0.85, 0.15)
+    )
   }
-  
+
   return(plot)
 }
 

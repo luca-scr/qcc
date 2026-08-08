@@ -272,16 +272,6 @@ plot.processCapability <- function(x,
 
   nobs <- length(object$data)
   indices <- object$indices[, 1]
-  Cp   <- indices["Cp"]
-  Cp_l <- indices["Cp_l"]
-  Cp_u <- indices["Cp_u"]
-  Cp_k <- indices["Cp_k"]
-  Cpm  <- indices["Cpm"]
-  Pp   <- indices["Pp"]
-  Pp_l <- indices["Pp_l"]
-  Pp_u <- indices["Pp_u"]
-  Pp_k <- indices["Pp_k"]
-  Ppm  <- indices["Ppm"]
   if(is.function(breaks))
     breaks <- breaks(object$data)
   breaks <- as.integer(breaks)
@@ -336,61 +326,46 @@ plot.processCapability <- function(x,
   
   if(add.stats) 
   { 
-    # write info at bottom
-    tab_base <- ggplot() + 
-      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_qcc_void()
+    display <- \(x, digits, suffix = "")
+      ifelse(is.na(x), "", paste0(signif(x, digits), suffix))
 
-    text1 <- c(paste0("Number of obs = ", nobs),
-               paste0("Center = ", signif(object$center, digits)),
-               paste0("StdDev = ", signif(object$std.dev, digits)),
-               paste0("Overall SD = ", signif(object$overall.std.dev, digits)))
-    text1 <- paste(text1, collapse = "\n")
-    tab1 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    
-    text2 <- paste(paste0("Target = ", if(object$has.target) signif(object$target, digits) else ""),
-                   paste0("LSL = ", signif(object$spec.limits[1], digits)),
-                   paste0("USL = ", signif(object$spec.limits[2], digits)), 
-                   sep = "\n")
-    tab2 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    
-    text3 <- paste(paste0("Cp     = ", ifelse(is.na(Cp), "", signif(Cp, 3))),
-                   paste0("Cp_l  = ", ifelse(is.na(Cp_l), "", signif(Cp_l, 3))),
-                   paste0("Cp_u = ", ifelse(is.na(Cp_u), "", signif(Cp_u, 3))),
-                   paste0("Cp_k = ", ifelse(is.na(Cp_k), "", signif(Cp_k, 3))),
-                   paste0("Cpm  = ", ifelse(is.na(Cpm), "", signif(Cpm, 3))),
-                   sep="\n")
-    tab3 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text3, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    
-    text4 <- paste(paste0("Pp     = ", ifelse(is.na(Pp), "", signif(Pp, 3))),
-                    paste0("Pp_l  = ", ifelse(is.na(Pp_l), "", signif(Pp_l, 3))),
-                    paste0("Pp_u = ", ifelse(is.na(Pp_u), "", signif(Pp_u, 3))),
-                    paste0("Pp_k = ", ifelse(is.na(Pp_k), "", signif(Pp_k, 3))),
-                    paste0("Ppm  = ", ifelse(is.na(Ppm), "", signif(Ppm, 3))),
-                    sep="\n")
-    tab4 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text4, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-
-    text5 <- paste(paste0("Exp<LSL ", ifelse(is.na(object$exp[1]), "", paste0(signif(object$exp[1], 2), "%"))),
-                   paste0("Exp>USL ", ifelse(is.na(object$exp[2]), "", paste0(signif(object$exp[2], 2), "%"))),
-                   paste0("Obs<LSL ", ifelse(is.na(object$obs[1]), "", paste0(signif(object$obs[1], 2), "%"))),
-                   paste0("Obs>USL ", ifelse(is.na(object$obs[2]), "", paste0(signif(object$obs[2], 2), "%"))),
-                   sep="\n")
-    tab5 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text5, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    
-    plot <- patchwork::wrap_plots(plotlist = list(plot, tab1, tab2, tab3, tab4, tab5),
-                                  design = "AAAAA\nBCDEF",
-                                  heights = c(0.73, 0.27), 
-                                  widths = c(0.24, 0.16, 0.18, 0.18, 0.24))
+    sections <- list(
+      `Process Summary` = c(
+        "Observations" = nobs,
+        "Center" = signif(object$center, digits),
+        "StdDev" = signif(object$std.dev, digits),
+        "Overall SD" = signif(object$overall.std.dev, digits)
+      ),
+      Specifications = c(
+        "Target" = if (object$has.target) signif(object$target, digits) else "",
+        "LSL" = signif(object$spec.limits[[1]], digits),
+        "USL" = signif(object$spec.limits[[2]], digits)
+      ),
+      Capability = display(
+        indices[c("Cp", "Cp_l", "Cp_u", "Cp_k", "Cpm")],
+        digits = 3
+      ),
+      Performance = display(
+        indices[c("Pp", "Pp_l", "Pp_u", "Pp_k", "Ppm")],
+        digits = 3
+      ),
+      `Non-conformance` = display(
+        c(
+          "Exp < LSL" = object$exp[[1]],
+          "Exp > USL" = object$exp[[2]],
+          "Obs < LSL" = object$obs[[1]],
+          "Obs > USL" = object$obs[[2]]
+        ),
+        digits = 2,
+        suffix = "%"
+      )
+    )
+    plot <- .add_footer(
+      plot,
+      sections,
+      heights = c(0.73, 0.27),
+      widths = c(0.24, 0.16, 0.18, 0.18, 0.24)
+    )
   }
 
   return(plot)
