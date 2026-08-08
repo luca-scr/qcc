@@ -99,7 +99,6 @@ scale_x_qcc <- function(x, limits, n = 7L) {
 
 # PERF: Use one ggplot2 object for all footer data, only dowside is changing the user-facing API.
 # FIX: On narrow screens, sections overlap: could by fixed by dynamically deciding nrows*ncolumns and height*width
-# FORMAT: Make panel title more prominent than individual indices.
 # FORMAT: make names(values) more prominent than values.
 # FORMAT: align around `=`
 # TODO: figure out a way to format a matrix, in case we add confidence intervals to the footer like JMP.
@@ -122,7 +121,7 @@ scale_x_qcc <- function(x, limits, n = 7L) {
       labs(title = section) +
       scale_x_continuous(limits = c(0, 1), expand = expansion(mult = 0.02)) +
       scale_y_continuous(limits = c(0.5, n_rows + 0.5), expand = expansion(mult = 0)) +
-      theme_qcc_void()
+      theme_qcc_void(plot.title = element_text(size = 9, face = "bold"))
   }, sections, names(sections))
 
   footer <- patchwork::wrap_plots(plotlist = panels, nrow = 1, widths = widths)
