@@ -102,9 +102,12 @@ scale_x_qcc <- function(x, limits, n = 7L) {
 # FORMAT: make names(values) more prominent than values.
 # FORMAT: align around `=`
 # TODO: figure out a way to format a matrix, in case we add confidence intervals to the footer like JMP.
-.add_footer <- function(plot, sections, widths, heights) {
-  stopifnot(length(sections) > 0L, length(sections) == length(widths))
+.add_footer <- function(plot, panels, widths, heights) {
+  footer <- patchwork::wrap_plots(plotlist = panels, nrow = 1, widths = widths)
+  (plot / footer) + patchwork::plot_layout(heights = heights)
+}
 
+chart_footer <- function(sections) {
   n_rows <- max(lengths(sections))
 
   panels <- Map(\(values, section) {
@@ -124,7 +127,9 @@ scale_x_qcc <- function(x, limits, n = 7L) {
       theme_qcc_void(plot.title = element_text(size = 9, face = "bold"))
   }, sections, names(sections))
 
-  footer <- patchwork::wrap_plots(plotlist = panels, nrow = 1, widths = widths)
-
-  (plot / footer) + patchwork::plot_layout(heights = heights)
+  structure(
+    panels,
+    nrows = n_rows,
+    npanels = length(sections)
+  )
 }

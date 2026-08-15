@@ -489,9 +489,10 @@ plot.cusum.qcc <- function(x, xtime = NULL,
       )
     )
 
+    panels <- chart_footer(sections)
     plot <- .add_footer(
       plot,
-      sections,
+      panels,
       widths = c(0.4, 0.6),
       heights = c(0.85, 0.15)
     )

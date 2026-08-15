@@ -360,9 +360,11 @@ plot.processCapability <- function(x,
         suffix = "%"
       )
     )
+
+    panels <- chart_footer(sections)
     plot <- .add_footer(
       plot,
-      sections,
+      panels,
       heights = c(0.73, 0.27),
       widths = c(0.24, 0.16, 0.18, 0.18, 0.24)
     )
