@@ -444,7 +444,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
       plot,
       panels,
       widths = c(0.4, 0.6),
-      heights = c(0.85, 0.15)
+      heights = c(0.90, 0.10)
     )
   }
 

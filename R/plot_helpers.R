@@ -107,7 +107,7 @@ scale_x_qcc <- function(x, limits, n = 7L) {
 
 chart_footer <- function(sections, parse = FALSE) {
   n_rows <- max(lengths(sections))
-  row_spacing <- 0.50
+  row_spacing <- 0.75
 
   panels <- Map(\(values, section, parse) {
     value_names <- names(values)

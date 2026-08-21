@@ -368,7 +368,7 @@ plot.processCapability <- function(x,
     plot <- .add_footer(
       plot,
       panels,
-      heights = c(0.73, 0.27),
+      heights = c(0.83, 0.17),
       widths = c(0.24, 0.16, 0.18, 0.18, 0.24)
     )
   }
