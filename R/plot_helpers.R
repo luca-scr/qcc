@@ -98,32 +98,42 @@ scale_x_qcc <- function(x, limits, n = 7L) {
 }
 
 # PERF: Use one ggplot2 object for all footer data, only dowside is changing the user-facing API.
-# FIX: On narrow screens, sections overlap: could by fixed by dynamically deciding nrows*ncolumns and height*width
-# FORMAT: make names(values) more prominent than values.
-# FORMAT: align around `=`
 # TODO: figure out a way to format a matrix, in case we add confidence intervals to the footer like JMP.
 .add_footer <- function(plot, panels, widths, heights) {
   footer <- patchwork::wrap_plots(plotlist = panels, nrow = 1, widths = widths)
+  # TODO: calculate heights from panels$n_rows
   (plot / footer) + patchwork::plot_layout(heights = heights)
 }
 
 chart_footer <- function(sections, parse = FALSE) {
   n_rows <- max(lengths(sections))
-  row_spacing <- 0.75
+  row_spacing <- 0.50
 
   panels <- Map(\(values, section, parse) {
+    value_names <- names(values)
+    labels <- sprintf("%s:", value_names)
+    value_x <- max(nchar(labels, type = "width")) + 1L
+    values <- as.character(unname(values))
     data <- data.frame(
       row = n_rows - (seq_along(values) - 1L) * row_spacing,
-      text = sprintf(if (parse) '%s == "%s"' else "%s = %s", names(values), values)
+      label = if (parse) sprintf('%s * ":"', value_names) else labels,
+      value = values
     )
 
     ggplot(data) +
       geom_text(
-        aes(y = .data[["row"]], label = .data[["text"]]),
-        x = 0, hjust = 0, parse = parse
+        aes(y = .data[["row"]], label = .data[["label"]]),
+        x = 0, hjust = 0, parse = parse, size = 9, size.unit = "pt"
+      ) +
+      geom_text(
+        aes(y = .data[["row"]], label = .data[["value"]]),
+        x = value_x, hjust = 0, size = 9, size.unit = "pt"
       ) +
       labs(title = section) +
-      scale_x_continuous(limits = c(0, 1), expand = expansion(mult = 0.02)) +
+      scale_x_continuous(
+        limits = c(0, value_x + max(nchar(values, type = "width"))),
+        expand = expansion(mult = 0.02)
+      ) +
       scale_y_continuous(limits = c(0.5, n_rows + 0.5), expand = expansion(mult = 0)) +
       theme_qcc_void(plot.title = element_text(size = 9, face = "bold"))
   }, sections, names(sections), parse)
@@ -131,6 +141,7 @@ chart_footer <- function(sections, parse = FALSE) {
   structure(
     panels,
     nrows = n_rows,
-    npanels = length(sections)
+    npanels = length(sections),
+    class = "footer_panels"
   )
 }
