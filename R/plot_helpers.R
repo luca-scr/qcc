@@ -107,25 +107,26 @@ scale_x_qcc <- function(x, limits, n = 7L) {
   (plot / footer) + patchwork::plot_layout(heights = heights)
 }
 
-chart_footer <- function(sections) {
+chart_footer <- function(sections, parse = FALSE) {
   n_rows <- max(lengths(sections))
+  row_spacing <- 0.75
 
-  panels <- Map(\(values, section) {
+  panels <- Map(\(values, section, parse) {
     data <- data.frame(
-      row = n_rows - seq_along(values) + 1L,
-      text = sprintf("%s = %s", names(values), values)
+      row = n_rows - (seq_along(values) - 1L) * row_spacing,
+      text = sprintf(if (parse) '%s == "%s"' else "%s = %s", names(values), values)
     )
 
     ggplot(data) +
       geom_text(
         aes(y = .data[["row"]], label = .data[["text"]]),
-        x = 0, hjust = 0
+        x = 0, hjust = 0, parse = parse
       ) +
       labs(title = section) +
       scale_x_continuous(limits = c(0, 1), expand = expansion(mult = 0.02)) +
       scale_y_continuous(limits = c(0.5, n_rows + 0.5), expand = expansion(mult = 0)) +
       theme_qcc_void(plot.title = element_text(size = 9, face = "bold"))
-  }, sections, names(sections))
+  }, sections, names(sections), parse)
 
   structure(
     panels,

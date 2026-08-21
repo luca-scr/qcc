@@ -341,13 +341,13 @@ plot.processCapability <- function(x,
         "LSL" = signif(object$spec.limits[[1]], digits),
         "USL" = signif(object$spec.limits[[2]], digits)
       ),
-      Capability = display(
-        indices[c("Cp", "Cp_l", "Cp_u", "Cp_k", "Cpm")],
-        digits = 3
+      Capability = setNames(
+        display(indices[c("Cp", "Cp_l", "Cp_u", "Cp_k", "Cpm")], digits = 3),
+        c("C[p]", "C[p*l]", "C[p*u]", "C[p*k]", "C[p*m]") # for geom_text(..., parse = TRUE)
       ),
-      Performance = display(
-        indices[c("Pp", "Pp_l", "Pp_u", "Pp_k", "Ppm")],
-        digits = 3
+      Performance = setNames(
+        display(indices[c("Pp", "Pp_l", "Pp_u", "Pp_k", "Ppm")], digits = 3),
+        c("P[p]", "P[p*l]", "P[p*u]", "P[p*k]", "P[p*m]") # for geom_text(..., parse = TRUE)
       ),
       `Non-conformance` = display(
         c(
@@ -361,7 +361,10 @@ plot.processCapability <- function(x,
       )
     )
 
-    panels <- chart_footer(sections)
+    panels <- chart_footer(
+      sections,
+      parse = names(sections) %in% c("Capability", "Performance")
+    )
     plot <- .add_footer(
       plot,
       panels,
