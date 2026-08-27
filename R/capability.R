@@ -254,18 +254,14 @@ summary.processCapability <- function(object, ...)
 #' @export
 #' @export plot.processCapability
 plot.processCapability <- function(x, 
-                                   add.stats = qcc.options("add.stats"),
+                                   add.stats = getOption("qcc.add.stats"),
                                    breaks = nclass.hist, 
-                                   fill = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5), 
+                                   fill = adjustcolor(getOption("qcc.zones")$fill, alpha.f = 0.5), # HACK: too much code for an argument.
                                    color = "white",
                                    title, xlab,
                                    digits = getOption("digits"),
                                    ...)
 {
-# Computes the operating-characteristic curves for the S-chart with nsigmas
-# limits. The values on the vertical axis give the probability of not detecting
-# a change from sigma to c*sigma on the first sample following the change.
-
   object <- x  # Argh.  Really want to use 'object' anyway
    if ((missing(object)) | (!inherits(object, "processCapability")))
      stop("an object of class `processCapability' is required")

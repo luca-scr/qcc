@@ -24,7 +24,7 @@ NULL
 #' @param chart.all a logical value indicating whether both statistics for
 #'   `data` and for `newdata` (if given) should be plotted.
 #' @param fill a logical value specifying if the in-control area should be
-#'   filled with the color specified in `qcc.options("zones")$fill`.
+#'   filled with the color specified in the `qcc.zones` option.
 #' @param title a character string specifying the main title. Set `title =
 #'   NULL` to remove the title.
 #' @param xlab a string giving the label for the x-axis.

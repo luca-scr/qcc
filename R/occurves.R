@@ -484,15 +484,22 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
 
   plot <- plot + 
     theme_light() + 
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", size = 11),
-          legend.position = c(0.9,0.8),
-          legend.text.align = 0,
-          axis.text.y = element_text(angle = 90, 
-                                     margin = margin(l = 5, r = 5),
-                                     hjust = 0.5, vjust = 0.5))
+    theme(
+      plot.background = element_rect(
+        fill = getOption("qcc.bg.margin"),
+        color = getOption("qcc.bg.margin")
+      ),
+      panel.background = element_rect(
+        fill = getOption("qcc.bg.figure")
+      ),
+      plot.title = element_text(face = "bold", size = 11),
+      legend.position = c(0.9,0.8),
+      legend.text.align = 0,
+      axis.text.y = element_text(
+        angle = 90, 
+        margin = margin(l = 5, r = 5),
+        hjust = 0.5, vjust = 0.5)
+    )
   
   return(plot)
 }

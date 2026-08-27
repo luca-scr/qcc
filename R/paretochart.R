@@ -114,11 +114,17 @@ plot.paretoChart <- function(x,
                                            name = ylab2,
                                            labels = scales::label_percent())) +
     theme_light() + 
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", size = 11),
-          plot.margin = margin(5, 5, 5, 5))
+    theme(
+      plot.background = element_rect(
+        fill = getOption("qcc.bg.margin"),
+        color = getOption("qcc.bg.margin")
+      ),
+      panel.background = element_rect(
+        fill = getOption("qcc.bg.figure")
+      ),
+      plot.title = element_text(face = "bold", size = 11),
+      plot.margin = margin(5, 5, 5, 5)
+    )
   
   return(plot)
 }

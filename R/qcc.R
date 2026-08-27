@@ -446,9 +446,9 @@ summary.qcc <- function(object, ...) print.qcc(object, ...)
 #' @export plot.qcc
 #' @inheritParams plot_common 
 plot.qcc <- function(x, xtime = NULL,
-                     add.stats = qcc.options("add.stats"), 
-                     chart.all = qcc.options("chart.all"), 
-                     fill = qcc.options("fill"),
+                     add.stats = getOption("qcc.add.stats"),
+                     chart.all = getOption("qcc.chart.all"),
+                     fill = getOption("qcc.fill"),
                      label.center = "CL",
                      label.limits = c("LCL ", "UCL"), 
                      title, xlab, ylab, xlim, ylim,
@@ -495,7 +495,10 @@ plot.qcc <- function(x, xtime = NULL,
   
   violation.values <- ifelse(is.na(violations), 0, violations)
   violation.levels <- sort(unique(c(0, violation.values)))
-  rule.options <- qcc.options("rules")
+
+  # TODO: should these be fromals
+  rule.options <- getOption("qcc.rules")
+  zones <- getOption("qcc.zones")
   colour.values <- setNames(
     c("black", rule.options$col),
     c("0", seq_along(rule.options$col))
@@ -563,7 +566,7 @@ plot.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -572,15 +575,15 @@ plot.qcc <- function(x, xtime = NULL,
                                     y = y1),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, 
                                     y = y2),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
     }
 
     plot <- plot + 
@@ -622,7 +625,7 @@ plot.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -630,14 +633,14 @@ plot.qcc <- function(x, xtime = NULL,
         geom_step(data = data.frame(x = x1, y = y1),
                            aes(x = .data[["x"]], 
                                y = .data[["y"]]), 
-                           lty = qcc.options("zones")$lty[2],
-                           col = qcc.options("zones")$col[2])
+                           lty = zones$lty[2],
+                           col = zones$col[2])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
                            aes(x = .data[["x"]], 
                                y = .data[["y"]]), 
-                           lty = qcc.options("zones")$lty[2],
-                           col = qcc.options("zones")$col[2])
+                           lty = zones$lty[2],
+                           col = zones$col[2])
     }
   }
   
@@ -672,7 +675,7 @@ plot.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -680,14 +683,14 @@ plot.qcc <- function(x, xtime = NULL,
         geom_step(data = data.frame(x = x1, y = y1),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[3],
-                  col = qcc.options("zones")$col[3])
+                  lty = zones$lty[3],
+                  col = zones$col[3])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[3],
-                  col = qcc.options("zones")$col[3])
+                  lty = zones$lty[3],
+                  col = zones$col[3])
     }
   }
   
@@ -695,12 +698,12 @@ plot.qcc <- function(x, xtime = NULL,
   plot <- plot + if(length(center) == 1) 
   {
     geom_hline(yintercept = center, 
-               col = qcc.options("zones")$col[1]) 
+               col = zones$col[1])
   } else
   {
     geom_step(data = df, aes(x = .data[["group"]], 
                              y = .data[["center"]]),
-              col = qcc.options("zones")$col[1])
+              col = zones$col[1])
   }
 
   if(chart.all & (!is.null(newstats)))

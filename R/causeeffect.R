@@ -64,7 +64,7 @@ causeEffectDiagram <- function(cause, effect,
     xlim(0, 100) + ylim(0, 100) +
     labs(title = title) +
     theme_qcc_void(
-      panel.background = element_rect(fill = qcc.options("bg.figure")),
+      panel.background = element_rect(fill = getOption("qcc.bg.figure")),
       plot.title = element_text(face = "bold", margin = margin(b = 10)),
       plot.margin = margin(10, 10, 10, 10)
     )

@@ -263,9 +263,9 @@ summary.ewma.qcc <- function(object, ...) print.ewma.qcc(object, ...)
 #' @export plot.ewma.qcc
 #' @inheritParams plot_common
 plot.ewma.qcc <- function(x, xtime = NULL,
-                          add.stats = qcc.options("add.stats"), 
-                          chart.all = qcc.options("chart.all"), 
-                          fill = qcc.options("fill"),
+                          add.stats = getOption("qcc.add.stats"),
+                          chart.all = getOption("qcc.chart.all"),
+                          fill = getOption("qcc.fill"),
                           label.center = "CL",
                           label.limits = c("LCL", "UCL"), 
                           title, xlab, ylab, xlim, ylim,
@@ -273,6 +273,11 @@ plot.ewma.qcc <- function(x, xtime = NULL,
                           ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
+
+  # TODO: should these be formals?
+  rules <- getOption("qcc.rules")
+  zones <- getOption("qcc.zones")
+
   if ((missing(object)) | (!inherits(object, "ewma.qcc")))
      stop("an object of class `ewma.qcc' is required")
 
@@ -333,9 +338,9 @@ plot.ewma.qcc <- function(x, xtime = NULL,
     geom_point(aes(colour = .data[["violations"]], 
                    shape = .data[["violations"]]), 
                size = 2) +
-    scale_colour_manual(values = c("black", qcc.options("rules")$col),
+    scale_colour_manual(values = c("black", rules$col),
                         breaks = levels(df$violations)) +
-    scale_shape_manual(values = c(20, qcc.options("rules")$pch),
+    scale_shape_manual(values = c(20, rules$pch),
                        breaks = levels(df$violations)) +
     geom_point(aes(y = .data[["stat"]]), pch = 3) +
     labs(title = title, subtitle = "",
@@ -365,7 +370,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -373,13 +378,13 @@ plot.ewma.qcc <- function(x, xtime = NULL,
         geom_step(data = data.frame(x = x1, y = y1),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
                   aes(x = .data[["x"]], y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
     }
 
     plot <- plot + 
@@ -392,7 +397,7 @@ plot.ewma.qcc <- function(x, xtime = NULL,
   
   # draw center line
   plot <- plot +
-    geom_hline(yintercept = center, col = qcc.options("zones")$col[1])
+    geom_hline(yintercept = center, col = zones$col[1])
   
   if(chart.all & (!is.null(newstats)))
   {

@@ -15,7 +15,7 @@ information should be printed at the bottom of the chart.}
 \code{data} and for \code{newdata} (if given) should be plotted.}
 
 \item{fill}{a logical value specifying if the in-control area should be
-filled with the color specified in \code{qcc.options("zones")$fill}.}
+filled with the color specified in the \code{qcc.zones} option.}
 
 \item{title}{a character string specifying the main title. Set \code{title = NULL} to remove the title.}
 

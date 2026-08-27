@@ -1,6 +1,39 @@
+.qcc_default_rules <- function() {
+  list(
+    col = c(
+      "#F03B20", "#EE7600", "#FD8D3C", "#CD5555",
+      "#7B3294", "#008837", "#B0BC17", "#C51B7D"
+    ),
+    pch = c(19, 15, 17, 8, 19, 15, 17, 18)
+  )
+}
+
+.qcc_default_zones <- function() {
+  list(
+    fill = "#5E81AC",
+    lty = c(2, 2, 2),
+    col = grDevices::grey(c(0.1, 0.4, 0.7))
+  )
+}
+
+.qcc_default_options <- function() {
+  list(
+    qcc.add.stats = TRUE,
+    qcc.chart.all = TRUE,
+    qcc.fill = TRUE,
+    qcc.rules = .qcc_default_rules(),
+    qcc.zones = .qcc_default_zones(),
+    qcc.bg.margin = "#EFF0F2",
+    qcc.bg.figure = "white",
+    qcc.cex = 1,
+    qcc.font.stats = 1,
+    qcc.cex.stats = 0.9
+  )
+}
+
 theme_qcc <- function(...) {
-  bg_margin <- qcc.options("bg.margin")
-  bg_figure <- qcc.options("bg.figure")
+  bg_margin <- getOption("qcc.bg.margin")
+  bg_figure <- getOption("qcc.bg.figure")
 
   theme_light() +
     theme(
@@ -20,7 +53,7 @@ theme_qcc <- function(...) {
 }
 
 theme_qcc_void <- function(...) {
-  bg_margin <- qcc.options("bg.margin")
+  bg_margin <- getOption("qcc.bg.margin")
 
   theme_void() +
     theme(

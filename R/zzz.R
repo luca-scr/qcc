@@ -1,3 +1,13 @@
+.onLoad <- function(lib, pkg) {
+  defaults <- .qcc_default_options()
+  missing <- setdiff(names(defaults), names(options()))
+  if(length(missing))
+    options(defaults[missing])
+  invisible(NULL)
+}
+
+# TODO: add .onUnload() to cleanuup .onLoad()
+
 #' Package Startup Message
 #'
 #' Builds the qcc package startup message with its version and citation
@@ -19,11 +29,7 @@ packageVersion("qcc")),
   return(msg)
 }
 
-.onAttach <- function(lib, pkg)
-{
-  # unlock .qcc.options variable allowing its modification
-  unlockBinding(".qcc.options", asNamespace("qcc")) 
-  # startup message
+.onAttach <- function(lib, pkg) {
   msg <- qccStartupMessage()
   if(!interactive())
     msg[1] <- paste("Package 'qcc' version", packageVersion("qcc"))

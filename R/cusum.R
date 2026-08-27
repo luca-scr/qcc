@@ -289,15 +289,20 @@ summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 #' @export plot.cusum.qcc
 #' @inheritParams plot_common
 plot.cusum.qcc <- function(x, xtime = NULL,
-                           add.stats = qcc.options("add.stats"), 
-                           chart.all = qcc.options("chart.all"), 
-                           fill = qcc.options("fill"),
+                           add.stats = getOption("qcc.add.stats"),
+                           chart.all = getOption("qcc.chart.all"),
+                           fill = getOption("qcc.fill"),
                            label.bounds = c("LDB", "UDB"), 
                            title, xlab, ylab, xlim, ylim,
                            digits = getOption("digits"), 
                            ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
+
+  # TODO: should these be formals?
+  rules <- getOption("qcc.rules")
+  zones <- getOption("qcc.zones")
+
   if ((missing(object)) | (!inherits(object, "cusum.qcc")))
      stop("an object of class `cusum.qcc' is required")
 
@@ -369,9 +374,9 @@ plot.cusum.qcc <- function(x, xtime = NULL,
                    colour = .data[["violations_lower"]], 
                    shape = .data[["violations_lower"]]), 
                size = 2) +
-    scale_colour_manual(values = c("black", qcc.options("rules")$col),
+    scale_colour_manual(values = c("black", rules$col),
                         breaks = levels(df$violations)) +
-    scale_shape_manual(values = c(20, qcc.options("rules")$pch),
+    scale_shape_manual(values = c(20, rules$pch),
                        breaks = levels(df$violations)) +
     labs(title = title, subtitle = "",
          x = if(missing(xlab)) "Group" else xlab,
@@ -419,24 +424,24 @@ plot.cusum.qcc <- function(x, xtime = NULL,
         geom_polygon(data = data.frame(xp, yp),
                      aes(x = .data[["xp"]], 
                          y = .data[["yp"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
       plot <- plot + 
         geom_hline(yintercept = ldb,
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
       plot <- plot + 
         geom_hline(yintercept = udb, 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
     }
   }
   
   # draw center line
   plot <- plot +
-    geom_hline(yintercept = 0, col = qcc.options("zones")$col[1])
+    geom_hline(yintercept = 0, col = zones$col[1])
 
   if(chart.all & (!is.null(newstats)))
   {
