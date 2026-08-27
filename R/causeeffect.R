@@ -76,7 +76,7 @@ causeEffectDiagram <- function(cause, effect,
   plot <- plot +  
     # add main spine
     geom_segment(aes(x = 0, y = 50, xend = 100-effect_label_width-2, yend = 50),
-                 arrow = arrow(length = unit(0.02, "npc")), 
+                 arrow = grid::arrow(length = grid::unit(0.02, "npc")), 
                  linewidth = 1) +
     # add effect label
     annotate("text", x = 100-effect_label_width, y = 50,  
