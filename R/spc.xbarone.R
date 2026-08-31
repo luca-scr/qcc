@@ -58,28 +58,24 @@ stats.xbar.one <- function(data, sizes)
 
 #' @rdname stats.xbar.one
 #' @export
-sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
-{
+# PERF: Replace apply call with matrixStats
+sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD"), r = 2, ...) {
   data <- as.vector(data)
-  n <- length(data)
-  if(!is.numeric(std.dev)) 
-     std.dev <- match.arg(std.dev)
-  if(is.numeric(std.dev)) 
-    { sd <- std.dev }
-  else
-    { switch(std.dev, 
-             "MR" = {
-                data <- data[!is.na(data)]
-                d2 <- qcc.options("exp.R.unscaled")
-                moving_ranges <- apply(embed(data, r), 1L, function(x) {
-                  diff(range(x))
-                })
-                sd <- mean(moving_ranges) / d2[r]
-             },
-             "SD" = { sd <- sd(data, na.rm = TRUE)/qcc.c4(sum(!is.na(data))) },
-             sd <- NULL)
-    }
-  return(sd)
+  if(is.numeric(std.dev))
+    return(std.dev)
+
+  std.dev <- match.arg(std.dev)
+  switch(std.dev, 
+    "MR" = {
+      windows <- embed(data[!is.na(data)], r)
+      moving_ranges <- apply(windows, 1L, function(x) {
+        diff(range(x))
+      })
+      mean(moving_ranges) / .d2(r)
+    },
+    "SD" = { 
+      sd(data, na.rm = TRUE)/.c4(sum(!is.na(data)))
+    })
 }
 
 
@@ -102,5 +98,5 @@ limits.xbar.one <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   delta <- nsigmas * se.stats
   lcl <- center - delta
   ucl <- center + delta
-  .construct_limits(lcl,ucl)
+  new_limits(lcl,ucl)
 }

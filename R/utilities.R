@@ -146,21 +146,22 @@ qccOverdispersionTest <- function(x, size,
 #' @param n sample size(s)
 #' @keywords internal
 #' @noRd
+# DEPRECATE qcc.c4 -> .c4
 qcc.c4 <- \(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
 
-
-#' Control Limits Constructor
+#' Construct Control Limits
 #'
-#' Returns lower and upper control limit vectors in a consistent structure.
-#' Used by limits.*() functions.
+#' Creates a two-column matrix of lower and upper control limits.
+#'
+#' @param ... A two-column matrix or separate lower and upper limit vectors.
+#' @param names Column names for the lower and upper limits.
 #'
 #' @keywords internal
 #' @noRd
-.construct_limits <- function(lcl,ucl) {
-  limits <- matrix(c(lcl, ucl), ncol = 2)
-  rownames(limits) <- rep("", length = nrow(limits))
-  colnames(limits) <- c("LCL", "UCL")
-  return(limits)
+new_limits <- function(..., names = c("LCL", "UCL")) {
+  limits <- cbind(...)
+  dimnames(limits) <- list(rep("", nrow(limits)), names)
+  limits
 }
 
 #' Blue color palette
@@ -227,110 +228,78 @@ blues.colors <- function (n)
   invisible(x)
 }
 
-#' Set or return options for the qcc package.
+#' qcc Options Interface
 #'
-#' This function can be used to control the behavior of the 'qcc' library such
-#' as the background color, out-of-control points appearance, and many others.
+#' `qcc.options()` is retained as a deprecated compatibility interface for the
+#' standard `qcc.*` options.
 #'
-#' The available options are:
+#' Set plotting defaults with [options()] using these names:
+#' `qcc.add.stats`, `qcc.chart.all`, `qcc.fill`, `qcc.rules`, `qcc.zones`,
+#' `qcc.bg.margin`, `qcc.bg.figure`, `qcc.cex`, `qcc.font.stats`, and
+#' `qcc.cex.stats`.
 #'
-#' - `exp.R.unscaled`: a vector specifying, for each sample size, the expected
-#'   value of the relative range (i.e. \eqn{R/\sigma}) for a normal
-#'   distribution. This appears as \eqn{d_2} on most tables containing factors
-#'   for the construction of control charts.
-#' - `se.R.unscaled`: a vector specifying, for each sample size, the standard
-#'   error of the relative range (i.e. \eqn{R/\sigma}) for a normal
-#'   distribution. This appears as \eqn{d_3} on most tables containing factors
-#'   for the construction of control charts.
-#' - `beyond.limits$pch`: plotting character used to highlight points beyond
-#'   control limits.
-#' - `beyond.limits$col`: color used to highlight points beyond control
-#'   limits.
-#' - `violating.runs$pch`: plotting character used to highlight points
-#'   violating runs.
-#' - `violating.runs$col`: color used to highlight points violating runs.
-#' - `run.length`: the maximum value of a run before to signal a point as out
-#'   of control.
-#' - `bg.margin`: background color used to draw the margin of the charts.
-#' - `bg.figure`: background color used to draw the figure of the charts.
-#' - `cex`: character expansion used to draw plot annotations (labels, title,
-#'   tickmarks, etc.).
-#' - `font.stats`: font used to draw text at the bottom of control charts.
-#' - `cex.stats`: character expansion used to draw text at the bottom of
-#'   control charts.
-#'
-#' @param ... the option to be set or retrieved. See details.
-#' @return If the functions is called with no argument return a list of
-#' available options.
-#'
-#' If an option argument is provided the corresponding value is returned.
-#'
-#' If a value is associated with an option argument, such option is set and the
-#' list of updated option values is invisibly returned. In this case the list
-#' `.qcc.options` is modified and any modification will remain in effect
-#' for the rest of the session.
-#' @author Luca Scrucca
-#' @seealso [qcc()]
+#' @param ... No arguments to view all `qcc.*` options; a single legacy option
+#'   name to retrieve its value; or named values or a named list to update
+#'   standard options.
+#' @return A named list for a call without arguments, a single option value for
+#'   a character-name lookup, or the updated named list invisibly after a
+#'   setter call.
 #' @export
-#' @examples
-#'
-#' old  = qcc.options()			# save defaults
-#' qcc.options("cex.stats")		# get a single parameter
-#' qcc.options("cex.stats"=1.2)	# change parameters
-#' qcc.options(bg.margin="azure2")
-#' qcc.options("violating.runs" = list(pch = 15, col = "purple"))
-#' qcc.options("beyond.limits" = list(pch = 15, col = "orangered"))
-#' qcc(rnorm(100), type = "xbar.one", std.dev = 0.7)	# see the results
-#' qcc.options(old)				# restore old defaults 
-#'
-qcc.options <- function(...)
-{
-  current <- .qcc.options
-  if(nargs() == 0) return(current)
-#  if(is.character(...))
-#       temp <- eval(parse(text = paste(c("list(", ..., ")"))))
-#  else temp <- list(...)
-  temp <- list(...)
-  if(length(temp) == 1 && is.null(names(temp))) 
-    { arg <- temp[[1]]
-      switch(mode(arg),
-             list = temp <- arg,
-             character = return(.qcc.options[[arg]]),
-             stop(paste("invalid argument:", sQuote(arg)))) }
-  if(length(temp) == 0) return(current)
-  name <- names(temp)
-  if(is.null(name)) stop("options must be given by name")
-  changed <- current[name]
-  current[name] <- temp
-  env <- if(sys.parent() == 0) asNamespace("qcc") 
-         else                  parent.frame()
-  assign(".qcc.options", current, envir = env)
-  invisible(current)
+qcc.options <- function(...) {
+  warning(
+    paste0(
+      "`qcc.options()` is deprecated; use `options(qcc.<name> = value)`."
+    ),
+    call. = FALSE
+  )
+
+  current_options <- function() {
+    current <- options()
+    current <- current[startsWith(names(current), "qcc.")]
+    names(current) <- substring(names(current), 5L)
+    current
+  }
+
+  current <- current_options()
+  if(nargs() == 0L)
+    return(current)
+
+  values <- list(...)
+  if(length(values) == 1L && is.null(names(values))) {
+    value <- values[[1L]]
+    switch(
+      mode(value),
+      list = values <- value,
+      character = return(getOption(paste0("qcc.", value))),
+      stop(paste("invalid argument:", sQuote(value)))
+    )
+  }
+  if(length(values) == 0L)
+    return(current)
+
+  option_names <- names(values)
+  if(is.null(option_names) || any(!nzchar(option_names)))
+    stop("options must be given by name")
+
+  names(values) <- paste0("qcc.", option_names)
+  options(values)
+  invisible(current_options())
 }
 
 
-#' Default `qcc` Settings
+#' Validate Sample Sizes
 #'
-#' Stores the statistical constants and graphical settings used as the qcc
-#' package defaults. See [qcc.options()].
+#' Replace invalid sample sizes with NA, or error in strict mode.
 #'
 #' @keywords internal
 #' @noRd
-".qcc.options" <- list(
-  exp.R.unscaled = c(NA, 1.128, 1.693, 2.059, 2.326, 2.534, 2.704, 2.847, 2.970, 3.078, 3.173, 3.258, 3.336, 3.407, 3.472, 3.532, 3.588, 3.640, 3.689, 3.735, 3.778, 3.819, 3.858, 3.895, 3.931),
-  se.R.unscaled = c(NA, 0.8525033, 0.8883697, 0.8798108, 0.8640855, 0.8480442, 0.8332108, 0.8198378, 0.8078413, 0.7970584, 0.7873230, 0.7784873, 0.7704257, 0.7630330, 0.7562217, 0.7499188, 0.7440627, 0.7386021, 0.7334929, 0.7286980, 0.7241851, 0.7199267, 0.7158987, 0.7120802, 0.7084528, 0.7050004, 0.7017086, 0.6985648, 0.6955576, 0.6926770, 0.6899137, 0.6872596, 0.6847074, 0.6822502, 0.6798821, 0.6775973, 0.6753910, 0.6732584, 0.6711952, 0.6691976, 0.6672619, 0.6653848, 0.6635632, 0.6617943, 0.6600754, 0.6584041, 0.6567780, 0.6551950, 0.6536532, 0.6521506),
-  rules = list(col = c("#F03B20", "#EE7600", "#FD8D3C", "#CD5555", "#7B3294", "#008837", "#B0BC17", "#C51B7D"),
-                   # c("#F03B20", "#FD8D3C", "#FEB24C", "#FED976"), 
-               pch = c(19, 15, 17, 8, 19, 15, 17, 18)),
-  zones = list(fill = "#5E81AC", # "#81a1c1",
-               lty = c(2,2,2), 
-               col = grey(c(0.1, 0.4, 0.7))),
-  bg.margin = "#EFF0F2", # grey(0.915),
-  bg.figure = "white",
-  cex = 1,
-  font.stats = 1,
-  cex.stats = 0.9,
-  add.stats = TRUE,
-  chart.all = TRUE, 
-  fill = TRUE)
-  
+assert_n <- \(n, strict = FALSE) {
+  invalid <- !is.finite(n) | n < 2 | n != floor(n)
+
+  if (!any(invalid)) return(invisible(n))
+
+  if (strict) cli::cli_abort("Invalid sample sizes: {n[invalid]}.")
+
+  cli_warn("Replacing invalid sample sizes with `NA`: {n[invalid]}.")
+  invisible(replace(n, invalid, NA_real_))
+}

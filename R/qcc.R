@@ -331,8 +331,7 @@ qcc <- function(data,
           warning("'std.dev' is not used when limits is given")
        if (!is.numeric(limits))
           stop("'limits' must be a vector of length 2 or a 2-columns matrix")
-       limits <- matrix(limits, ncol = 2)
-       dimnames(limits) <- list(rep("",nrow(limits)), c("LCL ", "UCL"))
+       limits <- new_limits(matrix(limits, ncol = 2))
      }
   object$limits <- limits
   
@@ -447,9 +446,9 @@ summary.qcc <- function(object, ...) print.qcc(object, ...)
 #' @export plot.qcc
 #' @inheritParams plot_common 
 plot.qcc <- function(x, xtime = NULL,
-                     add.stats = qcc.options("add.stats"), 
-                     chart.all = qcc.options("chart.all"), 
-                     fill = qcc.options("fill"),
+                     add.stats = getOption("qcc.add.stats"),
+                     chart.all = getOption("qcc.chart.all"),
+                     fill = getOption("qcc.fill"),
                      label.center = "CL",
                      label.limits = c("LCL ", "UCL"), 
                      title, xlab, ylab, xlim, ylim,
@@ -459,10 +458,6 @@ plot.qcc <- function(x, xtime = NULL,
   object <- x  # Argh.  Really want to use 'object' anyway
   if ((missing(object)) | (!inherits(object, "qcc")))
     stop("an object of class `qcc' is required")
-
-  if(!is.null(xtime) & 
-     !inherits(xtime, c("numeric", "integer", "Date", "POSIXct", "POSIXt")))
-    stop("xtime must be of class 'numeric', 'integer', 'Date', 'POSIXct' or 'POSIXt'")
 
   # collect info from object
   type <- object$type
@@ -480,8 +475,13 @@ plot.qcc <- function(x, xtime = NULL,
   rule.set <- object$rule.set %||% "western-electric"
   rule.set <- match.arg(rule.set, c("western-electric", "nelson"))
   statistics <- c(stats, newstats)
-  groups <- xtime %||% 1:length(statistics)
-  stopifnot(length(groups) == length(statistics))
+  plot.index <- qcc_plot_index(
+    n_phase1 = length(stats),
+    n_phase2 = length(newstats),
+    xtime = xtime,
+    chart_all = chart.all
+  )
+  groups <- plot.index$group
   
   if(missing(title))
   { 
@@ -495,7 +495,10 @@ plot.qcc <- function(x, xtime = NULL,
   
   violation.values <- ifelse(is.na(violations), 0, violations)
   violation.levels <- sort(unique(c(0, violation.values)))
-  rule.options <- qcc.options("rules")
+
+  # TODO: should these be fromals
+  rule.options <- getOption("qcc.rules")
+  zones <- getOption("qcc.zones")
   colour.values <- setNames(
     c("black", rule.options$col),
     c("0", seq_along(rule.options$col))
@@ -505,14 +508,17 @@ plot.qcc <- function(x, xtime = NULL,
     c("0", seq_along(rule.options$pch))
   )
 
-  df <- data.frame(group = groups, 
-                   stat = statistics, 
-                   center = center,
-                   lcl = lcl, ucl = ucl,
-                   violations = factor(violation.values, levels = violation.levels
-                  ))
-  if(!chart.all & (!is.null(newstats)))
-    df <- df[seq_len(length(df$group)) > length(object$statistics),]
+  plot.data <- data.frame(
+    stat = statistics,
+    center = center,
+    lcl = lcl,
+    ucl = ucl,
+    violations = factor(violation.values, levels = violation.levels)
+  )
+  df <- cbind(
+    plot.index,
+    plot.data[plot.index$row, , drop = FALSE]
+  )
   
   if(missing(ylim))
     ylim <- extendrange(c(df$stat, df$lcl, df$ucl))
@@ -537,15 +543,7 @@ plot.qcc <- function(x, xtime = NULL,
                     expand = FALSE, clip = "off") +
     theme_qcc()
 
-  plot <- plot + 
-  {
-    if(is.numeric(groups) | is.integer(groups))
-      scale_x_continuous(breaks = pretty(xlim, n = 7))
-    else if(inherits(groups, "Date"))
-      scale_x_date(breaks = pretty(xlim, n = 7))
-    else
-      scale_x_datetime(breaks = pretty(xlim, n = 7))
-  }
+  plot <- plot + scale_x_qcc(groups, xlim)
         
   # draw control limits
   has.rule <- function(x) any(rules %in% x)
@@ -554,10 +552,8 @@ plot.qcc <- function(x, xtime = NULL,
   { 
     dx <- min(diff(df$group))/2
     x1 <- x2 <- c(xlim[1], df$group[-length(df$group)]+dx, xlim[2])
-    y1 <- if(length(lcl) == 1) rep(lcl, length(x1)) else
-            c(lcl[seq_len(length(df$group))], lcl[length(df$group)])
-    y2 <- if(length(ucl) == 1) rep(ucl, length(x2)) else
-            c(ucl[seq_len(length(df$group))], ucl[length(df$group)])
+    y1 <- c(df$lcl, df$lcl[length(df$group)])
+    y2 <- c(df$ucl, df$ucl[length(df$group)])
     xp1 <- rep(x1, each=2)[-1]
     xp2 <- rep(x2, each=2)[-1]
     yp1 <- rep(y1, each=2)[-2*length(y1)]
@@ -570,7 +566,7 @@ plot.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -579,20 +575,20 @@ plot.qcc <- function(x, xtime = NULL,
                                     y = y1),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, 
                                     y = y2),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
     }
 
     plot <- plot + 
       annotate("text", x = Inf, 
-               y = c(rev(center)[1], rev(lcl)[1], rev(ucl)[1]),
+               y = c(rev(df$center)[1], rev(df$lcl)[1], rev(df$ucl)[1]),
                label = c(label.center, label.limits),
                col = gray(0.3), size = 10 * 5/14,
                hjust = -0.2, vjust = 0.5)
@@ -614,10 +610,9 @@ plot.qcc <- function(x, xtime = NULL,
       y2 <- rep(limits.2sigma[1,2], length(df$group)+1)
     } else
     {
-      y1 <- c(limits.2sigma[seq_len(length(df$group)),1],
-              limits.2sigma[length(df$group),1])
-      y2 <- c(limits.2sigma[seq_len(length(df$group)),2],
-              limits.2sigma[length(df$group),2])
+      limits.2sigma <- limits.2sigma[plot.index$row, , drop = FALSE]
+      y1 <- c(limits.2sigma[,1], limits.2sigma[length(df$group),1])
+      y2 <- c(limits.2sigma[,2], limits.2sigma[length(df$group),2])
     }
     xp1 <- rep(x1, each=2)[-1]
     xp2 <- rep(x2, each=2)[-1]
@@ -630,7 +625,7 @@ plot.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -638,14 +633,14 @@ plot.qcc <- function(x, xtime = NULL,
         geom_step(data = data.frame(x = x1, y = y1),
                            aes(x = .data[["x"]], 
                                y = .data[["y"]]), 
-                           lty = qcc.options("zones")$lty[2],
-                           col = qcc.options("zones")$col[2])
+                           lty = zones$lty[2],
+                           col = zones$col[2])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
                            aes(x = .data[["x"]], 
                                y = .data[["y"]]), 
-                           lty = qcc.options("zones")$lty[2],
-                           col = qcc.options("zones")$col[2])
+                           lty = zones$lty[2],
+                           col = zones$col[2])
     }
   }
   
@@ -665,10 +660,9 @@ plot.qcc <- function(x, xtime = NULL,
       y2 <- rep(limits.2sigma[1,2], length(df$group)+1)
     } else
     {
-      y1 <- c(limits.2sigma[seq_len(length(df$group)),1],
-              limits.2sigma[length(df$group),1])
-      y2 <- c(limits.2sigma[seq_len(length(df$group)),2],
-              limits.2sigma[length(df$group),2])
+      limits.2sigma <- limits.2sigma[plot.index$row, , drop = FALSE]
+      y1 <- c(limits.2sigma[,1], limits.2sigma[length(df$group),1])
+      y2 <- c(limits.2sigma[,2], limits.2sigma[length(df$group),2])
     }
     xp1 <- rep(x1, each=2)[-1]
     xp2 <- rep(x2, each=2)[-1]
@@ -681,7 +675,7 @@ plot.qcc <- function(x, xtime = NULL,
                                        y = c(yp1,rev(yp2))),
                      aes(x = .data[["x"]], 
                          y = .data[["y"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
@@ -689,14 +683,14 @@ plot.qcc <- function(x, xtime = NULL,
         geom_step(data = data.frame(x = x1, y = y1),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[3],
-                  col = qcc.options("zones")$col[3])
+                  lty = zones$lty[3],
+                  col = zones$col[3])
       plot <- plot + 
         geom_step(data = data.frame(x = x2, y = y2),
                   aes(x = .data[["x"]], 
                       y = .data[["y"]]), 
-                  lty = qcc.options("zones")$lty[3],
-                  col = qcc.options("zones")$col[3])
+                  lty = zones$lty[3],
+                  col = zones$col[3])
     }
   }
   
@@ -704,12 +698,12 @@ plot.qcc <- function(x, xtime = NULL,
   plot <- plot + if(length(center) == 1) 
   {
     geom_hline(yintercept = center, 
-               col = qcc.options("zones")$col[1]) 
+               col = zones$col[1])
   } else
   {
     geom_step(data = df, aes(x = .data[["group"]], 
                              y = .data[["center"]]),
-              col = qcc.options("zones")$col[1])
+              col = zones$col[1])
   }
 
   if(chart.all & (!is.null(newstats)))
@@ -733,44 +727,32 @@ plot.qcc <- function(x, xtime = NULL,
   
   if(add.stats) 
   { 
-    # write info at bottom
-    tab_base <- ggplot() + 
-      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_void() +
-      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")),
-            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
-    
-    text1 <- paste(paste0("Number of groups = ", length(statistics)),
-                   paste0("Center = ", if(length(center) == 1) 
-                     signif(center[1], digits) else "variable"),
-                   paste0("StdDev = ", if(length(std.dev) == 1) 
-                     signif(std.dev[1], digits) else "variable"), 
-                   sep = "\n")
-    text2 <- paste("",
-                   paste0("LCL = ", if(length(unique(lcl)) == 1) 
-                     signif(lcl[1], digits) else "variable"),
-                   paste0("UCL = " ,if(length(unique(ucl)) == 1) 
-                     signif(ucl[1], digits) else "variable"), 
-                   sep = "\n")
-    text3 <- paste("",
-                   paste0("No. beyond limits = ", sum(violations == 1, na.rm=TRUE)),
-                   paste0("No. violating runs = ", sum(violations > 1, na.rm=TRUE)),
-                   sep = "\n")
-    tab1 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    tab2 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    tab3 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text3, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
+    display_scalar <- \(x)
+      if (length(x) != 1L) "variable" else signif(x[[1L]], digits)
 
-    plot <- patchwork::wrap_plots(plot, tab1, tab2, tab3, 
-                                  design = c("AAA\nBCD"),
-                                  heights = c(0.85, 0.15), 
-                                  widths = c(0.4, 0.3, 0.3))
+    sections <- list(
+      `Process Summary` = c(
+        "Number of groups" = length(statistics),
+        "Center" = display_scalar(center),
+        "StdDev" = display_scalar(std.dev)
+      ),
+      Limits = c(
+        "LCL" = display_scalar(unique(lcl)), # HACK: is `unique` necessary?
+        "UCL" = display_scalar(unique(ucl))
+      ),
+      Violations = c(
+        "Beyond limits" = sum(violations == 1, na.rm = TRUE),
+        "Violating runs" = sum(violations > 1, na.rm = TRUE)
+      )
+    )
+
+    panels <- chart_footer(sections)
+    plot <- .add_footer(
+      plot,
+      panels,
+      widths = c(0.4, 0.3, 0.3),
+      heights = c(0.90, 0.10)
+    )
   }
   
   return(plot)

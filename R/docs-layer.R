@@ -24,7 +24,7 @@ NULL
 #' @param chart.all a logical value indicating whether both statistics for
 #'   `data` and for `newdata` (if given) should be plotted.
 #' @param fill a logical value specifying if the in-control area should be
-#'   filled with the color specified in `qcc.options("zones")$fill`.
+#'   filled with the color specified in the `qcc.zones` option.
 #' @param title a character string specifying the main title. Set `title =
 #'   NULL` to remove the title.
 #' @param xlab a string giving the label for the x-axis.
@@ -126,6 +126,11 @@ NULL
     "Chou, Y., Owen, D. B., and Borrego, S. A. (1990).",
     "Lower confidence limits on process capability indices.",
     "*Journal of Quality Technology*, **22**, 223--229."
+  ),
+  cano_moguerza_redchuk_2012 = paste(
+    "Cano, Emilio L., Moguerza, Javier M. and Redchuk, Andres. 2012.",
+    "*Six Sigma with {R}. Statistical Engineering for ProcessImprovement*,",
+    "Use R!, vol. 36. Springer, New York."
   )
 )
 

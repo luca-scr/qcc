@@ -261,6 +261,7 @@ qccRulesViolatingNEL7 <- function(object)
 
 #' @rdname rules
 #' @export
+# PERF: Use matrixStats
 qccRulesViolatingNEL8 <- function(object)
 {
   # Return indices of points outside one-sigma limits on both sides (Nelson #8)

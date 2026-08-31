@@ -289,15 +289,20 @@ summary.cusum.qcc <- function(object, ...) print.cusum.qcc(object, ...)
 #' @export plot.cusum.qcc
 #' @inheritParams plot_common
 plot.cusum.qcc <- function(x, xtime = NULL,
-                           add.stats = qcc.options("add.stats"), 
-                           chart.all = qcc.options("chart.all"), 
-                           fill = qcc.options("fill"),
+                           add.stats = getOption("qcc.add.stats"),
+                           chart.all = getOption("qcc.chart.all"),
+                           fill = getOption("qcc.fill"),
                            label.bounds = c("LDB", "UDB"), 
                            title, xlab, ylab, xlim, ylim,
                            digits = getOption("digits"), 
                            ...) 
 {
   object <- x  # Argh.  Really want to use 'object' anyway
+
+  # TODO: should these be formals?
+  rules <- getOption("qcc.rules")
+  zones <- getOption("qcc.zones")
+
   if ((missing(object)) | (!inherits(object, "cusum.qcc")))
      stop("an object of class `cusum.qcc' is required")
 
@@ -315,8 +320,13 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   cusum.pos <- object$pos
   cusum.neg <- object$neg
   statistics <- c(stats, newstats)
-  groups <- xtime %||% 1:length(statistics)
-  stopifnot(length(groups) == length(statistics))
+  plot.index <- qcc_plot_index(
+    n_phase1 = length(stats),
+    n_phase2 = length(newstats),
+    xtime = xtime,
+    chart_all = chart.all
+  )
+  groups <- plot.index$group
   
   if(missing(title))
   { 
@@ -328,18 +338,24 @@ plot.cusum.qcc <- function(x, xtime = NULL,
            title <- paste(type, "Chart for", newdata.name) 
   }
   
-  df <- data.frame(group = groups, 
-                   cusum_pos = cusum.pos,
-                   cusum_neg = cusum.neg,
-                   ldb = ldb, udb = udb,
-                   violations_lower = factor(ifelse(is.na(violations$lower), 
-                                                    0, violations$lower),
-                                             levels = 0:1),
-                   violations_upper = factor(ifelse(is.na(violations$upper), 
-                                                    0, violations$upper),
-                                             levels = 0:1))
-  if(!chart.all & (!is.null(newstats)))
-    df <- df[df$group > length(object$statistics),]
+  plot.data <- data.frame(
+    cusum_pos = cusum.pos,
+    cusum_neg = cusum.neg,
+    ldb = ldb,
+    udb = udb,
+    violations_lower = factor(
+      ifelse(is.na(violations$lower), 0, violations$lower),
+      levels = 0:1
+    ),
+    violations_upper = factor(
+      ifelse(is.na(violations$upper), 0, violations$upper),
+      levels = 0:1
+    )
+  )
+  df <- cbind(
+    plot.index,
+    plot.data[plot.index$row, , drop = FALSE]
+  )
 
   if(missing(ylim))
     ylim <- range(df[,c("cusum_pos", "cusum_neg", "ldb", "udb")], na.rm = TRUE)
@@ -358,9 +374,9 @@ plot.cusum.qcc <- function(x, xtime = NULL,
                    colour = .data[["violations_lower"]], 
                    shape = .data[["violations_lower"]]), 
                size = 2) +
-    scale_colour_manual(values = c("black", qcc.options("rules")$col),
+    scale_colour_manual(values = c("black", rules$col),
                         breaks = levels(df$violations)) +
-    scale_shape_manual(values = c(20, qcc.options("rules")$pch),
+    scale_shape_manual(values = c(20, rules$pch),
                        breaks = levels(df$violations)) +
     labs(title = title, subtitle = "",
          x = if(missing(xlab)) "Group" else xlab,
@@ -374,13 +390,7 @@ plot.cusum.qcc <- function(x, xtime = NULL,
       ),
     ) 
   
-  plot <- plot + 
-  {
-    if(is.numeric(groups))
-      scale_x_continuous(breaks = pretty(df$group, n = 7))
-    else
-      scale_x_date(breaks = pretty(df$group, n = 7))
-  }
+  plot <- plot + scale_x_qcc(groups, xlim)
     
   lab <- "Above target"
   if (add.stats && object$head.start > 0)
@@ -414,24 +424,24 @@ plot.cusum.qcc <- function(x, xtime = NULL,
         geom_polygon(data = data.frame(xp, yp),
                      aes(x = .data[["xp"]], 
                          y = .data[["yp"]]), 
-                     fill = adjustcolor(qcc.options("zones")$fill, alpha.f=0.2),
+                     fill = adjustcolor(zones$fill, alpha.f=0.2),
                      col = NA)
     } else
     {
       plot <- plot + 
         geom_hline(yintercept = ldb,
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
       plot <- plot + 
         geom_hline(yintercept = udb, 
-                  lty = qcc.options("zones")$lty[1],
-                  col = qcc.options("zones")$col[1])
+                  lty = zones$lty[1],
+                  col = zones$col[1])
     }
   }
   
   # draw center line
   plot <- plot +
-    geom_hline(yintercept = 0, col = qcc.options("zones")$col[1])
+    geom_hline(yintercept = 0, col = zones$col[1])
 
   if(chart.all & (!is.null(newstats)))
   {
@@ -458,47 +468,39 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   
   if(add.stats) 
   { 
-    # write info at bottom
-    tab_base <- ggplot() + 
-      ggplot2::xlim(0,1) + ggplot2::ylim(0,1) + 
-      theme_void() +
-      theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                           color = qcc.options("bg.margin")),
-            plot.margin = margin(0.5, 0, 0.5, 0, unit = "lines"))
+    display <- \(x, suffix = "") {
+      if (length(x) != 1L)
+        return("variable")
 
-    text1 <- paste(paste0("Number of groups = ", length(statistics)),
-                   paste0("Center = ", if(length(center) == 1) 
-                     signif(center[1], digits) else "variable"),
-                   paste0("StdDev = ", if(length(std.dev) == 1) 
-                     signif(std.dev[1], digits) else "variable"), sep = "\n")
-    
-    text2 <- paste(paste0("Decision interval (StdErr) = ", 
-                          signif(object$decision.interval, digits = digits)),
-                   paste0("Shift detection (StdErr) = ", 
-                          signif(object$se.shift, digits = digits)),
-                   paste0("No. beyond boundaries = ", 
-                          sum(sapply(violations, sum, na.rm = TRUE))), sep = "\n")
-    tab1 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text1, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    # TODO: remove
-    # theme(plot.margin = margin(0.5, 0, 0.5, 5, unit = "lines"))
-    tab2 <- tab_base + 
-      geom_text(aes(x = -Inf, y = Inf), label = text2, 
-                hjust = 0, vjust = 1, size = 10 * 5/14)
-    # TODO: remove
-    # theme(plot.margin = margin(0.5, 1, 0.5, 3, unit = "lines"))
-    # TODO: remove
-    # plot <- gridExtra::arrangeGrob(plot, tab1, tab2,
-    #                                layout_matrix = matrix(c(1,2,1,3), 
-    #                                                       nrow = 2, ncol = 2),
-    #                                heights = c(0.85, 0.15), 
-    #                                widths = c(0.5, 0.5))
-    plot <- patchwork::wrap_plots(plot, tab1, tab2,
-                                  design = c("AA\nBC"),
-                                  heights = c(0.85, 0.15), 
-                                  widths = c(0.6, 0.4))
-    
+      paste0(signif(x[[1L]], digits), suffix)
+    }
+
+    sections <- list(
+      `Process Summary` = c(
+        "Number of groups" = length(statistics),
+        "Center" = display(center),
+        "StdDev" = display(std.dev)
+      ),
+      Parameters = c(
+        if (object$head.start > 0) {
+          c("Head start" = display(object$head.start, " StdErr"))
+        },
+        "Decision interval" =
+          display(object$decision.interval, " StdErr"),
+        "Shift detection" =
+          display(object$se.shift, " StdErr"),
+        "Beyond boundaries" =
+          sum(unlist(violations, use.names = FALSE), na.rm = TRUE)
+      )
+    )
+
+    panels <- chart_footer(sections)
+    plot <- .add_footer(
+      plot,
+      panels,
+      widths = c(0.4, 0.6),
+      heights = c(0.90, 0.10)
+    )
   }
   
   return(plot)

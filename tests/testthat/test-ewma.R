@@ -61,3 +61,33 @@ test_that("ewma phase-II extension propagates labels and flags violations", {
   expect_equal(unname(chart$ewma), c(0, 0, 0, 5), tolerance = 1e-12)
   expect_equal(unname(chart$violations), c(NA_real_, NA_real_, NA_real_, 1))
 })
+
+test_that("ewma chart limits has the expected structure", {
+  data <- matrix(c(11, 13, 12), ncol = 1)
+  chart <- ewma(data, sizes = 1, center = 10, std.dev = 2)
+
+  expect_true(is.matrix(chart$limits))
+  expect_equal(dim(chart$limits), c(3, 2))
+
+})
+
+test_that("plot.ewma.qcc with footer matches its visual snapshot", {
+  chart <- ewma(
+    matrix(c(9.8, 10.1, 10.0, 10.2, 9.9, 10.05), ncol = 1),
+    sizes = 1,
+    center = 10,
+    std.dev = 0.1,
+    lambda = 0.25,
+    nsigmas = 3
+  )
+
+  vdiffr::expect_doppelganger(
+    "ewma chart with footer",
+    plot.ewma.qcc(
+      chart,
+      add.stats = TRUE,
+      fill = FALSE,
+      title = "EWMA chart"
+    )
+  )
+})

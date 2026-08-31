@@ -23,6 +23,7 @@ NULL
 
 #' @rdname stats.S
 #' @export
+# PERF: Replace apply call with matrixStats
 stats.S <- function(data, sizes)
 {
   data <- as.matrix(data)
@@ -54,7 +55,7 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
   if(is.null(nsigmas) & is.null(conf))
     stop("Argument 'nsigmas' or 'conf' must be provided. See help.")
   if(length(unique(sizes))==1) sizes <- sizes[1]
-  se.stats <- std.dev * sqrt(1 - qcc.c4(sizes)^2)
+  se.stats <- std.dev * sqrt(1 - .c4(sizes)^2)
   if (is.null(conf)) 
      { lcl <- pmax(0, center - nsigmas * se.stats)
        ucl <- center + nsigmas * se.stats
@@ -68,5 +69,5 @@ limits.S <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
           }
           else stop("invalid conf argument. See help.")
      }
-  .construct_limits(lcl,ucl)
+  new_limits(lcl,ucl)
 }

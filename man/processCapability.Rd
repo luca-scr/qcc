@@ -23,9 +23,9 @@ processCapability(
 
 \method{plot}{processCapability}(
   x,
-  add.stats = qcc.options("add.stats"),
+  add.stats = getOption("qcc.add.stats"),
   breaks = nclass.hist,
-  fill = adjustcolor(qcc.options("zones")$fill, alpha.f = 0.5),
+  fill = adjustcolor(getOption("qcc.zones")$fill, alpha.f = 0.5),
   color = "white",
   title,
   xlab,

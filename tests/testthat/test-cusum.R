@@ -83,3 +83,24 @@ test_that("cusum validates head.start bounds", {
     "head.start must be non-negative and less than decision.interval"
   )
 })
+
+test_that("plot.cusum.qcc with footer matches its visual snapshot", {
+  chart <- cusum(
+    matrix(c(9.8, 10.1, 10.0, 10.2, 9.9, 10.05), ncol = 1),
+    sizes = 1,
+    center = 10,
+    std.dev = 0.1,
+    decision.interval = 4,
+    se.shift = 1
+  )
+
+  vdiffr::expect_doppelganger(
+    "cusum chart with footer",
+    plot.cusum.qcc(
+      chart,
+      add.stats = TRUE,
+      fill = FALSE,
+      title = "CUSUM chart"
+    )
+  )
+})

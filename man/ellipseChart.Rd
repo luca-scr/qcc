@@ -6,7 +6,7 @@
 \usage{
 ellipseChart(
   object,
-  chart.all = TRUE,
+  chart.all = getOption("qcc.chart.all"),
   show.id = FALSE,
   ngrid = 50,
   confidence.level,

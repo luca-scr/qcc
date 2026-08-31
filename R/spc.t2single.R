@@ -32,9 +32,8 @@ stats.T2.single <- function(data, center = NULL, cov = NULL)
   x <- scale(data, center = center, scale = FALSE)
   if(is.null(cov))
     { cov <- crossprod(x)/(m-1) }       # sample covar matrix
-  cov.inv <- solve(cov)
   # Hotelling's T^2 statistic
-  T2 <- apply(x, 1, function(x) x %*% cov.inv %*% x)
+  T2 <- stats::mahalanobis(data, center, cov)
   list(statistics = T2, means = data, center = center, cov = cov)
 }
 
@@ -53,17 +52,11 @@ limits.T2.single <- function(ngroups, size = 1, nvars, conf)
   # Phase 1 control limits
   # Tracy Mason Young (1992)
   ucl <- (m-1)^2/m*qbeta(conf, p/2, (m-p-1)/2)
-  lcl <- 0
-  ctrl.limits <- matrix(c(lcl, ucl), ncol = 2)
   # Phase 2 prediction limits
-  ucl <- p*(m+1)*(m-1)/(m*(m-p))*qf(conf, p, m-p)
-  lcl <- 0
-  pred.limits <- matrix(c(lcl, ucl), ncol = 2)
+  upl <- p*(m+1)*(m-1)/(m*(m-p))*qf(conf, p, m-p)
 
-  rownames(ctrl.limits) <- rownames(pred.limits) <- rep("", nrow(pred.limits))
-  colnames(ctrl.limits) <- c("LCL", "UCL")
-  colnames(pred.limits) <- c("LPL", "UPL")
-
-  return(list(control = ctrl.limits, prediction = pred.limits))
+  list(
+    control = new_limits(0,ucl),
+    prediction = new_limits(0,upl, names = c("LPL", "UPL"))
+  )
 }
-

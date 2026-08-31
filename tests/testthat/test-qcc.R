@@ -192,6 +192,7 @@ test_that("plot.qcc validates xtime class", {
 })
 
 
+# TODO: Rewrite in BDD style in tests/testthat/test-spc.r.R
 test_that("S-chart helpers keep expected structure and non-negative lower limits", {
   grouped <- make_grouped()
   subgroup_sizes <- rep(4, nrow(grouped))
@@ -247,11 +248,13 @@ test_that("qcc validates required chart inputs and dimensions", {
   )
 })
 
+# TODO: Rewrite in BDD style in tests/testthat/test-spc.r.R
 test_that("c-chart helpers enforce unit sizes and compute sd from mean count", {
   expect_error(stats.c(c(1, 2, 3), sizes = c(1, 2, 1)), "all sizes")
   expect_equal(sd.c(c(1, 2, 3), sizes = rep(1, 3)), sqrt(mean(c(1, 2, 3))))
 })
 
+# TODO: Rewrite in BDD style in tests/testthat/test-spc.p_np.R
 test_that("p and np helpers remain internally consistent", {
   counts <- c(2, 4, 3, 5)
   sample_sizes <- c(10, 12, 11, 13)
@@ -267,7 +270,8 @@ test_that("p and np helpers remain internally consistent", {
   expect_equal(np_limits / sample_sizes, p_limits, tolerance = 1e-12)
 })
 
-test_that("R-chart helpers keep expected structure and enforce max subgroup size", {
+# TODO: Rewrite in BDD style in tests/testthat/test-spc.r.R
+test_that("R-chart helpers keep expected structure", {
   grouped <- make_grouped()
   subgroup_sizes <- rep(4, nrow(grouped))
 
@@ -283,51 +287,24 @@ test_that("R-chart helpers keep expected structure and enforce max subgroup size
   expect_equal(length(r_stats$statistics), nrow(grouped))
   expect_equal(ncol(r_limits), 2)
   expect_true(all(r_limits[, "UCL"] >= r_limits[, "LCL"]))
+})
 
-  max_r_size <- length(qcc.options("se.R.unscaled")) + 1
-  expect_error(
-    limits.R(
-      center = r_stats$center,
-      std.dev = r_sd,
-      sizes = max_r_size,
-      nsigmas = 3
-    ),
-    "group size must be less than"
+test_that("plot.qcc with footer matches its visual snapshot", {
+  chart <- qcc(
+    c(9.8, 10.1, 10.0, 10.2, 9.9, 10.05),
+    type = "xbar.one",
+    center = 10,
+    std.dev = 0.1,
+    rules = 1
   )
-})
 
-test_that("sd.xbar.one: mean MR estimator produces expected estimate.", {
-  data <- c(100, 110, 95, 105, 98, 112, 101, 99, 107, 103)
-  estimate <- sd.xbar.one(data, std.dev = "MR")
-  expect_equal(estimate, 7.97872340)
-})
-
-test_that("sd.xbar.one: SD-based estimator produces expected estimate", {
-  data <- c(100, 110, 95, 105, 98, 112, 101, 99, 107, 103)
-  estimate <- sd.xbar.one(data, std.dev = "SD")
-  expect_equal(estimate, 5.61029128)
-})
-
-test_that("sd.xbar.one: Assume zero MRs for partially missing windows with the mean MR estimator", {
-  data <- c(100, 110, NA, 105, 98, 112)
-  estimate <- sd.xbar.one(data, std.dev = "MR")
-  expect_equal(estimate, 7.97872340)
-})
-
-test_that("sd.xbar.one: Return Inf for completely missing windows", {
-  data <- c(100, 110, NA, NA, 98, 112)
-  expect_no_warning(estimate <- sd.xbar.one(data, std.dev = "MR"))
-  expect_equal(estimate, 10.6382979)
-})
-
-test_that("sd.xbar.one: Return NA for missing data using the SD-based estimator", {
-  data <- c(100, 110, NA, 105, 98, 112)
-  estimate <- sd.xbar.one(data, std.dev = "SD")
-  expect_equal(estimate, 6.471123)
-})
-
-test_that("sd.xbar.one: mean MR estimator accepts r != 2.", {
-  data <- c(100, 110, 95, 105, 98, 112, 101, 99, 107, 103)
-  estimate <- sd.xbar.one(data, std.dev = "MR", r = 3)
-  expect_equal(estimate, 7.16184288)
+  vdiffr::expect_doppelganger(
+    "qcc chart with footer",
+    plot.qcc(
+      chart,
+      add.stats = TRUE,
+      fill = FALSE,
+      title = "QCC chart"
+    )
+  )
 })

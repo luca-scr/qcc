@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' data-engine-version='2.0' width='720.00pt' height='576.00pt' viewBox='0 0 720.00 576.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA='>
+    <rect x='0.00' y='0.00' width='720.00' height='576.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 0.00; stroke: #EFF0F2; fill: #EFF0F2;' />
+</g>
+<defs>
+  <clipPath id='cpOS45Nnw3MTAuMDR8MzEuNzV8NTY2LjA0'>
+    <rect x='9.96' y='31.75' width='700.07' height='534.29' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpOS45Nnw3MTAuMDR8MzEuNzV8NTY2LjA0)'>
+<rect x='9.96' y='31.75' width='700.07' height='534.29' style='stroke-width: 0.00; stroke: none; fill: #FFFFFF;' />
+<line x1='41.78' y1='298.89' x2='542.26' y2='298.89' style='stroke-width: 2.13; stroke-linecap: butt;' />
+<polyline points='533.01,304.24 542.26,298.89 533.01,293.55 ' style='stroke-width: 2.13; stroke-linecap: butt;' />
+<text x='554.99' y='303.85' style='font-size: 14.40px; font-weight: bold; font-family: sans;' textLength='91.25px' lengthAdjust='spacingAndGlyphs'>Surface Flaws</text>
+<line x1='105.94' y1='80.32' x2='170.09' y2='298.89' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='105.94' y='70.61' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='79.39px' lengthAdjust='spacingAndGlyphs'>Measurements</text>
+<line x1='234.24' y1='80.32' x2='298.39' y2='298.89' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='234.24' y='70.61' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='48.69px' lengthAdjust='spacingAndGlyphs'>Materials</text>
+<line x1='362.54' y1='80.32' x2='426.69' y2='298.89' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='362.54' y='70.61' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='54.04px' lengthAdjust='spacingAndGlyphs'>Personnel</text>
+<line x1='105.94' y1='517.47' x2='170.09' y2='298.89' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='105.94' y='535.44' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='67.38px' lengthAdjust='spacingAndGlyphs'>Environment</text>
+<line x1='234.24' y1='517.47' x2='298.39' y2='298.89' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='234.24' y='535.44' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='46.04px' lengthAdjust='spacingAndGlyphs'>Methods</text>
+<line x1='362.54' y1='517.47' x2='426.69' y2='298.89' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='362.54' y='535.44' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='51.37px' lengthAdjust='spacingAndGlyphs'>Machines</text>
+<text x='124.71' y='127.75' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='59.42px' lengthAdjust='spacingAndGlyphs'>Micrometers</text>
+<text x='137.66' y='171.47' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='60.64px' lengthAdjust='spacingAndGlyphs'>Microscopes</text>
+<text x='149.41' y='215.18' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='49.84px' lengthAdjust='spacingAndGlyphs'>Inspectors</text>
+<text x='249.95' y='127.75' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='28.82px' lengthAdjust='spacingAndGlyphs'>Alloys</text>
+<text x='264.88' y='171.47' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='49.84px' lengthAdjust='spacingAndGlyphs'>Lubricants</text>
+<text x='277.23' y='215.18' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='45.03px' lengthAdjust='spacingAndGlyphs'>Suppliers</text>
+<text x='378.07' y='127.75' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='27.02px' lengthAdjust='spacingAndGlyphs'>Shifts</text>
+<text x='393.90' y='171.47' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='57.04px' lengthAdjust='spacingAndGlyphs'>Supervisors</text>
+<text x='404.93' y='215.18' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='39.02px' lengthAdjust='spacingAndGlyphs'>Training</text>
+<text x='418.66' y='258.90' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='48.03px' lengthAdjust='spacingAndGlyphs'>Operators</text>
+<text x='118.30' y='501.75' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='66.66px' lengthAdjust='spacingAndGlyphs'>Condensation</text>
+<text x='128.61' y='458.04' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='41.42px' lengthAdjust='spacingAndGlyphs'>Moisture</text>
+<text x='242.76' y='501.75' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='28.22px' lengthAdjust='spacingAndGlyphs'>Brake</text>
+<text x='256.85' y='458.04' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='40.84px' lengthAdjust='spacingAndGlyphs'>Engager</text>
+<text x='268.36' y='414.32' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='27.62px' lengthAdjust='spacingAndGlyphs'>Angle</text>
+<text x='371.36' y='501.75' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='31.23px' lengthAdjust='spacingAndGlyphs'>Speed</text>
+<text x='384.31' y='458.04' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='32.43px' lengthAdjust='spacingAndGlyphs'>Lathes</text>
+<text x='395.70' y='414.32' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='18.01px' lengthAdjust='spacingAndGlyphs'>Bits</text>
+<text x='410.57' y='370.61' style='font-size: 10.80px; font-style: italic; font-family: sans;' textLength='38.43px' lengthAdjust='spacingAndGlyphs'>Sockets</text>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<text x='9.96' y='19.05' style='font-size: 13.20px; font-weight: bold; font-family: sans;' textLength='154.10px' lengthAdjust='spacingAndGlyphs'>Cause-and-Effect diagram</text>
+</g>
+</svg>

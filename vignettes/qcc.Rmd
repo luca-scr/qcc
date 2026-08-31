@@ -45,7 +45,7 @@ This vignette is written in R Markdown using the [knitr](https://cran.r-project.
 
 ```{R, message = FALSE, echo = 1}
 library(qcc)
-# qcc.options(bg.margin = "#F8F8F8")
+# options(qcc.bg.margin = "#F8F8F8")
 cat(qcc:::qccStartupMessage(), sep = "")
 ```
 

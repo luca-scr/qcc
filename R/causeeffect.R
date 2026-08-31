@@ -63,24 +63,20 @@ causeEffectDiagram <- function(cause, effect,
   plot <- ggplot() +
     xlim(0, 100) + ylim(0, 100) +
     labs(title = title) +
-    theme_void() +
-    theme(plot.background = element_rect(fill = qcc.options("bg.margin"),
-                                         color = qcc.options("bg.margin")),
-          panel.background = element_rect(fill = qcc.options("bg.figure")),
-          plot.title = element_text(face = "bold", margin = margin(b = 10)),
-          plot.margin = margin(10, 10, 10, 10))
+    theme_qcc_void(
+      panel.background = element_rect(fill = getOption("qcc.bg.figure")),
+      plot.title = element_text(face = "bold", margin = margin(b = 10)),
+      plot.margin = margin(10, 10, 10, 10)
+    )
   
   size <- cex*12/ggplot2::.pt
   inches_per_unit <- 6 / 100  # ~ 6 inches across 100 units
   effect_label_width <- strwidth(effect, units = "inches") /inches_per_unit * 1.1
-  max_subcause_label_width <- max(unlist(sapply(cause, strwidth, units = "inches"))) /inches_per_unit # FIX: unused variable
-  max_label_height <- max(strheight(effect, units="inches"),
-            unlist(sapply(cause, strheight, units="inches"))) /inches_per_unit # FIX: unused variable
 
   plot <- plot +  
     # add main spine
     geom_segment(aes(x = 0, y = 50, xend = 100-effect_label_width-2, yend = 50),
-                 arrow = arrow(length = unit(0.02, "npc")), 
+                 arrow = grid::arrow(length = grid::unit(0.02, "npc")), 
                  linewidth = 1) +
     # add effect label
     annotate("text", x = 100-effect_label_width, y = 50,  

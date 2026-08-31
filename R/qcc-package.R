@@ -41,7 +41,7 @@
 #' @importFrom grDevices gray adjustcolor palette extendrange nclass.FD nclass.Sturges
 #' @importFrom MASS mvrnorm
 #' @importFrom scales label_percent
-#' @importFrom cli rule
+#' @importFrom cli rule cli_warn
 #' @importFrom crayon bold
 ## usethis namespace: end
 NULL

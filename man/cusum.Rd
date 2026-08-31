@@ -28,9 +28,9 @@ cusum(
 \method{plot}{cusum.qcc}(
   x,
   xtime = NULL,
-  add.stats = qcc.options("add.stats"),
-  chart.all = qcc.options("chart.all"),
-  fill = qcc.options("fill"),
+  add.stats = getOption("qcc.add.stats"),
+  chart.all = getOption("qcc.chart.all"),
+  fill = getOption("qcc.fill"),
   label.bounds = c("LDB", "UDB"),
   title,
   xlab,
@@ -96,7 +96,7 @@ information should be printed at the bottom of the chart.}
 \code{data} and for \code{newdata} (if given) should be plotted.}
 
 \item{fill}{a logical value specifying if the in-control area should be
-filled with the color specified in \code{qcc.options("zones")$fill}.}
+filled with the color specified in the \code{qcc.zones} option.}
 
 \item{label.bounds}{a character vector specifying the labels for the the
 decision interval boundaries.}
