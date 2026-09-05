@@ -95,6 +95,25 @@ testthat::describe("c4_mssd()", {
   it("Returns values close to Monte Carlo estimates", {
     # NOTE: We do not use Minitab c4` lookup table because it is biased (https://github.com/luca-scr/qcc/issues/63#issuecomment-5553861283)
     sim <- readRDS(testthat::test_path("fixtures", "c4_mssd_mc.rds")) # SOURCE: https://github.com/she3o/c4p_mssd
-    expect_equal(.c4_mssd(2:500), sim$estimate, tolerance = 5e-7)
+    expect_equal(c4_mssd(2:500), sim$estimate, tolerance = 5e-7)
+  })
+
+  it("handles unsupported sample sizes", {
+    expect_warning(x <- c4_mssd(c(0, 1, 20.5, Inf, -Inf, NA, NaN, 2)))
+    expect_equal(x, c(rep(NA_real_, 7), sqrt(2 / pi)), tolerance = 1e-12)
+  })
+
+  it("preserves order and repeated sample sizes", {
+    sim <- readRDS(testthat::test_path("fixtures", "c4_mssd_mc.rds"))
+    n <- c(10, 2, 100, 10, 2)
+    expect_equal(c4_mssd(n), sim$estimate[n - 1], tolerance = 5e-7)
+  })
+
+  it("returns a numeric vector for empty input", {
+    expect_identical(c4_mssd(numeric()), numeric())
+  })
+
+  it("matches the analytic value for two observations", {
+    expect_equal(c4_mssd(2), sqrt(2 / pi), tolerance = 1e-12)
   })
 })
