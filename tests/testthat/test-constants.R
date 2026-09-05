@@ -90,3 +90,11 @@ testthat::describe("c4()", {
     expect_equal(x, c(rep(NA, 7), c4(2)))
   })
 })
+
+testthat::describe("c4_mssd()", {
+  it("Returns values close to Monte Carlo estimates", {
+    # NOTE: We do not use Minitab c4` lookup table because it is biased (https://github.com/luca-scr/qcc/issues/63#issuecomment-5553861283)
+    sim <- readRDS(testthat::test_path("fixtures", "c4_mssd_mc.rds")) # SOURCE: https://github.com/she3o/c4p_mssd
+    expect_equal(.c4_mssd(2:500), sim$estimate, tolerance = 5e-7)
+  })
+})
