@@ -47,7 +47,7 @@
 #'   [SixSigma::ss.cc.getd2()], [IQCC::d2()], [shewhartr::shewhart_constants()]
 #'
 #' @export
-d2 <- function(n) assert_n(n) |> .d2()
+d2 <- function(n) .d2(assert_n(n))
 
 .d2 <- function(n) integrate_ok(
   function(x, n_i) 1 - ptukey(x, n_i, Inf),
@@ -74,7 +74,7 @@ d2 <- function(n) assert_n(n) |> .d2()
 #'   [SixSigma::ss.cc.getd3()], [IQCC::d3()], [shewhartr::shewhart_constants()]
 #'
 #' @export
-d3 <- function(n) assert_n(n) |> .d3()
+d3 <- function(n) .d3(assert_n(n))
 
 # Analytic solutions for `n` in [2, 5] in Wardell2025
 .d3 <- function(n) {
@@ -103,7 +103,7 @@ d3 <- function(n) assert_n(n) |> .d3()
 #' @seealso For other implementations in R:
 #'   [SixSigma::ss.cc.getc4()], [IQCC::c4()], [shewhartr::shewhart_constants()]
 #' @export
-c4 <- function(n) assert_n(n) |> .c4()
+c4 <- function(n) .c4(assert_n(n))
 
 # We use  `exp(lgamma(n/2) - lgamma((n - 1)/2))`
 # and not `((gamma(n/2))/(gamma((n - 1)/2)))`
