@@ -727,7 +727,7 @@ plot.qcc <- function(x, xtime = NULL,
   
   if(add.stats) 
   { 
-    display_scalar <- \(x)
+    display_scalar <- function(x)
       if (length(x) != 1L) "variable" else signif(x[[1L]], digits)
 
     sections <- list(

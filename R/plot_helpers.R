@@ -142,7 +142,7 @@ chart_footer <- function(sections, parse = FALSE) {
   n_rows <- max(lengths(sections))
   row_spacing <- 0.75
 
-  panels <- Map(\(values, section, parse) {
+  panels <- Map(function(values, section, parse) {
     value_names <- names(values)
     labels <- sprintf("%s:", value_names)
     value_x <- max(nchar(labels, type = "width")) + 1L

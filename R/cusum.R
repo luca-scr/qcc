@@ -468,7 +468,7 @@ plot.cusum.qcc <- function(x, xtime = NULL,
   
   if(add.stats) 
   { 
-    display <- \(x, suffix = "") {
+    display <- function(x, suffix = "") {
       if (length(x) != 1L)
         return("variable")
 

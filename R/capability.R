@@ -322,7 +322,7 @@ plot.processCapability <- function(x,
   
   if(add.stats) 
   { 
-    display <- \(x, digits, suffix = "")
+    display <- function(x, digits, suffix = "")
       ifelse(is.na(x), "", paste0(signif(x, digits), suffix))
 
     sections <- list(

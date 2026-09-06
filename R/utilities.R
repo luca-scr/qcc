@@ -147,7 +147,7 @@ qccOverdispersionTest <- function(x, size,
 #' @keywords internal
 #' @noRd
 # DEPRECATE qcc.c4 -> .c4
-qcc.c4 <- \(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
+qcc.c4 <- function(n) sqrt(2/(n - 1)) * exp(lgamma(n/2) - lgamma((n - 1)/2))
 
 #' Construct Control Limits
 #'
@@ -293,7 +293,7 @@ qcc.options <- function(...) {
 #'
 #' @keywords internal
 #' @noRd
-assert_n <- \(n, strict = FALSE) {
+assert_n <- function(n, strict = FALSE) {
   invalid <- !is.finite(n) | n < 2 | n != floor(n)
 
   if (!any(invalid)) return(invisible(n))

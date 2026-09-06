@@ -57,10 +57,10 @@ testthat::describe("sd.xbar()", {
 
   it("infers subgroup sizes from nonmissing observations", {
     methods <- c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF")
-    inferred <- vapply(methods, \(method) {
+    inferred <- vapply(methods, function(method) {
       sd.xbar(data, std.dev = method)
     }, numeric(1))
-    supplied <- vapply(methods, \(method) {
+    supplied <- vapply(methods, function(method) {
       sd.xbar(data, sizes = sizes, std.dev = method)
     }, numeric(1))
 

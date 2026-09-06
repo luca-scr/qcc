@@ -77,7 +77,7 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
   std.dev <- match.arg(std.dev)
   switch(std.dev,
          "UWAVE-R" = {
-           R <- apply(data, 1, \(x) diff(range(x, na.rm = TRUE)))
+           R <- apply(data, 1, function(x) diff(range(x, na.rm = TRUE)))
            sum(R/.d2(sizes))/length(sizes)
          },
          "UWAVE-SD" = {
@@ -85,7 +85,7 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
            sum(S/.c4(sizes))/length(sizes)
          },
          "MVLUE-R" = {
-           R <- apply(data, 1, \(x) diff(range(x, na.rm = TRUE)))
+           R <- apply(data, 1, function(x) diff(range(x, na.rm = TRUE)))
            d2 <- .d2(sizes)
            w <- (d2/.d3(sizes))^2
            sum(R/d2*w)/sum(w)

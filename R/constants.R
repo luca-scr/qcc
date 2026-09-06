@@ -49,8 +49,8 @@
 #' @export
 d2 <- function(n) assert_n(n) |> .d2()
 
-.d2 <- \(n) integrate_ok(
-  \(x, n_i) 1 - ptukey(x, n_i, Inf),
+.d2 <- function(n) integrate_ok(
+  function(x, n_i) 1 - ptukey(x, n_i, Inf),
   0, Inf, n
 )
 
@@ -77,10 +77,10 @@ d2 <- function(n) assert_n(n) |> .d2()
 d3 <- function(n) assert_n(n) |> .d3()
 
 # Analytic solutions for `n` in [2, 5] in Wardell2025
-.d3 <- \(n) {
+.d3 <- function(n) {
   sqrt(
     2 * integrate_ok(
-      \(x, n_i) x * (1 - ptukey(x, n_i, Inf)),
+      function(x, n_i) x * (1 - ptukey(x, n_i, Inf)),
       0, Inf, n
     ) - .d2(n)^2
   )
@@ -108,7 +108,7 @@ c4 <- function(n) assert_n(n) |> .c4()
 # We use  `exp(lgamma(n/2) - lgamma((n - 1)/2))`
 # and not `((gamma(n/2))/(gamma((n - 1)/2)))`
 # because [gamma()] reteurns `Inf` for n > 171 (On my machine).
-.c4 <- \(n) sqrt(2 / (n - 1)) * exp(lgamma(n / 2) - lgamma((n - 1) / 2))
+.c4 <- function(n) sqrt(2 / (n - 1)) * exp(lgamma(n / 2) - lgamma((n - 1) / 2))
 
 
 #' The \eqn{c_4'}{c4'} Constant
@@ -131,13 +131,13 @@ c4 <- function(n) assert_n(n) |> .c4()
 #' @noRd
 # TODO: Cite reference of the calculation below
 # TODO: Should we export a c4_mssd() like other constants?
-.c4_mssd <- \(n) {
+.c4_mssd <- function(n) {
   integrate_ok(
-    \(u, n_i) {
+    function(u, n_i) {
       k <- seq_len(n_i - 1L)
       w <- (1 - cos(pi * k / n_i)) / (n_i - 1)
 
-      vapply(u, \(u_i) {
+      vapply(u, function(u_i) {
         if (u_i == 0 || u_i == 1)
           return(1)
 
@@ -159,12 +159,12 @@ c4 <- function(n) assert_n(n) |> .c4()
 #'
 #' @keywords internal
 #' @noRd
-integrate_ok <- \(f, lower, upper, parameter, ..., max_error = 1e-3) {
+integrate_ok <- function(f, lower, upper, parameter, ..., max_error = 1e-3) {
   parameter_unique <- unique(parameter)
 
   values <- vapply(
     parameter_unique,
-    \(parameter_i) {
+    function(parameter_i) {
       if (is.na(parameter_i))
         return(NA_real_)
 
