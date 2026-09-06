@@ -1,6 +1,6 @@
 ### Constants of statistical importance in SPC and QC
 #
-# This file defines d2, d3, and c4.
+# This file defines d2, d3, c4, and c4_mssd.
 #
 # montgomery 8th Ed also defines A, A3, B3, B4, B5, B6 in Appendix 12.
 #  other factors: A2, D1, D2, D3, D4 are tabulated but not defined AFAIK.
@@ -30,7 +30,6 @@
 #   This would probably be overengineered.
 # TODO: d4 -> MMR estimator.
 # TODO: c5 -> MVLUE-SD and S-chart SE
-# TODO: c4_prime() -> MSSD estimator, due to autocorrelation, c4 would not be 100% correct
 
 #' The \eqn{d_2}{d2} Constant
 #'
@@ -50,7 +49,6 @@
 #' @export
 d2 <- function(n) assert_n(n) |> .d2()
 
-# Analytic solutions for `n` in [2, 5] in Wardell2025
 .d2 <- \(n) integrate_ok(
   \(x, n_i) 1 - ptukey(x, n_i, Inf),
   0, Inf, n
@@ -112,6 +110,47 @@ c4 <- function(n) assert_n(n) |> .c4()
 # because [gamma()] reteurns `Inf` for n > 171 (On my machine).
 .c4 <- \(n) sqrt(2 / (n - 1)) * exp(lgamma(n / 2) - lgamma((n - 1) / 2))
 
+
+#' The \eqn{c_4'}{c4'} Constant
+#'
+#' Calculates the bias-correction factor for the square root of half the mean
+#' squared successive difference (MSSD).
+#'
+#' For \eqn{n} independent, normally distributed observations, define
+#' \deqn{V = \frac{1}{2(n - 1)}\sum_{i=1}^{n-1}(X_{i+1} - X_i)^2.}{V = sum(diff(x)^2) / (2 * (n - 1))}
+#' Then \eqn{E(\sqrt{V}) = c_4'(n)\sigma}{E(sqrt(V)) = c4_mssd(n) * sigma},
+#' so \eqn{\sqrt{V} / c_4'(n)}{sqrt(V) / c4_mssd(n)} is an unbiased estimator
+#' of the population standard deviation. The factor accounts for dependence
+#' between successive differences and differs from [c4()].
+#'
+#' @param n A vector of sample sizes.
+#' @return A vector of calculated \eqn{c_4'}{c4'} constants.
+#' @references `r refs("von_neumann_et_al_1941", "von_neumann_1941")`
+#' @family constants for Shewhart charts
+#' @keywords internal
+#' @noRd
+# TODO: Cite reference of the calculation below
+# TODO: Should we export a c4_mssd() like other constants?
+.c4_mssd <- \(n) {
+  integrate_ok(
+    \(u, n_i) {
+      k <- seq_len(n_i - 1L)
+      w <- (1 - cos(pi * k / n_i)) / (n_i - 1)
+
+      vapply(u, \(u_i) {
+        if (u_i == 0 || u_i == 1)
+          return(1)
+
+        t <- (u_i / (1 - u_i))^2
+        # Log Laplace transform of the weighted sum of chi-squared variables.
+        log_L <- -0.5 * sum(log1p(2 * w * t))
+        # Avoid cancellation in 1 - exp(log_L).
+        -expm1(log_L) / u_i^2
+      }, numeric(1))
+    },
+    0, 1, n
+  ) / sqrt(pi)
+}
 
 #' Vectorized `integrate()` Wrapper
 #'

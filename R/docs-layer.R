@@ -127,6 +127,18 @@ NULL
     "Lower confidence limits on process capability indices.",
     "*Journal of Quality Technology*, **22**, 223--229."
   ),
+  von_neumann_et_al_1941 = paste(
+    "von Neumann, J., Kent, R. H., Bellinson, H. R., and Hart, B. I. (1941).",
+    "The Mean Square Successive Difference.",
+    "*The Annals of Mathematical Statistics*, **12**(2), 153--162.",
+    "<https://doi.org/10.1214/aoms/1177731746>."
+  ),
+  von_neumann_1941 = paste(
+    "von Neumann, J. (1941).",
+    "Distribution of the Ratio of the Mean Square Successive Difference to the Variance.",
+    "*The Annals of Mathematical Statistics*, **12**(4), 367--395.",
+    "<https://doi.org/10.1214/aoms/1177731677>."
+  ),
   cano_moguerza_redchuk_2012 = paste(
     "Cano, Emilio L., Moguerza, Javier M. and Redchuk, Andres. 2012.",
     "*Six Sigma with {R}. Statistical Engineering for ProcessImprovement*,",
