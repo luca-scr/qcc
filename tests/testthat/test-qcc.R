@@ -45,6 +45,16 @@ test_that("xbar.one charts produce the correct number of violations", {
   expect_equal(sum(!is.na(chart$violations)), 1)
 })
 
+test_that("xbar.one charts use MSSD from phase-I data for control limits", {
+  chart <- qcc(c(1, 3), type = "xbar.one", std.dev = "MSSD",
+               newdata = 100, rules = 1)
+
+  expect_equal(chart$std.dev, sqrt(pi), tolerance = 1e-12)
+  expect_equal(as.numeric(chart$limits), 2 + c(-3, 3) * sqrt(pi),
+               tolerance = 1e-12)
+  expect_equal(as.numeric(chart$violations), c(NA_real_, NA_real_, 1))
+})
+
 test_that("qcc uses Western Electric rules by default", {
   chart <- qcc(
     c(rep(0.5, 8), -0.5),

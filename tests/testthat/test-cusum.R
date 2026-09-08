@@ -23,6 +23,15 @@ test_that("cusum recursion and violation checks use strict decision boundaries",
   )
 })
 
+test_that("cusum standardizes individuals using the phase-I MSSD estimate", {
+  chart <- cusum(c(1, 3), std.dev = "MSSD", newdata = 100)
+  reference <- cusum(c(1, 3), std.dev = sqrt(pi), newdata = 100)
+
+  expect_equal(chart$std.dev, sqrt(pi), tolerance = 1e-12)
+  expect_equal(chart$pos, reference$pos, tolerance = 1e-12)
+  expect_equal(chart$neg, reference$neg, tolerance = 1e-12)
+})
+
 test_that("cusum phase-II data are appended with sequential labels", {
   phase_i <- matrix(c(10, 12), ncol = 1)
   phase_ii <- matrix(c(14, 16), ncol = 1)

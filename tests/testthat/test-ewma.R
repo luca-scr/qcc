@@ -20,6 +20,15 @@ test_that("ewma computes smoothing, sigma, and limits from explicit parameters",
   expect_equal(unname(chart$limits), unname(expected_limits), tolerance = 1e-12)
 })
 
+test_that("ewma uses the phase-I MSSD estimate for individual observations", {
+  chart <- ewma(c(1, 3), std.dev = "MSSD", newdata = 100, lambda = 1)
+
+  expect_equal(chart$std.dev, sqrt(pi), tolerance = 1e-12)
+  expect_equal(unname(chart$sigma), rep(sqrt(pi), 3), tolerance = 1e-12)
+  expect_equal(as.numeric(chart$limits[, "UCL"]), rep(2 + 3 * sqrt(pi), 3),
+               tolerance = 1e-12)
+})
+
 test_that("ewmaSmooth orders x and smooths y in sorted order", {
   smoothed <- ewmaSmooth(
     x = c(3, 1, 2),
