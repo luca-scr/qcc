@@ -1,5 +1,18 @@
 # qcc 3.0 (NOT ON CRAN)
 
+- Added the bias-corrected `"MSSD"` estimator to `sd.xbar.one()`, available through `std.dev = "MSSD"` in individuals, EWMA, and CUSUM charts.
+- Added all eight Nelson rules, selectable with `rule.set = "nelson"` in `qcc()` and `qccRules()`.
+- Added overall process performance indices (`Pp`, `Pp_l`, `Pp_u`, `Pp_k`, and `Ppm`) and their confidence limits to `processCapability()`.
+- Added exported, vectorized `d2()`, `d3()`, and `c4()` functions for bias-correction constants and moments of the range distribution, supporting sample sizes beyond the former table limits and higher precision.
+- Chart defaults now use standard R options with a `qcc.` prefix, for example `options(qcc.add.stats = FALSE)`. `qcc.options()` is retained as a compatibility interface.
+- Fixed `sd.xbar.one()` handling of missing observations: the `"MR"` estimator removes missing values before forming moving ranges, and the `"SD"` estimator uses the non-missing sample size for bias correction.
+- Fixed `processCapability()` returning `NULL` for `nobs` and returning `NA` for `Cp_k` when only one specification limit is supplied.
+- Fixed `ewmaSmooth()` accepting negative `lambda` values.
+- Fixed phase-II filtering in EWMA and CUSUM plots with `chart.all = FALSE` when `xtime` contains dates.
+- Fixed `causeEffectDiagram()` omitting branches or subcause labels when the number of causes is odd.
+- Improved chart theming. Statistics footers now have section headings, aligned labels and values and correctly rendered mathematical labels.
+- Migrated documentation and namespace generation to roxygen2.
+- The minimum supported R version is now 4.4.
 - Modification of rules for out-of-control points. A subset of Western Eletric Rules (WER) have been implemented. See `qccRules()`.
 - All functions in `qcc` now return an object with associated `print`, `summary`, and `plot` methods.
 - Several modifications to plot and print appearances. In particular graphs are produced using `ggplot2` package, with layout obtained using `patchworks` packakge, and print/summary uses `cli` package.
