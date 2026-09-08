@@ -8,7 +8,7 @@
 \usage{
 stats.xbar.one(data, sizes)
 
-sd.xbar.one(data, sizes, std.dev = c("MR", "SD"), r = 2, ...)
+sd.xbar.one(data, sizes, std.dev = c("MR", "SD", "MSSD"), r = 2, ...)
 
 limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
@@ -20,8 +20,8 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 \item{std.dev}{within group standard deviation. Optional for
 \code{sd.xbar.one} function, required for \code{limits.xbar.one}. See details.}
 
-\item{r}{number of successive pairs of observations for computing the
-standard deviation based on moving ranges of r points.}
+\item{r}{number of successive observations in each moving range for the
+\code{"MR"} estimator. Ignored for \code{"SD"} and \code{"MSSD"}.}
 
 \item{...}{catches further ignored arguments.}
 
@@ -50,12 +50,28 @@ for one-at-time data.
 \details{
 Methods available for estimating the process standard deviation:
 \itemize{
-\item \code{"MR"}: moving range; this estimate is based on the scaled mean of moving
+\item \code{"MR"}: moving range; this estimator is based on the scaled mean of moving
 ranges.
-\item \code{"SD"}: sample standard deviation; this estimate is defined as
-\code{sd(x) / cd(n)}, where \code{n} is the number of individual measurements of
+\item \code{"SD"}: sample standard deviation; this estimator is defined as
+\code{sd(x) / c4(n)}, where \code{n} is the number of individual measurements of
 \code{x}.
+\item \code{"MSSD"}: mean squared successive differences; this estimator is defined as
+\eqn{\sqrt{\frac{1}{2(n-1)}\sum_{i=1}^{n-1}(x_{i+1}-x_i)^2}/c_4'(n)}{sqrt(mean(diff(x)^2) / 2) / c4'(n)}.
+The correction factor \eqn{c_4'(n)}{c4'(n)} differs from \code{\link[=c4]{c4()}} by accounting
+for the dependence between successive differences.
 }
+
+For independent normal observations from an in-control process, \code{"MSSD"}
+generally has lower sampling variance than \code{"MR"} with \code{r = 2}. It can
+also perform well under some changes in the process mean. However,
+squaring the differences makes it sensitive to outliers. Serial correlation
+in the observations can also bias the estimate; the correction factor
+accounts for dependence between differences, not between observations.
+See Braun and Park (2008) for comparisons of estimators for individuals charts.
+
+Missing values are omitted when estimating the standard deviation. For
+\code{"MR"} and \code{"MSSD"}, successive observations refer to the remaining values
+in their original order, including pairs across gaps left by missing values.
 }
 \examples{
 x <- antifreeze[["water"]] # See `?antifreeze`
@@ -63,6 +79,8 @@ x <- antifreeze[["water"]] # See `?antifreeze`
 qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
 # 2) using SD
 qcc(x, type="xbar.one", std.dev = "SD", data.name="Water content (in ppm) of batches of antifreeze")
+# 3) using bias-corrected MSSD
+qcc(x, type="xbar.one", std.dev = "MSSD", data.name="Water content (in ppm) of batches of antifreeze")
 
 # "as the size increases further, we would expect sigma-hat to settle down
 #  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991, p. 121)
@@ -77,6 +95,7 @@ abline(h=sd(x), col=2, lty=2)   # different values of k
 \item Montgomery, D.C. (2013). \emph{Introduction to Statistical Quality Control}, 7th ed. New York: John Wiley & Sons.
 \item Ryan, T. P. (2011). \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 \item Wetherill, G. B., and Brown, D. W. (1991). \emph{Statistical Process Control}. New York: Chapman & Hall.
+\item Braun, W. J., and Park, D. (2008). Estimation of sigma for Individuals Charts. \emph{Journal of Quality Technology}, \strong{40}(3), 332--344. \url{https://doi.org/10.1080/00224065.2008.11917738}.
 }
 }
 \seealso{

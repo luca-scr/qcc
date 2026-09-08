@@ -122,6 +122,12 @@ NULL
     "The Taguchi capability index.",
     "*Journal of Quality Technology*, **23**, 107--126."
   ),
+  braun_park_2008 = paste(
+    "Braun, W. J., and Park, D. (2008).",
+    "Estimation of sigma for Individuals Charts.",
+    "*Journal of Quality Technology*, **40**(3), 332--344.",
+    "<https://doi.org/10.1080/00224065.2008.11917738>."
+  ),
   chou_owen_borrego_1990 = paste(
     "Chou, Y., Owen, D. B., and Borrego, S. A. (1990).",
     "Lower confidence limits on process capability indices.",
