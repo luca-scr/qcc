@@ -87,6 +87,28 @@ ocCurves <- function(object, ...)
 }
 
 
+# Assemble OC results while preserving chart-specific fields and matrix labels.
+.new_oc_curves <- function(type, beta, grid, grid.name, row.label, size = NULL)
+{
+  colnames(beta) <- if (is.null(size)) "beta" else size
+  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", grid))), "f"), grid)
+  names(dimnames(beta)) <- c(row.label, if (is.null(size)) "" else "sample size")
+
+  ARL <- 1 / (1 - beta)
+  if (is.null(size))
+    colnames(ARL) <- "ARL"
+
+  out <- list(type = type)
+  if (!is.null(size))
+    out$size <- size
+  out[[grid.name]] <- grid
+  out$beta <- beta
+  out$ARL <- ARL
+  class(out) <- "ocCurves"
+  return(out)
+}
+
+
 #' @rdname ocCurves
 #' @export
 ocCurves.xbar <- function(object, 
@@ -112,17 +134,7 @@ ocCurves.xbar <- function(object,
     beta[,i] <- pnorm(nsigmas-shift*sqrt(size[i])) - 
                 pnorm(-nsigmas-shift*sqrt(size[i]))
   }
-  colnames(beta) <- size
-  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", shift))), "f"), shift)
-  names(dimnames(beta)) <- c("shift (StdDev)", "sample size")
-
-  ARL <- 1/(1-beta)
-
-  out <- list(type = object$type, 
-              size = size, shift = shift, 
-              beta = beta, ARL = ARL) 
-  class(out) <- "ocCurves"
-  return(out)
+  .new_oc_curves(object$type, beta, shift, "shift", "shift (StdDev)", size = size)
 }
 
 #' @rdname ocCurves
@@ -164,17 +176,7 @@ ocCurves.R <- function(object,
     }
     beta <- outer(multiplier, size, beta.fun2, nsigmas)
   }
-  colnames(beta) <- size
-  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", multiplier))), "f"), multiplier)
-  names(dimnames(beta)) <- c("scale multiplier", "sample size")
-
-  ARL <- 1/(1-beta)
-
-  out <- list(type = object$type, 
-              size = size, multiplier = multiplier, 
-              beta = beta, ARL = ARL) 
-  class(out) <- "ocCurves"
-  return(out)
+  .new_oc_curves(object$type, beta, multiplier, "multiplier", "scale multiplier", size = size)
 }
 
 #' @rdname ocCurves
@@ -219,17 +221,7 @@ ocCurves.S <- function(object,
     }
     beta <- outer(multiplier, size, beta.fun2, nsigmas)
   }
-  colnames(beta) <- size
-  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", multiplier))), "f"), multiplier)
-  names(dimnames(beta)) <- c("scale multiplier", "sample size")
-
-  ARL <- 1/(1-beta)
-
-  out <- list(type = object$type, 
-              size = size, multiplier = multiplier, 
-              beta = beta, ARL = ARL) 
-  class(out) <- "ocCurves"
-  return(out)
+  .new_oc_curves(object$type, beta, multiplier, "multiplier", "scale multiplier", size = size)
 }
 
 #' @rdname ocCurves
@@ -258,18 +250,9 @@ ocCurves.p <- function(object, ...)
     LCL <- max(floor(limits[,1]), 0) 
   }
   beta <- matrix(pbinom(UCL, size, p) - pbinom(LCL-1, size, p), ncol = 1)
-  colnames(beta) <- "beta"
-  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", p))), "f"), p)
-  names(dimnames(beta)) <-  c("fraction nonconforming", "")
-  ARL <- 1/(1-beta)
-  colnames(ARL) = "ARL"
-  
   warning("Some computed values for the type II error have been rounded due to the discreteness of the binomial distribution. Thus, some ARL values might be meaningless.")
-  
-  out <- list(type = object$type, p = p,
-              beta = beta, ARL = ARL) 
-  class(out) <- "ocCurves"
-  return(out)
+
+  .new_oc_curves(object$type, beta, p, "p", "fraction nonconforming")
 }
 
 #' @rdname ocCurves
@@ -301,18 +284,9 @@ ocCurves.c <- function(object, ...)
   }
   lambda <- seq(0, max.lambda)
   beta <- matrix(ppois(UCL, lambda) - ppois(LCL-1, lambda), ncol = 1)
-  colnames(beta) <- "beta"
-  rownames(beta) <- sprintf(paste0("%.", max(nchar(sub(".*\\.", "", lambda))), "f"), lambda)
-  names(dimnames(beta)) <-  c("average nonconforming", "")
-  ARL <- 1/(1-beta)
-  colnames(ARL) = "ARL"
 
   warning("Some computed values for the type II error have been rounded due to the discreteness of the Poisson distribution. Thus, some ARL values might be meaningless.")
-
-  out <- list(type = object$type, lambda = lambda,
-              beta = beta, ARL = ARL) 
-  class(out) <- "ocCurves"
-  return(out)
+  .new_oc_curves(object$type, beta, lambda, "lambda", "average nonconforming")
 }
 
 #' @rdname ocCurves
