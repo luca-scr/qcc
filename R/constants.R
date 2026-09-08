@@ -1,6 +1,6 @@
 ### Constants of statistical importance in SPC and QC
 #
-# This file defines d2, d3, and c4.
+# This file defines d2, d3, c4, and c4_mssd.
 #
 # montgomery 8th Ed also defines A, A3, B3, B4, B5, B6 in Appendix 12.
 #  other factors: A2, D1, D2, D3, D4 are tabulated but not defined AFAIK.
@@ -30,7 +30,6 @@
 #   This would probably be overengineered.
 # TODO: d4 -> MMR estimator.
 # TODO: c5 -> MVLUE-SD and S-chart SE
-# TODO: c4_prime() -> MSSD estimator, due to autocorrelation, c4 would not be 100% correct
 
 #' The \eqn{d_2}{d2} Constant
 #'
@@ -48,11 +47,10 @@
 #'   [SixSigma::ss.cc.getd2()], [IQCC::d2()], [shewhartr::shewhart_constants()]
 #'
 #' @export
-d2 <- function(n) assert_n(n) |> .d2()
+d2 <- function(n) .d2(assert_n(n))
 
-# Analytic solutions for `n` in [2, 5] in Wardell2025
-.d2 <- \(n) integrate_ok(
-  \(x, n_i) 1 - ptukey(x, n_i, Inf),
+.d2 <- function(n) integrate_ok(
+  function(x, n_i) 1 - ptukey(x, n_i, Inf),
   0, Inf, n
 )
 
@@ -76,13 +74,13 @@ d2 <- function(n) assert_n(n) |> .d2()
 #'   [SixSigma::ss.cc.getd3()], [IQCC::d3()], [shewhartr::shewhart_constants()]
 #'
 #' @export
-d3 <- function(n) assert_n(n) |> .d3()
+d3 <- function(n) .d3(assert_n(n))
 
 # Analytic solutions for `n` in [2, 5] in Wardell2025
-.d3 <- \(n) {
+.d3 <- function(n) {
   sqrt(
     2 * integrate_ok(
-      \(x, n_i) x * (1 - ptukey(x, n_i, Inf)),
+      function(x, n_i) x * (1 - ptukey(x, n_i, Inf)),
       0, Inf, n
     ) - .d2(n)^2
   )
@@ -105,13 +103,54 @@ d3 <- function(n) assert_n(n) |> .d3()
 #' @seealso For other implementations in R:
 #'   [SixSigma::ss.cc.getc4()], [IQCC::c4()], [shewhartr::shewhart_constants()]
 #' @export
-c4 <- function(n) assert_n(n) |> .c4()
+c4 <- function(n) .c4(assert_n(n))
 
 # We use  `exp(lgamma(n/2) - lgamma((n - 1)/2))`
 # and not `((gamma(n/2))/(gamma((n - 1)/2)))`
 # because [gamma()] reteurns `Inf` for n > 171 (On my machine).
-.c4 <- \(n) sqrt(2 / (n - 1)) * exp(lgamma(n / 2) - lgamma((n - 1) / 2))
+.c4 <- function(n) sqrt(2 / (n - 1)) * exp(lgamma(n / 2) - lgamma((n - 1) / 2))
 
+
+#' The \eqn{c_4'}{c4'} Constant
+#'
+#' Calculates the bias-correction factor for the square root of half the mean
+#' squared successive difference (MSSD).
+#'
+#' For \eqn{n} independent, normally distributed observations, define
+#' \deqn{V = \frac{1}{2(n - 1)}\sum_{i=1}^{n-1}(X_{i+1} - X_i)^2.}{V = sum(diff(x)^2) / (2 * (n - 1))}
+#' Then \eqn{E(\sqrt{V}) = c_4'(n)\sigma}{E(sqrt(V)) = c4_mssd(n) * sigma},
+#' so \eqn{\sqrt{V} / c_4'(n)}{sqrt(V) / c4_mssd(n)} is an unbiased estimator
+#' of the population standard deviation. The factor accounts for dependence
+#' between successive differences and differs from [c4()].
+#'
+#' @param n A vector of sample sizes.
+#' @return A vector of calculated \eqn{c_4'}{c4'} constants.
+#' @references `r refs("von_neumann_et_al_1941", "von_neumann_1941")`
+#' @family constants for Shewhart charts
+#' @keywords internal
+#' @noRd
+# TODO: Cite reference of the calculation below
+# TODO: Should we export a c4_mssd() like other constants?
+.c4_mssd <- function(n) {
+  integrate_ok(
+    function(u, n_i) {
+      k <- seq_len(n_i - 1L)
+      w <- (1 - cos(pi * k / n_i)) / (n_i - 1)
+
+      vapply(u, function(u_i) {
+        if (u_i == 0 || u_i == 1)
+          return(1)
+
+        t <- (u_i / (1 - u_i))^2
+        # Log Laplace transform of the weighted sum of chi-squared variables.
+        log_L <- -0.5 * sum(log1p(2 * w * t))
+        # Avoid cancellation in 1 - exp(log_L).
+        -expm1(log_L) / u_i^2
+      }, numeric(1))
+    },
+    0, 1, n
+  ) / sqrt(pi)
+}
 
 #' Vectorized `integrate()` Wrapper
 #'
@@ -120,12 +159,12 @@ c4 <- function(n) assert_n(n) |> .c4()
 #'
 #' @keywords internal
 #' @noRd
-integrate_ok <- \(f, lower, upper, parameter, ..., max_error = 1e-3) {
+integrate_ok <- function(f, lower, upper, parameter, ..., max_error = 1e-3) {
   parameter_unique <- unique(parameter)
 
   values <- vapply(
     parameter_unique,
-    \(parameter_i) {
+    function(parameter_i) {
       if (is.na(parameter_i))
         return(NA_real_)
 

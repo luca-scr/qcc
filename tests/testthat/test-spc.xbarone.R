@@ -64,4 +64,51 @@ testthat::describe("sd.xbar.one", {
       )
     })
   })
+
+  testthat::describe("MSSD Estimator", {
+    it("matches the analytic estimate for two observations", {
+      # c4'(2) = sqrt(2 / pi), so sigma-hat = abs(diff(x)) * sqrt(pi) / 2.
+      expect_equal(
+        sd.xbar.one(c(1, 3), std.dev = "MSSD"),
+        sqrt(pi),
+        tolerance = 1e-12
+      )
+    })
+
+    it("corrects successive squared differences using the MSSD factor", {
+      sim <- readRDS(testthat::test_path("fixtures", "c4_mssd_mc.rds"))
+      # Successive squared differences are 4, 1, 16, 4; n = 5.
+      expect_equal(
+        sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MSSD"),
+        sqrt(25 / 8) / sim$estimate[4],
+        tolerance = 1e-6
+      )
+    })
+
+    it("omits missing observations before forming successive differences", {
+      expect_equal(
+        sd.xbar.one(c(NA, 1, NA, NaN, 3, NA), std.dev = "MSSD"),
+        sqrt(pi),
+        tolerance = 1e-12
+      )
+    })
+
+    it("returns NA when fewer than two observations remain", {
+      for (x in list(numeric(), NA_real_, c(NA, NaN), 1, c(NA, 1, NA))) {
+        expect_identical(sd.xbar.one(x, std.dev = "MSSD"), NA_real_)
+      }
+    })
+
+    it("returns zero for constant observations", {
+      expect_equal(sd.xbar.one(rep(4, 5), std.dev = "MSSD"), 0)
+    })
+
+    it("accepts a one-column matrix and ignores the MR window size", {
+      expect_equal(
+        sd.xbar.one(matrix(c(1, 3), ncol = 1), std.dev = "MSSD", r = 5),
+        sqrt(pi),
+        tolerance = 1e-12
+      )
+    })
+  })
 })
