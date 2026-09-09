@@ -6,6 +6,9 @@ extract_text_labels <- function(plot) {
 }
 
 test_that("causeEffectDiagram renders each odd-count branch title and item once", {
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+
   cMan <- c("Reservations staffs undertrained", "Front office staff unfocused")
   cMethods <- c(
     "No credit card blocking",
