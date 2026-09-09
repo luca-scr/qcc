@@ -307,6 +307,44 @@ print.ocCurves <- function(x, digits =  getOption("digits"), ...)
 }
 
 
+# chart-specific plotting defaults.
+.oc_curves_plot_data <- function(object, what)
+{
+  response <- object[[what]]
+  axis <- switch(object$type,
+    xbar = list(x = object$shift,
+                label = "Process shift (StdDev)",
+                scale = list(breaks = unique(as.integer(object$shift)))),
+    R =,
+    S = list(x = object$multiplier,
+             label = "Process scale multiplier",
+             scale = list(breaks = unique(as.integer(object$multiplier)))),
+    p =,
+    np = list(x = object$p,
+              label = "Fraction nonconforming",
+              scale = list(breaks = seq(0, 1, by = 0.2))),
+    c =,
+    u = list(x = object$lambda,
+             label = "Average nonconforming",
+             scale = list(n.breaks = 7)))
+
+  grouped <- object$type %in% c("xbar", "R", "S")
+  ncurves <- if(grouped) length(object$size) else 1L
+  df <- data.frame(x = rep(axis$x, times = ncurves),
+                   y = c(response),
+                   size = if(grouped)
+                     factor(rep(object$size, each = length(axis$x)))
+                   else NA)
+
+  list(data = df, grouped = grouped, ncurves = ncurves,
+       xlab = axis$label,
+       ylab = if(what == "beta") "Prob. type II error" else "ARL",
+       xscale = axis$scale,
+       yscale = if(what == "beta") list(breaks = seq(0, 1, by = 0.1))
+                else list(n.breaks = 9))
+}
+
+
 #' @rdname ocCurves
 #' @export
 #' @export plot.ocCurves
@@ -322,139 +360,43 @@ plot.ocCurves <- function(x, what = c("beta", "ARL"),
   stopifnot(inherits(object, "ocCurves"))
   what <- match.arg(what, choices = eval(formals(plot.ocCurves)$what), 
                     several.ok = FALSE)
+  plotting <- .oc_curves_plot_data(object, what)
   if(missing(title))
     title <- paste("OC curves for", object$type, "chart")
+  if(missing(xlab))
+    xlab <- plotting$xlab
   if(missing(ylab))
-    ylab <- if(what == "beta") "Prob. type II error" else "ARL"
+    ylab <- plotting$ylab
+  if(missing(lty))
+    lty <- rep(1, plotting$ncurves)
+  if(missing(lwd))
+    lwd <- rep(1, plotting$ncurves)
+  if(missing(col))
+    col <- blues.colors(plotting$ncurves)
 
-  if(object$type == "xbar")
+  plot <- ggplot(plotting$data, aes(x = .data[["x"]], y = .data[["y"]]))
+  if(plotting$grouped)
   {
-    if(missing(xlab))
-      xlab <- "Process shift (StdDev)"
-    if(missing(lty))
-      lty <- rep(1,length(object$size))
-    if(missing(lwd))
-      lwd <- rep(1,length(object$size))
-    if(missing(col))
-      col <- blues.colors(length(object$size))
-    df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
-                     size = factor(rep(object$size, 
-                                       each = length(object$shift))),
-                     shift = rep(object$shift, 
-                                 times = length(object$size)))
-    plot <- ggplot(df, aes(x = .data[["shift"]], 
-                           y = .data[["y"]],
-                           linetype = .data[["size"]], 
-                           linewidth = .data[["size"]],
-                           colour = .data[["size"]])) +
-      geom_line() +
+    plot <- plot +
+      geom_line(aes(linetype = .data[["size"]],
+                    linewidth = .data[["size"]],
+                    colour = .data[["size"]])) +
       scale_linetype_manual(values = lty) +
       scale_linewidth_manual(values = lwd) +
       scale_colour_manual(values = col) +
-      labs(title = title, 
-           x = xlab, y = ylab,
-           linetype = "Sample size:",
-           linewidth = "Sample size:", 
-           colour = "Sample size:") +
-      scale_x_continuous(breaks = unique(as.integer(object$shift)))
+      labs(linetype = "Sample size:",
+           linewidth = "Sample size:",
+           colour = "Sample size:")
   } else
-  if(object$type == "R")
   {
-    if(missing(xlab))
-      xlab <- "Process scale multiplier"
-    if(missing(col))
-      col <- blues.colors(length(object$size))
-    if(missing(lty))
-      lty <- rep(1,length(object$size))
-    if(missing(lwd))
-      lwd <- rep(1,length(object$size))
-    df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
-                     size = factor(rep(object$size, 
-                                       each = length(object$multiplier))),
-                     multiplier = rep(object$multiplier, 
-                                      times = length(object$size)))
-    
-    plot <- ggplot(df, aes(x = .data[["multiplier"]], 
-                           y = .data[["y"]],
-                           linetype = .data[["size"]], 
-                           linewidth = .data[["size"]],
-                           colour = .data[["size"]])) +
-      geom_line() +
-      scale_linetype_manual(values = lty) +
-      scale_linewidth_manual(values = lwd) +
-      scale_colour_manual(values = col) +
-      labs(title = title, 
-           x = xlab, y = ylab,
-           linetype = "Sample size:",
-           linewidth = "Sample size:", 
-           colour = "Sample size:") +
-      scale_x_continuous(breaks = unique(as.integer(object$multiplier)))
-  } else
-  if(object$type == "S")
-  {
-    if(missing(xlab))
-      xlab <- "Process scale multiplier"
-    if(missing(col))
-      col <- blues.colors(length(object$size))
-    if(missing(lty))
-      lty <- rep(1,length(object$size))
-    if(missing(lwd))
-      lwd <- rep(1,length(object$size))
-    df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
-                     size = factor(rep(object$size, 
-                                       each = length(object$multiplier))),
-                     multiplier = rep(object$multiplier, 
-                                      times = length(object$size)))
-    plot <- ggplot(df, aes(x = .data[["multiplier"]], 
-                           y = .data[["y"]], 
-                           linetype = .data[["size"]], 
-                           linewidth = .data[["size"]],
-                           colour = .data[["size"]])) +
-      geom_line() +
-      scale_linetype_manual(values = lty) +
-      scale_linewidth_manual(values = lwd) +
-      scale_colour_manual(values = col) +
-      labs(title = title, 
-           x = xlab, y = ylab,
-           linetype = "Sample size:",
-           linewidth = "Sample size:", 
-           colour = "Sample size:") +
-      scale_x_continuous(breaks = unique(as.integer(object$multiplier)))
-  } else
-  if(object$type == "p" | object$type == "np")
-  {
-    if(missing(xlab)) xlab <- "Fraction nonconforming"
-    if(missing(lty))  lty <- 1
-    if(missing(lwd))  lwd <- 1
-    if(missing(col))  col <- blues.colors(1)
-    df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
-                     p = object$p)
-    plot <- ggplot(df, aes(x = .data[["p"]], 
-                           y = .data[["y"]])) +
-      geom_line(linewidth = lwd[1], col = col[1], lty = lty[1]) +
-      labs(title = title, x = xlab, y = ylab) +
-      scale_x_continuous(breaks = seq(0,1,by=0.2)) 
-  } else
-  if(object$type == "c" | object$type == "u")
-  {
-    if(missing(xlab)) xlab <- "Average nonconforming"
-    if(missing(lty))  lty <- 1
-    if(missing(lwd))  lwd <- 1
-    if(missing(col))  col <- blues.colors(1)
-    df <- data.frame(y = c(if(what == "beta") object$beta else object$ARL),
-                     p = object$lambda)
-    plot <- ggplot(df, aes(x = .data[["p"]], 
-                           y = .data[["y"]])) +
-      geom_line(linewidth = lwd[1], col = col[1], lty = lty[1]) +
-      labs(title = title, x = xlab, y = ylab) +
-      scale_x_continuous(n.breaks = 7)
+    plot <- plot +
+      geom_line(linewidth = lwd[1], col = col[1], lty = lty[1])
   }
-  
-  plot <- plot + 
-    if(what == "beta")
-      scale_y_continuous(breaks = seq(0,1,by=0.1))
-    else
-      scale_y_continuous(n.breaks = 9)
+
+  plot <- plot +
+    labs(title = title, x = xlab, y = ylab) +
+    do.call(scale_x_continuous, plotting$xscale) +
+    do.call(scale_y_continuous, plotting$yscale)
 
   plot <- plot + 
     theme_light() + 
