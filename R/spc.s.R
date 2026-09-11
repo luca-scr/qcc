@@ -31,7 +31,7 @@ stats.S <- function(data, sizes)
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
-    { statistics <- .rowSds(data, na.rm = TRUE) }
+    { statistics <- rowSds(data, na.rm = TRUE) }
   if (length(sizes == 1))
      sizes <- rep(sizes, length(statistics))
   center <- sum(sizes * statistics)/sum(sizes)

@@ -80,7 +80,7 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
            sum(R/.d2(sizes))/length(sizes)
          },
          "UWAVE-SD" = {
-           S <- .rowSds(data, na.rm = TRUE)
+           S <- rowSds(data, na.rm = TRUE)
            sum(S/.c4(sizes))/length(sizes)
          },
          "MVLUE-R" = {
@@ -90,13 +90,13 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
            sum(R/d2*w)/sum(w)
          },
          "MVLUE-SD" = {
-           S <- .rowSds(data, na.rm = TRUE)
+           S <- rowSds(data, na.rm = TRUE)
            c4 <- .c4(sizes)
            w <- c4^2 / (1 - c4^2)
            sum(S / c4 * w) / sum(w)
          },
          "RMSDF" = {
-           S <- .rowSds(data, na.rm = TRUE)
+           S <- rowSds(data, na.rm = TRUE)
            w <- sizes - 1
            sqrt(sum(S^2 * w) / sum(w)) / .c4(sum(w) + 1)
          })

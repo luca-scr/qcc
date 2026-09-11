@@ -326,7 +326,3 @@ assert_n <- function(n, strict = FALSE) {
   ranges <- rowRanges(data, na.rm = na.rm, useNames = TRUE)
   ranges[, 2L] - ranges[, 1L]
 }
-
-.rowSds <- function(data, na.rm = FALSE) {
-  rowSds(data, na.rm = na.rm, useNames = TRUE)
-}

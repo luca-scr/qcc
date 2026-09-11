@@ -111,9 +111,7 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r =
       if (n < 2L)
         return(NA_real_)
 
-      # Base diff() preserves integer overflow warnings and logical inputs.
-      differences <- if(is.double(data)) diff2(data) else diff(data)
-      sqrt(mean(differences^2) / 2) / .c4_mssd(n)
+      sqrt(mean(diff(data)^2) / 2) / .c4_mssd(n)
     })
 }
 
