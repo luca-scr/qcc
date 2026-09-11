@@ -26,6 +26,9 @@
 #' accounts for dependence between differences, not between observations.
 #' See Braun and Park (2008) for comparisons of estimators for individuals charts.
 #'
+#' The current implementation of the MMR estimator is not corrected for
+#' finite-sample bias.
+#'
 #' Missing values are omitted when estimating the standard deviation. For
 #' `"MR"`, `"MMR"`, and `"MSSD"`, successive observations refer to the remaining values
 #' in their original order, including pairs across gaps left by missing values.

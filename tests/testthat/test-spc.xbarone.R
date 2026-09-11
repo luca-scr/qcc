@@ -7,6 +7,46 @@
 #   individual observations?
 testthat::describe("sd.xbar.one", {
 
+  it("calibrates all estimators to sigma under iid normal sampling", {
+    # NOTE: Monte Carlo simulation.
+    # NOTE: Evidence that all estimators are unbiased for the same estimand.
+    testthat::skip_on_cran()
+    # testthat::skip_on_ci()
+    testthat::skip_on_covr()
+    withr::local_seed(20260911)
+
+    B <- 10000L
+    sigma <- 2.5
+
+    # FIX: Our implementation of the MMR estimator scales medians (through d4) 
+    # making it asymptotically unbiased. that does not mean that the MMR estimator
+    # is unbiased for finite sample sizes.
+    # We could use Monte Carlo to derive the finite-sample bias correction factor 
+    # for the MMR estimator but I should first check a quadrature method.
+    methods <- c("MR", "SD", "MSSD")
+
+    for (n in c(5L, 30L)) { # test small and moderate sample sizes
+      estimates <- replicate(B, {
+        x <- rnorm(n, mean = 10, sd = sigma)
+
+        vapply(methods, function(method) {
+          sd.xbar.one(x, std.dev = method)
+        }, numeric(1))
+      })
+
+      # Monte Carlo standard error
+      mcse <- apply(estimates, 1, sd) / sqrt(B)
+
+      for (method in methods) {
+        expect_lt(
+          abs(mean(estimates[method, ]) - sigma),
+          5 * mcse[method], # FIX: very generous cutoff
+          label = sprintf("absolute bias for method = %s, n = %d", method, n)
+        )
+      }
+    }
+  })
+
   it("defaults to the MR estimator on successive pairs",{
     expect_equal(
       sd.xbar.one(antifreeze$water),
