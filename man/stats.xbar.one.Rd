@@ -8,7 +8,7 @@
 \usage{
 stats.xbar.one(data, sizes)
 
-sd.xbar.one(data, sizes, std.dev = c("MR", "SD", "MSSD"), r = 2, ...)
+sd.xbar.one(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r = 2, ...)
 
 limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
@@ -21,7 +21,7 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 \code{sd.xbar.one} function, required for \code{limits.xbar.one}. See details.}
 
 \item{r}{number of successive observations in each moving range for the
-\code{"MR"} estimator. Ignored for \code{"SD"} and \code{"MSSD"}.}
+\code{"MR"} and \code{"MMR"} estimators. Ignored for \code{"SD"} and \code{"MSSD"}.}
 
 \item{...}{catches further ignored arguments.}
 
@@ -52,6 +52,9 @@ Methods available for estimating the process standard deviation:
 \itemize{
 \item \code{"MR"}: moving range; this estimator is based on the scaled mean of moving
 ranges.
+\item \code{"MMR"}: median moving range; this estimator is defined as
+\code{median(moving_ranges) / d4(r)}, where \code{\link[=d4]{d4()}} is the median range of \code{r}
+independent standard normal observations.
 \item \code{"SD"}: sample standard deviation; this estimator is defined as
 \code{sd(x) / c4(n)}, where \code{n} is the number of individual measurements of
 \code{x}.
@@ -70,7 +73,7 @@ accounts for dependence between differences, not between observations.
 See Braun and Park (2008) for comparisons of estimators for individuals charts.
 
 Missing values are omitted when estimating the standard deviation. For
-\code{"MR"} and \code{"MSSD"}, successive observations refer to the remaining values
+\code{"MR"}, \code{"MMR"}, and \code{"MSSD"}, successive observations refer to the remaining values
 in their original order, including pairs across gaps left by missing values.
 }
 \examples{

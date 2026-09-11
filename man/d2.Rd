@@ -31,6 +31,7 @@ For other implementations in R:
 
 Other constants for Shewhart charts:
 \code{\link[=c4]{c4()}},
-\code{\link[=d3]{d3()}}
+\code{\link[=d3]{d3()}},
+\code{\link[=d4]{d4()}}
 }
 \concept{constants for Shewhart charts}

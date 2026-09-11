@@ -1,6 +1,6 @@
 ### Constants of statistical importance in SPC and QC
 #
-# This file defines d2, d3, c4, and c4_mssd.
+# This file defines d2, d3, d4, c4, and c4_mssd.
 #
 # montgomery 8th Ed also defines A, A3, B3, B4, B5, B6 in Appendix 12.
 #  other factors: A2, D1, D2, D3, D4 are tabulated but not defined AFAIK.
@@ -28,7 +28,6 @@
 # PERFORMANCE: expose a `_d2` argument to `.d3()` and don't use it in `d3()`.
 #   this way, `.d3()` can skip recomputing .d2 in formulas that compute both.
 #   This would probably be overengineered.
-# TODO: d4 -> MMR estimator.
 # TODO: c5 -> MVLUE-SD and S-chart SE
 
 #' The \eqn{d_2}{d2} Constant
@@ -76,7 +75,6 @@ d2 <- function(n) .d2(assert_n(n))
 #' @export
 d3 <- function(n) .d3(assert_n(n))
 
-# Analytic solutions for `n` in [2, 5] in Wardell2025
 .d3 <- function(n) {
   sqrt(
     2 * integrate_ok(
@@ -86,6 +84,46 @@ d3 <- function(n) .d3(assert_n(n))
   )
 }
 
+
+#' The \eqn{d_4}{d4} Constant
+#'
+#' Calculate the \eqn{d_4}{d4} constants for a vector `n` of sample sizes.
+#'
+#' \eqn{d_4(n)}{d4(n)} is the median of the range of `n` independent
+#' observations from a standard normal distribution. For normal observations
+#' with standard deviation \eqn{\sigma},
+#' \deqn{\mathrm{median}(R) = d_4(n)\sigma.}{median(R) = d4(n) * sigma}
+#'
+#' Not to be confused with the upper range-chart limit factor
+#' \eqn{D_4 = 1 + 3d_3/d_2}{D4 = 1 + 3 * d3 / d2}.
+#'
+#' @param n A vector of sample sizes.
+#' @return A vector of calculated \eqn{d_4}{d4} constants.
+#' @references
+#'   [Minitab: Methods and formulas for Moving Range Chart](https://support.minitab.com/en-us/minitab/help-and-how-to/quality-and-process-improvement/control-charts/how-to/variables-charts-for-individuals/i-mr-chart/methods-and-formulas/methods-and-formulas-for-moving-range-chart/)
+#' @family constants for Shewhart charts
+#' @seealso [stats::qtukey()], [stats::ptukey()], [sd.xbar.one()]
+#' @export
+d4 <- function(n) .d4(assert_n(n))
+
+# PERF: this is ~3-4x slower than `qtukey(0.5, n_i, Inf)`
+# but works for all valid n and has better precision
+# PERF: This is ~20-30x faster than a direct integration 
+# (see tests) but has a worst-case precision of ~1e-7 for
+# small n (n<50) compared to ~1e-10 for direct integration
+.d4 <- function(n) {
+  n_unique <- unique(n)
+  values <- vapply(n_unique, function(n_i) {
+    if (is.na(n_i))
+      return(NA_real_)
+
+    upper <- 2 * qnorm(0.25 / n_i, lower.tail = FALSE)
+    uniroot(function(x) ptukey(x, n_i, Inf) - 0.5,
+            c(0, upper), tol = .Machine$double.eps^0.5)$root
+  }, numeric(1))
+
+  values[match(n, n_unique)]
+}
 
 #' The \eqn{c_4}{\code{c4}} Constant
 #'

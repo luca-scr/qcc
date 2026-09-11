@@ -7,6 +7,9 @@
 #'
 #' - `"MR"`: moving range; this estimator is based on the scaled mean of moving
 #'   ranges.
+#' - `"MMR"`: median moving range; this estimator is defined as
+#'   `median(moving_ranges) / d4(r)`, where [d4()] is the median range of `r`
+#'   independent standard normal observations.
 #' - `"SD"`: sample standard deviation; this estimator is defined as
 #'   `sd(x) / c4(n)`, where `n` is the number of individual measurements of
 #'   `x`.
@@ -16,7 +19,7 @@
 #'   for the dependence between successive differences.
 #'
 #' For independent normal observations from an in-control process, `"MSSD"`
-#' generally has lower sampling variance than `"MR"` with `r = 2`. It can
+#' generally has lower sampling variance than `"MR"` with \code{r = 2}. It can
 #' also perform well under some changes in the process mean. However,
 #' squaring the differences makes it sensitive to outliers. Serial correlation
 #' in the observations can also bias the estimate; the correction factor
@@ -24,13 +27,13 @@
 #' See Braun and Park (2008) for comparisons of estimators for individuals charts.
 #'
 #' Missing values are omitted when estimating the standard deviation. For
-#' `"MR"` and `"MSSD"`, successive observations refer to the remaining values
+#' `"MR"`, `"MMR"`, and `"MSSD"`, successive observations refer to the remaining values
 #' in their original order, including pairs across gaps left by missing values.
 #'
 #' @inheritParams spc_common data center nsigmas conf
 #' @param sizes samples sizes. Not needed, `size = 1` is used.
 #' @param r number of successive observations in each moving range for the
-#'   `"MR"` estimator. Ignored for `"SD"` and `"MSSD"`.
+#'   `"MR"` and `"MMR"` estimators. Ignored for `"SD"` and `"MSSD"`.
 #' @param std.dev within group standard deviation. Optional for
 #'   `sd.xbar.one` function, required for `limits.xbar.one`. See details.
 #' @param ... catches further ignored arguments.
@@ -76,24 +79,28 @@ stats.xbar.one <- function(data, sizes)
 
 #' @rdname stats.xbar.one
 #' @export
-# TODO: 1. implement the corrected median moving range (MMR) estimator
 # TODO: 2. Implement the median absolute deviation estimator (MAD)
 # TODO: 3. implement the Ciminera-Tukey Estimator
 # TODO: 4. implement the Boyles Dynamic Linear model estimator (DLM)
 # PERF: Replace apply call with matrixStats
-sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD"), r = 2, ...) {
+# TODO: explain in docs why MMR is bad when should you use it.
+sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r = 2, ...) {
   data <- as.vector(data)
   if(is.numeric(std.dev))
     return(std.dev)
 
   std.dev <- match.arg(std.dev)
   switch(std.dev, 
-    "MR" = {
+    "MR" =,
+    "MMR" = {
       windows <- embed(data[!is.na(data)], r)
       moving_ranges <- apply(windows, 1L, function(x) {
         diff(range(x))
       })
-      mean(moving_ranges) / .d2(r)
+      if (std.dev == "MMR")
+        median(moving_ranges) / .d4(r)
+      else
+        mean(moving_ranges) / .d2(r)
     },
     "SD" = { 
       sd(data, na.rm = TRUE)/.c4(sum(!is.na(data)))

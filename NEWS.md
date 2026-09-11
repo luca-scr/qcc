@@ -1,6 +1,6 @@
 # qcc 3.0 (NOT ON CRAN)
 
-- Added the bias-corrected `"MSSD"` estimator to `sd.xbar.one()`, available through `std.dev = "MSSD"` in individuals, EWMA, and CUSUM charts.
+- Added the bias-corrected `"MSSD"` and `"MMR"` estimators to `sd.xbar.one()`, available in individuals, EWMA, and CUSUM charts.
 - Added all eight Nelson rules, selectable with `rule.set = "nelson"` in `qcc()` and `qccRules()`.
 - Added overall process performance indices (`Pp`, `Pp_l`, `Pp_u`, `Pp_k`, and `Ppm`) and their confidence limits to `processCapability()`.
 - Added exported, vectorized `d2()`, `d3()`, and `c4()` functions for bias-correction constants and moments of the range distribution, supporting sample sizes beyond the former table limits and higher precision.

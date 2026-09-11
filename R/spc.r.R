@@ -61,6 +61,7 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
      }
   else 
      { if (conf > 0 && conf < 1) 
+          # FIX: replace qtukey with a more precise implementation?
           { ucl <- qtukey(1 - (1 - conf)/2, sizes, 1e100) * std.dev
             lcl <- qtukey((1 - conf)/2, sizes, 1e100) * std.dev
           }
