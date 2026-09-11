@@ -85,7 +85,6 @@ stats.xbar.one <- function(data, sizes)
 # TODO: 2. Implement the median absolute deviation estimator (MAD)
 # TODO: 3. implement the Ciminera-Tukey Estimator
 # TODO: 4. implement the Boyles Dynamic Linear model estimator (DLM)
-# PERF: Replace apply call with matrixStats
 # TODO: explain in docs why MMR is bad when should you use it.
 sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r = 2, ...) {
   data <- as.vector(data)
@@ -97,9 +96,7 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r =
     "MR" =,
     "MMR" = {
       windows <- embed(data[!is.na(data)], r)
-      moving_ranges <- apply(windows, 1L, function(x) {
-        diff(range(x))
-      })
+      moving_ranges <- .rowRanges(windows)
       if (std.dev == "MMR")
         median(moving_ranges) / .d4(r)
       else
@@ -114,7 +111,9 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r =
       if (n < 2L)
         return(NA_real_)
 
-      sqrt(mean(diff(data)^2) / 2) / .c4_mssd(n)
+      # Base diff() preserves integer overflow warnings and logical inputs.
+      differences <- if(is.double(data)) diff2(data) else diff(data)
+      sqrt(mean(differences^2) / 2) / .c4_mssd(n)
     })
 }
 

@@ -43,6 +43,7 @@
 #' @importFrom scales label_percent
 #' @importFrom cli rule cli_warn
 #' @importFrom crayon bold
+#' @importFrom matrixStats rowRanges rowSds rowCounts rowAlls rowAnys diff2
 ## usethis namespace: end
 NULL
 

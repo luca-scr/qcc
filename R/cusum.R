@@ -67,7 +67,7 @@ cusum <- function(data,
   data <- data.matrix(data)
 
   if(missing(sizes)) 
-    { sizes <- as.integer(rowSums(!is.na(data)))  }
+    { sizes <- .rowNobs(data, useNames = FALSE)  }
   else
     { if(length(sizes)==1)
          sizes <- rep(sizes, nrow(data))
@@ -126,7 +126,7 @@ cusum <- function(data,
     newdata <- data.matrix(newdata)
     if(missing(newsizes))
     { 
-      newsizes <- as.integer(rowSums(!is.na(newdata)))
+      newsizes <- .rowNobs(newdata, useNames = FALSE)
     } else
     { 
       if(length(newsizes)==1)

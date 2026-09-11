@@ -171,10 +171,10 @@ qccRulesViolatingWER2 <- function(object,
                                      nsigmas = k))
   i <- if(nrow(limits) > 1) seq(run.length, length(statistics)) else 1
   viol.above <- embed(statistics, run.length) > limits[i,2]
-  viol.above <- which(rowSums(viol.above) >= run.points & viol.above[,1])
+  viol.above <- which(rowCounts(viol.above, value = TRUE) >= run.points & viol.above[,1])
   viol.above <- viol.above + (run.length-1)
   viol.below <- embed(statistics, run.length) < limits[i,1]
-  viol.below <- which(rowSums(viol.below) >= run.points & viol.below[,1])
+  viol.below <- which(rowCounts(viol.below, value = TRUE) >= run.points & viol.below[,1])
   viol.below <- viol.below + (run.length-1)
   return(c(viol.above, viol.below))
 }
@@ -261,7 +261,6 @@ qccRulesViolatingNEL7 <- function(object)
 
 #' @rdname rules
 #' @export
-# PERF: Use matrixStats
 qccRulesViolatingNEL8 <- function(object)
 {
   # Return indices of points outside one-sigma limits on both sides (Nelson #8)
@@ -276,9 +275,9 @@ qccRulesViolatingNEL8 <- function(object)
   outside.windows <- embed(outside, run.length)
   above.windows <- embed(above, run.length)
   below.windows <- embed(below, run.length)
-  violators <- which(apply(outside.windows, 1, all) &
-                     apply(above.windows, 1, any) &
-                     apply(below.windows, 1, any))
+  violators <- which(rowAlls(outside.windows) &
+                     rowAnys(above.windows) &
+                     rowAnys(below.windows))
   return(violators + run.length - 1)
 }
 

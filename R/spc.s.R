@@ -23,16 +23,15 @@ NULL
 
 #' @rdname stats.S
 #' @export
-# PERF: Replace apply call with matrixStats
 stats.S <- function(data, sizes)
 {
   data <- as.matrix(data)
   if (missing(sizes))
-     sizes <- as.integer(rowSums(!is.na(data)))
+     sizes <- .rowNobs(data, useNames = FALSE)
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
-    { statistics <- sqrt(apply(data, 1, var, na.rm=TRUE)) }
+    { statistics <- .rowSds(data, na.rm = TRUE) }
   if (length(sizes == 1))
      sizes <- rep(sizes, length(statistics))
   center <- sum(sizes * statistics)/sum(sizes)

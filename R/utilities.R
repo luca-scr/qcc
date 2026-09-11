@@ -303,3 +303,30 @@ assert_n <- function(n, strict = FALSE) {
   cli_warn("Replacing invalid sample sizes with `NA`: {n[invalid]}.")
   invisible(replace(n, invalid, NA_real_))
 }
+
+#### Optimized Matrix ops
+
+.rowNobs <- function(x, useNames = TRUE) {
+  ncol(x) - rowCounts(x, value = NA, useNames = useNames)
+}
+
+# Within-row range widths
+.rowRanges <- function(data, na.rm = FALSE) {
+  # retain base range() warnings for empty groups.
+  if(na.rm && (anyNA(data) || ncol(data) == 0L)) {
+    empty <- .rowNobs(data, useNames = FALSE) == 0L
+    if (any(empty)) {
+      cli_warn(
+        "Found {sum(empty)} empty subgroup(s); their ranges are -Inf."
+      )
+    }
+  }
+
+  # function really starts here
+  ranges <- rowRanges(data, na.rm = na.rm, useNames = TRUE)
+  ranges[, 2L] - ranges[, 1L]
+}
+
+.rowSds <- function(data, na.rm = FALSE) {
+  rowSds(data, na.rm = na.rm, useNames = TRUE)
+}
