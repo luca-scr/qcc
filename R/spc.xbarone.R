@@ -97,9 +97,10 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r =
     "MMR" = {
       windows <- embed(data[!is.na(data)], r)
       moving_ranges <- .rowRanges(windows)
-      if (std.dev == "MMR")
+      if (std.dev == "MMR") {
+        warning("The MMR estimator is biased for small sample sizes.", call. = FALSE)
         median(moving_ranges) / .d4(r)
-      else
+      } else
         mean(moving_ranges) / .d2(r)
     },
     "SD" = { 

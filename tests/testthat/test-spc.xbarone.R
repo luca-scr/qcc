@@ -85,26 +85,51 @@ testthat::describe("sd.xbar.one", {
   testthat::describe("MMR Estimator", {
     it("scales the median of successive ranges", {
       # Ranges are 2, 1, 4, 2: median 2, mean 2.25.
-      expect_equal(sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MMR"),
+      expect_warning(
+        estimate <- sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
                    2 / (sqrt(2) * qnorm(0.75)), tolerance = 1e-6)
     })
 
     it("uses ranges of the requested window size", {
       # Three-observation ranges are 2, 4, 4: median 4.
-      expect_equal(sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MMR", r = 3),
+      expect_warning(
+        estimate <- sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MMR", r = 3),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
                    4 / 1.588, tolerance = 5e-4)
     })
 
     it("omits missing observations before forming windows", {
       x <- matrix(c(NA, 1, NA, 3, NaN, 2, 6, NA, 4), ncol = 1)
-      expect_equal(sd.xbar.one(x, std.dev = "MMR"),
+      expect_warning(
+        estimate <- sd.xbar.one(x, std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
                    2 / (sqrt(2) * qnorm(0.75)), tolerance = 1e-6)
     })
 
     it("handles a single window and constant observations", {
-      expect_equal(sd.xbar.one(c(1, 3), std.dev = "MMR"),
+      expect_warning(
+        estimate <- sd.xbar.one(c(1, 3), std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
                    2 / (sqrt(2) * qnorm(0.75)), tolerance = 1e-6)
-      expect_equal(sd.xbar.one(rep(4, 5), std.dev = "MMR"), 0)
+      expect_warning(
+        estimate <- sd.xbar.one(rep(4, 5), std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate, 0)
     })
   })
 
