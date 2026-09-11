@@ -26,11 +26,11 @@ stats.R <- function(data, sizes)
 {
   data <- as.matrix(data)
   if (missing(sizes))
-     sizes <- as.integer(rowSums(!is.na(data)))
+     sizes <- .rowNobs(data, useNames = FALSE)
   if(ncol(data)==1) 
     { statistics <- as.vector(data) }
   else 
-    { statistics <- apply(data, 1, function(x) diff(range(x, na.rm=TRUE))) }
+    { statistics <- .rowRanges(data, na.rm = TRUE) }
   if (length(sizes == 1))
      sizes <- rep(sizes, length(statistics))
   center <- sum(sizes * statistics)/sum(sizes)
@@ -61,6 +61,7 @@ limits.R <- function(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
      }
   else 
      { if (conf > 0 && conf < 1) 
+          # FIX: replace qtukey with a more precise implementation?
           { ucl <- qtukey(1 - (1 - conf)/2, sizes, 1e100) * std.dev
             lcl <- qtukey((1 - conf)/2, sizes, 1e100) * std.dev
           }

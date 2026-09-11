@@ -71,6 +71,55 @@ testthat::describe("d3()", {
   })
 })
 
+testthat::describe("d4()", {
+  it("returns tabulated median range constants", {
+    # SOURCE: Minitab, Methods and formulas for Moving Range Chart, d4 table.
+    expected <- c(
+      0.954, 1.588, 1.978, 2.257, 2.472, 2.645, 2.791, 2.915,
+      3.024, 3.121, 3.207, 3.285, 3.356, 3.422, 3.482, 3.538,
+      3.591, 3.640, 3.686, 3.730, 3.771, 3.811, 3.847, 3.883
+    )
+    # Some tabulated entries (notably n = 23) differ from numerical medians
+    # by more than rounding to three decimal places.
+    expect_lt(max(abs(d4(2:25) - expected)), 2e-3)
+  })
+
+  it("matches the analytic median range for two observations", {
+    expect_equal(d4(2), sqrt(2) * qnorm(0.75), tolerance = 1e-6)
+  })
+
+  # NOTE: as if: qtukey(0.5, n, Inf) == .d4(n) but does not require NaN removal
+  it("inverts the range distribution", {
+    n <- 2:500
+    expect_equal(ptukey(d4(n), n, Inf), rep(0.5, length(n)),
+                 tolerance = 1e-6)
+  })
+
+  # PERF: Direct integration is cryptic & too slow; we use it to test
+  # The implementation inverts the ptukey distribution.
+  it("matches an independent normal order-statistic calculation", {
+    # P(range <= r) = n * integral(phi(x) * (Phi(x + r) - Phi(x))^(n - 1)).
+    for (n in c(23, 50)) {
+      r <- d4(n)
+      probability <- n * integrate(function(x) {
+        dnorm(x) * (pnorm(x + r) - pnorm(x))^(n - 1)
+      }, -Inf, Inf, rel.tol = 1e-9)$value
+      expect_equal(probability, 0.5, tolerance = 1e-6)
+    }
+  })
+
+  it("preserves order, repeated sizes, missing values, and empty input", {
+    expect_equal(.d4(c(5, 2, NA, 5, 2)),
+                 c(.d4(5), .d4(2), NA, .d4(5), .d4(2)))
+    expect_identical(d4(numeric()), numeric())
+  })
+
+  it("handles unsupported sample sizes", {
+    expect_warning(x <- d4(c(0, 1, 20.5, Inf, -Inf, NA, NaN, 2)))
+    expect_equal(x, c(rep(NA, 7), d4(2)))
+  })
+})
+
 testthat::describe("c4()", {
   it("returns expected values",{
     expected <- c( # SOURCE: c4 <- qcc:::qcc.c4(2:50)

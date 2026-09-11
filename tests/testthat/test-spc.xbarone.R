@@ -7,6 +7,46 @@
 #   individual observations?
 testthat::describe("sd.xbar.one", {
 
+  it("calibrates all estimators to sigma under iid normal sampling", {
+    # NOTE: Monte Carlo simulation.
+    # NOTE: Evidence that all estimators are unbiased for the same estimand.
+    testthat::skip_on_cran()
+    # testthat::skip_on_ci()
+    testthat::skip_on_covr()
+    withr::local_seed(20260911)
+
+    B <- 10000L
+    sigma <- 2.5
+
+    # FIX: Our implementation of the MMR estimator scales medians (through d4) 
+    # making it asymptotically unbiased. that does not mean that the MMR estimator
+    # is unbiased for finite sample sizes.
+    # We could use Monte Carlo to derive the finite-sample bias correction factor 
+    # for the MMR estimator but I should first check a quadrature method.
+    methods <- c("MR", "SD", "MSSD")
+
+    for (n in c(5L, 30L)) { # test small and moderate sample sizes
+      estimates <- replicate(B, {
+        x <- rnorm(n, mean = 10, sd = sigma)
+
+        vapply(methods, function(method) {
+          sd.xbar.one(x, std.dev = method)
+        }, numeric(1))
+      })
+
+      # Monte Carlo standard error
+      mcse <- apply(estimates, 1, sd) / sqrt(B)
+
+      for (method in methods) {
+        expect_lt(
+          abs(mean(estimates[method, ]) - sigma),
+          5 * mcse[method], # FIX: very generous cutoff
+          label = sprintf("absolute bias for method = %s, n = %d", method, n)
+        )
+      }
+    }
+  })
+
   it("defaults to the MR estimator on successive pairs",{
     expect_equal(
       sd.xbar.one(antifreeze$water),
@@ -39,6 +79,57 @@ testthat::describe("sd.xbar.one", {
         c(7.089815, 6.380833, 5.317361, 6.646701),
         tolerance = 5e-4
       )
+    })
+  })
+
+  testthat::describe("MMR Estimator", {
+    it("scales the median of successive ranges", {
+      # Ranges are 2, 1, 4, 2: median 2, mean 2.25.
+      expect_warning(
+        estimate <- sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
+                   2 / (sqrt(2) * qnorm(0.75)), tolerance = 1e-6)
+    })
+
+    it("uses ranges of the requested window size", {
+      # Three-observation ranges are 2, 4, 4: median 4.
+      expect_warning(
+        estimate <- sd.xbar.one(c(1, 3, 2, 6, 4), std.dev = "MMR", r = 3),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
+                   4 / 1.588, tolerance = 5e-4)
+    })
+
+    it("omits missing observations before forming windows", {
+      x <- matrix(c(NA, 1, NA, 3, NaN, 2, 6, NA, 4), ncol = 1)
+      expect_warning(
+        estimate <- sd.xbar.one(x, std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
+                   2 / (sqrt(2) * qnorm(0.75)), tolerance = 1e-6)
+    })
+
+    it("handles a single window and constant observations", {
+      expect_warning(
+        estimate <- sd.xbar.one(c(1, 3), std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate,
+                   2 / (sqrt(2) * qnorm(0.75)), tolerance = 1e-6)
+      expect_warning(
+        estimate <- sd.xbar.one(rep(4, 5), std.dev = "MMR"),
+        "The MMR estimator is biased for small sample sizes.",
+        fixed = TRUE
+      )
+      expect_equal(estimate, 0)
     })
   })
 

@@ -1,2 +1,3 @@
 man/*.Rd linguist-generated
 tests/testthat/_snaps/* linguist-generated
+NAMESPACE linguist-generated

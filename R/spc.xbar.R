@@ -55,7 +55,7 @@ stats.xbar <- function(data, sizes)
 {
   data <- as.matrix(data)
   if(missing(sizes))
-    sizes <- as.integer(rowSums(!is.na(data)))
+    sizes <- .rowNobs(data, useNames = FALSE)
   statistics <- rowMeans(data, na.rm = TRUE)
   center <- sum(sizes * statistics)/sum(sizes)
   list(statistics = statistics, center = center)
@@ -63,12 +63,11 @@ stats.xbar <- function(data, sizes)
 
 #' @rdname stats.xbar
 #' @export
-# PERF: Use matrixStats instead of apply
 sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "MVLUE-SD", "RMSDF"), ...)
 {
   data <- as.matrix(data)
   if(missing(sizes))
-    sizes <- as.integer(rowSums(!is.na(data)))
+    sizes <- .rowNobs(data, useNames = FALSE)
   if(any(sizes == 1))
     stop("group sizes must be larger than one")
   if(is.numeric(std.dev))
@@ -77,27 +76,27 @@ sd.xbar <- function(data, sizes, std.dev = c("UWAVE-R", "UWAVE-SD", "MVLUE-R", "
   std.dev <- match.arg(std.dev)
   switch(std.dev,
          "UWAVE-R" = {
-           R <- apply(data, 1, function(x) diff(range(x, na.rm = TRUE)))
+           R <- .rowRanges(data, na.rm = TRUE)
            sum(R/.d2(sizes))/length(sizes)
          },
          "UWAVE-SD" = {
-           S <- apply(data, 1, sd, na.rm = TRUE)
+           S <- rowSds(data, na.rm = TRUE)
            sum(S/.c4(sizes))/length(sizes)
          },
          "MVLUE-R" = {
-           R <- apply(data, 1, function(x) diff(range(x, na.rm = TRUE)))
+           R <- .rowRanges(data, na.rm = TRUE)
            d2 <- .d2(sizes)
            w <- (d2/.d3(sizes))^2
            sum(R/d2*w)/sum(w)
          },
          "MVLUE-SD" = {
-           S <- apply(data, 1, sd, na.rm = TRUE)
+           S <- rowSds(data, na.rm = TRUE)
            c4 <- .c4(sizes)
            w <- c4^2 / (1 - c4^2)
            sum(S / c4 * w) / sum(w)
          },
          "RMSDF" = {
-           S <- apply(data, 1, sd, na.rm = TRUE)
+           S <- rowSds(data, na.rm = TRUE)
            w <- sizes - 1
            sqrt(sum(S^2 * w) / sum(w)) / .c4(sum(w) + 1)
          })
