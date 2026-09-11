@@ -1,5 +1,6 @@
 # qcc 3.0 (NOT ON CRAN)
 
+- The package now uses efficient matrix operations, thanks to the matrixStats package.
 - Added the bias-corrected `"MSSD"` and `"MMR"` estimators to `sd.xbar.one()`, available in individuals, EWMA, and CUSUM charts.
 - Added all eight Nelson rules, selectable with `rule.set = "nelson"` in `qcc()` and `qccRules()`.
 - Added overall process performance indices (`Pp`, `Pp_l`, `Pp_u`, `Pp_k`, and `Ppm`) and their confidence limits to `processCapability()`.

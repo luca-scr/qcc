@@ -95,22 +95,23 @@ processCapability <- function(object, spec.limits, target,
   if(is.na(LSL) & is.na(USL))
      stop("invalid specification limits")
 
-  # TODO: refactor
   has.target <- (!missing(target))
   if(!has.target) {
-    target <- mean(spec.limits, na.rm=TRUE) # FIX: removing NA means target == spec limits
-    if(!is.na(LSL) & !is.na(USL)) has.target <- TRUE
-    message("target value not provided; using midpoint of specification limits. Cpm and Ppm may be optimistic")
-    # TODO: Explain this message in more detail in ?processCapability
+    target <- NA_real_
+    if(!is.na(LSL) & !is.na(USL)) {
+      target <- mean(c(LSL, USL))
+      has.target <- TRUE
+      message("target value not provided; using midpoint of specification limits. Cpm and Ppm may be optimistic")
+    }
   }
      
-  if (is.na(LSL))
+  if (has.target && is.na(LSL))
      { if (target > USL)
            warning("target value larger than one-sided specification limit...") }
-  if (is.na(USL))
+  if (has.target && is.na(USL))
      { if (target < LSL)
            warning("target value smaller than one-sided specification limit...") }
-  if (!is.na(LSL) & !is.na(USL))
+  if (has.target && !is.na(LSL) && !is.na(USL))
      { if (target < LSL || target > USL)
        warning("target value is not within specification limits...") }
        
