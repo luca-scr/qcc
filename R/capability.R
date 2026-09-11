@@ -38,7 +38,7 @@
 #' @param digits the number of significant digits to use.
 #' @param ... catches further ignored arguments.
 #' @return Invisibly returns a list with components:
-#' - `nobs`: number of observations.
+#' - `nobs`: number of non-missing observations.
 #' - `center`: center.
 #' - `std.dev`: standard deviation.
 #' - `target`: target.
@@ -188,7 +188,7 @@ processCapability <- function(object, spec.limits, target,
               obs = { obs <- c(obs.LSL, obs.USL)
                       names(obs) <- c("Obs < LSL", "Obs > USL")
                       obs },
-              nobs = length(object$data) )
+              nobs = n )
   class(out) <- "processCapability"
   return(out)
 }

@@ -75,7 +75,7 @@ border used for drawing the histogram.}
 \value{
 Invisibly returns a list with components:
 \itemize{
-\item \code{nobs}: number of observations.
+\item \code{nobs}: number of non-missing observations.
 \item \code{center}: center.
 \item \code{std.dev}: standard deviation.
 \item \code{target}: target.
