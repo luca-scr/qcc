@@ -40,9 +40,9 @@ processCapability(
 specification limits. For one-sided specification limits, the value of the
 missing limit must be set to \code{NA}.}
 
-\item{target}{a value specifying the target of the process. If missing the
-value from the \code{'qcc'} object is used if not \code{NULL}, otherwise the
-target is set at the middle value between specification limits.}
+\item{target}{a value specifying the target of the process. If omitted,
+the midpoint is used when both specification limits are provided; for a
+one-sided specification, no target is assumed.}
 
 \item{std.dev}{a value specifying the within-group standard deviation. If
 not provided is taken from the \code{'qcc'} object.}
@@ -78,7 +78,7 @@ Invisibly returns a list with components:
 \item \code{nobs}: number of non-missing observations.
 \item \code{center}: center.
 \item \code{std.dev}: standard deviation.
-\item \code{target}: target.
+\item \code{target}: target, or \code{NA_real_} if no target is specified or assumed.
 \item \code{spec.limits}: a vector of values giving the lower specification limit
 (LSL) and the upper specification limit (USL).
 \item \code{indices}: a matrix of capability indices (\eqn{C_p}{C_p},

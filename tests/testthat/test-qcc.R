@@ -56,12 +56,8 @@ test_that("xbar.one charts use MSSD from phase-I data for control limits", {
 })
 
 test_that("xbar.one charts use MMR from phase-I data for control limits", {
-  expect_warning(
-    chart <- qcc(c(1, 3, 2, 6, 4), type = "xbar.one", std.dev = "MMR",
-                 newdata = 100, rules = 1),
-    "The MMR estimator is biased for small sample sizes.",
-    fixed = TRUE
-  )
+  chart <- qcc(c(1, 3, 2, 6, 4), type = "xbar.one", std.dev = "MMR",
+               newdata = 100, rules = 1)
   sigma <- 2 / (sqrt(2) * qnorm(0.75))
 
   expect_equal(chart$std.dev, sigma, tolerance = 1e-6)

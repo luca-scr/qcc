@@ -9,7 +9,9 @@
 #'   ranges.
 #' - `"MMR"`: median moving range; this estimator is defined as
 #'   `median(moving_ranges) / d4(r)`, where [d4()] is the median range of `r`
-#'   independent standard normal observations.
+#'   independent standard normal observations. It does not correct finite-sample
+#'   bias in the median of moving ranges. If fewer than `r` non-missing
+#'   observations remain, it returns `NA_real_`.
 #' - `"SD"`: sample standard deviation; this estimator is defined as
 #'   `sd(x) / c4(n)`, where `n` is the number of individual measurements of
 #'   `x`.
@@ -19,11 +21,11 @@
 #'   for the dependence between successive differences.
 #'
 #' For independent normal observations from an in-control process, `"MSSD"`
-#' generally has lower sampling variance than `"MR"` with \code{r = 2}. It can
-#' also perform well under some changes in the process mean. However,
-#' squaring the differences makes it sensitive to outliers. Serial correlation
-#' in the observations can also bias the estimate; the correction factor
-#' accounts for dependence between differences, not between observations.
+#' generally has lower sampling variance than `"MR"` with with a moving range 
+#' of length 2. It can also perform well under some changes in the process mean.
+#' However, squaring the differences makes it sensitive to outliers. Serial
+#' correlation in the observations can also bias the estimate; the correction 
+#' factor accounts for dependence between differences, not between observations.
 #' See Braun and Park (2008) for comparisons of estimators for individuals charts.
 #'
 #' The current implementation of the MMR estimator is not corrected for
@@ -36,7 +38,8 @@
 #' @inheritParams spc_common data center nsigmas conf
 #' @param sizes samples sizes. Not needed, `size = 1` is used.
 #' @param r number of successive observations in each moving range for the
-#'   `"MR"` and `"MMR"` estimators. Ignored for `"SD"` and `"MSSD"`.
+#'   `"MR"` and `"MMR"` estimators. For `"MMR"`, `r` must be a single integer
+#'   of at least 2. Ignored for `"SD"` and `"MSSD"`.
 #' @param std.dev within group standard deviation. Optional for
 #'   `sd.xbar.one` function, required for `limits.xbar.one`. See details.
 #' @param ... catches further ignored arguments.
@@ -54,14 +57,18 @@
 #' @examples
 #' x <- antifreeze[["water"]] # See `?antifreeze`
 #' # 1) using MR (default)
-#' qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
+#' qcc(x, type="xbar.one", 
+#'     data.name="Water content (in ppm) of batches of antifreeze")
 #' # 2) using SD
-#' qcc(x, type="xbar.one", std.dev = "SD", data.name="Water content (in ppm) of batches of antifreeze")
+#' qcc(x, type="xbar.one", std.dev = "SD", 
+#'     data.name="Water content (in ppm) of batches of antifreeze")
 #' # 3) using bias-corrected MSSD
-#' qcc(x, type="xbar.one", std.dev = "MSSD", data.name="Water content (in ppm) of batches of antifreeze")
+#' qcc(x, type="xbar.one", std.dev = "MSSD", 
+#'     data.name="Water content (in ppm) of batches of antifreeze")
 #'
-#' # "as the size increases further, we would expect sigma-hat to settle down
-#' #  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991, p. 121)
+#' # As the size increases further, we would expect sigma-hat to settle 
+#' # down at a value close to the overall sigma-hat 
+#' # (Wetherill and Brown, 1991, p. 121)
 #' sigma <- NA
 #' k <- 2:24
 #' for (j in k) sigma[j] <- sd.xbar.one(x, k=j)
@@ -85,7 +92,7 @@ stats.xbar.one <- function(data, sizes)
 # TODO: 2. Implement the median absolute deviation estimator (MAD)
 # TODO: 3. implement the Ciminera-Tukey Estimator
 # TODO: 4. implement the Boyles Dynamic Linear model estimator (DLM)
-# TODO: explain in docs why MMR is bad when should you use it.
+# PERF: Replace apply call with matrixStats
 sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r = 2, ...) {
   data <- as.vector(data)
   if(is.numeric(std.dev))
@@ -102,6 +109,18 @@ sd.xbar.one <- function(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r =
         median(moving_ranges) / .d4(r)
       } else
         mean(moving_ranges) / .d2(r)
+    },
+    "MMR" = {
+      if (!is.numeric(r) || length(r) != 1L || !is.finite(r) ||
+          r < 2 || r != floor(r))
+        stop("'r' must be a single integer of at least 2 for MMR", call. = FALSE)
+
+      data <- data[!is.na(data)]
+      if (length(data) < r)
+        return(NA_real_)
+
+      moving_ranges <- apply(embed(data, r), 1L, function(x) diff(range(x)))
+      median(moving_ranges) / .d4(r)
     },
     "SD" = { 
       sd(data, na.rm = TRUE)/.c4(sum(!is.na(data)))

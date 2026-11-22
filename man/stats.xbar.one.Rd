@@ -21,7 +21,8 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 \code{sd.xbar.one} function, required for \code{limits.xbar.one}. See details.}
 
 \item{r}{number of successive observations in each moving range for the
-\code{"MR"} and \code{"MMR"} estimators. Ignored for \code{"SD"} and \code{"MSSD"}.}
+\code{"MR"} and \code{"MMR"} estimators. For \code{"MMR"}, \code{r} must be a single integer
+of at least 2. Ignored for \code{"SD"} and \code{"MSSD"}.}
 
 \item{...}{catches further ignored arguments.}
 
@@ -54,7 +55,9 @@ Methods available for estimating the process standard deviation:
 ranges.
 \item \code{"MMR"}: median moving range; this estimator is defined as
 \code{median(moving_ranges) / d4(r)}, where \code{\link[=d4]{d4()}} is the median range of \code{r}
-independent standard normal observations.
+independent standard normal observations. It does not correct finite-sample
+bias in the median of moving ranges. If fewer than \code{r} non-missing
+observations remain, it returns \code{NA_real_}.
 \item \code{"SD"}: sample standard deviation; this estimator is defined as
 \code{sd(x) / c4(n)}, where \code{n} is the number of individual measurements of
 \code{x}.
@@ -65,11 +68,11 @@ for the dependence between successive differences.
 }
 
 For independent normal observations from an in-control process, \code{"MSSD"}
-generally has lower sampling variance than \code{"MR"} with \code{r = 2}. It can
-also perform well under some changes in the process mean. However,
-squaring the differences makes it sensitive to outliers. Serial correlation
-in the observations can also bias the estimate; the correction factor
-accounts for dependence between differences, not between observations.
+generally has lower sampling variance than \code{"MR"} with with a moving range
+of length 2. It can also perform well under some changes in the process mean.
+However, squaring the differences makes it sensitive to outliers. Serial
+correlation in the observations can also bias the estimate; the correction
+factor accounts for dependence between differences, not between observations.
 See Braun and Park (2008) for comparisons of estimators for individuals charts.
 
 The current implementation of the MMR estimator is not corrected for
@@ -82,14 +85,18 @@ in their original order, including pairs across gaps left by missing values.
 \examples{
 x <- antifreeze[["water"]] # See `?antifreeze`
 # 1) using MR (default)
-qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
+qcc(x, type="xbar.one", 
+    data.name="Water content (in ppm) of batches of antifreeze")
 # 2) using SD
-qcc(x, type="xbar.one", std.dev = "SD", data.name="Water content (in ppm) of batches of antifreeze")
+qcc(x, type="xbar.one", std.dev = "SD", 
+    data.name="Water content (in ppm) of batches of antifreeze")
 # 3) using bias-corrected MSSD
-qcc(x, type="xbar.one", std.dev = "MSSD", data.name="Water content (in ppm) of batches of antifreeze")
+qcc(x, type="xbar.one", std.dev = "MSSD", 
+    data.name="Water content (in ppm) of batches of antifreeze")
 
-# "as the size increases further, we would expect sigma-hat to settle down
-#  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991, p. 121)
+# As the size increases further, we would expect sigma-hat to settle 
+# down at a value close to the overall sigma-hat 
+# (Wetherill and Brown, 1991, p. 121)
 sigma <- NA
 k <- 2:24
 for (j in k) sigma[j] <- sd.xbar.one(x, k=j)
@@ -101,7 +108,7 @@ abline(h=sd(x), col=2, lty=2)   # different values of k
 \item Montgomery, D.C. (2013). \emph{Introduction to Statistical Quality Control}, 7th ed. New York: John Wiley & Sons.
 \item Ryan, T. P. (2011). \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 \item Wetherill, G. B., and Brown, D. W. (1991). \emph{Statistical Process Control}. New York: Chapman & Hall.
-\item Braun, W. J., and Park, D. (2008). Estimation of sigma for Individuals Charts. \emph{Journal of Quality Technology}, \strong{40}(3), 332--344. \url{https://doi.org/10.1080/00224065.2008.11917738}.
+\item Braun, W. J., and Park, D. (2008). Estimation of sigma for Individuals Charts. \emph{Journal of Quality Technology}, \strong{40}(3), 332--344.
 }
 }
 \seealso{

@@ -39,16 +39,4 @@ was temporarily assigned to the machine for sample 23. After these 30
 samples, the machine was adjusted and 24 additional samples were collected.
 The \code{orangejuice2} dataset contains samples collected after this adjustment.
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{RyanMultivar}},
-\code{\link{antifreeze}},
-\code{\link{boiler}},
-\code{\link{circuit}},
-\code{\link{dyedcloth}},
-\code{\link{pcmanufact}},
-\code{\link{pistonrings}},
-\code{\link{viscosity}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}

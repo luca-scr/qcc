@@ -22,7 +22,7 @@ from a standard normal distribution.
 }
 \references{
 \itemize{
-\item Cano, Emilio L., Moguerza, Javier M. and Redchuk, Andres. 2012. \emph{Six Sigma with {R}. Statistical Engineering for ProcessImprovement}, Use R!, vol. 36. Springer, New York.
+\item Cano, Emilio L., Moguerza, Javier M. and Redchuk, Andres. 2012. \emph{Six Sigma with {R}. Statistical Engineering for Process Improvement}, Use R!, vol. 36. Springer, New York.
 }
 }
 \seealso{

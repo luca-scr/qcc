@@ -16,9 +16,9 @@
 #' @param spec.limits a two-values vector specifying the lower and upper
 #' specification limits. For one-sided specification limits, the value of the
 #' missing limit must be set to `NA`.
-#' @param target a value specifying the target of the process. If missing the
-#' value from the `'qcc'` object is used if not `NULL`, otherwise the
-#' target is set at the middle value between specification limits.
+#' @param target a value specifying the target of the process. If omitted,
+#' the midpoint is used when both specification limits are provided; for a
+#' one-sided specification, no target is assumed.
 #' @param std.dev a value specifying the within-group standard deviation. If
 #' not provided is taken from the `'qcc'` object.
 #' @param nsigmas a numeric value specifying the number of sigmas to use. If
@@ -41,7 +41,7 @@
 #' - `nobs`: number of non-missing observations.
 #' - `center`: center.
 #' - `std.dev`: standard deviation.
-#' - `target`: target.
+#' - `target`: target, or `NA_real_` if no target is specified or assumed.
 #' - `spec.limits`: a vector of values giving the lower specification limit
 #'   (LSL) and the upper specification limit (USL).
 #' - `indices`: a matrix of capability indices (\eqn{C_p}{C_p},

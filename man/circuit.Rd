@@ -30,16 +30,4 @@ control problem in the wave soldering machine, which was subsequently
 repaired. The last 20 samples are further samples collected on inspection
 units (each formed by 100 boards).
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{RyanMultivar}},
-\code{\link{antifreeze}},
-\code{\link{boiler}},
-\code{\link{dyedcloth}},
-\code{\link{orangejuice}},
-\code{\link{pcmanufact}},
-\code{\link{pistonrings}},
-\code{\link{viscosity}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}

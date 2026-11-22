@@ -119,33 +119,34 @@ import(ggplot2)
 import(patchwork)
 import(stats)
 importFrom(MASS,mvrnorm)
-importFrom(cli,cli_warn)
-importFrom(cli,rule)
+importFrom(cli,
+  cli_warn,
+  rule
+)
 importFrom(crayon,bold)
-importFrom(grDevices,adjustcolor)
-importFrom(grDevices,extendrange)
-importFrom(grDevices,gray)
-importFrom(grDevices,nclass.FD)
-importFrom(grDevices,nclass.Sturges)
-importFrom(grDevices,palette)
-importFrom(graphics,abline)
-importFrom(graphics,axis)
-importFrom(graphics,box)
-importFrom(graphics,contour)
-importFrom(graphics,hist)
-importFrom(graphics,lines)
-importFrom(graphics,mtext)
-importFrom(graphics,par)
-importFrom(graphics,points)
-importFrom(graphics,polygon)
-importFrom(graphics,rect)
-importFrom(graphics,strheight)
-importFrom(graphics,strwidth)
-importFrom(graphics,text)
-importFrom(matrixStats,rowAlls)
-importFrom(matrixStats,rowAnys)
-importFrom(matrixStats,rowCounts)
-importFrom(matrixStats,rowRanges)
-importFrom(matrixStats,rowSds)
+importFrom(grDevices,
+  adjustcolor,
+  extendrange,
+  gray,
+  nclass.FD,
+  nclass.Sturges,
+  palette
+)
+importFrom(graphics,
+  abline,
+  axis,
+  box,
+  contour,
+  hist,
+  lines,
+  mtext,
+  par,
+  points,
+  polygon,
+  rect,
+  strheight,
+  strwidth,
+  text
+)
 importFrom(scales,label_percent)
 importFrom(utils,packageVersion)

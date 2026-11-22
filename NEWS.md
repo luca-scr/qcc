@@ -1,13 +1,13 @@
 # qcc 3.0 (NOT ON CRAN)
 
-- The package now uses efficient matrix operations, thanks to the matrixStats package.
-- Added the bias-corrected `"MSSD"` and `"MMR"` estimators to `sd.xbar.one()`, available in individuals, EWMA, and CUSUM charts.
+- Added the bias-corrected `"MSSD"` estimator to `sd.xbar.one()`, available through `std.dev = "MSSD"` in individuals, EWMA, and CUSUM charts.
+- Added the median moving range estimator (`std.dev = "MMR"`) for those same charts and exported its normal-range scaling constant `d4()`. MMR does not include a finite-sample bias correction.
 - Added all eight Nelson rules, selectable with `rule.set = "nelson"` in `qcc()` and `qccRules()`.
 - Added overall process performance indices (`Pp`, `Pp_l`, `Pp_u`, `Pp_k`, and `Ppm`) and their confidence limits to `processCapability()`.
 - Added exported, vectorized `d2()`, `d3()`, and `c4()` functions for bias-correction constants and moments of the range distribution, supporting sample sizes beyond the former table limits and higher precision.
 - Chart defaults now use standard R options with a `qcc.` prefix, for example `options(qcc.add.stats = FALSE)`. `qcc.options()` is retained as a compatibility interface.
 - Fixed `sd.xbar.one()` handling of missing observations: the `"MR"` estimator removes missing values before forming moving ranges, and the `"SD"` estimator uses the non-missing sample size for bias correction.
-- Fixed `processCapability()` returning `NULL` for `nobs` and returning `NA` for `Cp_k` when only one specification limit is supplied.
+- Fixed the observation count in `processCapability()` to exclude missing values. For a one-sided specification, an omitted target no longer defaults to the specification limit, and `Cp_k` uses the available one-sided index.
 - Fixed `ewmaSmooth()` accepting negative `lambda` values.
 - Fixed phase-II filtering in EWMA and CUSUM plots with `chart.all = FALSE` when `xtime` contains dates.
 - Fixed `causeEffectDiagram()` omitting branches or subcause labels when the number of causes is odd.

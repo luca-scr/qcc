@@ -106,16 +106,16 @@ d3 <- function(n) .d3(assert_n(n))
 #' @export
 d4 <- function(n) .d4(assert_n(n))
 
-# PERF: this is ~3-4x slower than `qtukey(0.5, n_i, Inf)`
-# but works for all valid n and has better precision
-# PERF: This is ~20-30x faster than a direct integration 
-# (see tests) but has a worst-case precision of ~1e-7 for
-# small n (n<50) compared to ~1e-10 for direct integration
+# Numerically invert the infinite-df studentized range CDF for n > 2.
+# The upper bracket follows by bounding the probability that any of the
+# n standard normal observations lies outside [-upper / 2, upper / 2].
 .d4 <- function(n) {
   n_unique <- unique(n)
   values <- vapply(n_unique, function(n_i) {
     if (is.na(n_i))
       return(NA_real_)
+    if (n_i == 2)
+      return(sqrt(2) * qnorm(0.75))
 
     upper <- 2 * qnorm(0.25 / n_i, lower.tail = FALSE)
     uniroot(function(x) ptukey(x, n_i, Inf) - 0.5,

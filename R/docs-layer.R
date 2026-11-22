@@ -125,8 +125,7 @@ NULL
   braun_park_2008 = paste(
     "Braun, W. J., and Park, D. (2008).",
     "Estimation of sigma for Individuals Charts.",
-    "*Journal of Quality Technology*, **40**(3), 332--344.",
-    "<https://doi.org/10.1080/00224065.2008.11917738>."
+    "*Journal of Quality Technology*, **40**(3), 332--344."
   ),
   chou_owen_borrego_1990 = paste(
     "Chou, Y., Owen, D. B., and Borrego, S. A. (1990).",
@@ -136,18 +135,16 @@ NULL
   von_neumann_et_al_1941 = paste(
     "von Neumann, J., Kent, R. H., Bellinson, H. R., and Hart, B. I. (1941).",
     "The Mean Square Successive Difference.",
-    "*The Annals of Mathematical Statistics*, **12**(2), 153--162.",
-    "<https://doi.org/10.1214/aoms/1177731746>."
+    "*The Annals of Mathematical Statistics*, **12**(2), 153--162."
   ),
   von_neumann_1941 = paste(
     "von Neumann, J. (1941).",
     "Distribution of the Ratio of the Mean Square Successive Difference to the Variance.",
-    "*The Annals of Mathematical Statistics*, **12**(4), 367--395.",
-    "<https://doi.org/10.1214/aoms/1177731677>."
+    "*The Annals of Mathematical Statistics*, **12**(4), 367--395."
   ),
   cano_moguerza_redchuk_2012 = paste(
     "Cano, Emilio L., Moguerza, Javier M. and Redchuk, Andres. 2012.",
-    "*Six Sigma with {R}. Statistical Engineering for ProcessImprovement*,",
+    "*Six Sigma with {R}. Statistical Engineering for Process Improvement*,",
     "Use R!, vol. 36. Springer, New York."
   )
 )
