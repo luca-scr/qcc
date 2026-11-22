@@ -54,7 +54,8 @@
 #' @examples
 #' x <- antifreeze[["water"]] # See `?antifreeze`
 #' # 1) using MR (default)
-#' qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
+#' qcc(x, type="xbar.one", 
+#'     data.name="Water content (in ppm) of batches of antifreeze")
 #' # 2) using SD
 #' qcc(x, type="xbar.one", std.dev = "SD", 
 #'     data.name="Water content (in ppm) of batches of antifreeze")
@@ -62,8 +63,9 @@
 #' qcc(x, type="xbar.one", std.dev = "MSSD", 
 #'     data.name="Water content (in ppm) of batches of antifreeze")
 #'
-#' # "as the size increases further, we would expect sigma-hat to settle down
-#' #  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991, p. 121)
+#' # As the size increases further, we would expect sigma-hat to settle 
+#' # down at a value close to the overall sigma-hat 
+#' # (Wetherill and Brown, 1991, p. 121)
 #' sigma <- NA
 #' k <- 2:24
 #' for (j in k) sigma[j] <- sd.xbar.one(x, k=j)

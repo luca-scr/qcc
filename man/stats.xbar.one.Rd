@@ -82,7 +82,8 @@ in their original order, including pairs across gaps left by missing values.
 \examples{
 x <- antifreeze[["water"]] # See `?antifreeze`
 # 1) using MR (default)
-qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
+qcc(x, type="xbar.one", 
+    data.name="Water content (in ppm) of batches of antifreeze")
 # 2) using SD
 qcc(x, type="xbar.one", std.dev = "SD", 
     data.name="Water content (in ppm) of batches of antifreeze")
@@ -90,8 +91,9 @@ qcc(x, type="xbar.one", std.dev = "SD",
 qcc(x, type="xbar.one", std.dev = "MSSD", 
     data.name="Water content (in ppm) of batches of antifreeze")
 
-# "as the size increases further, we would expect sigma-hat to settle down
-#  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991, p. 121)
+# As the size increases further, we would expect sigma-hat to settle 
+# down at a value close to the overall sigma-hat 
+# (Wetherill and Brown, 1991, p. 121)
 sigma <- NA
 k <- 2:24
 for (j in k) sigma[j] <- sd.xbar.one(x, k=j)
@@ -103,7 +105,7 @@ abline(h=sd(x), col=2, lty=2)   # different values of k
 \item Montgomery, D.C. (2013). \emph{Introduction to Statistical Quality Control}, 7th ed. New York: John Wiley & Sons.
 \item Ryan, T. P. (2011). \emph{Statistical Methods for Quality Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 \item Wetherill, G. B., and Brown, D. W. (1991). \emph{Statistical Process Control}. New York: Chapman & Hall.
-\item Braun, W. J., and Park, D. (2008). Estimation of sigma for Individuals Charts. \emph{Journal of Quality Technology}, \strong{40}(3), 332--344. \url{https://doi.org/10.1080/00224065.2008.11917738}.
+\item Braun, W. J., and Park, D. (2008). Estimation of sigma for Individuals Charts. \emph{Journal of Quality Technology}, \strong{40}(3), 332--344.
 }
 }
 \seealso{
