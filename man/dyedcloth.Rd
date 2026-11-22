@@ -22,16 +22,4 @@ dyedcloth
 In a textile finishing plant, dyed cloth is inspected for the occurrence of
 defects per 50 square meters. The data on ten rolls of cloth are presented.
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{RyanMultivar}},
-\code{\link{antifreeze}},
-\code{\link{boiler}},
-\code{\link{circuit}},
-\code{\link{orangejuice}},
-\code{\link{pcmanufact}},
-\code{\link{pistonrings}},
-\code{\link{viscosity}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}

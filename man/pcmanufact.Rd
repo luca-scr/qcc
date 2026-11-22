@@ -23,16 +23,4 @@ A personal computer manufacturer counts the number of nonconformities per
 unit on the final assembly line. He collects data on 20 samples of 5
 computers each.
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{RyanMultivar}},
-\code{\link{antifreeze}},
-\code{\link{boiler}},
-\code{\link{circuit}},
-\code{\link{dyedcloth}},
-\code{\link{orangejuice}},
-\code{\link{pistonrings}},
-\code{\link{viscosity}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}

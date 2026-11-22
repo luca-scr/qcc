@@ -16,9 +16,9 @@
 #' @param spec.limits a two-values vector specifying the lower and upper
 #' specification limits. For one-sided specification limits, the value of the
 #' missing limit must be set to `NA`.
-#' @param target a value specifying the target of the process. If missing the
-#' value from the `'qcc'` object is used if not `NULL`, otherwise the
-#' target is set at the middle value between specification limits.
+#' @param target a value specifying the target of the process. If omitted,
+#' the midpoint is used when both specification limits are provided; for a
+#' one-sided specification, no target is assumed.
 #' @param std.dev a value specifying the within-group standard deviation. If
 #' not provided is taken from the `'qcc'` object.
 #' @param nsigmas a numeric value specifying the number of sigmas to use. If
@@ -38,10 +38,10 @@
 #' @param digits the number of significant digits to use.
 #' @param ... catches further ignored arguments.
 #' @return Invisibly returns a list with components:
-#' - `nobs`: number of observations.
+#' - `nobs`: number of non-missing observations.
 #' - `center`: center.
 #' - `std.dev`: standard deviation.
-#' - `target`: target.
+#' - `target`: target, or `NA_real_` if no target is specified or assumed.
 #' - `spec.limits`: a vector of values giving the lower specification limit
 #'   (LSL) and the upper specification limit (USL).
 #' - `indices`: a matrix of capability indices (\eqn{C_p}{C_p},
@@ -95,22 +95,23 @@ processCapability <- function(object, spec.limits, target,
   if(is.na(LSL) & is.na(USL))
      stop("invalid specification limits")
 
-  # TODO: refactor
   has.target <- (!missing(target))
   if(!has.target) {
-    target <- mean(spec.limits, na.rm=TRUE) # FIX: removing NA means target == spec limits
-    if(!is.na(LSL) & !is.na(USL)) has.target <- TRUE
-    message("target value not provided; using midpoint of specification limits. Cpm and Ppm may be optimistic")
-    # TODO: Explain this message in more detail in ?processCapability
+    target <- NA_real_
+    if(!is.na(LSL) & !is.na(USL)) {
+      target <- mean(c(LSL, USL))
+      has.target <- TRUE
+      message("target value not provided; using midpoint of specification limits. Cpm and Ppm may be optimistic")
+    }
   }
      
-  if (is.na(LSL))
+  if (has.target && is.na(LSL))
      { if (target > USL)
            warning("target value larger than one-sided specification limit...") }
-  if (is.na(USL))
+  if (has.target && is.na(USL))
      { if (target < LSL)
            warning("target value smaller than one-sided specification limit...") }
-  if (!is.na(LSL) & !is.na(USL))
+  if (has.target && !is.na(LSL) && !is.na(USL))
      { if (target < LSL || target > USL)
        warning("target value is not within specification limits...") }
        
@@ -188,7 +189,7 @@ processCapability <- function(object, spec.limits, target,
               obs = { obs <- c(obs.LSL, obs.USL)
                       names(obs) <- c("Obs < LSL", "Obs > USL")
                       obs },
-              nobs = length(object$data) )
+              nobs = n )
   class(out) <- "processCapability"
   return(out)
 }

@@ -21,16 +21,4 @@ RyanMultivar
 \description{
 Multivariate data from Ryan (2011, Table 9.2).
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{antifreeze}},
-\code{\link{boiler}},
-\code{\link{circuit}},
-\code{\link{dyedcloth}},
-\code{\link{orangejuice}},
-\code{\link{pcmanufact}},
-\code{\link{pistonrings}},
-\code{\link{viscosity}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}

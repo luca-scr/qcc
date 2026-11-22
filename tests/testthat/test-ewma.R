@@ -29,6 +29,17 @@ test_that("ewma uses the phase-I MSSD estimate for individual observations", {
                tolerance = 1e-12)
 })
 
+test_that("ewma uses the phase-I MMR estimate for individual observations", {
+  x <- c(1, 3, 2, 6, 4)
+  sigma <- 2 / (sqrt(2) * qnorm(0.75))
+  chart <- ewma(x, std.dev = "MMR", newdata = 100)
+  reference <- ewma(x, std.dev = sigma, newdata = 100)
+
+  expect_equal(chart$std.dev, sigma, tolerance = 1e-12)
+  expect_equal(chart$sigma, reference$sigma, tolerance = 1e-12)
+  expect_equal(chart$limits, reference$limits, tolerance = 1e-12)
+})
+
 test_that("ewmaSmooth orders x and smooths y in sorted order", {
   smoothed <- ewmaSmooth(
     x = c(3, 1, 2),

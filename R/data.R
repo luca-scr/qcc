@@ -12,7 +12,7 @@
 #' @source Wetherill, G.B. and Brown, D.W. (1991) Statistical Process
 #' Control. New York: Chapman & Hall, p. 120
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "antifreeze"
 
 
@@ -40,7 +40,7 @@
 #' @source Mason, R.L. and Young, J.C. (2002) \emph{Multivariate
 #' Statistical Process Control with Industrial Applications}, SIAM, p. 86.
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "boiler"
 
 
@@ -69,7 +69,7 @@
 #' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
 #' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 173--175
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "circuit"
 
 
@@ -90,7 +90,7 @@
 #' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
 #' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 183--184
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "dyedcloth"
 
 
@@ -124,7 +124,7 @@
 #' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
 #' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 152--159.
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "orangejuice"
 
 #' @rdname orangejuice
@@ -150,7 +150,7 @@
 #' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
 #' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 181--182
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "pcmanufact"
 
 
@@ -177,7 +177,7 @@
 #' @source Montgomery, D.C. (1991) \emph{Introduction to Statistical
 #' Quality Control}, 2nd ed, New York, John Wiley & Sons, pp. 206--213
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "pistonrings"
 
 
@@ -198,7 +198,7 @@
 #' @source Ryan, T. P. (2011), \emph{Statistical Methods for Quality
 #' Improvement}, 3rd ed. New York: John Wiley & Sons, Inc.
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "RyanMultivar"
 
 
@@ -223,5 +223,5 @@
 #' @source Montgomery, D.C. (2005) \emph{Introduction to Statistical
 #' Quality Control}, 5th ed, New York, John Wiley & Sons, pp. 232-235
 #'
-#' @family datasets in `qcc` package
+#' @keywords datasets
 "viscosity"

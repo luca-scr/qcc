@@ -8,7 +8,7 @@
 \usage{
 stats.xbar.one(data, sizes)
 
-sd.xbar.one(data, sizes, std.dev = c("MR", "SD", "MSSD"), r = 2, ...)
+sd.xbar.one(data, sizes, std.dev = c("MR", "SD", "MSSD", "MMR"), r = 2, ...)
 
 limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 }
@@ -21,7 +21,8 @@ limits.xbar.one(center, std.dev, sizes, nsigmas = NULL, conf = NULL)
 \code{sd.xbar.one} function, required for \code{limits.xbar.one}. See details.}
 
 \item{r}{number of successive observations in each moving range for the
-\code{"MR"} estimator. Ignored for \code{"SD"} and \code{"MSSD"}.}
+\code{"MR"} and \code{"MMR"} estimators. For \code{"MMR"}, \code{r} must be a single integer
+of at least 2. Ignored for \code{"SD"} and \code{"MSSD"}.}
 
 \item{...}{catches further ignored arguments.}
 
@@ -52,6 +53,11 @@ Methods available for estimating the process standard deviation:
 \itemize{
 \item \code{"MR"}: moving range; this estimator is based on the scaled mean of moving
 ranges.
+\item \code{"MMR"}: median moving range; this estimator is defined as
+\code{median(moving_ranges) / d4(r)}, where \code{\link[=d4]{d4()}} is the median range of \code{r}
+independent standard normal observations. It does not correct finite-sample
+bias in the median of moving ranges. If fewer than \code{r} non-missing
+observations remain, it returns \code{NA_real_}.
 \item \code{"SD"}: sample standard deviation; this estimator is defined as
 \code{sd(x) / c4(n)}, where \code{n} is the number of individual measurements of
 \code{x}.
@@ -62,15 +68,15 @@ for the dependence between successive differences.
 }
 
 For independent normal observations from an in-control process, \code{"MSSD"}
-generally has lower sampling variance than \code{"MR"} with \code{r = 2}. It can
-also perform well under some changes in the process mean. However,
-squaring the differences makes it sensitive to outliers. Serial correlation
-in the observations can also bias the estimate; the correction factor
-accounts for dependence between differences, not between observations.
+generally has lower sampling variance than \code{"MR"} with with a moving range
+of length 2. It can also perform well under some changes in the process mean.
+However, squaring the differences makes it sensitive to outliers. Serial
+correlation in the observations can also bias the estimate; the correction
+factor accounts for dependence between differences, not between observations.
 See Braun and Park (2008) for comparisons of estimators for individuals charts.
 
 Missing values are omitted when estimating the standard deviation. For
-\code{"MR"} and \code{"MSSD"}, successive observations refer to the remaining values
+\code{"MR"}, \code{"MMR"}, and \code{"MSSD"}, successive observations refer to the remaining values
 in their original order, including pairs across gaps left by missing values.
 }
 \examples{
@@ -78,9 +84,11 @@ x <- antifreeze[["water"]] # See `?antifreeze`
 # 1) using MR (default)
 qcc(x, type="xbar.one", data.name="Water content (in ppm) of batches of antifreeze")
 # 2) using SD
-qcc(x, type="xbar.one", std.dev = "SD", data.name="Water content (in ppm) of batches of antifreeze")
+qcc(x, type="xbar.one", std.dev = "SD", 
+    data.name="Water content (in ppm) of batches of antifreeze")
 # 3) using bias-corrected MSSD
-qcc(x, type="xbar.one", std.dev = "MSSD", data.name="Water content (in ppm) of batches of antifreeze")
+qcc(x, type="xbar.one", std.dev = "MSSD", 
+    data.name="Water content (in ppm) of batches of antifreeze")
 
 # "as the size increases further, we would expect sigma-hat to settle down
 #  at a value close to the overall sigma-hat" (Wetherill and Brown, 1991, p. 121)

@@ -25,16 +25,4 @@ characteristic. The product is produced in batches, and because each batch
 takes several hours to produce, the production rate is too slow to allow for
 rational subgroups of size greater than one." (Montgomery, 2005, p. 232)
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{RyanMultivar}},
-\code{\link{antifreeze}},
-\code{\link{boiler}},
-\code{\link{circuit}},
-\code{\link{dyedcloth}},
-\code{\link{orangejuice}},
-\code{\link{pcmanufact}},
-\code{\link{pistonrings}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}

@@ -55,6 +55,17 @@ test_that("xbar.one charts use MSSD from phase-I data for control limits", {
   expect_equal(as.numeric(chart$violations), c(NA_real_, NA_real_, 1))
 })
 
+test_that("xbar.one charts use MMR from phase-I data for control limits", {
+  chart <- qcc(c(1, 3, 2, 6, 4), type = "xbar.one", std.dev = "MMR",
+               newdata = 100, rules = 1)
+  sigma <- 2 / (sqrt(2) * qnorm(0.75))
+
+  expect_equal(chart$std.dev, sigma, tolerance = 1e-6)
+  expect_equal(as.numeric(chart$limits), 3.2 + c(-3, 3) * sigma,
+               tolerance = 1e-6)
+  expect_equal(as.numeric(chart$violations), c(rep(NA_real_, 5), 1))
+})
+
 test_that("qcc uses Western Electric rules by default", {
   chart <- qcc(
     c(rep(0.5, 8), -0.5),

@@ -66,6 +66,30 @@ test_that("ProcessCapability warns and defaults target to the midpoint when targ
   expect_equal(capability$target, mean(two_sided_specs))
 })
 
+test_that("ProcessCapability counts only non-missing observations", {
+  incomplete <- chart
+  incomplete$data[1, 1:2] <- c(NA_real_, NaN)
+  result <- processCapability(incomplete, spec.limits = two_sided_specs,
+                              target = midpoint_target)
+  expect_identical(result$nobs, 10L)
+  expect_equal(result$data, as.vector(incomplete$data)[!is.na(incomplete$data)])
+})
+
+test_that("ProcessCapability does not infer a target for a one-sided specification", {
+  limits <- list(c(NA_real_, two_sided_specs[2]),
+                 c(two_sided_specs[1], NA_real_))
+  explicit <- list(upper_capability, lower_capability)
+  for (i in seq_along(limits)) {
+    expect_message(result <- processCapability(chart, spec.limits = limits[[i]]), NA)
+    expect_false(result$has.target)
+    expect_identical(result$target, NA_real_)
+    expect_true(all(is.na(result$indices[c("Cpm", "Ppm"), ])))
+    expect_equal(result$indices, explicit[[i]]$indices)
+    expect_true(explicit[[i]]$has.target)
+    expect_equal(explicit[[i]]$target, off_target)
+  }
+})
+
 test_that("ProcessCapability returns expected indices. Two-sided on-target case", {
   expected_indices <- matrix(
     c(

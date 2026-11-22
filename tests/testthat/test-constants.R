@@ -71,6 +71,35 @@ testthat::describe("d3()", {
   })
 })
 
+
+testthat::describe("d4()", {
+  it("matches the analytic normal-range median for two observations", {
+    expect_equal(d4(2), sqrt(2) * qnorm(0.75), tolerance = 1e-12)
+  })
+
+  it("matches independent normal order-statistic calculations", {
+    for (n in c(3, 10, 23, 50)) {
+      r <- d4(n)
+      # P(range <= r) = n * integral(phi(x) * (Phi(x + r) - Phi(x))^(n - 1)).
+      probability <- n * integrate(function(x) {
+        dnorm(x) * (pnorm(x + r) - pnorm(x))^(n - 1)
+      }, -Inf, Inf, rel.tol = 1e-9)$value
+      expect_equal(probability, 0.5, tolerance = 1e-6)
+    }
+  })
+
+  it("preserves order, repeated sizes and missing values", {
+    expect_warning(values <- d4(c(5, 2, NA, 5, 2)), "Replacing invalid sample sizes")
+    expect_equal(values, c(d4(5), d4(2), NA, d4(5), d4(2)))
+    expect_identical(d4(numeric()), numeric())
+  })
+
+  it("handles unsupported sample sizes", {
+    expect_warning(values <- d4(c(1, 2.5, Inf, 2)))
+    expect_equal(values, c(NA_real_, NA_real_, NA_real_, d4(2)))
+  })
+})
+
 testthat::describe("c4()", {
   it("returns expected values",{
     expected <- c( # SOURCE: c4 <- qcc:::qcc.c4(2:50)

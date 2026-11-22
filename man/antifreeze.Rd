@@ -20,16 +20,4 @@ antifreeze
 \description{
 Water content in 34 successive batches of antifreeze.
 }
-\seealso{
-Other datasets in \code{qcc} package:
-\code{\link{RyanMultivar}},
-\code{\link{boiler}},
-\code{\link{circuit}},
-\code{\link{dyedcloth}},
-\code{\link{orangejuice}},
-\code{\link{pcmanufact}},
-\code{\link{pistonrings}},
-\code{\link{viscosity}}
-}
-\concept{datasets in \code{qcc} package}
 \keyword{datasets}
